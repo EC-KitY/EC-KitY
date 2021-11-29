@@ -1,1 +1,1 @@
-# EC-Kitty
+# EC-KitY
