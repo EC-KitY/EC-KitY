@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,intellij+all,pycharm+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,intellij+all,pycharm+all
 
@@ -154,6 +153,7 @@ modules.xml
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
