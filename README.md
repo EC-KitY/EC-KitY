@@ -28,6 +28,13 @@ This will open an html page from which you can access the documentation of all t
 
 (Work in progress - some modules and functions are not documented yet.)
 
+### Tutorials
+Four tutorials are available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials):
+- [Multiplexer](https://github.com/EC-KitY/EC-KitY/wiki/Multiplexer-Tutorial) 
+- [Symbolic Regression](https://github.com/EC-KitY/EC-KitY/wiki/Symbolic-Regression-Tutorial) 
+- [Sklearn-Compatible Symbolic Regression](https://github.com/EC-KitY/EC-KitY/wiki/Sklearn-Compatible-Symbolic-Regression-Tutorial) 
+- [Sklearn-Compatible Breast Cancer](https://github.com/EC-KitY/EC-KitY/wiki/Sklearn-Compatible-Breast-Cancer-Tutorial) 
+
 ### Examples
 More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
 All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
