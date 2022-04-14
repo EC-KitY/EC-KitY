@@ -33,7 +33,9 @@ More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main
 All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
 
 ### Basic example (no sklearn)
-You can run an EA with just 3 lines of code. The problem being solved herein is simple symbolic regression. [LINK TO TUTORIAL]  
+You can run an EA with just 3 lines of code. The problem being solved herein is simple symbolic regression.
+
+Additional information on this problem can be found in the [Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/blob/main/doc/tutorials/treegp/non_sklearn_mode/symbolic_regression.md).
 ```python
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.subpopulation import Subpopulation
@@ -45,6 +47,10 @@ print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
 ```
 
 ### Example with sklearn
+
+The problem being solved herein is the same problem, but in this case we also involve sklearn compatability - a core feature of EC-KitY.
+Additional information for this example can be found in the [Sklearn Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/blob/main/doc/tutorials/treegp/sklearn_mode/symbolic_regression.md).
+
 A simple sklearn-compatible EA run:
 
 ```python
