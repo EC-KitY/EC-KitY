@@ -100,7 +100,7 @@ If you wish to cite this work please use:
   year = {2022},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://eckity.org} }
+  howpublished = {\url{https://www.eckity.org/} }
 }
 ```
 
