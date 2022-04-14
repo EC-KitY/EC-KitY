@@ -23,7 +23,7 @@ class TournamentSelection(SelectionMethod):
         dest_inds.extend(winners)
 
         self.selected_individuals = dest_inds
-        # self.publish("after_selection")   # TODO this already publishes 'after_operator' event, why do we need this event too?
+        # self.publish("after_selection")   # TODO this already publishes 'after_operator' event
 
         return dest_inds
 

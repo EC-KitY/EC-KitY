@@ -7,7 +7,6 @@ from overrides import overrides
 
 from eckity.event_based_operator import Operator
 from eckity.population import Population
-from eckity.serializer import Serializer
 from eckity.subpopulation import Subpopulation
 
 SEED_MIN_VALUE = 0
@@ -62,13 +61,8 @@ class Algorithm(Operator):
     generation_seed: int, default=None
         Current generation seed. Useful for resuming a previously paused experiment.
 
-    serializer: Serializer, default=Serializer()
-        Responsible of serializing and deserializing the experiment.
-
     generation_num: int, default=0
         Current generation number
-
-    Array with associated photographic information.
 
     Attributes
     ----------
@@ -89,7 +83,6 @@ class Algorithm(Operator):
                  random_seed=time(),
                  generation_seed=None,
                  max_workers=None,
-                 serializer=Serializer(),
                  generation_num=0):
 
         ext_event_names = event_names.copy() if event_names is not None else []
@@ -139,8 +132,6 @@ class Algorithm(Operator):
         self.breeder.max_workers = self.max_workers
 
         self.final_generation_ = 0
-
-        self.serializer = serializer
 
     @overrides
     def apply_operator(self, payload):
