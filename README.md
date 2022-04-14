@@ -6,8 +6,8 @@ Currently we have implemented tree-based genetic programming (GP), but EC-KitY w
 
 ### Dependencies
 For the basic evolution mode, EC-KitY requires:
-- numpy (>=1.21.5)
-- pandas (>=1.3.5)
+- numpy (>=1.14.6)
+- pandas (>=0.25.0)
 - overrides (>= 6.1.0)
 
 For sklearn mode, EC-KitY additionally requires:
