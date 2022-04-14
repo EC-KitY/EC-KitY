@@ -23,10 +23,13 @@ For the extended package: `pip install -r base_requirements.txt -r extensions_re
 
 ### Documentation
 
-is available [here](https://htmlpreview.github.io/?https://github.com/moshesipper/ec-kity/tree/master/doc "here"). 
+After cloning the project, navigate to the `doc\api` folder and open `eckity.html` file.
+This will open an html page from which you can access the documentation of all the modules.
+
+(Work in progress - some modules and functions are not documented yet.)
 
 ### Examples
-More examples are in the [examples](https://github.com/moshesipper/ec-kity/tree/master/examples "examples") folder.
+More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
 All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
 
 ### Basic example (no sklearn)
