@@ -1,4 +1,4 @@
-<img src="https://github.com/moshesipper/scikit-gp/blob/master/doc/header.jpg" width="90%"/>
+![image](https://user-images.githubusercontent.com/62753120/163423530-1c85e43f-48a9-4fbd-827e-f97a1f174db0.png)
 
 EC-KitY is a Python tool kit for doing evolutionary computation. 
 It is scikit-learn-compatible and is distributed under the GNU General Public License v3.0.
