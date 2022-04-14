@@ -4,6 +4,13 @@ EC-KitY is a Python tool kit for doing evolutionary computation.
 It is scikit-learn-compatible and is distributed under the GNU General Public License v3.0.
 Currently we have implemented tree-based genetic programming (GP), but EC-KitY will grow!
 
+EC-KitY is:
+- A comprehensive toolkit for running evolutionary algorithms
+- Written in Python
+- Can work with or without Scikit-learn, i.e., supports both sklearn and non-sklearn modes
+- Designed with modern software engineering in mind
+- Designed to support all popular EC paradigms (GA, GP, ES, coevolution, multi-objective, etc').
+
 ### Dependencies
 For the basic evolution mode, EC-KitY requires:
 - numpy (>=1.14.6)
