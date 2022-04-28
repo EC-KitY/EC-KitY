@@ -45,7 +45,7 @@ All you need to do is define a fitness-evaluation method, through a `SimpleIndiv
 ### Basic example (no sklearn)
 You can run an EA with just 3 lines of code. The problem being solved herein is simple symbolic regression.
 
-Additional information on this problem can be found in the [Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Symbolic-Regression-Tutorial).
+Additional information on this problem can be found in the [Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Tutorial:-Symbolic-Regression).
 ```python
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.subpopulation import Subpopulation
@@ -59,7 +59,7 @@ print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
 ### Example with sklearn
 
 The problem being solved herein is the same problem, but in this case we also involve sklearn compatability - a core feature of EC-KitY.
-Additional information for this example can be found in the [Sklearn Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Sklearn-Compatible-Symbolic-Regression-Tutorial).
+Additional information for this example can be found in the [Sklearn Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Tutorial:-Sklearn-Compatible-Symbolic-Regression).
 
 A simple sklearn-compatible EA run:
 
