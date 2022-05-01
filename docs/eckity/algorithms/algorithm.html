@@ -106,7 +106,6 @@
 
 <span class="kn">from</span> <span class="nn">eckity.event_based_operator</span> <span class="kn">import</span> <span class="n">Operator</span>
 <span class="kn">from</span> <span class="nn">eckity.population</span> <span class="kn">import</span> <span class="n">Population</span>
-<span class="kn">from</span> <span class="nn">eckity.serializer</span> <span class="kn">import</span> <span class="n">Serializer</span>
 <span class="kn">from</span> <span class="nn">eckity.subpopulation</span> <span class="kn">import</span> <span class="n">Subpopulation</span>
 
 <span class="n">SEED_MIN_VALUE</span> <span class="o">=</span> <span class="mi">0</span>
@@ -161,13 +160,8 @@
 <span class="sd">    generation_seed: int, default=None</span>
 <span class="sd">        Current generation seed. Useful for resuming a previously paused experiment.</span>
 
-<span class="sd">    serializer: Serializer, default=Serializer()</span>
-<span class="sd">        Responsible of serializing and deserializing the experiment.</span>
-
 <span class="sd">    generation_num: int, default=0</span>
 <span class="sd">        Current generation number</span>
-
-<span class="sd">    Array with associated photographic information.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -188,7 +182,6 @@
                  <span class="n">random_seed</span><span class="o">=</span><span class="n">time</span><span class="p">(),</span>
                  <span class="n">generation_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">max_workers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">serializer</span><span class="o">=</span><span class="n">Serializer</span><span class="p">(),</span>
                  <span class="n">generation_num</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 
         <span class="n">ext_event_names</span> <span class="o">=</span> <span class="n">event_names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">event_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
@@ -238,8 +231,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">serializer</span> <span class="o">=</span> <span class="n">serializer</span>
 
     <span class="nd">@overrides</span>
     <span class="k">def</span> <span class="nf">apply_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
@@ -425,13 +416,8 @@
 <span class="sd">    generation_seed: int, default=None</span>
 <span class="sd">        Current generation seed. Useful for resuming a previously paused experiment.</span>
 
-<span class="sd">    serializer: Serializer, default=Serializer()</span>
-<span class="sd">        Responsible of serializing and deserializing the experiment.</span>
-
 <span class="sd">    generation_num: int, default=0</span>
 <span class="sd">        Current generation number</span>
-
-<span class="sd">    Array with associated photographic information.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -452,7 +438,6 @@
                  <span class="n">random_seed</span><span class="o">=</span><span class="n">time</span><span class="p">(),</span>
                  <span class="n">generation_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">max_workers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">serializer</span><span class="o">=</span><span class="n">Serializer</span><span class="p">(),</span>
                  <span class="n">generation_num</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 
         <span class="n">ext_event_names</span> <span class="o">=</span> <span class="n">event_names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">event_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
@@ -502,8 +487,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">serializer</span> <span class="o">=</span> <span class="n">serializer</span>
 
     <span class="nd">@overrides</span>
     <span class="k">def</span> <span class="nf">apply_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
@@ -663,11 +646,8 @@ Random generator module.</li>
 Random seed for deterministic experiment.</li>
 <li><strong>generation_seed</strong> (int, default=None):
 Current generation seed. Useful for resuming a previously paused experiment.</li>
-<li><strong>serializer</strong> (Serializer, default=Serializer()):
-Responsible of serializing and deserializing the experiment.</li>
 <li><strong>generation_num</strong> (int, default=0):
 Current generation number</li>
-<li><strong>Array with associated photographic information.</strong></li>
 </ul>
 
 <h6 id="attributes">Attributes</h6>
@@ -693,10 +673,9 @@ The generation in which the evolution ended.</li>
     events=None,
     event_names=None,
     random_generator=None,
-    random_seed=1649607633.637385,
+    random_seed=1651425696.0067415,
     generation_seed=None,
     max_workers=None,
-    serializer=&lt;<a href="../serializer.html#Serializer">eckity.serializer.Serializer</a> object&gt;,
     generation_num=0
 )</span>
     </div>
@@ -716,7 +695,6 @@ The generation in which the evolution ended.</li>
                  <span class="n">random_seed</span><span class="o">=</span><span class="n">time</span><span class="p">(),</span>
                  <span class="n">generation_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">max_workers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">serializer</span><span class="o">=</span><span class="n">Serializer</span><span class="p">(),</span>
                  <span class="n">generation_num</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 
         <span class="n">ext_event_names</span> <span class="o">=</span> <span class="n">event_names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">event_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
@@ -766,8 +744,6 @@ The generation in which the evolution ended.</li>
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">serializer</span> <span class="o">=</span> <span class="n">serializer</span>
 </pre></div>
 
         </details>

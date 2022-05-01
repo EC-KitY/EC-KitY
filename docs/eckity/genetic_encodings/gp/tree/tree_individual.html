@@ -271,16 +271,9 @@
                 <span class="sa">f</span><span class="s1">&#39;Some variable terminals were not passed to tree.execute as keyword arguments: </span><span class="si">{</span><span class="n">missing_vars</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="c1"># print(res)</span>
-        <span class="c1"># if not isinstance(res,Number): print(res.shape)</span>
-        <span class="c1"># print(res, type(res), X[:,0].shape, reshape)</span>
         <span class="k">if</span> <span class="n">reshape</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="n">res</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
             <span class="c1"># sometimes a tree degenrates to a scalar value</span>
-            <span class="c1"># TODO compare those 3 methods</span>
-            <span class="c1"># res = np.full_like(X[:, 0], res)</span>
-            <span class="c1"># res = res * np.ones((X.shape[0], 1))</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">res</span><span class="p">)</span>
-            <span class="c1"># print(res, type(res), X[:, 0].shape, reshape, &quot;reshape excute&quot;)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span>
 
     <span class="k">def</span> <span class="nf">random_subtree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -557,16 +550,9 @@
                 <span class="sa">f</span><span class="s1">&#39;Some variable terminals were not passed to tree.execute as keyword arguments: </span><span class="si">{</span><span class="n">missing_vars</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="c1"># print(res)</span>
-        <span class="c1"># if not isinstance(res,Number): print(res.shape)</span>
-        <span class="c1"># print(res, type(res), X[:,0].shape, reshape)</span>
         <span class="k">if</span> <span class="n">reshape</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="n">res</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
             <span class="c1"># sometimes a tree degenrates to a scalar value</span>
-            <span class="c1"># TODO compare those 3 methods</span>
-            <span class="c1"># res = np.full_like(X[:, 0], res)</span>
-            <span class="c1"># res = res * np.ones((X.shape[0], 1))</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">res</span><span class="p">)</span>
-            <span class="c1"># print(res, type(res), X[:, 0].shape, reshape, &quot;reshape excute&quot;)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span>
 
     <span class="k">def</span> <span class="nf">random_subtree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -940,16 +926,9 @@ Range of values for ephemeral random constant (erc). The default is None.</li>
                 <span class="sa">f</span><span class="s1">&#39;Some variable terminals were not passed to tree.execute as keyword arguments: </span><span class="si">{</span><span class="n">missing_vars</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="c1"># print(res)</span>
-        <span class="c1"># if not isinstance(res,Number): print(res.shape)</span>
-        <span class="c1"># print(res, type(res), X[:,0].shape, reshape)</span>
         <span class="k">if</span> <span class="n">reshape</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span> <span class="ow">or</span> <span class="n">res</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
             <span class="c1"># sometimes a tree degenrates to a scalar value</span>
-            <span class="c1"># TODO compare those 3 methods</span>
-            <span class="c1"># res = np.full_like(X[:, 0], res)</span>
-            <span class="c1"># res = res * np.ones((X.shape[0], 1))</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="n">res</span><span class="p">)</span>
-            <span class="c1"># print(res, type(res), X[:, 0].shape, reshape, &quot;reshape excute&quot;)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">res</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span>
 </pre></div>
 
