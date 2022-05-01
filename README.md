@@ -87,6 +87,10 @@ regressor.fit(X_train, y_train)
 print('MAE on test set:', mean_absolute_error(regressor.predict(X_test), y_test))
 ```
 
+### Feature comparison
+We are working on a paper that describes EC-KitY. For now, here is a table comparing EC-KitY with 8 other libraries:
+![image](https://github.com/EC-KitY/EC-KitY/blob/main/features.JPG?raw=true)
+
 ### Authors
 [Moshe Sipper](http://www.moshesipper.com/ "Moshe Sipper"), 
 [Achiya Elyasaf](https://achiya.elyasaf.net/ "Achiya Elyasaf"),
