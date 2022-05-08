@@ -9,16 +9,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='eckity',
     version=VERSION,
-    author='Moshe Sipper',
-    author_email='sipper@gmail.com',
+    author='Moshe Sipper, Achiya Elyasaf, Itai Tzruia, Tomer Halperin',
+    author_email='sipper@gmail.com, achiya@bgu.ac.il, itaitz@post.bgu.ac.il, tomerhal@post.bgu.ac.il',
     description='EC-KitY: Evolutionary Computation Tool Kit in Python.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/moshesipper/ec-kity',
+    url='https://www.eckity.org',
     project_urls = {
-        "Bug Tracker": "https://github.com/moshesipper/ec-kity/issues"
+        "Bug Tracker": "https://github.com/EC-KitY/EC-KitY/issues"
     },
     license='GNU GPLv3',
     packages=find_packages(),
-    install_requires=['scikit-learn>=0.24.2'],
+    install_requires=['numpy>=1.14.6', 'overrides>=6.1.0', 'pandas>=0.25.0', 'scikit-learn>=0.24.2'],
 )
