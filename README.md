@@ -99,7 +99,7 @@ Tomer Halperin
 
 ### Citation
 
-Citations are alway appreciated 😊:
+Citations are always appreciated 😊:
 ```
 @article{eckity2022,
     author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
