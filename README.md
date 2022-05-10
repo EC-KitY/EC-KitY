@@ -99,7 +99,7 @@ Tomer Halperin
 
 ### Citation
 
-If you wish to cite this work please use:
+If you wish to cite this work:
 ```
 @article{eckity2022,
     author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
