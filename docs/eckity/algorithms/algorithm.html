@@ -124,8 +124,8 @@
 <span class="sd">    population: Population</span>
 <span class="sd">        The population to be evolved. Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=BestAverageWorstStatistics instance</span>
-<span class="sd">        Statistics class for providing statistics for every generation.</span>
+<span class="sd">    statistics: list of Statistics, default=None</span>
+<span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder()</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
@@ -227,8 +227,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="n">max_workers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">executor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -380,8 +378,8 @@
 <span class="sd">    population: Population</span>
 <span class="sd">        The population to be evolved. Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=BestAverageWorstStatistics instance</span>
-<span class="sd">        Statistics class for providing statistics for every generation.</span>
+<span class="sd">    statistics: list of Statistics, default=None</span>
+<span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder()</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
@@ -483,8 +481,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="n">max_workers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">executor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -621,8 +617,8 @@
 <ul>
 <li><strong>population</strong> (Population):
 The population to be evolved. Consists of a list of individuals.</li>
-<li><strong>statistics</strong> (Statistics, default=BestAverageWorstStatistics instance):
-Statistics class for providing statistics for every generation.</li>
+<li><strong>statistics</strong> (list of Statistics, default=None):
+Provide multiple statistics on the population during the evolutionary run.</li>
 <li><strong>breeder</strong> (SimpleBreeder, default=SimpleBreeder()):
 Responsible of applying the selection method and operator sequence on the individuals
 in each generation. Applies on one sub-population in simple case.</li>
@@ -673,7 +669,7 @@ The generation in which the evolution ended.</li>
     events=None,
     event_names=None,
     random_generator=None,
-    random_seed=1652206136.2023323,
+    random_seed=1652209726.58906,
     generation_seed=None,
     max_workers=None,
     generation_num=0
@@ -740,8 +736,6 @@ The generation in which the evolution ended.</li>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="n">max_workers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">executor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="o">.</span><span class="n">max_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
