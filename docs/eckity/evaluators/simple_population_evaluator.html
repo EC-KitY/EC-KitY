@@ -82,11 +82,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sub_population</span> <span class="ow">in</span> <span class="n">population</span><span class="o">.</span><span class="n">sub_populations</span><span class="p">:</span>
             <span class="n">sp_eval</span><span class="p">:</span> <span class="n">IndividualEvaluator</span> <span class="o">=</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">evaluator</span>
-            <span class="n">eval_futures</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sp_eval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="p">[</span><span class="n">indiv</span><span class="p">])</span> <span class="k">for</span> <span class="n">indiv</span> <span class="ow">in</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">individuals</span><span class="p">]</span>
+            <span class="n">eval_futures</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sp_eval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">individuals</span><span class="p">]</span>
 
-            <span class="c1"># wait for all fitnesses to be evaluated before returning from this method</span>
-            <span class="c1"># TODO maybe each fitness class can save the eval_future</span>
-            <span class="c1">#      so we won&#39;t have to wait for all futures to be resolved?</span>
+            <span class="c1"># wait for all fitness values to be evaluated before returning from this method</span>
             <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">eval_futures</span><span class="p">:</span>
                 <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 
@@ -137,11 +135,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_evaluate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sub_population</span> <span class="ow">in</span> <span class="n">population</span><span class="o">.</span><span class="n">sub_populations</span><span class="p">:</span>
             <span class="n">sp_eval</span><span class="p">:</span> <span class="n">IndividualEvaluator</span> <span class="o">=</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">evaluator</span>
-            <span class="n">eval_futures</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sp_eval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="p">[</span><span class="n">indiv</span><span class="p">])</span> <span class="k">for</span> <span class="n">indiv</span> <span class="ow">in</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">individuals</span><span class="p">]</span>
+            <span class="n">eval_futures</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">sp_eval</span><span class="o">.</span><span class="n">evaluate</span><span class="p">,</span> <span class="p">[</span><span class="n">ind</span><span class="p">])</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">sub_population</span><span class="o">.</span><span class="n">individuals</span><span class="p">]</span>
 
-            <span class="c1"># wait for all fitnesses to be evaluated before returning from this method</span>
-            <span class="c1"># TODO maybe each fitness class can save the eval_future</span>
-            <span class="c1">#      so we won&#39;t have to wait for all futures to be resolved?</span>
+            <span class="c1"># wait for all fitness values to be evaluated before returning from this method</span>
             <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">eval_futures</span><span class="p">:</span>
                 <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 

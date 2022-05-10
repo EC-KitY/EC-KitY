@@ -108,13 +108,6 @@
 <span class="sd">            True if the algorithm should terminate early, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_individual</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ThresholdFromTargetTerminationChecker</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">optimal</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">threshold</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span>
 </pre></div>
 
         </details>
@@ -175,13 +168,6 @@
 <span class="sd">            True if the algorithm should terminate early, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_individual</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ThresholdFromTargetTerminationChecker</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">optimal</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">threshold</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span>
 </pre></div>
 
         </details>

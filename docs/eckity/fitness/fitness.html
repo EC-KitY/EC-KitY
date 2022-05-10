@@ -126,15 +126,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_relative_fitness</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="c1"># we compare the equality of the fitness functions by comparing their byte code</span>
-        <span class="c1"># (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Fitness</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">context</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">trials</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_is_evaluated</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal_fitness</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">optimal_fitness</span>
 </pre></div>
 
         </details>
@@ -198,15 +189,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_relative_fitness</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="c1"># we compare the equality of the fitness functions by comparing their byte code</span>
-        <span class="c1"># (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Fitness</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">context</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">trials</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_is_evaluated</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimal_fitness</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">optimal_fitness</span>
 </pre></div>
 
         </details>

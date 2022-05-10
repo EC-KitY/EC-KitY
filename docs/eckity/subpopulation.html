@@ -224,22 +224,6 @@
 
     <span class="k">def</span> <span class="nf">contains_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">individuals</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="c1"># comparing self fields with other fields</span>
-        <span class="c1"># when comparing callbacks, we first make sure the lengths of the lists are equal,</span>
-        <span class="c1"># then we compare the equality of the callback functions by comparing their byte code</span>
-        <span class="c1"># (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">creators</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">creators</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pcr</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_pcr</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators_sequence</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_operators_sequence</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">population_size</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_methods</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_selection_methods</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluator</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_elite</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_elite</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">individuals</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">individuals</span>
 </pre></div>
 
         </details>
@@ -387,22 +371,6 @@
 
     <span class="k">def</span> <span class="nf">contains_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">individual</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">individuals</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="c1"># comparing self fields with other fields</span>
-        <span class="c1"># when comparing callbacks, we first make sure the lengths of the lists are equal,</span>
-        <span class="c1"># then we compare the equality of the callback functions by comparing their byte code</span>
-        <span class="c1"># (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">creators</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">creators</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pcr</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_pcr</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operators_sequence</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_operators_sequence</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">population_size</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_methods</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_selection_methods</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluator</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_elite</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_elite</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">individuals</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">individuals</span>
 </pre></div>
 
         </details>
