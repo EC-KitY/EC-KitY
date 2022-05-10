@@ -104,9 +104,9 @@ If you wish to cite this work please use:
 @article{eckity2022,
     author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
     title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
-    OPTjournal = {Journal of Machine Learning Research},
-    OPTvolume = {},
-    OPTpages = {},
+    journal = {},
+    volume = {},
+    pages = {},
     year = {2022},
     note = {in preparation}
 }
