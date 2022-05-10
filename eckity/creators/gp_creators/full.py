@@ -86,6 +86,3 @@ class FullCreator(GpTreeCreator):
         if is_func:
             for i in range(tree_ind.arity[node]):
                 self._create_tree(tree_ind, max_depth, depth=depth + 1)
-
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, FullCreator)

@@ -24,6 +24,3 @@ class Individual:
             return True
 
         return self.fitness.better_than(self, other.fitness, other)
-
-    def __eq__(self, other):
-        return isinstance(other, Individual) and self.fitness == other.fitness

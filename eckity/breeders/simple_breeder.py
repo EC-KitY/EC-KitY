@@ -69,7 +69,3 @@ class SimpleBreeder(Breeder):
         if event_name == "after_selection":
             return {"selected_individuals": self.selected_individuals,
                     "best_of_run": self.best_of_run}
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, SimpleBreeder)

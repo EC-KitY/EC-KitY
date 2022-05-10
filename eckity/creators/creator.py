@@ -20,6 +20,3 @@ class Creator(Operator):
             return {"created_individuals": self.created_individuals}
         else:
             return {}
-
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, Creator)

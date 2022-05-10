@@ -48,12 +48,3 @@ class Fitness:
         if self.is_relative_fitness:
             return True
         return self._is_evaluated
-
-    def __eq__(self, other):
-        # we compare the equality of the fitness functions by comparing their byte code
-        # (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)
-        return isinstance(other, Fitness) \
-               and self.context == other.context \
-               and self.trials == other.trials \
-               and self._is_evaluated == other._is_evaluated \
-               and self.optimal_fitness == other.optimal_fitness
