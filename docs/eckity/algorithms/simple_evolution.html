@@ -106,9 +106,8 @@
 <span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=BestAverageWorstStatistics instance</span>
-<span class="sd">        Statistics class for providing statistics during the evolution phase.</span>
-<span class="sd">        By default, provides statistics about best, average and worst fitness in every generation.</span>
+<span class="sd">    statistics: Statistics, default=None</span>
+<span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
@@ -161,7 +160,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">population</span><span class="p">,</span>
-                 <span class="n">statistics</span><span class="o">=</span><span class="n">BestAverageWorstStatistics</span><span class="p">(),</span>
+                 <span class="n">statistics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">breeder</span><span class="o">=</span><span class="n">SimpleBreeder</span><span class="p">(),</span>
                  <span class="n">population_evaluator</span><span class="o">=</span><span class="n">SimplePopulationEvaluator</span><span class="p">(),</span>
                  <span class="n">max_generation</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
@@ -183,6 +182,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_event_names</span> <span class="o">=</span> <span class="n">event_names</span>
 
+        <span class="k">if</span> <span class="n">statistics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">statistics</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">statistics</span><span class="o">=</span><span class="n">statistics</span><span class="p">,</span> <span class="n">breeder</span><span class="o">=</span><span class="n">breeder</span><span class="p">,</span> <span class="n">population_evaluator</span><span class="o">=</span><span class="n">population_evaluator</span><span class="p">,</span>
                          <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">_event_names</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">,</span>
                          <span class="n">random_generator</span><span class="o">=</span><span class="n">random_generator</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">generation_seed</span><span class="o">=</span><span class="n">generation_seed</span><span class="p">,</span>
@@ -200,7 +202,8 @@
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
 
     <span class="nd">@overrides</span>
     <span class="k">def</span> <span class="nf">generation_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gen</span><span class="p">):</span>
@@ -305,9 +308,8 @@
 <span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=BestAverageWorstStatistics instance</span>
-<span class="sd">        Statistics class for providing statistics during the evolution phase.</span>
-<span class="sd">        By default, provides statistics about best, average and worst fitness in every generation.</span>
+<span class="sd">    statistics: Statistics, default=None</span>
+<span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
@@ -360,7 +362,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">population</span><span class="p">,</span>
-                 <span class="n">statistics</span><span class="o">=</span><span class="n">BestAverageWorstStatistics</span><span class="p">(),</span>
+                 <span class="n">statistics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">breeder</span><span class="o">=</span><span class="n">SimpleBreeder</span><span class="p">(),</span>
                  <span class="n">population_evaluator</span><span class="o">=</span><span class="n">SimplePopulationEvaluator</span><span class="p">(),</span>
                  <span class="n">max_generation</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
@@ -382,6 +384,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_event_names</span> <span class="o">=</span> <span class="n">event_names</span>
 
+        <span class="k">if</span> <span class="n">statistics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">statistics</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">statistics</span><span class="o">=</span><span class="n">statistics</span><span class="p">,</span> <span class="n">breeder</span><span class="o">=</span><span class="n">breeder</span><span class="p">,</span> <span class="n">population_evaluator</span><span class="o">=</span><span class="n">population_evaluator</span><span class="p">,</span>
                          <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">_event_names</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">,</span>
                          <span class="n">random_generator</span><span class="o">=</span><span class="n">random_generator</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">,</span> <span class="n">generation_seed</span><span class="o">=</span><span class="n">generation_seed</span><span class="p">,</span>
@@ -399,7 +404,8 @@
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
 
     <span class="nd">@overrides</span>
     <span class="k">def</span> <span class="nf">generation_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gen</span><span class="p">):</span>
@@ -489,9 +495,8 @@ Does not include and is not meant for multi-objective, co-evolution etc.</p>
 <li><strong>population</strong> (Population):
 The population to be evolved. Contains only one sub-population in simple case.
 Consists of a list of individuals.</li>
-<li><strong>statistics</strong> (Statistics, default=BestAverageWorstStatistics instance):
-Statistics class for providing statistics during the evolution phase.
-By default, provides statistics about best, average and worst fitness in every generation.</li>
+<li><strong>statistics</strong> (Statistics, default=None):
+Provide multiple statistics on the population during the evolutionary run.</li>
 <li><strong>breeder</strong> (SimpleBreeder, default=SimpleBreeder instance):
 Responsible of applying the selection method and operator sequence on the individuals
 in each generation. Applies on one sub-population in simple case.</li>
@@ -535,7 +540,7 @@ Current generation number</li>
         
             <span class="name">SimpleEvolution</span><span class="signature">(
     population,
-    statistics=&lt;<a href="../statistics/best_average_worst_statistics.html#BestAverageWorstStatistics">eckity.statistics.best_average_worst_statistics.BestAverageWorstStatistics</a> object&gt;,
+    statistics=None,
     breeder=&lt;<a href="../breeders/simple_breeder.html#SimpleBreeder">eckity.breeders.simple_breeder.SimpleBreeder</a> object&gt;,
     population_evaluator=&lt;<a href="../evaluators/simple_population_evaluator.html#SimplePopulationEvaluator">eckity.evaluators.simple_population_evaluator.SimplePopulationEvaluator</a> object&gt;,
     max_generation=500,
@@ -544,7 +549,7 @@ Current generation number</li>
     termination_checker=&lt;<a href="../termination_checkers/threshold_from_target_termination_checker.html#ThresholdFromTargetTerminationChecker">eckity.termination_checkers.threshold_from_target_termination_checker.ThresholdFromTargetTerminationChecker</a> object&gt;,
     max_workers=None,
     random_generator=None,
-    random_seed=1652206136.287335,
+    random_seed=1652209726.6590586,
     generation_seed=None,
     best_of_run_=None,
     best_of_run_evaluator=None,
@@ -558,7 +563,7 @@ Current generation number</li>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">population</span><span class="p">,</span>
-                 <span class="n">statistics</span><span class="o">=</span><span class="n">BestAverageWorstStatistics</span><span class="p">(),</span>
+                 <span class="n">statistics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">breeder</span><span class="o">=</span><span class="n">SimpleBreeder</span><span class="p">(),</span>
                  <span class="n">population_evaluator</span><span class="o">=</span><span class="n">SimplePopulationEvaluator</span><span class="p">(),</span>
                  <span class="n">max_generation</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
@@ -579,6 +584,9 @@ Current generation number</li>
             <span class="n">_event_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;before_eval&#39;</span><span class="p">,</span> <span class="s1">&#39;after_eval&#39;</span><span class="p">,</span> <span class="s1">&#39;before_breeding&#39;</span><span class="p">,</span> <span class="s1">&#39;after_breeding&#39;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_event_names</span> <span class="o">=</span> <span class="n">event_names</span>
+
+        <span class="k">if</span> <span class="n">statistics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">statistics</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">statistics</span><span class="o">=</span><span class="n">statistics</span><span class="p">,</span> <span class="n">breeder</span><span class="o">=</span><span class="n">breeder</span><span class="p">,</span> <span class="n">population_evaluator</span><span class="o">=</span><span class="n">population_evaluator</span><span class="p">,</span>
                          <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">_event_names</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">,</span>
@@ -613,7 +621,8 @@ Current generation number</li>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
 </pre></div>
 
         </details>
