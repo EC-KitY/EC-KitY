@@ -101,14 +101,25 @@ Tomer Halperin
 
 If you wish to cite this work please use:
 ```
-@misc{eckity2022,
-  author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
-  title = {EC-KitY: Evolutionary Computation Tool Kit in Python},
-  year = {2022},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://www.eckity.org/} }
+@article{eckity2022,
+    author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
+    title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
+    OPTjournal = {Journal of Machine Learning Research},
+    OPTvolume = {},
+    OPTpages = {},
+    year = {2022},
+    note = {in preparation}
 }
+
+@misc{eckity2022git,
+    author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
+    title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
+    year = {2022},
+    publisher = {GitHub},
+    journal = {GitHub repository},
+    howpublished = {\url{https://www.eckity.org/} }
+}
+
 ```
 
 
