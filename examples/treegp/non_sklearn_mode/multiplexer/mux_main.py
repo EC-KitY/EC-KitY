@@ -60,7 +60,7 @@ def main():
         max_workers=1,
         max_generation=40,
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=1, threshold=0.01),
-        statistics=BestAverageWorstStatistics(),
+        statistics=[BestAverageWorstStatistics()],
         random_seed=10
     )
 

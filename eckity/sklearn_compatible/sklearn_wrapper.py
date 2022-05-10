@@ -75,7 +75,7 @@ class SklearnWrapper:
         return self.is_fitted
 
     def get_params(self, deep=True):
-        return self.__getstate__()
+        return self.algorithm.__getstate__()
 
     def set_params(self, **parameters):
         self.algorithm.__setstate__(parameters)

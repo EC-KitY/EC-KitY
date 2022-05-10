@@ -69,7 +69,7 @@ def main():
         max_generation=1000,
         # optimal fitness is 1, evolution ("training") process will be finished when best fitness <= threshold
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=1, threshold=0.03),
-        statistics=BestAverageWorstSizeTreeStatistics()
+        statistics=[BestAverageWorstSizeTreeStatistics()]
     )
     # wrap the basic evolutionary algorithm with a sklearn-compatible classifier
     classifier = SkClassifier(algo)

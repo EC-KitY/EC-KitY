@@ -25,8 +25,8 @@ class Algorithm(Operator):
     population: Population
         The population to be evolved. Consists of a list of individuals.
 
-    statistics: Statistics, default=BestAverageWorstStatistics instance
-        Statistics class for providing statistics for every generation.
+    statistics: list of Statistics, default=None
+        Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder()
         Responsible of applying the selection method and operator sequence on the individuals

@@ -26,9 +26,8 @@ class SimpleEvolution(Algorithm):
         The population to be evolved. Contains only one sub-population in simple case.
         Consists of a list of individuals.
 
-    statistics: Statistics, default=BestAverageWorstStatistics instance
-        Statistics class for providing statistics during the evolution phase.
-        By default, provides statistics about best, average and worst fitness in every generation.
+    statistics: Statistics, default=None
+        Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder instance
         Responsible of applying the selection method and operator sequence on the individuals
@@ -81,7 +80,7 @@ class SimpleEvolution(Algorithm):
 
     def __init__(self,
                  population,
-                 statistics=BestAverageWorstStatistics(),
+                 statistics=None,
                  breeder=SimpleBreeder(),
                  population_evaluator=SimplePopulationEvaluator(),
                  max_generation=500,
@@ -103,6 +102,9 @@ class SimpleEvolution(Algorithm):
         else:
             _event_names = event_names
 
+        if statistics is None:
+            statistics = []
+
         super().__init__(population, statistics=statistics, breeder=breeder, population_evaluator=population_evaluator,
                          events=events, event_names=_event_names, max_workers=max_workers,
                          random_generator=random_generator, random_seed=random_seed, generation_seed=generation_seed,
@@ -120,7 +122,8 @@ class SimpleEvolution(Algorithm):
 
     def initialize(self):
         super().initialize()
-        self.register('after_generation', self.statistics.write_statistics)
+        for stat in self.statistics:
+            self.register('after_generation', stat.write_statistics)
 
     @overrides
     def generation_iteration(self, gen):
