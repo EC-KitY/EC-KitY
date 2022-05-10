@@ -128,8 +128,6 @@ class Algorithm(Operator):
 
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
-        self.breeder.executor = self.executor
-        self.breeder.max_workers = self.max_workers
 
         self.final_generation_ = 0
 
