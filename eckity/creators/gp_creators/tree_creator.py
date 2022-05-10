@@ -52,11 +52,3 @@ class GpTreeCreator(Creator):
     @abstractmethod
     def create_tree(self, tree_ind, max_depth):
         pass
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, GpTreeCreator) \
-               and self.init_depth == other.init_depth \
-               and self.function_set == other.function_set \
-               and self.terminal_set == other.terminal_set \
-               and self.erc_range == other.erc_range

@@ -45,10 +45,3 @@ class ThresholdFromTargetTerminationChecker(TerminationChecker):
             True if the algorithm should terminate early, False otherwise.
         """
         return abs(best_individual.get_pure_fitness() - self.optimal) <= self.threshold
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, ThresholdFromTargetTerminationChecker) \
-               and self.optimal == other.optimal \
-               and self.threshold == other.threshold \
-               and self.higher_is_better == other.higher_is_better

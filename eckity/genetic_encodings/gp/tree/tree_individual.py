@@ -263,16 +263,4 @@ class Tree(Individual):
         """
         self._show("", [0])
 
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, Tree) \
-               and self.function_set == other.function_set \
-               and self.terminal_set == other.terminal_set \
-               and self.n_terminals == other.n_terminals \
-               and self.arity == other.arity \
-               and self.vars == other.vars \
-               and self.erc_range == other.erc_range \
-               and self.n_functions == other.n_functions \
-               and self.init_depth == other.init_depth \
-               and self.tree == other.tree
-
 # end class tree

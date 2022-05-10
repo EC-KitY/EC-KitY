@@ -143,19 +143,3 @@ class Subpopulation:
 
     def contains_individual(self, individual):
         return individual in self.individuals
-
-    def __eq__(self, other):
-        # comparing self fields with other fields
-        # when comparing callbacks, we first make sure the lengths of the lists are equal,
-        # then we compare the equality of the callback functions by comparing their byte code
-        # (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)
-        return isinstance(other, Subpopulation) \
-               and self.creators == other.creators \
-               and self._pcr == other._pcr \
-               and self._operators_sequence == other._operators_sequence \
-               and self.population_size == other.population_size \
-               and self._selection_methods == other._selection_methods \
-               and self.higher_is_better == other.higher_is_better \
-               and self.evaluator == other.evaluator \
-               and self.n_elite == other.n_elite \
-               and self.individuals == other.individuals

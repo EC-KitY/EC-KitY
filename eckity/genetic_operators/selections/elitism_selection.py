@@ -17,8 +17,3 @@ class ElitismSelection(SelectionMethod):
         # TODO shouldn't it be after_operator? why is this needed?
         # self.publish("after_selection")
         return dest_inds
-
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, ElitismSelection) \
-               and self.num_elites == other.num_elites \
-               and self.higher_is_better == other.higher_is_better

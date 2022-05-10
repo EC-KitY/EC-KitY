@@ -55,7 +55,3 @@ class Operator(BeforeAfterPublisher):
             return {}
         else:
             return {}
-    
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, Operator) and self.applied_individuals == other.applied_individuals

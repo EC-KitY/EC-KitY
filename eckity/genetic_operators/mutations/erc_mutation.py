@@ -1,10 +1,10 @@
 from random import choice, gauss
 
 from eckity.event_based_operator import Operator
-from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
+from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
-class ErcMutation(ProbabilisticConditionOperator):
+class ErcMutation(GeneticOperator):
     def __init__(self, probability=1, arity=1, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
 

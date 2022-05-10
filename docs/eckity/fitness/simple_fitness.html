@@ -122,11 +122,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitnesses</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">fitness</span>
-
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_cache_between_gens</span><span class="p">:</span>
@@ -189,11 +184,6 @@
     <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitnesses</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">fitness</span>
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>

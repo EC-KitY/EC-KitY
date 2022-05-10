@@ -42,9 +42,3 @@ class BeforeAfterPublisher:
         return_val = act_func()
         self.publish(AFTER_OPERATOR_EVENT_NAME)
         return return_val
-
-    def __eq__(self, other):
-        return isinstance(other, BeforeAfterPublisher) \
-               and self.events == other.events \
-               and self.individual == other.individual \
-               and self.customers_id == other.customers_id

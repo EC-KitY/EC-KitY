@@ -95,12 +95,6 @@
             <span class="k">if</span> <span class="n">participant</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">better_than</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">winner</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
                 <span class="n">winner</span> <span class="o">=</span> <span class="n">participant</span>
         <span class="k">return</span> <span class="n">winner</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TournamentSelection</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tournament_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tournament_size</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span>
 </pre></div>
 
         </details>
@@ -146,12 +140,6 @@
             <span class="k">if</span> <span class="n">participant</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">better_than</span><span class="p">(</span><span class="n">participant</span><span class="p">,</span> <span class="n">winner</span><span class="o">.</span><span class="n">fitness</span><span class="p">,</span> <span class="n">winner</span><span class="p">):</span>
                 <span class="n">winner</span> <span class="o">=</span> <span class="n">participant</span>
         <span class="k">return</span> <span class="n">winner</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TournamentSelection</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tournament_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tournament_size</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">higher_is_better</span>
 </pre></div>
 
         </details>

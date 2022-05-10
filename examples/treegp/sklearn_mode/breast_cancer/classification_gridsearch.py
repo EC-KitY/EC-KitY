@@ -11,6 +11,7 @@ from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
+from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
 from eckity.sklearn_compatible.classification_evaluator import ClassificationEvaluator
@@ -53,6 +54,7 @@ def main():
         max_workers=4,
         max_generation=1000,
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=1, threshold=0.03),
+        statistics=[BestAverageWorstStatistics()]
     )
     classifier = SkClassifier(algo)
 

@@ -23,6 +23,3 @@ class SelectionMethod(Operator):
             return {"applied_individuals": self.selected_individuals}
         else:
             return {}
-
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, SelectionMethod)

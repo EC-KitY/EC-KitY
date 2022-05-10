@@ -355,18 +355,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Tree</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_set</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">function_set</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">terminal_set</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terminals</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_terminals</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">arity</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">vars</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">vars</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">erc_range</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_functions</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_functions</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">init_depth</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tree</span>
-
 <span class="c1"># end class tree</span>
 </pre></div>
 
@@ -633,18 +621,6 @@
 <span class="sd">        None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Tree</span><span class="p">)</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_set</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">function_set</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">terminal_set</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terminals</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_terminals</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">arity</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">vars</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">vars</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">erc_range</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_functions</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">n_functions</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">init_depth</span> \
-               <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tree</span>
 </pre></div>
 
         </details>

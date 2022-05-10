@@ -25,8 +25,8 @@ class Algorithm(Operator):
     population: Population
         The population to be evolved. Consists of a list of individuals.
 
-    statistics: Statistics, default=BestAverageWorstStatistics instance
-        Statistics class for providing statistics for every generation.
+    statistics: list of Statistics, default=None
+        Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder()
         Responsible of applying the selection method and operator sequence on the individuals
@@ -128,8 +128,6 @@ class Algorithm(Operator):
 
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
-        self.breeder.executor = self.executor
-        self.breeder.max_workers = self.max_workers
 
         self.final_generation_ = 0
 

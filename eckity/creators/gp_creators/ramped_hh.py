@@ -118,9 +118,3 @@ class RampedHalfAndHalfCreator(GpTreeCreator):
 
     def create_tree(self, tree_ind, max_depth):
         self.init_method.create_tree(tree_ind, max_depth)
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, RampedHalfAndHalfCreator) \
-               and self.full_creator == other.full_creator \
-               and self.grow_creator == other.grow_creator

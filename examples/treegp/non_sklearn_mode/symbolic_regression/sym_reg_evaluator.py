@@ -56,9 +56,3 @@ class SymbolicRegressionEvaluator(SimpleIndividualEvaluator):
         """
         x, y, z = self.df['x'], self.df['y'], self.df['z']
         return np.mean(np.abs(individual.execute(x=x, y=y, z=z) - self.df['target']))
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, SymbolicRegressionEvaluator) \
-               and self.df == other.df \
-               and self.target_func == other.target_func
