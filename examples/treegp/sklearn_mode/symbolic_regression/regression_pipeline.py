@@ -85,7 +85,7 @@ def main():
     pipeline.fit(X_train, y_train)
 
     # compute test score on test set
-    test_score = mean_absolute_error(pipeline.predict(X_test), y_test)
+    test_score = mean_absolute_error(y_test, pipeline.predict(X_test))
     print(f'pipeline test score: {test_score}')
 
     print(f'Total runtime: {time() - start_time} seconds.')

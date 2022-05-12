@@ -95,7 +95,7 @@ def main():
     print(f'\nbest pure fitness over training set: {algo.best_of_run_.get_pure_fitness()}')
 
     # check test set results by computing the MAE between the prediction result and the test set result
-    test_score = mean_absolute_error(regressor.predict(X_test), y_test)
+    test_score = mean_absolute_error(y_test, regressor.predict(X_test))
     print(f'test score: {test_score}')
 
     print(f'Total runtime: {time() - start_time} seconds.')
