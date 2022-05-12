@@ -15,6 +15,7 @@ jobs:
     - name: Run gendocs script
       run: |
          sudo apt install python3-pip
+         pip install --upgrade pip
          pip install pdoc
          pip install -r base_requirements.txt -r extensions_requirements.txt
          chmod +x ./gendocs.bat
