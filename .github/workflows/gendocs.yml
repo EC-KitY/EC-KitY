@@ -16,7 +16,7 @@ jobs:
       run: |
          sudo apt install python3-pip
          pip install pdoc
-         pip install overrides
+         pip install -r base_requirements.txt -r extensions_requirements.txt
          chmod +x ./gendocs.bat
          ./gendocs.bat
       shell: bash
