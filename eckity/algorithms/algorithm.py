@@ -28,11 +28,11 @@ class Algorithm(Operator):
     statistics: list of Statistics, default=None
         Provide multiple statistics on the population during the evolutionary run.
 
-    breeder: SimpleBreeder, default=SimpleBreeder()
+    breeder: Breeder, default=SimpleBreeder()
         Responsible of applying the selection method and operator sequence on the individuals
         in each generation. Applies on one sub-population in simple case.
 
-    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator()
+    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
         Responsible of evaluating each individual's fitness concurrently and returns the best individual
         of each subpopulation (returns a single individual in simple case).
 
@@ -238,11 +238,6 @@ class Algorithm(Operator):
         state = self.__dict__.copy()
         del state['executor']
         del state['random_generator']
-
-        # TODO is this necessary for algorithm?
-        # del state['applied_individuals']
-        # del state['arity']
-        # del state['customers_id']
 
         return state
 
