@@ -1,18 +1,21 @@
-name: Generate Docs
+name: Generate API Docs
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
     
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  run_tests:
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Generate Docs
-        run: gendocs.bat
+    - uses: actions/checkout@v2
+    - name: Run gendocs script
+      run: |
+         sudo apt install python3-pip
+         pip install pdoc
+         chmod +x ./gendocs.bat
+         ./gendocs.bat
+      shell: bash
