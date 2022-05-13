@@ -133,7 +133,7 @@ You will need to implement such a class to work with your own problem and fitnes
 <span class="sd">        float</span>
 <span class="sd">            Computed fitness value - evaluated using MAE between the execution result of X and the vector y.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">individual</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
 </pre></div>
 
         </details>
@@ -209,7 +209,7 @@ You will need to implement such a class to work with your own problem and fitnes
 <span class="sd">        float</span>
 <span class="sd">            Computed fitness value - evaluated using MAE between the execution result of X and the vector y.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">individual</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">individual</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
 </pre></div>
 
         </details>

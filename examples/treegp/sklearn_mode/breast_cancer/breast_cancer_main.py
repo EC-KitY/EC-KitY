@@ -84,7 +84,7 @@ def main():
     print(f'\nbest pure fitness over training set: {algo.best_of_run_.get_pure_fitness()}')
 
     # check test set results by computing the accuracy score between the prediction result and the test set result
-    test_score = accuracy_score(classifier.predict(X_test), y_test)
+    test_score = accuracy_score(y_test, classifier.predict(X_test))
     print(f'test score: {test_score}')
 
     print(f'Total runtime: {time() - start_time} seconds.')
