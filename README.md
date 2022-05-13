@@ -84,7 +84,7 @@ regressor = SkRegressor(algo)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 regressor.fit(X_train, y_train)
-print('MAE on test set:', mean_absolute_error(regressor.predict(X_test), y_test))
+print('MAE on test set:', mean_absolute_error(y_test, regressor.predict(X_test)))
 ```
 
 ### Feature comparison
