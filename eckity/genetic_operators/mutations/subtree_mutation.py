@@ -1,7 +1,6 @@
 from random import randint
 
 from eckity.creators.gp_creators.grow import GrowCreator
-from eckity.event_based_operator import Operator
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 

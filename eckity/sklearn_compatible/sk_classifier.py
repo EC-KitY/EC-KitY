@@ -4,7 +4,7 @@ from sklearn.utils.validation import check_is_fitted
 from eckity.sklearn_compatible.sklearn_wrapper import SklearnWrapper
 
 
-class SkClassifier(SklearnWrapper, ClassifierMixin):
+class SKClassifier(SklearnWrapper, ClassifierMixin):
     def predict(self, X):
         """
         Compute output using best evolved individual.

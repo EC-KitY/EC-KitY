@@ -8,7 +8,7 @@ from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub, f_div, \
     f_sqrt, f_log, f_abs, f_max, f_min, f_inv, f_neg
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
-from eckity.genetic_operators.mutations.erc_mutation import ErcMutation
+from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
@@ -47,7 +47,7 @@ def main():
                       operators_sequence=[
                           SubtreeCrossover(probability=0.9, arity=2),
                           SubtreeMutation(probability=0.2, arity=1),
-                          ErcMutation(probability=0.05, arity=1)
+                          ERCMutation(probability=0.05, arity=1)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple

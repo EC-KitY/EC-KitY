@@ -2,10 +2,10 @@ from random import random
 
 from overrides import overrides
 
-from eckity.creators.gp_creators.tree_creator import GpTreeCreator
+from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 
 
-class GrowCreator(GpTreeCreator):
+class GrowCreator(GPTreeCreator):
     def __init__(self,
                  init_depth=None,
                  function_set=None,
@@ -22,13 +22,13 @@ class GrowCreator(GpTreeCreator):
         Min and max depths of initial random trees. The default is None.
 
         function_set : list
-            List of functions used as internal nodes in the gp tree. The default is None.
+            List of functions used as internal nodes in the GP-tree. The default is None.
 
         terminal_set : list
-            List of terminals used in the gp-tree leaves. The default is None.
+            List of terminals used in the GP-tree leaves. The default is None.
 
         erc_range : (float, float)
-            Range of values for ephemeral random constant (erc). The default is None.
+            Range of values for ephemeral random constant (ERC). The default is None.
 
         bloat_weight : float
             Bloat control weight to punish large trees. Bigger values make a bigger punish.

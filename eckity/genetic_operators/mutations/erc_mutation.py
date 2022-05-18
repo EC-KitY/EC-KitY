@@ -4,13 +4,13 @@ from eckity.event_based_operator import Operator
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
-class ErcMutation(GeneticOperator):
+class ERCMutation(GeneticOperator):
     def __init__(self, probability=1, arity=1, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
 
     def apply(self, individuals):
         """
-        Perform ephemeral random constant (erc) mutation: select an erc node at random
+        Perform ephemeral random constant (ERC) mutation: select an ERC node at random
         and add Gaussian noise to it.
 
         Returns

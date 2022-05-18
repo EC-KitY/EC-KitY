@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.sklearn_compatible.sk_classifier import SkClassifier
+from eckity.sklearn_compatible.sk_classifier import SKClassifier
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub, f_div, f_neg, f_sqrt, f_log, f_abs, f_inv, f_max, \
@@ -72,7 +72,7 @@ def main():
         statistics=[BestAverageWorstSizeTreeStatistics()]
     )
     # wrap the basic evolutionary algorithm with a sklearn-compatible classifier
-    classifier = SkClassifier(algo)
+    classifier = SKClassifier(algo)
 
     # split brest cancer dataset to train and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
