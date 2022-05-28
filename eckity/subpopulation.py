@@ -2,10 +2,10 @@ import numpy as np
 
 from eckity.creators.creator import Creator
 from eckity.creators.gp_creators.full import FullCreator
-from eckity.creators.gp_creators.tree_creator import GpTreeCreator
+from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
-from eckity.genetic_operators.mutations.erc_mutation import ErcMutation
+from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 
@@ -101,7 +101,7 @@ class Subpopulation:
         if operators_sequence is None:
             operators_sequence = [SubtreeCrossover(arity=2, probability=0.9),
                                   SubtreeMutation(arity=1, probability=0.7),
-                                  ErcMutation(arity=1, probability=0.1)]
+                                  ERCMutation(arity=1, probability=0.1)]
         if selection_methods is None:
             selection_methods = [(TournamentSelection(tournament_size=10, higher_is_better=higher_is_better), 1)]
 

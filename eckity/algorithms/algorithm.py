@@ -33,12 +33,13 @@ class Algorithm(Operator):
         in each generation. Applies on one sub-population in simple case.
 
     population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
-        Responsible of evaluating each individual's fitness concurrently and returns the best individual
-        of each subpopulation (returns a single individual in simple case).
+        Responsible of evaluating each individual's fitness concurrently and returns the best
+         individual of each subpopulation (returns a single individual in simple case).
 
     max_generation: int, default=1000
         Maximal number of generations to run the evolutionary process.
-        Note the evolution could end before reaching max_generation, depends on the termination checker.
+        Note the evolution could end before reaching max_generation,
+        depends on the termination checker.
 
     events: dict(str, dict(object, function)), default=None
         Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
@@ -50,7 +51,8 @@ class Algorithm(Operator):
         Responsible of checking if the algorithm should finish before reaching max_generation.
 
     max_workers: int, default=None
-        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.
+        Maximal number of worker nodes for the Executor object
+        that evaluates the fitness of the individuals.
 
     random_generator: module, default=random
         Random generator module.
@@ -92,7 +94,8 @@ class Algorithm(Operator):
 
         if population is None:
             raise ValueError('Population cannot be None')
-        elif isinstance(population, Population):
+
+        if isinstance(population, Population):
             self.population = population
         elif isinstance(population, Subpopulation):
             self.population = Population([population])
@@ -101,11 +104,13 @@ class Algorithm(Operator):
                 raise ValueError('Population cannot be empty')
             for sub_pop in population:
                 if not isinstance(sub_pop, Subpopulation):
-                    raise ValueError('Detected a non-Subpopulation instance as an element in Population')
+                    raise ValueError('Detected a non-Subpopulation '
+                                     'instance as an element in Population')
             self.population = Population(population)
         else:
             raise ValueError(
-                'Parameter population must be either a Population, a Subpopulation or a list of Subpopulations\n '
+                'Parameter population must be either a Population, '
+                'a Subpopulation or a list of Subpopulations\n '
                 'received population with unexpected type of', type(population)
             )
 
@@ -142,7 +147,9 @@ class Algorithm(Operator):
         """
         self.initialize()
 
-        if self.termination_checker.should_terminate(self.population, self.best_of_run_, self.generation_num):
+        if self.termination_checker.should_terminate(self.population,
+                                                     self.best_of_run_,
+                                                     self.generation_num):
             self.final_generation_ = 0
             self.publish('after_generation')
         else:
@@ -177,7 +184,9 @@ class Algorithm(Operator):
 
             self.set_generation_seed(self.next_seed())
             self.generation_iteration(gen)
-            if self.termination_checker.should_terminate(self.population, self.best_of_run_, self.generation_num):
+            if self.termination_checker.should_terminate(self.population,
+                                                         self.best_of_run_,
+                                                         self.generation_num):
                 self.final_generation_ = gen
                 self.publish('after_generation')
                 break
@@ -190,7 +199,7 @@ class Algorithm(Operator):
 
         Parameters
         ----------
-        gen
+        gen: int
             current generation number
 
         Returns

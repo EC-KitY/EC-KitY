@@ -20,5 +20,5 @@ setup(
     },
     license='GNU GPLv3',
     packages=find_packages(),
-    install_requires=['numpy>=1.14.6', 'overrides>=6.1.0', 'pandas>=0.25.0', 'scikit-learn>=0.24.2'],
+    install_requires=['numpy>=1.14.6', 'overrides>=6.1.0', 'pandas>=0.25.0'],
 )

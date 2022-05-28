@@ -44,10 +44,10 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
         Parameters
         ----------
         individual: Tree
-            An individual program tree in the gp population, whose fitness needs to be computed.
+            An individual program tree in the GP population, whose fitness needs to be computed.
             Makes use of GPTree.execute, which runs the program.
-            Calling `gptree.execute` must use keyword arguments that match the terminal-set variables.
-            For example, if the terminal set includes `x` and `y` then the call is `gptree.execute(x=..., y=...)`.
+            Calling `GPTree.execute` must use keyword arguments that match the terminal-set variables.
+            For example, if the terminal set includes `x` and `y` then the call is `GPTree.execute(x=..., y=...)`.
 
         Returns
         -------

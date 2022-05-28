@@ -3,7 +3,7 @@ from overrides import overrides
 from eckity.fitness.simple_fitness import SimpleFitness
 
 
-class GpFitness(SimpleFitness):
+class GPFitness(SimpleFitness):
     def __init__(self,
                  fitness: float = None,
                  higher_is_better=False,

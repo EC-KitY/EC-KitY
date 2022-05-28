@@ -24,9 +24,7 @@ For sklearn mode, EC-KitY additionally requires:
 
 `git clone https://github.com/EC-KitY/EC-KitY.git`
 
-For basic package installation: `pip install -r base_requirements.txt`
-
-For the extended package: `pip install -r base_requirements.txt -r extensions_requirements.txt`
+For basic package installation: `pip install -r requirements.txt`
 
 ### Documentation
 
@@ -72,7 +70,7 @@ from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
-from eckity.sklearn_compatible.sk_regressor import SkRegressor
+from eckity.sklearn_compatible.sk_regressor import SKRegressor
 from eckity.subpopulation import Subpopulation
 
 X, y = make_regression(n_samples=100, n_features=3)
@@ -80,7 +78,7 @@ terminal_set = create_terminal_set(X)
 
 algo = SimpleEvolution(Subpopulation(creators=FullCreator(terminal_set=terminal_set),
                                      evaluator=RegressionEvaluator()))
-regressor = SkRegressor(algo)
+regressor = SKRegressor(algo)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 regressor.fit(X_train, y_train)
