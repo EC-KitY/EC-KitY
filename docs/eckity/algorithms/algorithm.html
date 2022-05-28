@@ -127,11 +127,11 @@
 <span class="sd">    statistics: list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
-<span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder()</span>
+<span class="sd">    breeder: Breeder, default=SimpleBreeder()</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
 <span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
 
-<span class="sd">    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator()</span>
+<span class="sd">    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()</span>
 <span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
 <span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
 
@@ -337,11 +337,6 @@
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;executor&#39;</span><span class="p">]</span>
         <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;random_generator&#39;</span><span class="p">]</span>
-
-        <span class="c1"># TODO is this necessary for algorithm?</span>
-        <span class="c1"># del state[&#39;applied_individuals&#39;]</span>
-        <span class="c1"># del state[&#39;arity&#39;]</span>
-        <span class="c1"># del state[&#39;customers_id&#39;]</span>
 
         <span class="k">return</span> <span class="n">state</span>
 
@@ -381,11 +376,11 @@
 <span class="sd">    statistics: list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
-<span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder()</span>
+<span class="sd">    breeder: Breeder, default=SimpleBreeder()</span>
 <span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
 <span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
 
-<span class="sd">    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator()</span>
+<span class="sd">    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()</span>
 <span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
 <span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
 
@@ -592,11 +587,6 @@
         <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;executor&#39;</span><span class="p">]</span>
         <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;random_generator&#39;</span><span class="p">]</span>
 
-        <span class="c1"># TODO is this necessary for algorithm?</span>
-        <span class="c1"># del state[&#39;applied_individuals&#39;]</span>
-        <span class="c1"># del state[&#39;arity&#39;]</span>
-        <span class="c1"># del state[&#39;customers_id&#39;]</span>
-
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="c1"># Necessary for valid unpickling, since SimpleQueue object cannot be pickled</span>
@@ -619,10 +609,10 @@
 The population to be evolved. Consists of a list of individuals.</li>
 <li><strong>statistics</strong> (list of Statistics, default=None):
 Provide multiple statistics on the population during the evolutionary run.</li>
-<li><strong>breeder</strong> (SimpleBreeder, default=SimpleBreeder()):
+<li><strong>breeder</strong> (Breeder, default=SimpleBreeder()):
 Responsible of applying the selection method and operator sequence on the individuals
 in each generation. Applies on one sub-population in simple case.</li>
-<li><strong>population_evaluator</strong> (SimplePopulationEvaluator, default=SimplePopulationEvaluator()):
+<li><strong>population_evaluator</strong> (PopulationEvaluator, default=SimplePopulationEvaluator()):
 Responsible of evaluating each individual's fitness concurrently and returns the best individual
 of each subpopulation (returns a single individual in simple case).</li>
 <li><strong>max_generation</strong> (int, default=1000):
@@ -669,7 +659,7 @@ The generation in which the evolution ended.</li>
     events=None,
     event_names=None,
     random_generator=None,
-    random_seed=1652388642.7289639,
+    random_seed=1652426522.4896889,
     generation_seed=None,
     max_workers=None,
     generation_num=0

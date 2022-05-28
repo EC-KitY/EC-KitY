@@ -84,7 +84,7 @@ regressor = SKRegressor(algo)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 regressor.fit(X_train, y_train)
-print('MAE on test set:', mean_absolute_error(regressor.predict(X_test), y_test))
+print('MAE on test set:', mean_absolute_error(y_test, regressor.predict(X_test)))
 ```
 
 ### Feature comparison
@@ -99,16 +99,27 @@ Tomer Halperin
 
 ### Citation
 
-If you wish to cite this work please use:
+Citations are always appreciated 😊:
 ```
-@misc{eckity2022,
-  author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
-  title = {EC-KitY: Evolutionary Computation Tool Kit in Python},
-  year = {2022},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://www.eckity.org/} }
+@article{eckity2022,
+    author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
+    title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
+    journal = {},
+    volume = {},
+    pages = {},
+    year = {2022},
+    note = {in preparation}
 }
+
+@misc{eckity2022git,
+    author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
+    title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
+    year = {2022},
+    publisher = {GitHub},
+    journal = {GitHub repository},
+    howpublished = {\url{https://www.eckity.org/} }
+}
+
 ```
 
 
