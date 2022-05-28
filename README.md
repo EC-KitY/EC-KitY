@@ -24,9 +24,7 @@ For sklearn mode, EC-KitY additionally requires:
 
 `git clone https://github.com/EC-KitY/EC-KitY.git`
 
-For basic package installation: `pip install -r base_requirements.txt`
-
-For the extended package: `pip install -r base_requirements.txt -r extensions_requirements.txt`
+For basic package installation: `pip install -r requirements.txt`
 
 ### Documentation
 
