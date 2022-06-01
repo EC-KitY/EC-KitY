@@ -15,10 +15,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://www.eckity.org',
-    project_urls = {
+    project_urls={
         "Bug Tracker": "https://github.com/EC-KitY/EC-KitY/issues"
     },
     license='GNU GPLv3',
     packages=find_packages(),
-    install_requires=['numpy>=1.14.6', 'overrides>=6.1.0', 'pandas>=0.25.0'],
+    install_requires=['numpy>=1.14.6', 'overrides', 'pandas>=0.25.0'],
 )
