@@ -7,6 +7,7 @@ from overrides import overrides
 
 from eckity.event_based_operator import Operator
 from eckity.population import Population
+from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
 SEED_MIN_VALUE = 0
@@ -92,6 +93,7 @@ class Algorithm(Operator):
         ext_event_names.extend(["init", "evolution_finished", "after_generation"])
         super().__init__(events=events, event_names=ext_event_names)
 
+        # Assert valid population input
         if population is None:
             raise ValueError('Population cannot be None')
 
@@ -114,7 +116,22 @@ class Algorithm(Operator):
                 'received population with unexpected type of', type(population)
             )
 
-        self.statistics = statistics
+        # Assert valid statistics input
+        if isinstance(statistics, Statistics):
+            self.statistics = [statistics]
+        elif isinstance(statistics, list):
+            for stat in statistics:
+                if not isinstance(stat, Statistics):
+                    raise ValueError('Expected a Statistics instance as an element in Statistics list, '
+                                     'but received', type(stat))
+            self.statistics = statistics
+        else:
+            raise ValueError(
+                'Parameter statistics must be either a subclass of Statistics'
+                ' or a list of subclasses of Statistics.\n'
+                'received statistics with unexpected type of', type(statistics)
+            )
+
         self.breeder = breeder
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
