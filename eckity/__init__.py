@@ -2,4 +2,4 @@
 EC-KitY: Evolutionary Computation Tool Kit in Python
 """
 
-__version__ = '0.1d'
+__version__ = '0.1.0a'
