@@ -26,7 +26,7 @@ class Algorithm(Operator):
     population: Population
         The population to be evolved. Consists of a list of individuals.
 
-    statistics: list of Statistics, default=None
+    statistics: Statistics or list of Statistics, default=None
         Provide multiple statistics on the population during the evolutionary run.
 
     breeder: Breeder, default=SimpleBreeder()

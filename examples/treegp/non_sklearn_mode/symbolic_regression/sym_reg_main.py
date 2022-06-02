@@ -59,7 +59,7 @@ def main():
         max_generation=500,
         # random_seed=0,
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=0, threshold=0.001),
-        statistics=[BestAverageWorstStatistics()]
+        statistics=BestAverageWorstStatistics()
     )
 
     # evolve the generated initial population

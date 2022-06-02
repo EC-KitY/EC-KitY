@@ -54,7 +54,7 @@ def main():
         max_workers=4,
         max_generation=1000,
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=1, threshold=0.03),
-        statistics=[BestAverageWorstStatistics()]
+        statistics=BestAverageWorstStatistics()
     )
     classifier = SKClassifier(algo)
 

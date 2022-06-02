@@ -68,7 +68,7 @@ def main():
         max_generation=1000,
         # optimal fitness is 0, evolution ("training") process will be finished when best fitness <= threshold
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=0, threshold=0.01),
-        statistics=[BestAverageWorstStatistics()]
+        statistics=BestAverageWorstStatistics()
     )
     # wrap the simple evolutionary algorithm with sklearn compatible regressor
     regressor = SKRegressor(algo)

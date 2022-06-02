@@ -8,7 +8,6 @@ from time import time
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
 
 
@@ -26,7 +25,7 @@ class SimpleEvolution(Algorithm):
         The population to be evolved. Contains only one sub-population in simple case.
         Consists of a list of individuals.
 
-    statistics: Statistics, default=None
+    statistics: Statistics or list of Statistics, default=None
         Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder instance
@@ -116,7 +115,6 @@ class SimpleEvolution(Algorithm):
         self.best_of_gen = best_of_gen
         self.worst_of_gen = worst_of_gen
         self.max_generation = max_generation
-        self.statistics = statistics
 
         self.final_generation_ = None
 
