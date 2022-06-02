@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='EC-KitY',
+    name='eckity',
     version=VERSION,
     author='Moshe Sipper, Achiya Elyasaf, Itai Tzruia, Tomer Halperin',
     author_email='sipper@gmail.com, achiya@bgu.ac.il, itaitz@post.bgu.ac.il, tomerhal@post.bgu.ac.il',
