@@ -22,9 +22,7 @@ For sklearn mode, EC-KitY additionally requires:
 
 ### User installation
 
-`git clone https://github.com/EC-KitY/EC-KitY.git`
-
-For basic package installation: `pip install -r requirements.txt`
+`pip install eckity`
 
 ### Documentation
 
