@@ -26,8 +26,7 @@ For sklearn mode, EC-KitY additionally requires:
 
 ### Documentation
 
-After cloning the project, navigate to the `doc\api` folder and open `eckity.html` file.
-This will open an html page from which you can access the documentation of all the modules.
+API is available [here](https://api.eckity.org)
 
 (Work in progress - some modules and functions are not documented yet.)
 
