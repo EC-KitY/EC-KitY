@@ -1,11 +1,11 @@
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.creators.gp_creators.grow import GrowCreator
-from eckity.creators.gp_creators.tree_creator import GpTreeCreator
+from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 from eckity.genetic_encodings.gp.tree.tree_individual import Tree
-from eckity.fitness.gp_fitness import GpFitness
+from eckity.fitness.gp_fitness import GPFitness
 
 
-class RampedHalfAndHalfCreator(GpTreeCreator):
+class RampedHalfAndHalfCreator(GPTreeCreator):
     def __init__(self,
                  grow_creator=None,
                  full_creator=None,
@@ -30,13 +30,13 @@ class RampedHalfAndHalfCreator(GpTreeCreator):
         Min and max depths of initial random trees. The default is None.
 
         function_set : list
-            List of functions used as internal nodes in the gp tree. The default is None.
+            List of functions used as internal nodes in the GP tree. The default is None.
 
         terminal_set : list
-            List of terminals used in the gp-tree leaves. The default is None.
+            List of terminals used in the GP-tree leaves. The default is None.
 
         erc_range : (float, float)
-            Range of values for ephemeral random constant (erc). The default is None.
+            Range of values for ephemeral random constant (ERC). The default is None.
 
         bloat_weight : float
             Bloat control weight to punish large trees. Bigger values make a bigger punish.
@@ -112,15 +112,9 @@ class RampedHalfAndHalfCreator(GpTreeCreator):
     def _create_individuals(self, individuals, max_depth, higher_is_better):
         t = Tree(init_depth=self.init_depth, function_set=self.function_set,
                  terminal_set=self.terminal_set, erc_range=self.erc_range,
-                 fitness=GpFitness(bloat_weight=self.bloat_weight, higher_is_better=higher_is_better))
+                 fitness=GPFitness(bloat_weight=self.bloat_weight, higher_is_better=higher_is_better))
         self.create_tree(t, max_depth=max_depth)
         individuals.append(t)
 
     def create_tree(self, tree_ind, max_depth):
         self.init_method.create_tree(tree_ind, max_depth)
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, RampedHalfAndHalfCreator) \
-               and self.full_creator == other.full_creator \
-               and self.grow_creator == other.grow_creator

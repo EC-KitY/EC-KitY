@@ -16,10 +16,10 @@ from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
-from eckity.genetic_operators.mutations.erc_mutation import ErcMutation
+from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.sklearn_compatible.sk_regressor import SkRegressor
+from eckity.sklearn_compatible.sk_regressor import SKRegressor
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
@@ -68,7 +68,7 @@ def main():
                       operators_sequence=[
                           SubtreeCrossover(probability=0.9, arity=2),
                           SubtreeMutation(probability=0.2, arity=1),
-                          ErcMutation(probability=0.05, arity=1)
+                          ERCMutation(probability=0.05, arity=1)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple
@@ -83,7 +83,7 @@ def main():
         statistics=BestAverageWorstStatistics()
     )
     # wrap the simple evolutionary algorithm with sklearn-compatible regressor
-    regressor = SkRegressor(algo)
+    regressor = SKRegressor(algo)
 
     # split regression dataset to train and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -95,7 +95,7 @@ def main():
     print(f'\nbest pure fitness over training set: {algo.best_of_run_.get_pure_fitness()}')
 
     # check test set results by computing the MAE between the prediction result and the test set result
-    test_score = mean_absolute_error(regressor.predict(X_test), y_test)
+    test_score = mean_absolute_error(y_test, regressor.predict(X_test))
     print(f'test score: {test_score}')
 
     print(f'Total runtime: {time() - start_time} seconds.')

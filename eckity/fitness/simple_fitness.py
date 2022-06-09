@@ -44,11 +44,6 @@ class SimpleFitness(Fitness):
         self.check_comparable_fitnesses(other_fitness)
         return self.get_augmented_fitness(ind) == other_fitness.get_augmented_fitness(other_ind)
 
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, SimpleFitness) \
-               and self.fitness == other.fitness
-
     def __getstate__(self):
         state = self.__dict__.copy()
         if not self.should_cache_between_gens:

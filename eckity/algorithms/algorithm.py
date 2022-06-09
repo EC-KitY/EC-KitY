@@ -7,7 +7,7 @@ from overrides import overrides
 
 from eckity.event_based_operator import Operator
 from eckity.population import Population
-from eckity.serializer import Serializer
+from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
 SEED_MIN_VALUE = 0
@@ -26,20 +26,21 @@ class Algorithm(Operator):
     population: Population
         The population to be evolved. Consists of a list of individuals.
 
-    statistics: Statistics, default=BestAverageWorstStatistics instance
-        Statistics class for providing statistics for every generation.
+    statistics: Statistics or list of Statistics, default=None
+        Provide multiple statistics on the population during the evolutionary run.
 
-    breeder: SimpleBreeder, default=SimpleBreeder()
+    breeder: Breeder, default=SimpleBreeder()
         Responsible of applying the selection method and operator sequence on the individuals
         in each generation. Applies on one sub-population in simple case.
 
-    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator()
-        Responsible of evaluating each individual's fitness concurrently and returns the best individual
-        of each subpopulation (returns a single individual in simple case).
+    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
+        Responsible of evaluating each individual's fitness concurrently and returns the best
+         individual of each subpopulation (returns a single individual in simple case).
 
     max_generation: int, default=1000
         Maximal number of generations to run the evolutionary process.
-        Note the evolution could end before reaching max_generation, depends on the termination checker.
+        Note the evolution could end before reaching max_generation,
+        depends on the termination checker.
 
     events: dict(str, dict(object, function)), default=None
         Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
@@ -51,7 +52,8 @@ class Algorithm(Operator):
         Responsible of checking if the algorithm should finish before reaching max_generation.
 
     max_workers: int, default=None
-        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.
+        Maximal number of worker nodes for the Executor object
+        that evaluates the fitness of the individuals.
 
     random_generator: module, default=random
         Random generator module.
@@ -62,13 +64,8 @@ class Algorithm(Operator):
     generation_seed: int, default=None
         Current generation seed. Useful for resuming a previously paused experiment.
 
-    serializer: Serializer, default=Serializer()
-        Responsible of serializing and deserializing the experiment.
-
     generation_num: int, default=0
         Current generation number
-
-    Array with associated photographic information.
 
     Attributes
     ----------
@@ -89,7 +86,6 @@ class Algorithm(Operator):
                  random_seed=time(),
                  generation_seed=None,
                  max_workers=None,
-                 serializer=Serializer(),
                  generation_num=0):
 
         ext_event_names = event_names.copy() if event_names is not None else []
@@ -97,9 +93,11 @@ class Algorithm(Operator):
         ext_event_names.extend(["init", "evolution_finished", "after_generation"])
         super().__init__(events=events, event_names=ext_event_names)
 
+        # Assert valid population input
         if population is None:
             raise ValueError('Population cannot be None')
-        elif isinstance(population, Population):
+
+        if isinstance(population, Population):
             self.population = population
         elif isinstance(population, Subpopulation):
             self.population = Population([population])
@@ -108,15 +106,32 @@ class Algorithm(Operator):
                 raise ValueError('Population cannot be empty')
             for sub_pop in population:
                 if not isinstance(sub_pop, Subpopulation):
-                    raise ValueError('Detected a non-Subpopulation instance as an element in Population')
+                    raise ValueError('Detected a non-Subpopulation '
+                                     'instance as an element in Population')
             self.population = Population(population)
         else:
             raise ValueError(
-                'Parameter population must be either a Population, a Subpopulation or a list of Subpopulations\n '
+                'Parameter population must be either a Population, '
+                'a Subpopulation or a list of Subpopulations\n '
                 'received population with unexpected type of', type(population)
             )
 
-        self.statistics = statistics
+        # Assert valid statistics input
+        if isinstance(statistics, Statistics):
+            self.statistics = [statistics]
+        elif isinstance(statistics, list):
+            for stat in statistics:
+                if not isinstance(stat, Statistics):
+                    raise ValueError('Expected a Statistics instance as an element in Statistics list, '
+                                     'but received', type(stat))
+            self.statistics = statistics
+        else:
+            raise ValueError(
+                'Parameter statistics must be either a subclass of Statistics'
+                ' or a list of subclasses of Statistics.\n'
+                'received statistics with unexpected type of', type(statistics)
+            )
+
         self.breeder = breeder
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
@@ -135,12 +150,8 @@ class Algorithm(Operator):
 
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
-        self.breeder.executor = self.executor
-        self.breeder.max_workers = self.max_workers
 
         self.final_generation_ = 0
-
-        self.serializer = serializer
 
     @overrides
     def apply_operator(self, payload):
@@ -153,7 +164,9 @@ class Algorithm(Operator):
         """
         self.initialize()
 
-        if self.termination_checker.should_terminate(self.population, self.best_of_run_, self.generation_num):
+        if self.termination_checker.should_terminate(self.population,
+                                                     self.best_of_run_,
+                                                     self.generation_num):
             self.final_generation_ = 0
             self.publish('after_generation')
         else:
@@ -188,7 +201,9 @@ class Algorithm(Operator):
 
             self.set_generation_seed(self.next_seed())
             self.generation_iteration(gen)
-            if self.termination_checker.should_terminate(self.population, self.best_of_run_, self.generation_num):
+            if self.termination_checker.should_terminate(self.population,
+                                                         self.best_of_run_,
+                                                         self.generation_num):
                 self.final_generation_ = gen
                 self.publish('after_generation')
                 break
@@ -201,7 +216,7 @@ class Algorithm(Operator):
 
         Parameters
         ----------
-        gen
+        gen: int
             current generation number
 
         Returns
@@ -249,11 +264,6 @@ class Algorithm(Operator):
         state = self.__dict__.copy()
         del state['executor']
         del state['random_generator']
-
-        # TODO is this necessary for algorithm?
-        # del state['applied_individuals']
-        # del state['arity']
-        # del state['customers_id']
 
         return state
 

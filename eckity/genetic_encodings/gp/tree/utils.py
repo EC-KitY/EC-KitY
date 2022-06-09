@@ -31,7 +31,7 @@ def create_terminal_set(X):
 
 def _generate_args(X):
     """
-    Generate keyword arguments from a 2d array for passing to gptree.execute.
+    Generate keyword arguments from a 2d array for passing to GPTree.execute.
     
     Example: \n 
         X = array([[  4,   7,  -7, -10],  \n

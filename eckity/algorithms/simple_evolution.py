@@ -8,8 +8,6 @@ from time import time
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.serializer import Serializer
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
 
 
@@ -27,9 +25,8 @@ class SimpleEvolution(Algorithm):
         The population to be evolved. Contains only one sub-population in simple case.
         Consists of a list of individuals.
 
-    statistics: Statistics, default=BestAverageWorstStatistics instance
-        Statistics class for providing statistics during the evolution phase.
-        By default, provides statistics about best, average and worst fitness in every generation.
+    statistics: Statistics or list of Statistics, default=None
+        Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder instance
         Responsible of applying the selection method and operator sequence on the individuals
@@ -64,9 +61,6 @@ class SimpleEvolution(Algorithm):
     generation_seed: int, default=None
         Current generation seed. Useful for resuming a previously paused experiment.
 
-    serializer: Serializer, default=Serializer()
-        Responsible of serializing and deserializing the experiment.
-
     best_of_run_: Individual, default=None
         The individual that has the best fitness in the entire evolutionary run.
 
@@ -85,7 +79,7 @@ class SimpleEvolution(Algorithm):
 
     def __init__(self,
                  population,
-                 statistics=BestAverageWorstStatistics(),
+                 statistics=None,
                  breeder=SimpleBreeder(),
                  population_evaluator=SimplePopulationEvaluator(),
                  max_generation=500,
@@ -96,7 +90,6 @@ class SimpleEvolution(Algorithm):
                  random_generator=None,
                  random_seed=time(),
                  generation_seed=None,
-                 serializer=Serializer(),
                  best_of_run_=None,
                  best_of_run_evaluator=None,
                  best_of_gen=None,
@@ -108,10 +101,13 @@ class SimpleEvolution(Algorithm):
         else:
             _event_names = event_names
 
+        if statistics is None:
+            statistics = []
+
         super().__init__(population, statistics=statistics, breeder=breeder, population_evaluator=population_evaluator,
                          events=events, event_names=_event_names, max_workers=max_workers,
                          random_generator=random_generator, random_seed=random_seed, generation_seed=generation_seed,
-                         termination_checker=termination_checker, serializer=serializer, generation_num=generation_num)
+                         termination_checker=termination_checker, generation_num=generation_num)
 
         self.termination_checker = termination_checker
         self.best_of_run_ = best_of_run_
@@ -119,13 +115,13 @@ class SimpleEvolution(Algorithm):
         self.best_of_gen = best_of_gen
         self.worst_of_gen = worst_of_gen
         self.max_generation = max_generation
-        self.statistics = statistics
 
         self.final_generation_ = None
 
     def initialize(self):
         super().initialize()
-        self.register('after_generation', self.statistics.write_statistics)
+        for stat in self.statistics:
+            self.register('after_generation', stat.write_statistics)
 
     @overrides
     def generation_iteration(self, gen):

@@ -40,7 +40,3 @@ class Breeder(Operator):
     def apply_operator(self, payload):
         population: Population = payload
         self.apply_breed(population)
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, Breeder)

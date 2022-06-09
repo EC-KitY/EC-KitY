@@ -31,6 +31,3 @@ class TerminationChecker:
             True if the algorithm should terminate early, False otherwise.
         """
         pass
-
-    def __eq__(self, other):
-        return isinstance(other, TerminationChecker)

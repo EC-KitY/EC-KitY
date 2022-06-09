@@ -1,12 +1,12 @@
 from eckity.creators.creator import Creator
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_sub, f_mul, f_div
-from eckity.fitness.gp_fitness import GpFitness
+from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 
 from abc import abstractmethod
 
 
-class GpTreeCreator(Creator):
+class GPTreeCreator(Creator):
     def __init__(self,
                  init_depth=None,
                  function_set=None,
@@ -37,7 +37,7 @@ class GpTreeCreator(Creator):
         individuals = [Tree(function_set=self.function_set,
                             terminal_set=self.terminal_set,
                             erc_range=self.erc_range,
-                            fitness=GpFitness(bloat_weight=self.bloat_weight, higher_is_better=higher_is_better),
+                            fitness=GPFitness(bloat_weight=self.bloat_weight, higher_is_better=higher_is_better),
                             init_depth=self.init_depth)
                        for _ in range(n_individuals)]
         for ind in individuals:
@@ -52,11 +52,3 @@ class GpTreeCreator(Creator):
     @abstractmethod
     def create_tree(self, tree_ind, max_depth):
         pass
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, GpTreeCreator) \
-               and self.init_depth == other.init_depth \
-               and self.function_set == other.function_set \
-               and self.terminal_set == other.terminal_set \
-               and self.erc_range == other.erc_range

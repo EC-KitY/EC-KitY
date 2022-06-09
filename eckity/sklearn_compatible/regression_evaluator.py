@@ -57,7 +57,7 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
         Parameters
         ----------
         individual : Tree
-            An individual program tree in the gp population, whose fitness needs to be computed.
+            An individual program tree in the GP population, whose fitness needs to be computed.
             Makes use of GPTree.execute, which runs the program.
             In Sklearn settings, calling `individual.execute` must use a numpy array.
             For example, if self.X is X_train/X_test, the call is `individual.execute(self.X)`.
@@ -67,4 +67,4 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
         float
             Computed fitness value - evaluated using MAE between the execution result of X and the vector y.
         """
-        return mean_absolute_error(individual.execute(self.X), self.y)
+        return mean_absolute_error(self.y, individual.execute(self.X))

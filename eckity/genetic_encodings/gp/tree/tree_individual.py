@@ -27,13 +27,13 @@ class Tree(Individual):
         Min and max depths of initial random trees. The default is None.
         
     function_set : list
-        List of functions used as internal nodes in the gp tree. The default is None.
+        List of functions used as internal nodes in the GP tree. The default is None.
         
     terminal_set : list
-        List of terminals used in the gp-tree leaves. The default is None.
+        List of terminals used in the GP-tree leaves. The default is None.
         
     erc_range : (float, float)
-        Range of values for ephemeral random constant (erc). The default is None.        
+        Range of values for ephemeral random constant (ERC). The default is None.
     """
 
     def __init__(self,
@@ -108,7 +108,7 @@ class Tree(Individual):
         return self.function_set[randint(0, self.n_functions - 1)]
 
     def random_terminal(self):
-        """select a random terminal or create an erc terminal"""
+        """Select a random terminal or create an ERC terminal"""
         if self.erc_range is None:
             node = self.terminal_set[randint(0, self.n_terminals - 1)]
         else:
@@ -262,17 +262,5 @@ class Tree(Individual):
         None.
         """
         self._show("", [0])
-
-    def __eq__(self, other):
-        return super().__eq__(other) and isinstance(other, Tree) \
-               and self.function_set == other.function_set \
-               and self.terminal_set == other.terminal_set \
-               and self.n_terminals == other.n_terminals \
-               and self.arity == other.arity \
-               and self.vars == other.vars \
-               and self.erc_range == other.erc_range \
-               and self.n_functions == other.n_functions \
-               and self.init_depth == other.init_depth \
-               and self.tree == other.tree
 
 # end class tree

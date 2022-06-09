@@ -32,6 +32,3 @@ class Population:
 
     def get_average_fitness(self):
         return [sub_pop.get_average_fitness() for sub_pop in self.sub_populations]
-
-    def __eq__(self, other):
-        return isinstance(other, Population) and self.sub_populations == other.sub_populations

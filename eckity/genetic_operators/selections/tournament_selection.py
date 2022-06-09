@@ -23,7 +23,7 @@ class TournamentSelection(SelectionMethod):
         dest_inds.extend(winners)
 
         self.selected_individuals = dest_inds
-        # self.publish("after_selection")   # TODO this already publishes 'after_operator' event, why do we need this event too?
+        # self.publish("after_selection")   # TODO this already publishes 'after_operator' event
 
         return dest_inds
 
@@ -33,9 +33,3 @@ class TournamentSelection(SelectionMethod):
             if participant.fitness.better_than(participant, winner.fitness, winner):
                 winner = participant
         return winner.clone()
-
-    def __eq__(self, other):
-        return super().__eq__(other) \
-               and isinstance(other, TournamentSelection) \
-               and self.tournament_size == other.tournament_size \
-               and self.higher_is_better == other.higher_is_better

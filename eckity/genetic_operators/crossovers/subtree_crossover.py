@@ -1,7 +1,7 @@
-from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
+from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
-class SubtreeCrossover(ProbabilisticConditionOperator):
+class SubtreeCrossover(GeneticOperator):
     def __init__(self, probability=1, arity=2, events=None):
         self.individuals = None
         self.applied_individuals = None

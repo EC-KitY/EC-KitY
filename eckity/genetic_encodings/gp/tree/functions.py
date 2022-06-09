@@ -1,5 +1,5 @@
 """
-This module implements functions used in the function (internal) nodes of a gp tree.
+This module implements functions used in the function (internal) nodes of a GP tree.
 Note: all functions work on numpy arrays.
 """
 

@@ -2,10 +2,10 @@ import numpy as np
 
 from eckity.creators.creator import Creator
 from eckity.creators.gp_creators.full import FullCreator
-from eckity.creators.gp_creators.tree_creator import GpTreeCreator
+from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
-from eckity.genetic_operators.mutations.erc_mutation import ErcMutation
+from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 
@@ -101,7 +101,7 @@ class Subpopulation:
         if operators_sequence is None:
             operators_sequence = [SubtreeCrossover(arity=2, probability=0.9),
                                   SubtreeMutation(arity=1, probability=0.7),
-                                  ErcMutation(arity=1, probability=0.1)]
+                                  ERCMutation(arity=1, probability=0.1)]
         if selection_methods is None:
             selection_methods = [(TournamentSelection(tournament_size=10, higher_is_better=higher_is_better), 1)]
 
@@ -143,19 +143,3 @@ class Subpopulation:
 
     def contains_individual(self, individual):
         return individual in self.individuals
-
-    def __eq__(self, other):
-        # comparing self fields with other fields
-        # when comparing callbacks, we first make sure the lengths of the lists are equal,
-        # then we compare the equality of the callback functions by comparing their byte code
-        # (https://stackoverflow.com/questions/20059011/check-if-two-python-functions-are-equal)
-        return isinstance(other, Subpopulation) \
-               and self.creators == other.creators \
-               and self._pcr == other._pcr \
-               and self._operators_sequence == other._operators_sequence \
-               and self.population_size == other.population_size \
-               and self._selection_methods == other._selection_methods \
-               and self.higher_is_better == other.higher_is_better \
-               and self.evaluator == other.evaluator \
-               and self.n_elite == other.n_elite \
-               and self.individuals == other.individuals

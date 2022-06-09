@@ -25,11 +25,9 @@ class SimplePopulationEvaluator(PopulationEvaluator):
         super()._evaluate(population)
         for sub_population in population.sub_populations:
             sp_eval: IndividualEvaluator = sub_population.evaluator
-            eval_futures = [self.executor.submit(sp_eval.evaluate, [indiv]) for indiv in sub_population.individuals]
+            eval_futures = [self.executor.submit(sp_eval.evaluate, [ind]) for ind in sub_population.individuals]
 
-            # wait for all fitnesses to be evaluated before returning from this method
-            # TODO maybe each fitness class can save the eval_future
-            #      so we won't have to wait for all futures to be resolved?
+            # wait for all fitness values to be evaluated before returning from this method
             for future in eval_futures:
                 future.result()
 
