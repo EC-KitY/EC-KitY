@@ -4,4 +4,4 @@ class GABitStringVectorCreator(GAVectorCreator):
                  length=1,
                  gene_creator=None,
                  events=None):
-        super().__init__(length,gene_creator,"bit_string_vector",events)
+        super().__init__(length,gene_creator,BitStringVector,events)

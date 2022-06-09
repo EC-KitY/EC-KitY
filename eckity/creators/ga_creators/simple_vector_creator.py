@@ -2,18 +2,12 @@ from eckity.creators.creator import Creator
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.ga.vector_individual import Vector
 
-VECTOR_TYPES = {
-            "bit_string_vector": BitStringVector,
-            "int_vector": IntVector,
-            "float_vector": FloatVector
-        }
-
 
 class GAVectorCreator(Creator):
     def __init__(self,
                  length=1,
                  gene_creator=None,
-                 vector_type="bit_string_vector",
+                 vector_type=BitStringVector,
                  events=None):
         if events is None:
             events = ["after_creation"]
@@ -24,7 +18,7 @@ class GAVectorCreator(Creator):
         self.length = length
         self.gene_creator = gene_creator
 
-        self.type = VECTOR_TYPES[vector_type]
+        self.type = vector_type
 
     def create_individuals(self, n_individuals, higher_is_better):
         individuals = [self.type(length=self.length,

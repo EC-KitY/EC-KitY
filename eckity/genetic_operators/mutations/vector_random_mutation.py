@@ -3,10 +3,12 @@ from random import choice, gauss
 from eckity.event_based_operator import Operator
 from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
 
+from eckity.genetic_operators.mutations.vector_one_point_mutation import VectorOnePointMutation
+
 
 class VectorGaussOnePointFloatMutation(VectorOnePointMutation):
-    def __init__(self, probability=1, arity=1, mu=0, sigma=1 ,events=None):
-        mutated_value_getter = lambda individual, index:  gauss(mu=mu, sigma=sigma)
+    def __init__(self, probability=1, arity=1, mu=0, sigma=1, events=None):
+        mutated_value_getter = lambda individual, index: gauss(mu=mu, sigma=sigma)
         super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events)
 
     """def apply(self, individuals):
@@ -32,4 +34,17 @@ class VectorGaussOnePointFloatMutation(VectorOnePointMutation):
 class IntVectorOnePointMutation(VectorOnePointMutation):
     def __init__(self, probability=1, arity=1, events=None):
         mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
-        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events)
+        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events, n=1)
+
+
+class IntVectorNPointMutation(VectorNPointMutation):
+    def __init__(self, probability=1, arity=1, events=None, n=1):
+        mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
+        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events,
+                         n=n)
+
+
+class BitStringVectorFlipMutation(VectorOnePointMutation):
+    def __init__(self, probability=1, arity=1, events=None):
+        mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
+        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events, n=1)
