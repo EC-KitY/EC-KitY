@@ -4,15 +4,15 @@ from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
 class VectorNPointMutation(GeneticOperator):
-    def __init__(self, n=1, probability=1, arity=1, mut_val_gen=None, events=None):
+    def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
-        if mut_val_gen is None:
-            mut_val_gen = self.default_mut_val_gen
-        self.default_mut_val_gen = mut_val_gen
+        if mut_val_getter is None:
+            mut_val_getter = self.default_mut_val_getter
+        self.default_mut_val_gen = mut_val_getter
         self.n = n
 
     @staticmethod
-    def default_mut_val_gen(vec, idx):
+    def default_mut_val_getter(vec, idx):
         return vec.get_random_number_in_bounds(vec, idx)
 
     def apply(self, individuals):
