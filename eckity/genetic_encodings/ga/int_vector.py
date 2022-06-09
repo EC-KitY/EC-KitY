@@ -2,28 +2,25 @@
 This module implements the vector class.
 """
 
-import numpy as np
 import sys
-from numbers import Number
-from random import randint, uniform, random
+from random import randint
 
-from eckity.base.utils import arity
-from eckity.genetic_encodings.gp.tree.utils import _generate_args
+from eckity.genetic_encodings.ga.vector_individual import Vector
 
-from eckity.individual import Individual
-from eckity.genetic_encodings.gp.tree.functions import f_add, f_sub, f_mul, f_div
+MIN_BOUND = 2 ** 31 - 1
+MAX_BOUND = -2 ** 31
 
 
 class IntVector(Vector):
     def __init__(self,
                  fitness,
                  length,
-                 bounds=(sys.minint, sys.maxint)):
+                 bounds=(MIN_BOUND, MAX_BOUND)):
         super().__init__(fitness, length, bounds)
 
     def get_random_number_in_bounds(self, index):
-        if type(bounds) == tuple:
-            return randint(bounds[0], vector.get_bounds[1])
-        return randint(bounds[index][0], vector.get_bounds[index][1])
+        if type(self.bounds) == tuple:
+            return randint(self.bounds[0], self.bounds[1])
+        return randint(self.bounds[index][0], self.bounds[index][1])
 
 # end class int vector

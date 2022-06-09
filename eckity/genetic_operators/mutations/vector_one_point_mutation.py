@@ -1,28 +1,30 @@
-class VectorOnePointMutation(ProbabilisticConditionOperator):
-    def __init__(self, probability=1, arity=1, mutated_value_getter=None, events=None):
+from random import choices
+
+from eckity.genetic_operators.genetic_operator import GeneticOperator
+
+
+class VectorNPointMutation(GeneticOperator):
+    def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
-        if mutated_value_getter is None:
-            mutated_value_getter = lambda x,y: y
-        self.mutated_value_getter = mutated_value_getter
+        if mut_val_getter is None:
+            mut_val_getter = self.default_mut_val_getter
+        self.default_mut_val_gen = mut_val_getter
+        self.n = n
+
+    @staticmethod
+    def default_mut_val_getter(vec, idx):
+        return vec.get_random_number_in_bounds(vec, idx)
 
     def apply(self, individuals):
-        """
-        Perform ephemeral random constant (erc) mutation: select an erc node at random
-        and add Gaussian noise to it.
+        for individual in individuals:
+            # randomly select n points of the vector (without repetitions)
+            m_points = choices(individual.get_vector(), k=self.n)
+            # obtain the mutated values
+            mut_vals = [self.default_mut_val_gen(individual, m_point) for m_point in m_points]
 
-        Returns
-        -------
-        None.
-        """
+            # update the mutated value in-place
+            for m_point, mut_val in zip(m_points, mut_vals):
+                individual.set_cell_value(m_point, mut_val)
 
-        for j in range(len(individuals)):
-            # selecting the point
-            m_point = choice(individuals[j].get_vector())
-
-            # getting the mutated value
-            new_val = self.mutated_value_getter(j,m_point)
-
-            # setting the mutated value
-            individuals[j].set_cell_value(m_point, new_val)
         self.applied_individuals = individuals
         return individuals
