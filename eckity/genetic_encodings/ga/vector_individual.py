@@ -52,17 +52,6 @@ class Vector(Individual):
         return self.vector[rnd_i:end_i + 1]
 
     def replace_vector_part_random(self, vector):
-        """
-        Replace the subtree starting at `index` with `vector`
-
-        Parameters
-        ----------
-        subtree - new subtree to replace the some existing subtree in this individual's tree
-
-        Returns
-        -------
-        None
-        """
         index = randint(0, self.size() - len(vector))  # select a random node (index)
         end_i = index + len(vector)
         replaced_part = self.vector[index:end_i]
@@ -71,17 +60,6 @@ class Vector(Individual):
         return replaced_part
 
     def replace_vector_part(self, vector, start_index):
-        """
-        Replace the subtree starting at `index` with `vector`
-
-        Parameters
-        ----------
-        subtree - new subtree to replace the some existing subtree in this individual's tree
-
-        Returns
-        -------
-        None
-        """
         end_i = start_index + len(vector)
         replaced_part = self.vector[start_index:end_i]
         # todo add a test to make sure this logic works
@@ -91,7 +69,7 @@ class Vector(Individual):
     def get_vector_part(self, index, end_i):
         return self.vector[index:end_i]
 
-    def _cell_value(self, index):
+    def cell_value(self, index):
         return self.vector[index]
 
     def set_cell_value(self, index, value):
