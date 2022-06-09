@@ -47,11 +47,8 @@ class Vector(Individual):
 
     def random_vector_part(self):
         # todo add tests to make sure this logic works
-        # select a random node index from this individual's vector
         rnd_i = randint(0, self.size() - 1)
-        # select the end
         end_i = randint(rnd_i, self.size() - 1)
-        # now we have a random subtree from this individual
         return self.vector[rnd_i:end_i + 1]
 
     def replace_vector_part_random(self, vector):
