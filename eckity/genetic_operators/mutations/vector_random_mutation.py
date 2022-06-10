@@ -3,7 +3,7 @@ from random import choice, gauss
 from eckity.event_based_operator import Operator
 from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
 
-from eckity.genetic_operators.mutations.vector_one_point_mutation import VectorOnePointMutation
+from eckity.genetic_operators.mutations.vector_one_point_mutation import VectorOnePointMutation, VectorNPointMutation
 
 
 class VectorGaussOnePointFloatMutation(VectorOnePointMutation):

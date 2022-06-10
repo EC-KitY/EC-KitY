@@ -1,9 +1,10 @@
 from random import choices
 
+from eckity.genetic_operators.failable_operator import FailableOperator
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
-class VectorNPointMutation(GeneticOperator):
+class VectorNPointMutation(FailableOperator):
     def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
         if mut_val_getter is None:
