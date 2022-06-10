@@ -16,7 +16,7 @@ class VectorNPointMutation(FailableOperator):
     def default_mut_val_getter(vec, idx):
         return vec.get_random_number_in_bounds(vec, idx)
 
-    def apply(self, individuals):
+    def attempt_operator(self, individuals, attempt_num):
         for individual in individuals:
             # randomly select n points of the vector (without repetitions)
             m_points = choices(individual.get_vector(), k=self.n)
@@ -29,3 +29,5 @@ class VectorNPointMutation(FailableOperator):
 
         self.applied_individuals = individuals
         return individuals
+
+    def on_fail(self, individuals):

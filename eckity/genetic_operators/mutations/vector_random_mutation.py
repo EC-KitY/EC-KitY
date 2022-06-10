@@ -1,15 +1,14 @@
-from random import choice, gauss
+from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
 
-from eckity.event_based_operator import Operator
-from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
-
-from eckity.genetic_operators.mutations.vector_one_point_mutation import VectorOnePointMutation, VectorNPointMutation
+#from eckity.genetic_operators.mutations.vector_one_point_mutation import VectorOnePointMutation, VectorNPointMutation
 
 
-class VectorGaussOnePointFloatMutation(VectorOnePointMutation):
+
+class VectorGaussOnePointFloatMutation(VectorNPointMutation):
     def __init__(self, probability=1, arity=1, mu=0, sigma=1, events=None):
-        mutated_value_getter = lambda individual, index: gauss(mu=mu, sigma=sigma)
-        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events)
+        mutated_value_getter = lambda individual, index: individual.gauss(mu=mu, sigma=sigma)
+        super().__init__(probability=probability, arity=arity, mut_val_getter=mutated_value_getter, events=events,
+                         n=1)
 
     """def apply(self, individuals):
         
@@ -29,22 +28,41 @@ class VectorGaussOnePointFloatMutation(VectorOnePointMutation):
             individuals[j].set_cell_value(m_point, value)
         self.applied_individuals = individuals
         return individuals"""
+class VectorNPointFloatMutation(VectorNPointMutation):
+    def __init__(self, n=1, probability=1, arity=1, sigma=1, events=None):
+        super().__init__(n=n,
+                         probability=probability,
+                         arity=arity,
+                         mut_val_getter=lambda vec, index: vec.get_random_number_in_bounds(index, sigma),
+                         events=events)
 
 
-class IntVectorOnePointMutation(VectorOnePointMutation):
+class VectorGaussNPointFloatMutation(VectorNPointMutation):
+    def __init__(self, n=1, probability=1, arity=1, sigma=1, events=None):
+        super().__init__(n=n,
+                         probability=probability,
+                         arity=arity,
+                         mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, sigma),
+                         events=events)
+
+
+class IntVectorOnePointMutation(VectorNPointMutation):
     def __init__(self, probability=1, arity=1, events=None):
         mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
-        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events, n=1)
+        super().__init__(probability=probability, arity=arity, mut_val_getter=mutated_value_getter, events=events,
+                         n=1)
 
 
 class IntVectorNPointMutation(VectorNPointMutation):
     def __init__(self, probability=1, arity=1, events=None, n=1):
         mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
-        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events,
+        super().__init__(probability=probability, arity=arity, mut_val_getter=mutated_value_getter, events=events,
                          n=n)
 
 
-class BitStringVectorFlipMutation(VectorOnePointMutation):
+class BitStringVectorFlipMutation(VectorNPointMutation):
     def __init__(self, probability=1, arity=1, events=None):
-        mutated_value_getter = lambda individual, index: individual.get_random_number_in_bounds(index)
-        super().__init__(probability=probability, arity=arity, mutated_value_getter=mutated_value_getter, events=events, n=1)
+        super().__init__(probability=probability,
+                         arity=arity,
+                         mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(index),
+                         events=events, n=1)

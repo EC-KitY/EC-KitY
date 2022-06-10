@@ -6,27 +6,23 @@ from abc import abstractmethod
 
 class FailableOperator(GeneticOperator):
 
-    def __init__(self, attempts=4):
+    def __init__(self, attempts=5):
         super().__init__()
         self.attempts = attempts
 
     # TODO add event of on fail or on fail all retries
 
     def apply(self, payload):
+        result = 0  # todo check how to enforce least one attempt
         for i in range(self.attempts):
-            (did_not_fail, result) = self.apply_operator_without_fail(payload, i)
-            if did_not_fail:
+            (succeeded, result) = self.attempt_operator(payload, i)
+            if succeeded:
                 return result
-        return self.on_fail(payload)
+        return result
 
-    # returns tuple of (true if didn't fail, result value)
-    #def strict(fun):
-    # inspect annotations and check types on call
-    #@strict
+    # returns tuple of (succeeded or not, result value)
     @abstractmethod
     def attempt_operator(self, payload, i):
         pass
 
-    @abstractmethod
-    def on_fail(self, payload):
-        pass
+

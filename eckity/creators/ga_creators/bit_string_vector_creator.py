@@ -1,3 +1,6 @@
+from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
+from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
+
 
 class GABitStringVectorCreator(GAVectorCreator):
     def __init__(self,

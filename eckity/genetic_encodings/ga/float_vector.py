@@ -2,7 +2,7 @@
 This module implements the vector class.
 """
 
-from random import uniform
+from random import uniform, gauss
 
 from eckity.genetic_encodings.ga.vector_individual import Vector
 
@@ -19,8 +19,7 @@ class FloatVector(Vector):
             return uniform(self.bounds[0], self.bounds.get_bounds[1])
         return uniform(self.bounds[index][0], self.bounds[index][1])
 
-    def get_random_number_with_gauss(self, index, gauss):
-        # TODO implement
-        return index  # index
+    def get_random_number_with_gauss(self, index, sigma):
+        return self.cell_value(index) + gauss(0, sigma)
 
 # end class float vector
