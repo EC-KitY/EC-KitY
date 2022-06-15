@@ -1,7 +1,9 @@
-from eckity.genetic_operators.probabilistic_condition_operator import ProbabilisticConditionOperator
+from random import sample
+
+from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
-class SubtreeCrossover(ProbabilisticConditionOperator):
+class VectorKPointsCrossover(GeneticOperator):
     def __init__(self, probability=1, arity=2, k=1, events=None):
         self.individuals = None
         self.applied_individuals = None
@@ -12,7 +14,7 @@ class SubtreeCrossover(ProbabilisticConditionOperator):
     def apply(self, individuals):
 
         self.individuals = individuals
-        self.points = sorted(random.sample(range(0,individuals[0].size()), self.k))
+        self.points = sorted(sample(range(0,individuals[0].size()), self.k))
 
         start_index = 0
         for end_point in self.points:

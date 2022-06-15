@@ -12,7 +12,7 @@ class BitStringVector(Vector):
                  fitness,
                  length,
                  bounds=(0, 1)):
-        super().__init__(fitness, length, bounds)
+        super().__init__(fitness=fitness, length=length, bounds=bounds)
 
     def get_random_number_in_bounds(self, index):
         # todo check if need to check bounds - is it tuple always?

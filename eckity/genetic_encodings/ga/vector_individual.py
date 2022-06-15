@@ -13,8 +13,10 @@ class Vector(Individual):
                  bounds,
                  length=1):
         super().__init__(fitness)
-
-        assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)
+        print(bounds)
+        print(len(bounds))
+        print(type(bounds))
+        #assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)
         self.bounds = bounds  # todo remove cell_range
         self.length = length
         self.vector = []
@@ -73,7 +75,8 @@ class Vector(Individual):
         end_i = start_index + len(vector)
         replaced_part = self.vector[start_index:end_i]
         # todo add a test to make sure this logic works
-        self.vector = self.vector[start_index:].extend(vector).extend(self.vector[:end_i])  # todo check
+        self.vector[start_index:].extend(vector)
+        self.vector = self.vector.extend(self.vector[:end_i])  # todo check
         return replaced_part
 
     def get_vector_part(self, index, end_i):
