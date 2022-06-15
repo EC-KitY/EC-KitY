@@ -5,27 +5,28 @@ from abc import abstractmethod
 
 class FailableOperator(Operator):
 
-    def __init__(self, retries=4):
+    def __init__(self, attempts=5):
         super().__init__()
-        self.retries = retries
+        self.attempts = attempts
 
     # TODO add event of on fail or on fail all retries
 
     def apply_operator(self, payload):
-        for i in range(self.retries):
-            (did_not_fail, result) = self.apply_operator_without_fail(payload, i)
+        for i in range(self.attempts):
+            (did_not_fail, result) = self.attempt_operator(payload, i)
             if did_not_fail:
                 return result
-        return on_fail(payload)
+        return self.on_fail(payload)
 
     # returns tuple of (true if didn't fail, result value)
     #def strict(fun):
     # inspect annotations and check types on call
     #@strict
     @abstractmethod
-    def apply_operator_without_fail(self, payload, i):
+    def attempt_operator(self, payload, i):
         pass
 
+    # TODO last attempt should perform "on_fail" mechanism
     @abstractmethod
     def on_fail(self, payload):
         pass
