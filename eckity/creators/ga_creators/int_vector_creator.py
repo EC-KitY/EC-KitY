@@ -4,4 +4,4 @@ class GAIntVectorCreator(GAVectorCreator):
                  length=1,
                  gene_creator=None,
                  events=None):
-        super().__init__(length,gene_creator,"int_vector",events)
+        super().__init__(length,gene_creator,IntVector,events)

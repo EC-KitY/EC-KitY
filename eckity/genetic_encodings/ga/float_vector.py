@@ -19,7 +19,7 @@ class FloatVector(Vector):
             return uniform(self.bounds[0], self.bounds.get_bounds[1])
         return uniform(self.bounds[index][0], self.bounds[index][1])
 
-    def get_random_number_with_gauss(self, index, sigma):
-        return self.cell_value(index) + gauss(0, sigma)
+    def get_random_number_with_gauss(self, index, mu, sigma):
+        return self.cell_value(index) + gauss(mu, sigma)
 
 # end class float vector
