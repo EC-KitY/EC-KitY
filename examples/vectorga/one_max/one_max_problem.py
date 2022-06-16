@@ -24,7 +24,7 @@ def main():
                       # user-defined fitness evaluation method
                       evaluator=OneMaxEvaluator(),
                       # minimization problem (fitness is MAE), so higher fitness is worse
-                      higher_is_better=False,
+                      higher_is_better=True,
                       elitism_rate=0.03,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
@@ -33,7 +33,7 @@ def main():
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple
-                          (TournamentSelection(tournament_size=3, higher_is_better=False), 1)
+                          (TournamentSelection(tournament_size=3, higher_is_better=True), 1)
                       ]
                       ),
         breeder=SimpleBreeder(),

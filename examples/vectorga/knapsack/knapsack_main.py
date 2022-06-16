@@ -50,9 +50,6 @@ def main():
     # evolve the generated initial population
     algo.evolve()
 
-    # execute the best individual after the evolution process ends
-    print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
-
 
 if __name__ == '__main__':
     main()

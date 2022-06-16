@@ -16,5 +16,5 @@ class TestVector:
         assert v1.vector == [1] * replaced_part_size + [0] * (vec_len - replaced_part_size)
 
         old_v2_part = v2.replace_vector_part(old_v1_part, 0)
-        assert old_v2_part == [1, 1, 1]
+        assert old_v2_part == [1] * replaced_part_size
         assert v2.vector == [0] * replaced_part_size + [1] * (vec_len - replaced_part_size)
