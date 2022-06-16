@@ -89,7 +89,7 @@ class Vector(Individual):
         self.vector[index] = value
 
     def get_random_number_in_bounds(self, index):
-        raise Exception("get_random_number is abs method in vector individual")
+        raise ValueError("get_random_number is abs method in vector individual")
 
     def show(self):
         """

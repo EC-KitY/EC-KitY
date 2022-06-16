@@ -5,7 +5,8 @@ from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
 class VectorNPointMutation(FailableOperator):
-    def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None, success_checker=None, on_fail=None, events=None):
+    def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None,
+                 success_checker=None, on_fail=None, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
         self.n = n
 
@@ -19,7 +20,7 @@ class VectorNPointMutation(FailableOperator):
 
         if mut_val_getter is None:
             mut_val_getter = self.default_mut_val_getter
-        self.mut_val_getter = mut_val_getter  # todo all good itai?
+        self.mut_val_getter = mut_val_getter
 
     @staticmethod
     def default_on_fail(vectors):
