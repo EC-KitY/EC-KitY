@@ -39,7 +39,7 @@ def main():
         breeder=SimpleBreeder(),
         max_workers=4,
         max_generation=500,
-        random_seed=64,
+        # random_seed=64,
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=0, threshold=0.001),
         statistics=BestAverageWorstStatistics()
     )
