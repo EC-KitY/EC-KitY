@@ -13,11 +13,11 @@ class Vector(Individual):
                  bounds,
                  length=1):
         super().__init__(fitness)
-        print(bounds)
-        print(len(bounds))
-        print(type(bounds))
+
+        # TODO do we need this assertion? @tomer
         #assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)
-        self.bounds = bounds  # todo remove cell_range
+
+        self.bounds = bounds
         self.length = length
         self.vector = []
 
@@ -37,7 +37,7 @@ class Vector(Individual):
 
     def check_if_in_bounds(self):
         for i in range(self.size()):
-            if len(self.bounds == 2):
+            if len(self.bounds) == 2:
                 if (self.vector[i] < self.bounds[0]) | (self.vector[i] > self.bounds[1]):
                     return False
             else:
@@ -63,20 +63,17 @@ class Vector(Individual):
         end_i = randint(rnd_i, self.size() - 1)
         return self.vector[rnd_i:end_i + 1]
 
-    def replace_vector_part_random(self, vector):
-        index = randint(0, self.size() - len(vector))  # select a random node (index)
-        end_i = index + len(vector)
+    def replace_vector_part_random(self, inserted_part):
+        index = randint(0, self.size() - len(inserted_part))  # select a random index
+        end_i = index + len(inserted_part)
         replaced_part = self.vector[index:end_i]
-        # todo add a test to make sure this logic works
-        self.vector = self.vector[index:].extend(vector).extend(self.vector[:end_i])
+        self.vector = self.vector[:index] + inserted_part + self.vector[end_i:]
         return replaced_part
 
-    def replace_vector_part(self, vector, start_index):
-        end_i = start_index + len(vector)
+    def replace_vector_part(self, inserted_part, start_index):
+        end_i = start_index + len(inserted_part)
         replaced_part = self.vector[start_index:end_i]
-        # todo add a test to make sure this logic works
-        self.vector[start_index:].extend(vector)
-        self.vector = self.vector.extend(self.vector[:end_i])  # todo check
+        self.vector = self.vector[:start_index] + inserted_part + self.vector[end_i:]
         return replaced_part
 
     def get_vector_part(self, index, end_i):

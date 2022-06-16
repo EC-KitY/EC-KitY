@@ -6,7 +6,6 @@ from eckity.genetic_encodings.ga.vector_individual import Vector
 
 class GAVectorCreator(Creator):
     def __init__(self,
-                 fitness,
                  length=1,
                  gene_creator=None,
                  bounds=(0.0, 1.0),
@@ -17,11 +16,11 @@ class GAVectorCreator(Creator):
         super().__init__(events)
 
         if gene_creator is None:
-            gene_creator = lambda individual, index: individual.get_random_number_in_bounds(index)
-        self.length = length
+            gene_creator = self.default_gene_creator
         self.gene_creator = gene_creator
 
         self.type = vector_type
+        self.length = length
         self.bounds = bounds
 
     def create_individuals(self, n_individuals, higher_is_better):
@@ -39,3 +38,7 @@ class GAVectorCreator(Creator):
         # vector = [self.gene_creator(individual.bounds[i % len(individual.bounds)]) for i in individual.size()]
         vector = [self.gene_creator(individual, i) for i in range(self.length)]
         individual.set_vector(vector)
+
+    @staticmethod
+    def default_gene_creator(individual, index):
+        return individual.get_random_number_in_bounds(index)
