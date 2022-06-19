@@ -28,7 +28,7 @@ def main():
                       elitism_rate=0.03,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
-                          VectorKPointsCrossover(probability=0.5, k=2),
+                          VectorKPointsCrossover(probability=0.7, k=2),
                           BitStringVectorFlipMutation(probability=0.05)
                       ],
                       selection_methods=[
@@ -40,15 +40,14 @@ def main():
         max_workers=4,
         max_generation=500,
         # random_seed=64,
-        termination_checker=ThresholdFromTargetTerminationChecker(optimal=0, threshold=0.001),
+        termination_checker=ThresholdFromTargetTerminationChecker(optimal=10, threshold=0),
         statistics=BestAverageWorstStatistics()
     )
 
     # evolve the generated initial population
     algo.evolve()
 
-    # execute the best individual after the evolution process ends
-    # print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
+    # execute the best individual after the evolution process ends')
     algo.best_of_run_.show()
 
 
