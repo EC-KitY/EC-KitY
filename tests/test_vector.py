@@ -33,3 +33,11 @@ class TestVector:
         old_v2_part = v2.replace_vector_part(old_v1_part, 1)
         assert old_v2_part == [0, 1]
         assert v2.vector == [1, 1, 0, 0]
+
+    def test_bit_flip(self):
+        v1 = BitStringVector(SimpleFitness(), length=4)
+        init_vec = [0, 1, 0, 1]
+        v1.vector = init_vec.copy()
+        assert v1.bit_flip(0) == v1.bit_flip(2) == 1
+        assert v1.bit_flip(1) == v1.bit_flip(3) == 0
+        assert init_vec == v1.vector

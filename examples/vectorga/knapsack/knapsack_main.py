@@ -7,8 +7,6 @@ from eckity.genetic_operators.selections.tournament_selection import TournamentS
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 
-
-
 from examples.vectorga.knapsack.knapsack_evaluator import KnapsackEvaluator, NUM_ITEMS
 
 IND_INIT_SIZE = 5

@@ -98,4 +98,4 @@ class Vector(Individual):
         """
         print(self.vector)
 
-# end class tree
+# end class Vector
