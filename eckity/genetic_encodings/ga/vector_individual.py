@@ -88,6 +88,26 @@ class Vector(Individual):
     def get_random_number_in_bounds(self, index):
         raise ValueError("get_random_number is abs method in vector individual")
 
+    def execute(self, *args, **kwargs):
+        """
+        Execute the vector.
+        Input is a numpy array or keyword arguments (but not both).
+
+        Parameters
+        ----------
+        args : arguments
+            A numpy array, this is mostly relevant to GP representation.
+
+        kwargs : keyword arguments
+            Input to program, this is mostly relevant to GP representation.
+
+        Returns
+        -------
+        object
+            Vector (genome) of this individual.
+        """
+        return self.get_vector()
+
     def show(self):
         """
         Print out a simple textual representation of the vector.

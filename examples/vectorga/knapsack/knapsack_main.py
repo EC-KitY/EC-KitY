@@ -46,8 +46,8 @@ def main():
 
     # evolve the generated initial population
     algo.evolve()
-    # Show the best solution
-    algo.best_of_run_.show()
+    # Execute (show) the best solution
+    print(algo.execute())
 
 
 if __name__ == '__main__':
