@@ -9,18 +9,26 @@ from eckity.subpopulation import Subpopulation
 
 from examples.vectorga.knapsack.knapsack_evaluator import KnapsackEvaluator, NUM_ITEMS
 
-IND_INIT_SIZE = 5
-
 
 def main():
+    """
+    In the 0/1 knapsack problem, there is a pool of items, each having its own weight and value.
+    The goal is to collect the most valuable items, while not exceeding the maximum weight of the bag.
+    We solve this problem using GA bit vectors, in which the i-th cell is 1 if the i-th item is in the bag, else 0.
+
+    References
+    ----------
+    DEAP Knapsack Example: https://deap.readthedocs.io/en/master/examples/ga_knapsack.html
+    """
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(creators=GABitStringVectorCreator(length=NUM_ITEMS),
                       population_size=50,
                       # user-defined fitness evaluation method
                       evaluator=KnapsackEvaluator(),
-                      # maximization problem (fitness is prices-weights), so higher fitness is better
+                      # maximization problem (fitness is sum of values), so higher fitness is better
                       higher_is_better=True,
+                      elitism_rate=0.0,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           VectorKPointsCrossover(probability=0.5, k=2),
@@ -31,14 +39,14 @@ def main():
                           (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
                       ]),
         breeder=SimpleBreeder(),
-        max_workers=4,
+        max_workers=1,
         max_generation=500,
-        random_seed=64,
         statistics=BestAverageWorstStatistics()
     )
 
     # evolve the generated initial population
     algo.evolve()
+    # Show the best solution
     algo.best_of_run_.show()
 
 
