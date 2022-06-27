@@ -48,8 +48,7 @@ def main():
     # evolve the generated initial population
     algo.evolve()
 
-    # execute the best individual after the evolution process ends
-    # print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
+    # execute the best individual after the evolution process ends')
     algo.best_of_run_.show()
 
 

@@ -75,7 +75,7 @@ class BitStringVectorFlipMutation(VectorNPointMutation):
     def __init__(self, probability=1.0, arity=1, events=None):
         super().__init__(probability=probability,
                          arity=arity,
-                         mut_val_getter=lambda individual, index: individual.flip(index),
+                         mut_val_getter=lambda individual, index: individual.bit_flip(index),
                          n=1,
                          events=events,
                          on_fail=lambda individuals: True)

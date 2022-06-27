@@ -164,7 +164,7 @@ class Tree(Individual):
                 X = args[0]
                 kwargs = _generate_args(X)
                 reshape = True
-            except:
+            except Exception:
                 raise ValueError(f'Bad argument to tree.execute, must be numpy array or kwargs: {args}')
 
         kw = list(kwargs.keys())
