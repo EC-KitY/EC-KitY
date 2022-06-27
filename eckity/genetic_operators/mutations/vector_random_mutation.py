@@ -9,8 +9,8 @@ class VectorUniformOnePointFloatMutation(VectorNPointMutation):
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_in_bounds(index),
-                         events=events,
-                         on_fail=lambda individuals: None)
+                         events=events)
+        self.on_fail = lambda individuals: None
 
 
 class VectorUniformNPointFloatMutation(VectorNPointMutation):
@@ -19,8 +19,9 @@ class VectorUniformNPointFloatMutation(VectorNPointMutation):
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_in_bounds(index),
-                         events=events,
-                         on_fail=lambda individuals: None)
+                         events=events
+                         )
+        self.on_fail = lambda individuals: None
 
 
 class VectorGaussOnePointFloatMutation(VectorNPointMutation):
@@ -29,8 +30,9 @@ class VectorGaussOnePointFloatMutation(VectorNPointMutation):
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events,
-                         on_fail=on_gauss_fail(1, probability, arity, events))
+                         events=events)
+        self.on_fail = on_gauss_fail(1, probability, arity, events)
+
 
 
 class VectorGaussNPointFloatMutation(VectorNPointMutation):
@@ -39,8 +41,8 @@ class VectorGaussNPointFloatMutation(VectorNPointMutation):
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events,
-                         on_fail=on_gauss_fail(n, probability, arity, events))
+                         events=events)
+        self.on_fail = on_gauss_fail(n, probability, arity, events)
 
 
 def on_gauss_fail(n=1, probability=1.0, arity=1, events=None):
@@ -57,8 +59,8 @@ class IntVectorOnePointMutation(VectorNPointMutation):
                          arity=arity,
                          mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(index),
                          events=events,
-                         n=1,
-                         on_fail=lambda individuals: None)
+                         n=1)
+        self.on_fail = lambda individuals: None
 
 
 class IntVectorNPointMutation(VectorNPointMutation):
@@ -67,8 +69,8 @@ class IntVectorNPointMutation(VectorNPointMutation):
                          arity=arity,
                          mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(index),
                          events=events,
-                         n=n,
-                         on_fail=lambda individuals: None)
+                         n=n)
+        self.on_fail = lambda individuals: None
 
 
 class BitStringVectorFlipMutation(VectorNPointMutation):
@@ -77,8 +79,8 @@ class BitStringVectorFlipMutation(VectorNPointMutation):
                          arity=arity,
                          mut_val_getter=lambda individual, index: individual.bit_flip(index),
                          n=1,
-                         events=events,
-                         on_fail=lambda individuals: True)
+                         events=events)
+        self.on_fail = lambda individuals: True
 
 
 class BitStringVectorNFlipMutation(VectorNPointMutation):
@@ -86,8 +88,8 @@ class BitStringVectorNFlipMutation(VectorNPointMutation):
         self.probability_for_each = probability_for_each
         super().__init__(probability=probability,
                          arity=arity,
-                         mut_val_getter=lambda individual, index: individual.flip(
+                         mut_val_getter=lambda individual, index: individual.bit_flip(
                              index) if random() <= self.probability_for_each else individual.cell_value(index),
                          events=events,
-                         on_fail=lambda individuals: True,
                          n=n)
+        self.on_fail = lambda individuals: True

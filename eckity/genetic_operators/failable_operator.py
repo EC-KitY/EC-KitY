@@ -18,10 +18,14 @@ class FailableOperator(GeneticOperator):
         for i in range(self.attempts):
             succeeded, result = self.attempt_operator(payload, i)
             if succeeded:
-                break
-        return result
+                return result
+        return self.on_fail(payload,i)
 
     # returns tuple of (succeeded or not, result value)
     @abstractmethod
     def attempt_operator(self, payload, i):
+        pass
+
+    @abstractmethod
+    def on_fail(self, payload, i):
         pass
