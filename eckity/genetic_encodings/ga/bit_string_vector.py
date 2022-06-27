@@ -18,4 +18,9 @@ class BitStringVector(Vector):
         # todo check if need to check bounds - is it tuple always?
         return randint(self.bounds[0], self.bounds[1])
 
+    def flip(self,index):
+        if self.vector[index] == 1:
+            return 0
+        return 1
+
 # end class bit string vector

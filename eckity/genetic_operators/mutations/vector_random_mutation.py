@@ -1,3 +1,5 @@
+from random import random
+
 from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
 
 
@@ -73,7 +75,19 @@ class BitStringVectorFlipMutation(VectorNPointMutation):
     def __init__(self, probability=1.0, arity=1, events=None):
         super().__init__(probability=probability,
                          arity=arity,
-                         mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(index),
+                         mut_val_getter=lambda individual, index: individual.flip(index),
                          n=1,
                          events=events,
                          on_fail=lambda individuals: True)
+
+
+class BitStringVectorNFlipMutation(VectorNPointMutation):
+    def __init__(self, probability=1.0, arity=1, events=None, probability_for_each=0.2,n=100):
+        self.probability_for_each = probability_for_each
+        super().__init__(probability=probability,
+                         arity=arity,
+                         mut_val_getter=lambda individual, index: individual.flip(
+                             index) if random() <= self.probability_for_each else individual.cell_value(index),
+                         events=events,
+                         on_fail=lambda individuals: True,
+                         n=n)
