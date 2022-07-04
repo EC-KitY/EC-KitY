@@ -23,6 +23,9 @@ class KnapsackEvaluator(SimpleIndividualEvaluator):
         if items is None:
             # Generate ramdom items for the problem (keys=weights, values=values)
             items = {i: (random.randint(1, 10), random.uniform(0, 100)) for i in range(NUM_ITEMS)}
+        elif type(items) == list:
+            # Convert items list to dictionary by adding item id
+            items = {i: items[i] for i in range(len(items))}
         self.items = items
         self.max_weight = max_weight
 
