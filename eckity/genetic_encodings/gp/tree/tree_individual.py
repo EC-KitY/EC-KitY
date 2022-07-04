@@ -35,7 +35,6 @@ class Tree(Individual):
     erc_range : (float, float)
         Range of values for ephemeral random constant (ERC). The default is None.
     """
-
     def __init__(self,
                  fitness,
                  function_set=None,
