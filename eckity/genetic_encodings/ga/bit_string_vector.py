@@ -23,6 +23,7 @@ class BitStringVector(Vector):
     bounds : list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
+
     def __init__(self,
                  fitness,
                  length,
@@ -60,7 +61,6 @@ class BitStringVector(Vector):
         int
             random value according to bounds field
         """
-        #todo add support to other bound
         return self.bounds[1] if self.cell_value(index) == self.bounds[0] else self.bounds[0]
 
 # end class bit string vector
