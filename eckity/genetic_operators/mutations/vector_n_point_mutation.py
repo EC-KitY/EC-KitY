@@ -6,13 +6,9 @@ from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 class VectorNPointMutation(FailableOperator):
     def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None,
-                 success_checker=None, on_fail=None, events=None):
+                 success_checker=None, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
         self.n = n
-
-        if on_fail is None:
-            on_fail = self.default_on_fail
-        self.on_fail = on_fail
 
         if success_checker is None:
             success_checker = self.default_success_checker
@@ -22,9 +18,6 @@ class VectorNPointMutation(FailableOperator):
             mut_val_getter = self.default_mut_val_getter
         self.mut_val_getter = mut_val_getter
 
-    @staticmethod
-    def default_on_fail(vectors):
-        return [vector.replace_vector_part_random([vector.get_random_number_in_bounds(0)]) for vector in vectors]
 
     @staticmethod
     def default_mut_val_getter(vec, idx):
@@ -51,9 +44,6 @@ class VectorNPointMutation(FailableOperator):
             if not self.success_checker(old_individual, individual):
                 succeeded = False
                 break
-
-        if not succeeded:
-            self.on_fail(individuals)
 
         self.applied_individuals = individuals
         return succeeded, individuals

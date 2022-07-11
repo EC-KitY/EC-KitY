@@ -60,6 +60,7 @@ class BitStringVector(Vector):
         int
             random value according to bounds field
         """
+        #todo add support to other bound
         return self.bounds[1] if self.cell_value(index) == self.bounds[0] else self.bounds[0]
 
 # end class bit string vector
