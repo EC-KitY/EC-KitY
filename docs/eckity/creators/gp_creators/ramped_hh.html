@@ -66,12 +66,12 @@
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.full</span> <span class="kn">import</span> <span class="n">FullCreator</span>
 <span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.grow</span> <span class="kn">import</span> <span class="n">GrowCreator</span>
-<span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.tree_creator</span> <span class="kn">import</span> <span class="n">GpTreeCreator</span>
+<span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.tree_creator</span> <span class="kn">import</span> <span class="n">GPTreeCreator</span>
 <span class="kn">from</span> <span class="nn">eckity.genetic_encodings.gp.tree.tree_individual</span> <span class="kn">import</span> <span class="n">Tree</span>
-<span class="kn">from</span> <span class="nn">eckity.fitness.gp_fitness</span> <span class="kn">import</span> <span class="n">GpFitness</span>
+<span class="kn">from</span> <span class="nn">eckity.fitness.gp_fitness</span> <span class="kn">import</span> <span class="n">GPFitness</span>
 
 
-<span class="k">class</span> <span class="nc">RampedHalfAndHalfCreator</span><span class="p">(</span><span class="n">GpTreeCreator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">RampedHalfAndHalfCreator</span><span class="p">(</span><span class="n">GPTreeCreator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">grow_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">full_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -96,13 +96,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -178,7 +178,7 @@
     <span class="k">def</span> <span class="nf">_create_individuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">init_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span><span class="p">,</span> <span class="n">function_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">,</span>
                  <span class="n">terminal_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">,</span> <span class="n">erc_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span><span class="p">,</span>
-                 <span class="n">fitness</span><span class="o">=</span><span class="n">GpFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">))</span>
+                 <span class="n">fitness</span><span class="o">=</span><span class="n">GPFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_tree</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
         <span class="n">individuals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
@@ -195,12 +195,12 @@
 
         
         <span class="def">class</span>
-        <span class="name">RampedHalfAndHalfCreator</span><wbr>(<span class="base"><a href="tree_creator.html#GpTreeCreator">eckity.creators.gp_creators.tree_creator.GpTreeCreator</a></span>):
+        <span class="name">RampedHalfAndHalfCreator</span><wbr>(<span class="base"><a href="tree_creator.html#GPTreeCreator">eckity.creators.gp_creators.tree_creator.GPTreeCreator</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">RampedHalfAndHalfCreator</span><span class="p">(</span><span class="n">GpTreeCreator</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">RampedHalfAndHalfCreator</span><span class="p">(</span><span class="n">GPTreeCreator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">grow_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">full_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -225,13 +225,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -307,7 +307,7 @@
     <span class="k">def</span> <span class="nf">_create_individuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">init_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span><span class="p">,</span> <span class="n">function_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">,</span>
                  <span class="n">terminal_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">,</span> <span class="n">erc_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span><span class="p">,</span>
-                 <span class="n">fitness</span><span class="o">=</span><span class="n">GpFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">))</span>
+                 <span class="n">fitness</span><span class="o">=</span><span class="n">GPFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_tree</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
         <span class="n">individuals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
@@ -361,13 +361,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -409,11 +409,11 @@ a tree creator that creates trees using the grow method</li>
 <li><p><strong>init_depth</strong> ((int, int)):</p></li>
 <li><p><strong>Min and max depths of initial random trees. The default is None.</strong></p></li>
 <li><strong>function_set</strong> (list):
-List of functions used as internal nodes in the gp tree. The default is None.</li>
+List of functions used as internal nodes in the GP tree. The default is None.</li>
 <li><strong>terminal_set</strong> (list):
-List of terminals used in the gp-tree leaves. The default is None.</li>
+List of terminals used in the GP-tree leaves. The default is None.</li>
 <li><strong>erc_range</strong> ((float, float)):
-Range of values for ephemeral random constant (erc). The default is None.</li>
+Range of values for ephemeral random constant (ERC). The default is None.</li>
 <li><strong>bloat_weight</strong> (float):
 Bloat control weight to punish large trees. Bigger values make a bigger punish.</li>
 <li><strong>events</strong> (list):

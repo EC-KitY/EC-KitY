@@ -35,7 +35,6 @@ class Tree(Individual):
     erc_range : (float, float)
         Range of values for ephemeral random constant (ERC). The default is None.
     """
-
     def __init__(self,
                  fitness,
                  function_set=None,
@@ -164,7 +163,7 @@ class Tree(Individual):
                 X = args[0]
                 kwargs = _generate_args(X)
                 reshape = True
-            except:
+            except Exception:
                 raise ValueError(f'Bad argument to tree.execute, must be numpy array or kwargs: {args}')
 
         kw = list(kwargs.keys())

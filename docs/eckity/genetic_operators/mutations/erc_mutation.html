@@ -31,13 +31,13 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#ErcMutation">ErcMutation</a>
+                    <a class="class" href="#ERCMutation">ERCMutation</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#ErcMutation.__init__">ErcMutation</a>
+                                <a class="function" href="#ERCMutation.__init__">ERCMutation</a>
                         </li>
                         <li>
-                                <a class="function" href="#ErcMutation.apply">apply</a>
+                                <a class="function" href="#ERCMutation.apply">apply</a>
                         </li>
                 </ul>
 
@@ -67,13 +67,13 @@
 <span class="kn">from</span> <span class="nn">eckity.genetic_operators.genetic_operator</span> <span class="kn">import</span> <span class="n">GeneticOperator</span>
 
 
-<span class="k">class</span> <span class="nc">ErcMutation</span><span class="p">(</span><span class="n">GeneticOperator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ERCMutation</span><span class="p">(</span><span class="n">GeneticOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform ephemeral random constant (erc) mutation: select an erc node at random</span>
+<span class="sd">        Perform ephemeral random constant (ERC) mutation: select an ERC node at random</span>
 <span class="sd">        and add Gaussian noise to it.</span>
 
 <span class="sd">        Returns</span>
@@ -93,24 +93,24 @@
         </details>
 
             </section>
-                <section id="ErcMutation">
+                <section id="ERCMutation">
                                 <div class="attr class">
-        <a class="headerlink" href="#ErcMutation">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#ERCMutation">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">ErcMutation</span><wbr>(<span class="base"><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></span>):
+        <span class="name">ERCMutation</span><wbr>(<span class="base"><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ErcMutation</span><span class="p">(</span><span class="n">GeneticOperator</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ERCMutation</span><span class="p">(</span><span class="n">GeneticOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform ephemeral random constant (erc) mutation: select an erc node at random</span>
+<span class="sd">        Perform ephemeral random constant (ERC) mutation: select an ERC node at random</span>
 <span class="sd">        and add Gaussian noise to it.</span>
 
 <span class="sd">        Returns</span>
@@ -131,11 +131,11 @@
 
     
 
-                            <div id="ErcMutation.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#ErcMutation.__init__">#&nbsp;&nbsp</a>
+                            <div id="ERCMutation.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ERCMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">ErcMutation</span><span class="signature">(probability=1, arity=1, events=None)</span>
+            <span class="name">ERCMutation</span><span class="signature">(probability=1, arity=1, events=None)</span>
     </div>
 
             <details>
@@ -149,8 +149,8 @@
     
 
                             </div>
-                            <div id="ErcMutation.apply" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#ErcMutation.apply">#&nbsp;&nbsp</a>
+                            <div id="ERCMutation.apply" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#ERCMutation.apply">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -161,7 +161,7 @@
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Perform ephemeral random constant (erc) mutation: select an erc node at random</span>
+<span class="sd">        Perform ephemeral random constant (ERC) mutation: select an ERC node at random</span>
 <span class="sd">        and add Gaussian noise to it.</span>
 
 <span class="sd">        Returns</span>
@@ -180,7 +180,7 @@
 
         </details>
 
-            <div class="docstring"><p>Perform ephemeral random constant (erc) mutation: select an erc node at random
+            <div class="docstring"><p>Perform ephemeral random constant (ERC) mutation: select an ERC node at random
 and add Gaussian noise to it.</p>
 
 <h6 id="returns">Returns</h6>
@@ -196,21 +196,21 @@ and add Gaussian noise to it.</p>
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></dt>
-                                <dd id="ErcMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
+                                <dd id="ERCMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="ErcMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="ErcMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="ErcMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
-                <dd id="ErcMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="ERCMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="ERCMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="ERCMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                <dd id="ERCMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="ErcMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="ErcMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="ErcMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="ErcMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="ERCMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="ERCMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="ERCMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="ERCMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>

@@ -31,13 +31,13 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#GpFitness">GpFitness</a>
+                    <a class="class" href="#GPFitness">GPFitness</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#GpFitness.__init__">GpFitness</a>
+                                <a class="function" href="#GPFitness.__init__">GPFitness</a>
                         </li>
                         <li>
-                                <a class="function" href="#GpFitness.get_augmented_fitness">get_augmented_fitness</a>
+                                <a class="function" href="#GPFitness.get_augmented_fitness">get_augmented_fitness</a>
                         </li>
                 </ul>
 
@@ -66,7 +66,7 @@
 <span class="kn">from</span> <span class="nn">eckity.fitness.simple_fitness</span> <span class="kn">import</span> <span class="n">SimpleFitness</span>
 
 
-<span class="k">class</span> <span class="nc">GpFitness</span><span class="p">(</span><span class="n">SimpleFitness</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">GPFitness</span><span class="p">(</span><span class="n">SimpleFitness</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">higher_is_better</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -86,18 +86,18 @@
         </details>
 
             </section>
-                <section id="GpFitness">
+                <section id="GPFitness">
                                 <div class="attr class">
-        <a class="headerlink" href="#GpFitness">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#GPFitness">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">GpFitness</span><wbr>(<span class="base"><a href="simple_fitness.html#SimpleFitness">eckity.fitness.simple_fitness.SimpleFitness</a></span>):
+        <span class="name">GPFitness</span><wbr>(<span class="base"><a href="simple_fitness.html#SimpleFitness">eckity.fitness.simple_fitness.SimpleFitness</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">GpFitness</span><span class="p">(</span><span class="n">SimpleFitness</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">GPFitness</span><span class="p">(</span><span class="n">SimpleFitness</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">higher_is_better</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -124,11 +124,11 @@
 </div>
 
 
-                            <div id="GpFitness.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#GpFitness.__init__">#&nbsp;&nbsp</a>
+                            <div id="GPFitness.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#GPFitness.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">GpFitness</span><span class="signature">(fitness: float = None, higher_is_better=False, bloat_weight=0.1)</span>
+            <span class="name">GPFitness</span><span class="signature">(fitness: float = None, higher_is_better=False, bloat_weight=0.1)</span>
     </div>
 
             <details>
@@ -146,8 +146,8 @@
     
 
                             </div>
-                            <div id="GpFitness.get_augmented_fitness" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#GpFitness.get_augmented_fitness">#&nbsp;&nbsp</a>
+                            <div id="GPFitness.get_augmented_fitness" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#GPFitness.get_augmented_fitness">#&nbsp;&nbsp</a>
 
                 <div class="decorator">@overrides</div>
 
@@ -175,16 +175,16 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="simple_fitness.html#SimpleFitness">eckity.fitness.simple_fitness.SimpleFitness</a></dt>
-                                <dd id="GpFitness.set_fitness" class="function"><a href="simple_fitness.html#SimpleFitness.set_fitness">set_fitness</a></dd>
-                <dd id="GpFitness.get_pure_fitness" class="function"><a href="simple_fitness.html#SimpleFitness.get_pure_fitness">get_pure_fitness</a></dd>
-                <dd id="GpFitness.set_not_evaluated" class="function"><a href="simple_fitness.html#SimpleFitness.set_not_evaluated">set_not_evaluated</a></dd>
-                <dd id="GpFitness.check_comparable_fitnesses" class="function"><a href="simple_fitness.html#SimpleFitness.check_comparable_fitnesses">check_comparable_fitnesses</a></dd>
-                <dd id="GpFitness.better_than" class="function"><a href="simple_fitness.html#SimpleFitness.better_than">better_than</a></dd>
-                <dd id="GpFitness.equal_to" class="function"><a href="simple_fitness.html#SimpleFitness.equal_to">equal_to</a></dd>
+                                <dd id="GPFitness.set_fitness" class="function"><a href="simple_fitness.html#SimpleFitness.set_fitness">set_fitness</a></dd>
+                <dd id="GPFitness.get_pure_fitness" class="function"><a href="simple_fitness.html#SimpleFitness.get_pure_fitness">get_pure_fitness</a></dd>
+                <dd id="GPFitness.set_not_evaluated" class="function"><a href="simple_fitness.html#SimpleFitness.set_not_evaluated">set_not_evaluated</a></dd>
+                <dd id="GPFitness.check_comparable_fitnesses" class="function"><a href="simple_fitness.html#SimpleFitness.check_comparable_fitnesses">check_comparable_fitnesses</a></dd>
+                <dd id="GPFitness.better_than" class="function"><a href="simple_fitness.html#SimpleFitness.better_than">better_than</a></dd>
+                <dd id="GPFitness.equal_to" class="function"><a href="simple_fitness.html#SimpleFitness.equal_to">equal_to</a></dd>
 
             </div>
             <div><dt><a href="fitness.html#Fitness">eckity.fitness.fitness.Fitness</a></dt>
-                                <dd id="GpFitness.is_fitness_evaluated" class="function"><a href="fitness.html#Fitness.is_fitness_evaluated">is_fitness_evaluated</a></dd>
+                                <dd id="GPFitness.is_fitness_evaluated" class="function"><a href="fitness.html#Fitness.is_fitness_evaluated">is_fitness_evaluated</a></dd>
 
             </div>
                                 </dl>

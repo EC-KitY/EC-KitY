@@ -106,6 +106,7 @@
 
 <span class="kn">from</span> <span class="nn">eckity.event_based_operator</span> <span class="kn">import</span> <span class="n">Operator</span>
 <span class="kn">from</span> <span class="nn">eckity.population</span> <span class="kn">import</span> <span class="n">Population</span>
+<span class="kn">from</span> <span class="nn">eckity.statistics.statistics</span> <span class="kn">import</span> <span class="n">Statistics</span>
 <span class="kn">from</span> <span class="nn">eckity.subpopulation</span> <span class="kn">import</span> <span class="n">Subpopulation</span>
 
 <span class="n">SEED_MIN_VALUE</span> <span class="o">=</span> <span class="mi">0</span>
@@ -124,7 +125,7 @@
 <span class="sd">    population: Population</span>
 <span class="sd">        The population to be evolved. Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: list of Statistics, default=None</span>
+<span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: Breeder, default=SimpleBreeder()</span>
@@ -132,12 +133,13 @@
 <span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
 
 <span class="sd">    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()</span>
-<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
-<span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
+<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best</span>
+<span class="sd">         individual of each subpopulation (returns a single individual in simple case).</span>
 
 <span class="sd">    max_generation: int, default=1000</span>
 <span class="sd">        Maximal number of generations to run the evolutionary process.</span>
-<span class="sd">        Note the evolution could end before reaching max_generation, depends on the termination checker.</span>
+<span class="sd">        Note the evolution could end before reaching max_generation,</span>
+<span class="sd">        depends on the termination checker.</span>
 
 <span class="sd">    events: dict(str, dict(object, function)), default=None</span>
 <span class="sd">        Dictionary of events, where each event holds a dictionary of (subscriber, callback method).</span>
@@ -149,7 +151,8 @@
 <span class="sd">        Responsible of checking if the algorithm should finish before reaching max_generation.</span>
 
 <span class="sd">    max_workers: int, default=None</span>
-<span class="sd">        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</span>
+<span class="sd">        Maximal number of worker nodes for the Executor object</span>
+<span class="sd">        that evaluates the fitness of the individuals.</span>
 
 <span class="sd">    random_generator: module, default=random</span>
 <span class="sd">        Random generator module.</span>
@@ -189,9 +192,11 @@
         <span class="n">ext_event_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;evolution_finished&quot;</span><span class="p">,</span> <span class="s2">&quot;after_generation&quot;</span><span class="p">])</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">ext_event_names</span><span class="p">)</span>
 
+        <span class="c1"># Assert valid population input</span>
         <span class="k">if</span> <span class="n">population</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be None&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">([</span><span class="n">population</span><span class="p">])</span>
@@ -200,15 +205,32 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be empty&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">sub_pop</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_pop</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation instance as an element in Population&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation &#39;</span>
+                                     <span class="s1">&#39;instance as an element in Population&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Parameter population must be either a Population, a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;Parameter population must be either a Population, &#39;</span>
+                <span class="s1">&#39;a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
                 <span class="s1">&#39;received population with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="c1"># Assert valid statistics input</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="p">[</span><span class="n">statistics</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">statistics</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expected a Statistics instance as an element in Statistics list, &#39;</span>
+                                     <span class="s1">&#39;but received&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Parameter statistics must be either a subclass of Statistics&#39;</span>
+                <span class="s1">&#39; or a list of subclasses of Statistics.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;received statistics with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">statistics</span><span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span> <span class="o">=</span> <span class="n">breeder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population_evaluator</span> <span class="o">=</span> <span class="n">population_evaluator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span> <span class="o">=</span> <span class="n">termination_checker</span>
@@ -241,7 +263,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -276,7 +300,9 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">set_generation_seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generation_iteration</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="n">gen</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
@@ -289,7 +315,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        gen</span>
+<span class="sd">        gen: int</span>
 <span class="sd">            current generation number</span>
 
 <span class="sd">        Returns</span>
@@ -373,7 +399,7 @@
 <span class="sd">    population: Population</span>
 <span class="sd">        The population to be evolved. Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: list of Statistics, default=None</span>
+<span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: Breeder, default=SimpleBreeder()</span>
@@ -381,12 +407,13 @@
 <span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
 
 <span class="sd">    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()</span>
-<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
-<span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
+<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best</span>
+<span class="sd">         individual of each subpopulation (returns a single individual in simple case).</span>
 
 <span class="sd">    max_generation: int, default=1000</span>
 <span class="sd">        Maximal number of generations to run the evolutionary process.</span>
-<span class="sd">        Note the evolution could end before reaching max_generation, depends on the termination checker.</span>
+<span class="sd">        Note the evolution could end before reaching max_generation,</span>
+<span class="sd">        depends on the termination checker.</span>
 
 <span class="sd">    events: dict(str, dict(object, function)), default=None</span>
 <span class="sd">        Dictionary of events, where each event holds a dictionary of (subscriber, callback method).</span>
@@ -398,7 +425,8 @@
 <span class="sd">        Responsible of checking if the algorithm should finish before reaching max_generation.</span>
 
 <span class="sd">    max_workers: int, default=None</span>
-<span class="sd">        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</span>
+<span class="sd">        Maximal number of worker nodes for the Executor object</span>
+<span class="sd">        that evaluates the fitness of the individuals.</span>
 
 <span class="sd">    random_generator: module, default=random</span>
 <span class="sd">        Random generator module.</span>
@@ -438,9 +466,11 @@
         <span class="n">ext_event_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;evolution_finished&quot;</span><span class="p">,</span> <span class="s2">&quot;after_generation&quot;</span><span class="p">])</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">ext_event_names</span><span class="p">)</span>
 
+        <span class="c1"># Assert valid population input</span>
         <span class="k">if</span> <span class="n">population</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be None&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">([</span><span class="n">population</span><span class="p">])</span>
@@ -449,15 +479,32 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be empty&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">sub_pop</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_pop</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation instance as an element in Population&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation &#39;</span>
+                                     <span class="s1">&#39;instance as an element in Population&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Parameter population must be either a Population, a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;Parameter population must be either a Population, &#39;</span>
+                <span class="s1">&#39;a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
                 <span class="s1">&#39;received population with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="c1"># Assert valid statistics input</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="p">[</span><span class="n">statistics</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">statistics</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expected a Statistics instance as an element in Statistics list, &#39;</span>
+                                     <span class="s1">&#39;but received&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Parameter statistics must be either a subclass of Statistics&#39;</span>
+                <span class="s1">&#39; or a list of subclasses of Statistics.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;received statistics with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">statistics</span><span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span> <span class="o">=</span> <span class="n">breeder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population_evaluator</span> <span class="o">=</span> <span class="n">population_evaluator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span> <span class="o">=</span> <span class="n">termination_checker</span>
@@ -490,7 +537,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -525,7 +574,9 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">set_generation_seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generation_iteration</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="n">gen</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
@@ -538,7 +589,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        gen</span>
+<span class="sd">        gen: int</span>
 <span class="sd">            current generation number</span>
 
 <span class="sd">        Returns</span>
@@ -607,17 +658,18 @@
 <ul>
 <li><strong>population</strong> (Population):
 The population to be evolved. Consists of a list of individuals.</li>
-<li><strong>statistics</strong> (list of Statistics, default=None):
+<li><strong>statistics</strong> (Statistics or list of Statistics, default=None):
 Provide multiple statistics on the population during the evolutionary run.</li>
 <li><strong>breeder</strong> (Breeder, default=SimpleBreeder()):
 Responsible of applying the selection method and operator sequence on the individuals
 in each generation. Applies on one sub-population in simple case.</li>
 <li><strong>population_evaluator</strong> (PopulationEvaluator, default=SimplePopulationEvaluator()):
-Responsible of evaluating each individual's fitness concurrently and returns the best individual
-of each subpopulation (returns a single individual in simple case).</li>
+Responsible of evaluating each individual's fitness concurrently and returns the best
+individual of each subpopulation (returns a single individual in simple case).</li>
 <li><strong>max_generation</strong> (int, default=1000):
 Maximal number of generations to run the evolutionary process.
-Note the evolution could end before reaching max_generation, depends on the termination checker.</li>
+Note the evolution could end before reaching max_generation,
+depends on the termination checker.</li>
 <li><strong>events</strong> (dict(str, dict(object, function)), default=None):
 Dictionary of events, where each event holds a dictionary of (subscriber, callback method).</li>
 <li><strong>event_names</strong> (list of strings, default=None):
@@ -625,7 +677,8 @@ Names of events to publish during the evolution.</li>
 <li><strong>termination_checker</strong> (TerminationChecker, default=ThresholdFromTargetTerminationChecker()):
 Responsible of checking if the algorithm should finish before reaching max_generation.</li>
 <li><strong>max_workers</strong> (int, default=None):
-Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</li>
+Maximal number of worker nodes for the Executor object
+that evaluates the fitness of the individuals.</li>
 <li><strong>random_generator</strong> (module, default=random):
 Random generator module.</li>
 <li><strong>random_seed</strong> (float or int, default=current system time):
@@ -659,7 +712,7 @@ The generation in which the evolution ended.</li>
     events=None,
     event_names=None,
     random_generator=None,
-    random_seed=1654083053.5689719,
+    random_seed=1657616323.2434216,
     generation_seed=None,
     max_workers=None,
     generation_num=0
@@ -688,9 +741,11 @@ The generation in which the evolution ended.</li>
         <span class="n">ext_event_names</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;evolution_finished&quot;</span><span class="p">,</span> <span class="s2">&quot;after_generation&quot;</span><span class="p">])</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span> <span class="n">event_names</span><span class="o">=</span><span class="n">ext_event_names</span><span class="p">)</span>
 
+        <span class="c1"># Assert valid population input</span>
         <span class="k">if</span> <span class="n">population</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be None&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Population</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">population</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">([</span><span class="n">population</span><span class="p">])</span>
@@ -699,15 +754,32 @@ The generation in which the evolution ended.</li>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Population cannot be empty&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">sub_pop</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_pop</span><span class="p">,</span> <span class="n">Subpopulation</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation instance as an element in Population&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Detected a non-Subpopulation &#39;</span>
+                                     <span class="s1">&#39;instance as an element in Population&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Parameter population must be either a Population, a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;Parameter population must be either a Population, &#39;</span>
+                <span class="s1">&#39;a Subpopulation or a list of Subpopulations</span><span class="se">\n</span><span class="s1"> &#39;</span>
                 <span class="s1">&#39;received population with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
             <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="c1"># Assert valid statistics input</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="p">[</span><span class="n">statistics</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">statistics</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">statistics</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">Statistics</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Expected a Statistics instance as an element in Statistics list, &#39;</span>
+                                     <span class="s1">&#39;but received&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Parameter statistics must be either a subclass of Statistics&#39;</span>
+                <span class="s1">&#39; or a list of subclasses of Statistics.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;received statistics with unexpected type of&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">statistics</span><span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span> <span class="o">=</span> <span class="n">breeder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">population_evaluator</span> <span class="o">=</span> <span class="n">population_evaluator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span> <span class="o">=</span> <span class="n">termination_checker</span>
@@ -773,7 +845,9 @@ The generation in which the evolution ended.</li>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -860,7 +934,9 @@ performing the evolutionary loop and finally finishing the evolution process</p>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">set_generation_seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_seed</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">generation_iteration</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="o">.</span><span class="n">should_terminate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="n">gen</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">)</span>
                 <span class="k">break</span>
@@ -892,7 +968,7 @@ performing the evolutionary loop and finally finishing the evolution process</p>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        gen</span>
+<span class="sd">        gen: int</span>
 <span class="sd">            current generation number</span>
 
 <span class="sd">        Returns</span>
@@ -910,7 +986,8 @@ performing the evolutionary loop and finally finishing the evolution process</p>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>gen</strong>: current generation number</li>
+<li><strong>gen</strong> (int):
+current generation number</li>
 </ul>
 
 <h6 id="returns">Returns</h6>

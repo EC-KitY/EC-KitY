@@ -22,7 +22,7 @@ class SklearnWrapper:
     def __init__(self,
                  algorithm):
         self.algorithm = algorithm
-        self.is_fitted_ = False
+        self.is_fitted = False
 
     def fit(self, X, y=None):
         """
@@ -46,7 +46,7 @@ class SklearnWrapper:
             sub_pop.evaluator.set_context((X, y))
 
         self.algorithm.evolve()
-        self.is_fitted_ = True
+        self.is_fitted = True
         return self
 
     def predict(self, X):
@@ -72,7 +72,7 @@ class SklearnWrapper:
         return self.algorithm.best_of_run_.execute(X)
 
     def __sklearn_is_fitted__(self):
-        return self.is_fitted_
+        return self.is_fitted
 
     def get_params(self, deep=True):
         return self.__getstate__()

@@ -31,16 +31,16 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#GpTreeCreator">GpTreeCreator</a>
+                    <a class="class" href="#GPTreeCreator">GPTreeCreator</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#GpTreeCreator.__init__">GpTreeCreator</a>
+                                <a class="function" href="#GPTreeCreator.__init__">GPTreeCreator</a>
                         </li>
                         <li>
-                                <a class="function" href="#GpTreeCreator.create_individuals">create_individuals</a>
+                                <a class="function" href="#GPTreeCreator.create_individuals">create_individuals</a>
                         </li>
                         <li>
-                                <a class="function" href="#GpTreeCreator.create_tree">create_tree</a>
+                                <a class="function" href="#GPTreeCreator.create_tree">create_tree</a>
                         </li>
                 </ul>
 
@@ -66,13 +66,13 @@
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">eckity.creators.creator</span> <span class="kn">import</span> <span class="n">Creator</span>
 <span class="kn">from</span> <span class="nn">eckity.genetic_encodings.gp.tree.functions</span> <span class="kn">import</span> <span class="n">f_add</span><span class="p">,</span> <span class="n">f_sub</span><span class="p">,</span> <span class="n">f_mul</span><span class="p">,</span> <span class="n">f_div</span>
-<span class="kn">from</span> <span class="nn">eckity.fitness.gp_fitness</span> <span class="kn">import</span> <span class="n">GpFitness</span>
+<span class="kn">from</span> <span class="nn">eckity.fitness.gp_fitness</span> <span class="kn">import</span> <span class="n">GPFitness</span>
 <span class="kn">from</span> <span class="nn">eckity.genetic_encodings.gp.tree.tree_individual</span> <span class="kn">import</span> <span class="n">Tree</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 
 
-<span class="k">class</span> <span class="nc">GpTreeCreator</span><span class="p">(</span><span class="n">Creator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">GPTreeCreator</span><span class="p">(</span><span class="n">Creator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -103,7 +103,7 @@
         <span class="n">individuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">function_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">,</span>
                             <span class="n">terminal_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">,</span>
                             <span class="n">erc_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span><span class="p">,</span>
-                            <span class="n">fitness</span><span class="o">=</span><span class="n">GpFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
+                            <span class="n">fitness</span><span class="o">=</span><span class="n">GPFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
                             <span class="n">init_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span><span class="p">)</span>
                        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_individuals</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">individuals</span><span class="p">:</span>
@@ -123,18 +123,18 @@
         </details>
 
             </section>
-                <section id="GpTreeCreator">
+                <section id="GPTreeCreator">
                                 <div class="attr class">
-        <a class="headerlink" href="#GpTreeCreator">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#GPTreeCreator">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">GpTreeCreator</span><wbr>(<span class="base"><a href="../creator.html#Creator">eckity.creators.creator.Creator</a></span>):
+        <span class="name">GPTreeCreator</span><wbr>(<span class="base"><a href="../creator.html#Creator">eckity.creators.creator.Creator</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">GpTreeCreator</span><span class="p">(</span><span class="n">Creator</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">GPTreeCreator</span><span class="p">(</span><span class="n">Creator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -165,7 +165,7 @@
         <span class="n">individuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">function_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">,</span>
                             <span class="n">terminal_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">,</span>
                             <span class="n">erc_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span><span class="p">,</span>
-                            <span class="n">fitness</span><span class="o">=</span><span class="n">GpFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
+                            <span class="n">fitness</span><span class="o">=</span><span class="n">GPFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
                             <span class="n">init_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span><span class="p">)</span>
                        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_individuals</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">individuals</span><span class="p">:</span>
@@ -186,11 +186,11 @@
 
     
 
-                            <div id="GpTreeCreator.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#GpTreeCreator.__init__">#&nbsp;&nbsp</a>
+                            <div id="GPTreeCreator.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#GPTreeCreator.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">GpTreeCreator</span><span class="signature">(
+            <span class="name">GPTreeCreator</span><span class="signature">(
     init_depth=None,
     function_set=None,
     terminal_set=None,
@@ -234,8 +234,8 @@
     
 
                             </div>
-                            <div id="GpTreeCreator.create_individuals" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#GpTreeCreator.create_individuals">#&nbsp;&nbsp</a>
+                            <div id="GPTreeCreator.create_individuals" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#GPTreeCreator.create_individuals">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -248,7 +248,7 @@
         <span class="n">individuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">function_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">,</span>
                             <span class="n">terminal_set</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">,</span>
                             <span class="n">erc_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span><span class="p">,</span>
-                            <span class="n">fitness</span><span class="o">=</span><span class="n">GpFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
+                            <span class="n">fitness</span><span class="o">=</span><span class="n">GPFitness</span><span class="p">(</span><span class="n">bloat_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bloat_weight</span><span class="p">,</span> <span class="n">higher_is_better</span><span class="o">=</span><span class="n">higher_is_better</span><span class="p">),</span>
                             <span class="n">init_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">init_depth</span><span class="p">)</span>
                        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_individuals</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">individuals</span><span class="p">:</span>
@@ -266,8 +266,8 @@
     
 
                             </div>
-                            <div id="GpTreeCreator.create_tree" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#GpTreeCreator.create_tree">#&nbsp;&nbsp</a>
+                            <div id="GPTreeCreator.create_tree" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#GPTreeCreator.create_tree">#&nbsp;&nbsp</a>
 
                 <div class="decorator">@abstractmethod</div>
 
@@ -291,21 +291,21 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="../creator.html#Creator">eckity.creators.creator.Creator</a></dt>
-                                <dd id="GpTreeCreator.apply_operator" class="function"><a href="../creator.html#Creator.apply_operator">apply_operator</a></dd>
-                <dd id="GpTreeCreator.event_name_to_data" class="function"><a href="../creator.html#Creator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="GPTreeCreator.apply_operator" class="function"><a href="../creator.html#Creator.apply_operator">apply_operator</a></dd>
+                <dd id="GPTreeCreator.event_name_to_data" class="function"><a href="../creator.html#Creator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="GpTreeCreator.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="GpTreeCreator.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="GpTreeCreator.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                                <dd id="GPTreeCreator.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="GPTreeCreator.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="GPTreeCreator.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="GpTreeCreator.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="GpTreeCreator.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="GpTreeCreator.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="GpTreeCreator.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="GPTreeCreator.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="GPTreeCreator.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="GPTreeCreator.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="GPTreeCreator.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>
