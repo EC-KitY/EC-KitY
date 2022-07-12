@@ -19,7 +19,7 @@ class FailableOperator(GeneticOperator):
             succeeded, result = self.attempt_operator(payload, i)
             if succeeded:
                 return result
-        return self.on_fail(payload,i)
+        return self.on_fail(payload, i)
 
     # returns tuple of (succeeded or not, result value)
     @abstractmethod
