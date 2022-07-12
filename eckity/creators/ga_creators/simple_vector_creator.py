@@ -1,7 +1,6 @@
 from eckity.creators.creator import Creator
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
-from eckity.genetic_encodings.ga.vector_individual import Vector
 
 
 class GAVectorCreator(Creator):
