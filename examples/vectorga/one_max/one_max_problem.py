@@ -29,8 +29,8 @@ def main():
                       elitism_rate=1/300,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
-                          VectorKPointsCrossover(probability=0.7, k=1),
-                          BitStringVectorNFlipMutation(probability=1, probability_for_each=0.02, n=1000)
+                          VectorKPointsCrossover(probability=0.5, k=2),
+                          BitStringVectorNFlipMutation(probability=0.2, probability_for_each=0.05, n=1000)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple
