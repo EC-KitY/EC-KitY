@@ -1,6 +1,4 @@
 from eckity.genetic_operators.genetic_operator import GeneticOperator
-from eckity.genetic_operators.mutations.identity_transformation import IdentityTransformation
-from eckity.event_based_operator import Operator
 from abc import abstractmethod
 
 
@@ -14,12 +12,11 @@ class FailableOperator(GeneticOperator):
 
     # TODO add event of on fail or on fail all retries
     def apply(self, payload):
-        result = None
         for i in range(self.attempts):
             succeeded, result = self.attempt_operator(payload, i)
             if succeeded:
                 return result
-        return self.on_fail(payload, i)
+        return self.on_fail(payload)
 
     # returns tuple of (succeeded or not, result value)
     @abstractmethod
@@ -27,5 +24,5 @@ class FailableOperator(GeneticOperator):
         pass
 
     @abstractmethod
-    def on_fail(self, payload, i):
+    def on_fail(self, payload):
         pass

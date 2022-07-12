@@ -33,6 +33,14 @@ class Vector(Individual):
         return len(self.vector)
 
     def get_bounds(self):
+        """
+        Get vector bounds
+
+        Returns
+        -------
+        tuple of (Number, Number)
+            vector bounds.
+        """
         return self.bounds
 
     def check_if_in_bounds(self):
