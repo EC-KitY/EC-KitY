@@ -46,10 +46,10 @@ class Vector(Individual):
     def check_if_in_bounds(self):
         for i in range(self.size()):
             if len(self.bounds) == 2:
-                if (self.vector[i] < self.bounds[0]) | (self.vector[i] > self.bounds[1]):
+                if (self.vector[i] < self.bounds[0]) or (self.vector[i] > self.bounds[1]):
                     return False
             else:
-                if (self.vector[i] < self.bounds[i][0]) | (self.vector[i] > self.bounds[i][1]):
+                if (self.vector[i] < self.bounds[i][0]) or (self.vector[i] > self.bounds[i][1]):
                     return False
         return True
 
