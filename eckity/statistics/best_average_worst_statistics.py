@@ -33,6 +33,7 @@ class BestAverageWorstStatistics(Statistics):
             print(self.format_string.format(best_individual.get_pure_fitness(),
                                             sub_pop.get_worst_individual().get_pure_fitness(),
                                             sub_pop.get_average_fitness()), file=self.output_stream)
+            print(best_individual.vector)
 
     # TODO tostring to indiv
 

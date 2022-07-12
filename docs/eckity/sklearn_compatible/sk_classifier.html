@@ -31,16 +31,16 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#SkClassifier">SkClassifier</a>
+                    <a class="class" href="#SKClassifier">SKClassifier</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#SkClassifier.predict">predict</a>
+                                <a class="function" href="#SKClassifier.predict">predict</a>
                         </li>
                         <li>
-                                <a class="function" href="#SkClassifier.predict_proba">predict_proba</a>
+                                <a class="function" href="#SKClassifier.predict_proba">predict_proba</a>
                         </li>
                         <li>
-                                <a class="function" href="#SkClassifier.predict_log_proba">predict_log_proba</a>
+                                <a class="function" href="#SKClassifier.predict_log_proba">predict_log_proba</a>
                         </li>
                 </ul>
 
@@ -70,7 +70,7 @@
 <span class="kn">from</span> <span class="nn">eckity.sklearn_compatible.sklearn_wrapper</span> <span class="kn">import</span> <span class="n">SklearnWrapper</span>
 
 
-<span class="k">class</span> <span class="nc">SkClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute output using best evolved individual.</span>
@@ -107,18 +107,18 @@
         </details>
 
             </section>
-                <section id="SkClassifier">
+                <section id="SKClassifier">
                                 <div class="attr class">
-        <a class="headerlink" href="#SkClassifier">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#SKClassifier">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">SkClassifier</span><wbr>(<span class="base"><a href="sklearn_wrapper.html#SklearnWrapper">eckity.sklearn_compatible.sklearn_wrapper.SklearnWrapper</a></span>, <span class="base">sklearn.base.ClassifierMixin</span>):
+        <span class="name">SKClassifier</span><wbr>(<span class="base"><a href="sklearn_wrapper.html#SklearnWrapper">eckity.sklearn_compatible.sklearn_wrapper.SklearnWrapper</a></span>, <span class="base">sklearn.base.ClassifierMixin</span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">SkClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute output using best evolved individual.</span>
@@ -168,14 +168,14 @@ during the fitting and prediction process, respectively.</li>
 <h6 id="attributes">Attributes</h6>
 
 <ul>
-<li><strong>is_fitted</strong> (bool):
+<li><strong>is_fitted_</strong> (bool):
 Determines if the model is fitted (evolved).</li>
 </ul>
 </div>
 
 
-                            <div id="SkClassifier.predict" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#SkClassifier.predict">#&nbsp;&nbsp</a>
+                            <div id="SKClassifier.predict" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#SKClassifier.predict">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -214,7 +214,7 @@ Determines if the model is fitted (evolved).</li>
         </details>
 
             <div class="docstring"><p>Compute output using best evolved individual.
-Use <code><a href="#SkClassifier.predict">predict</a></code> in a sklearn setting.
+Use <code><a href="#SKClassifier.predict">predict</a></code> in a sklearn setting.
 Input is a numpy array.</p>
 
 <h6 id="parameters">Parameters</h6>
@@ -233,8 +233,8 @@ Returns predicted values after applying classification.</li>
 
 
                             </div>
-                            <div id="SkClassifier.predict_proba" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#SkClassifier.predict_proba">#&nbsp;&nbsp</a>
+                            <div id="SKClassifier.predict_proba" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#SKClassifier.predict_proba">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -252,8 +252,8 @@ Returns predicted values after applying classification.</li>
     
 
                             </div>
-                            <div id="SkClassifier.predict_log_proba" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#SkClassifier.predict_log_proba">#&nbsp;&nbsp</a>
+                            <div id="SKClassifier.predict_log_proba" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#SKClassifier.predict_log_proba">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -275,15 +275,15 @@ Returns predicted values after applying classification.</li>
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="sklearn_wrapper.html#SklearnWrapper">eckity.sklearn_compatible.sklearn_wrapper.SklearnWrapper</a></dt>
-                                <dd id="SkClassifier.__init__" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.__init__">SklearnWrapper</a></dd>
-                <dd id="SkClassifier.fit" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.fit">fit</a></dd>
-                <dd id="SkClassifier.get_params" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.get_params">get_params</a></dd>
-                <dd id="SkClassifier.set_params" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.set_params">set_params</a></dd>
-                <dd id="SkClassifier.partial_fit" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.partial_fit">partial_fit</a></dd>
+                                <dd id="SKClassifier.__init__" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.__init__">SklearnWrapper</a></dd>
+                <dd id="SKClassifier.fit" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.fit">fit</a></dd>
+                <dd id="SKClassifier.get_params" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.get_params">get_params</a></dd>
+                <dd id="SKClassifier.set_params" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.set_params">set_params</a></dd>
+                <dd id="SKClassifier.partial_fit" class="function"><a href="sklearn_wrapper.html#SklearnWrapper.partial_fit">partial_fit</a></dd>
 
             </div>
             <div><dt>sklearn.base.ClassifierMixin</dt>
-                                <dd id="SkClassifier.score" class="function">score</dd>
+                                <dd id="SKClassifier.score" class="function">score</dd>
 
             </div>
                                 </dl>

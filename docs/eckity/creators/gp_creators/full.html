@@ -63,10 +63,10 @@
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">overrides</span> <span class="kn">import</span> <span class="n">overrides</span>
 
-<span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.tree_creator</span> <span class="kn">import</span> <span class="n">GpTreeCreator</span>
+<span class="kn">from</span> <span class="nn">eckity.creators.gp_creators.tree_creator</span> <span class="kn">import</span> <span class="n">GPTreeCreator</span>
 
 
-<span class="k">class</span> <span class="nc">FullCreator</span><span class="p">(</span><span class="n">GpTreeCreator</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FullCreator</span><span class="p">(</span><span class="n">GPTreeCreator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -83,13 +83,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -160,12 +160,12 @@
 
         
         <span class="def">class</span>
-        <span class="name">FullCreator</span><wbr>(<span class="base"><a href="tree_creator.html#GpTreeCreator">eckity.creators.gp_creators.tree_creator.GpTreeCreator</a></span>):
+        <span class="name">FullCreator</span><wbr>(<span class="base"><a href="tree_creator.html#GPTreeCreator">eckity.creators.gp_creators.tree_creator.GPTreeCreator</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FullCreator</span><span class="p">(</span><span class="n">GpTreeCreator</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FullCreator</span><span class="p">(</span><span class="n">GPTreeCreator</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">init_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -182,13 +182,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -286,13 +286,13 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 
 <span class="sd">        function_set : list</span>
-<span class="sd">            List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">            List of functions used as internal nodes in the GP tree. The default is None.</span>
 
 <span class="sd">        terminal_set : list</span>
-<span class="sd">            List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">            List of terminals used in the GP-tree leaves. The default is None.</span>
 
 <span class="sd">        erc_range : (float, float)</span>
-<span class="sd">            Range of values for ephemeral random constant (erc). The default is None.</span>
+<span class="sd">            Range of values for ephemeral random constant (ERC). The default is None.</span>
 
 <span class="sd">        bloat_weight : float</span>
 <span class="sd">            Bloat control weight to punish large trees. Bigger values make a bigger punish.</span>
@@ -314,11 +314,11 @@
 <li><p><strong>init_depth</strong> ((int, int)):</p></li>
 <li><p><strong>Min and max depths of initial random trees. The default is None.</strong></p></li>
 <li><strong>function_set</strong> (list):
-List of functions used as internal nodes in the gp tree. The default is None.</li>
+List of functions used as internal nodes in the GP tree. The default is None.</li>
 <li><strong>terminal_set</strong> (list):
-List of terminals used in the gp-tree leaves. The default is None.</li>
+List of terminals used in the GP-tree leaves. The default is None.</li>
 <li><strong>erc_range</strong> ((float, float)):
-Range of values for ephemeral random constant (erc). The default is None.</li>
+Range of values for ephemeral random constant (ERC). The default is None.</li>
 <li><strong>bloat_weight</strong> (float):
 Bloat control weight to punish large trees. Bigger values make a bigger punish.</li>
 <li><strong>events</strong> (list):
@@ -384,8 +384,8 @@ Maximum depth of tree. The default is 5.</li>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="tree_creator.html#GpTreeCreator">eckity.creators.gp_creators.tree_creator.GpTreeCreator</a></dt>
-                                <dd id="FullCreator.create_individuals" class="function"><a href="tree_creator.html#GpTreeCreator.create_individuals">create_individuals</a></dd>
+                                    <div><dt><a href="tree_creator.html#GPTreeCreator">eckity.creators.gp_creators.tree_creator.GPTreeCreator</a></dt>
+                                <dd id="FullCreator.create_individuals" class="function"><a href="tree_creator.html#GPTreeCreator.create_individuals">create_individuals</a></dd>
 
             </div>
             <div><dt><a href="../creator.html#Creator">eckity.creators.creator.Creator</a></dt>

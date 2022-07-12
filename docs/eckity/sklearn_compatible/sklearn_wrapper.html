@@ -91,7 +91,7 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    is_fitted: bool</span>
+<span class="sd">    is_fitted_: bool</span>
 <span class="sd">        Determines if the model is fitted (evolved).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -162,7 +162,7 @@
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;is_fitted&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;is_fitted_&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
@@ -196,7 +196,7 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    is_fitted: bool</span>
+<span class="sd">    is_fitted_: bool</span>
 <span class="sd">        Determines if the model is fitted (evolved).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -267,7 +267,7 @@
 
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;is_fitted&#39;</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;is_fitted_&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
@@ -290,7 +290,7 @@ during the fitting and prediction process, respectively.</li>
 <h6 id="attributes">Attributes</h6>
 
 <ul>
-<li><strong>is_fitted</strong> (bool):
+<li><strong>is_fitted_</strong> (bool):
 Determines if the model is fitted (evolved).</li>
 </ul>
 </div>

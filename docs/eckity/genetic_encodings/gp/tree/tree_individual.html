@@ -119,15 +119,14 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    function_set : list</span>
-<span class="sd">        List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">        List of functions used as internal nodes in the GP tree. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    terminal_set : list</span>
-<span class="sd">        List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">        List of terminals used in the GP-tree leaves. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    erc_range : (float, float)</span>
-<span class="sd">        Range of values for ephemeral random constant (erc). The default is None.        </span>
+<span class="sd">        Range of values for ephemeral random constant (ERC). The default is None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -200,7 +199,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_functions</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">random_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;select a random terminal or create an erc terminal&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Select a random terminal or create an ERC terminal&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terminals</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -256,7 +255,7 @@
                 <span class="n">X</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_generate_args</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
                 <span class="n">reshape</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bad argument to tree.execute, must be numpy array or kwargs: </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">kw</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -386,15 +385,14 @@
 <span class="sd">        Min and max depths of initial random trees. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    function_set : list</span>
-<span class="sd">        List of functions used as internal nodes in the gp tree. The default is None.</span>
+<span class="sd">        List of functions used as internal nodes in the GP tree. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    terminal_set : list</span>
-<span class="sd">        List of terminals used in the gp-tree leaves. The default is None.</span>
+<span class="sd">        List of terminals used in the GP-tree leaves. The default is None.</span>
 <span class="sd">        </span>
 <span class="sd">    erc_range : (float, float)</span>
-<span class="sd">        Range of values for ephemeral random constant (erc). The default is None.        </span>
+<span class="sd">        Range of values for ephemeral random constant (ERC). The default is None.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">,</span>
                  <span class="n">function_set</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -467,7 +465,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">function_set</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_functions</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">random_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;select a random terminal or create an erc terminal&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Select a random terminal or create an ERC terminal&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terminals</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -523,7 +521,7 @@
                 <span class="n">X</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_generate_args</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
                 <span class="n">reshape</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bad argument to tree.execute, must be numpy array or kwargs: </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">kw</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -637,11 +635,11 @@ There are two types of nodes: functions and terminals.</p>
 <li><strong>init_depth</strong> ((int, int)):
 Min and max depths of initial random trees. The default is None.</li>
 <li><strong>function_set</strong> (list):
-List of functions used as internal nodes in the gp tree. The default is None.</li>
+List of functions used as internal nodes in the GP tree. The default is None.</li>
 <li><strong>terminal_set</strong> (list):
-List of terminals used in the gp-tree leaves. The default is None.</li>
+List of terminals used in the GP-tree leaves. The default is None.</li>
 <li><strong>erc_range</strong> ((float, float)):
-Range of values for ephemeral random constant (erc). The default is None.</li>
+Range of values for ephemeral random constant (ERC). The default is None.</li>
 </ul>
 </div>
 
@@ -832,7 +830,7 @@ Range of values for ephemeral random constant (erc). The default is None.</li>
             <details>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">random_terminal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;select a random terminal or create an erc terminal&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Select a random terminal or create an ERC terminal&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">erc_range</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminal_set</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terminals</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -845,7 +843,7 @@ Range of values for ephemeral random constant (erc). The default is None.</li>
 
         </details>
 
-            <div class="docstring"><p>select a random terminal or create an erc terminal</p>
+            <div class="docstring"><p>Select a random terminal or create an ERC terminal</p>
 </div>
 
 
@@ -887,7 +885,7 @@ Range of values for ephemeral random constant (erc). The default is None.</li>
                 <span class="n">X</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_generate_args</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
                 <span class="n">reshape</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">except</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bad argument to tree.execute, must be numpy array or kwargs: </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">kw</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>

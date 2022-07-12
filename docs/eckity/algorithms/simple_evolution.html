@@ -88,7 +88,6 @@
 <span class="kn">from</span> <span class="nn">eckity.algorithms.algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
 <span class="kn">from</span> <span class="nn">eckity.breeders.simple_breeder</span> <span class="kn">import</span> <span class="n">SimpleBreeder</span>
 <span class="kn">from</span> <span class="nn">eckity.evaluators.simple_population_evaluator</span> <span class="kn">import</span> <span class="n">SimplePopulationEvaluator</span>
-<span class="kn">from</span> <span class="nn">eckity.statistics.best_average_worst_statistics</span> <span class="kn">import</span> <span class="n">BestAverageWorstStatistics</span>
 <span class="kn">from</span> <span class="nn">eckity.termination_checkers.threshold_from_target_termination_checker</span> <span class="kn">import</span> <span class="n">ThresholdFromTargetTerminationChecker</span>
 
 
@@ -106,7 +105,7 @@
 <span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=None</span>
+<span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
@@ -196,7 +195,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span> <span class="o">=</span> <span class="n">best_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">worst_of_gen</span> <span class="o">=</span> <span class="n">worst_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span> <span class="o">=</span> <span class="n">max_generation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -258,7 +256,6 @@
     <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">get_average_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># TODO check if it should be here or register statistic to breeder or sub pop</span>
@@ -308,7 +305,7 @@
 <span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
-<span class="sd">    statistics: Statistics, default=None</span>
+<span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
@@ -398,7 +395,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span> <span class="o">=</span> <span class="n">best_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">worst_of_gen</span> <span class="o">=</span> <span class="n">worst_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span> <span class="o">=</span> <span class="n">max_generation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -460,7 +456,6 @@
     <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">get_average_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># TODO check if it should be here or register statistic to breeder or sub pop</span>
@@ -495,7 +490,7 @@ Does not include and is not meant for multi-objective, co-evolution etc.</p>
 <li><strong>population</strong> (Population):
 The population to be evolved. Contains only one sub-population in simple case.
 Consists of a list of individuals.</li>
-<li><strong>statistics</strong> (Statistics, default=None):
+<li><strong>statistics</strong> (Statistics or list of Statistics, default=None):
 Provide multiple statistics on the population during the evolutionary run.</li>
 <li><strong>breeder</strong> (SimpleBreeder, default=SimpleBreeder instance):
 Responsible of applying the selection method and operator sequence on the individuals
@@ -549,7 +544,7 @@ Current generation number</li>
     termination_checker=&lt;<a href="../termination_checkers/threshold_from_target_termination_checker.html#ThresholdFromTargetTerminationChecker">eckity.termination_checkers.threshold_from_target_termination_checker.ThresholdFromTargetTerminationChecker</a> object&gt;,
     max_workers=None,
     random_generator=None,
-    random_seed=1654083053.6059725,
+    random_seed=1657616323.2544553,
     generation_seed=None,
     best_of_run_=None,
     best_of_run_evaluator=None,
@@ -599,7 +594,6 @@ Current generation number</li>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span> <span class="o">=</span> <span class="n">best_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">worst_of_gen</span> <span class="o">=</span> <span class="n">worst_of_gen</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span> <span class="o">=</span> <span class="n">max_generation</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
@@ -758,7 +752,6 @@ The input to the program (tree).</li>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
 </pre></div>
 
