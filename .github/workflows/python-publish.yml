@@ -9,6 +9,11 @@
 name: Upload Python Package
 
 on:
+  workflow_dispatch:
+    inputs:
+        repo_name:
+          description: 'EC-KitY'
+          required: false
   release:
     types: [published]
 
