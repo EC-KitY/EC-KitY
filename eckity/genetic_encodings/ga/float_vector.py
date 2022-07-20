@@ -27,7 +27,7 @@ class FloatVector(Vector):
                  fitness,
                  length=1,
                  bounds=(0.0, 1.0)):
-        super().__init__(fitness, length, bounds)
+        super().__init__(fitness=fitness, length=length, bounds=bounds)
 
     def get_random_number_in_bounds(self, index):
         """
