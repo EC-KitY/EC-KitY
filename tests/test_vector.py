@@ -1,12 +1,24 @@
 from collections import Counter
 
+import pytest
+
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
 from eckity.genetic_encodings.ga.float_vector import FloatVector
+from eckity.genetic_encodings.ga.int_vector import IntVector
 from eckity.genetic_operators.mutations.vector_random_mutation import VectorGaussOnePointFloatMutation
 
 
 class TestVector:
+    def test_bad_bounds(self):
+        length = 5
+        bounds = [(i, i + 1) for i in range(length)]
+
+        with pytest.raises(ValueError):
+            FloatVector(SimpleFitness(), bounds=bounds, length=length + 1)
+        with pytest.raises(ValueError):
+            FloatVector(SimpleFitness(), bounds=bounds, length=length - 1)
+
     def test_replace_vector_part_bit_index0(self):
         vec_len = 5
         v1 = BitStringVector(SimpleFitness(), length=vec_len)
@@ -72,3 +84,45 @@ class TestVector:
 
         assert len(cnt.keys()) == 2
         assert cnt[2.0] == length - 1
+
+    def test_float_get_rand_num_single_bounds(self):
+        bounds = (-1.0, 1.0)
+        v1 = FloatVector(SimpleFitness(), bounds=bounds, length=5)
+
+        for _ in range(10**6):
+            num = v1.get_random_number_in_bounds(0)
+            assert type(num) == float and bounds[0] <= num <= bounds[1]
+
+    def test_int_get_rand_num_single_bounds(self):
+        bounds = (1, 5)
+        v1 = IntVector(SimpleFitness(), bounds=bounds, length=5)
+
+        for _ in range(10**6):
+            num = v1.get_random_number_in_bounds(0)
+            assert type(num) == int and bounds[0] <= num <= bounds[1]
+
+    def test_bit_get_rand_num_single_bounds(self):
+        bounds = (0, 1)
+        v1 = BitStringVector(SimpleFitness(), bounds=bounds, length=5)
+
+        for _ in range(10**6):
+            num = v1.get_random_number_in_bounds(0)
+            assert type(num) == int and num == bounds[0] or num == bounds[1]
+
+    def test_float_get_rand_num_multi_bounds(self):
+        length = 5
+        bounds = [(i, i + 1) for i in range(length)]
+        v1 = FloatVector(SimpleFitness(), bounds=bounds, length=length)
+
+        for i in range(length):
+            num = v1.get_random_number_in_bounds(i)
+            assert type(num) == float and bounds[i][0] <= num <= bounds[i][1]
+
+    def test_int_get_rand_num_multi_bounds(self):
+        length = 5
+        bounds = [(i, i + 1) for i in range(length)]
+        v1 = IntVector(SimpleFitness(), bounds=bounds, length=length)
+
+        for i in range(length):
+            num = v1.get_random_number_in_bounds(i)
+            assert type(num) == int and bounds[i][0] <= num <= bounds[i][1]

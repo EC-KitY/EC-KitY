@@ -23,14 +23,16 @@ class Vector(Individual):
     bounds : list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
+
     def __init__(self,
                  fitness,
                  bounds,
                  length=1):
         super().__init__(fitness)
 
-        # TODO do we need this assertion? @tomer
-        #assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)
+        if (type(bounds) == tuple and len(bounds) != 2) \
+                or (type(bounds) == list and len(bounds) != length):
+            raise ValueError(f'Bounds must be either a tuple of size 2 or a list of {length} tuples')
 
         self.bounds = bounds
         self.length = length
@@ -249,7 +251,7 @@ class Vector(Individual):
         object
             vector cell value
         """
-        raise ValueError("get_random_number is an abstract method in vector individual")
+        raise NotImplementedError("get_random_number is an abstract method in vector individual")
 
     def execute(self, *args, **kwargs):
         """

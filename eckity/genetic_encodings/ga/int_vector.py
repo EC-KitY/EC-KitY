@@ -23,7 +23,7 @@ class IntVector(Vector):
     length : int
         Vector length - the number of cells in the vector.
 
-    bounds : list of tuples
+    bounds : tuple or list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
     def __init__(self,

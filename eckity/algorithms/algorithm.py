@@ -122,8 +122,8 @@ class Algorithm(Operator):
         elif isinstance(statistics, list):
             for stat in statistics:
                 if not isinstance(stat, Statistics):
-                    raise ValueError('Expected a Statistics instance as an element in Statistics list, '
-                                     'but received', type(stat))
+                    raise ValueError('Expected a Statistics instance as an element'
+                                     ' in Statistics list, but received', type(stat))
             self.statistics = statistics
         else:
             raise ValueError(
