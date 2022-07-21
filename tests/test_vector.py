@@ -1,5 +1,9 @@
+from collections import Counter
+
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
+from eckity.genetic_encodings.ga.float_vector import FloatVector
+from eckity.genetic_operators.mutations.vector_random_mutation import VectorGaussOnePointFloatMutation
 
 
 class TestVector:
@@ -38,6 +42,33 @@ class TestVector:
         v1 = BitStringVector(SimpleFitness(), length=4)
         init_vec = [0, 1, 0, 1]
         v1.vector = init_vec.copy()
+
         assert v1.bit_flip(0) == v1.bit_flip(2) == 1
         assert v1.bit_flip(1) == v1.bit_flip(3) == 0
         assert init_vec == v1.vector
+
+    def test_gauss_mutation_success(self):
+        length = 4
+        v1 = FloatVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
+        init_vec = [2.0] * length
+        v1.vector = init_vec.copy()
+        mut = VectorGaussOnePointFloatMutation()
+
+        mut.apply_operator([v1])
+        cnt = Counter(v1.vector)
+
+        assert len(cnt.keys()) == 2
+        assert cnt[2.0] == length - 1
+
+    def test_gauss_mutation_fail(self):
+        length = 4
+        v1 = FloatVector(SimpleFitness(), length=length, bounds=(-1.0, 1.0))
+        init_vec = [2.0] * length
+        v1.vector = init_vec.copy()
+        mut = VectorGaussOnePointFloatMutation(mu=1000)
+
+        mut.apply_operator([v1])
+        cnt = Counter(v1.vector)
+
+        assert len(cnt.keys()) == 2
+        assert cnt[2.0] == length - 1
