@@ -2,38 +2,38 @@
 This module implements the SimpleEvolution class.
 """
 
-from overrides import overrides
 from time import time
+from overrides import overrides
 
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
+from eckity.termination_checkers.threshold_from_target_termination_checker\
+    import ThresholdFromTargetTerminationChecker
 
 
 class SimpleEvolution(Algorithm):
-
     """
     Simple case evolutionary algorithm.
 
-    Basic evolutionary algorithm that contains one sub-population.
+    Basic evolutionary algorithm that contains one subpopulation.
     Does not include and is not meant for multi-objective, co-evolution etc.
 
     Parameters
     ----------
     population: Population
-        The population to be evolved. Contains only one sub-population in simple case.
+        The population to be evolved. Contains only one subpopulation in simple case.
         Consists of a list of individuals.
 
     statistics: Statistics or list of Statistics, default=None
         Provide multiple statistics on the population during the evolutionary run.
 
     breeder: SimpleBreeder, default=SimpleBreeder instance
-        Responsible of applying the selection method and operator sequence on the individuals
-        in each generation. Applies on one sub-population in simple case.
+        Responsible for applying the selection method and operator sequence on the individuals
+        in each generation. Applies on one subpopulation in simple case.
 
     population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator instance
-        Responsible of evaluating each individual's fitness concurrently and returns the best individual
+        Responsible for evaluating each individual's fitness concurrently and returns the best individual
         of each subpopulation (returns a single individual in simple case).
 
     max_generation: int, default=1000
@@ -47,7 +47,7 @@ class SimpleEvolution(Algorithm):
         Names of events to publish during the evolution.
 
     termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()
-        Responsible of checking if the algorithm should finish before reaching max_generation.
+        Responsible for checking if the algorithm should finish before reaching max_generation.
 
     max_workers: int, default=None
         Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.
@@ -119,6 +119,11 @@ class SimpleEvolution(Algorithm):
         self.final_generation_ = None
 
     def initialize(self):
+        """
+        Initialize the evolutionary algorithm
+
+        Register statistics to `after_generation` event
+        """
         super().initialize()
         for stat in self.statistics:
             self.register('after_generation', stat.write_statistics)
@@ -174,6 +179,9 @@ class SimpleEvolution(Algorithm):
         return self.best_of_run_.execute(**kwargs)
 
     def finish(self):
+        """
+        Finish the evolutionary run by showing the best individual and printing the best fitness
+        """
         # todo should move to finisher
         self.best_of_run_.show()
         print(self.best_of_run_.get_pure_fitness())
@@ -183,15 +191,20 @@ class SimpleEvolution(Algorithm):
 
     def event_name_to_data(self, event_name):
         if event_name == "init":
-            return {"population": self.population,
-                    "statistics": self.statistics,
-                    "breeder": self.breeder,
-                    "termination_checker": self.termination_checker,
-                    "max_generation": self.max_generation,
-                    "events": self.events,
-                    "max_workers": self.max_workers}
-        else:
-            return {"population": self.population,
-                    "best_of_run_": self.best_of_run_,
-                    "best_of_gen": self.best_of_gen,
-                    "generation_num": self.generation_num}
+            return {
+                "population": self.population,
+                "statistics": self.statistics,
+                "breeder": self.breeder,
+                "termination_checker": self.termination_checker,
+                "max_generation": self.max_generation,
+                "events": self.events,
+                "max_workers": self.max_workers
+            }
+
+        # default case
+        return {
+            "population": self.population,
+            "best_of_run_": self.best_of_run_,
+            "best_of_gen": self.best_of_gen,
+            "generation_num": self.generation_num
+        }

@@ -1,5 +1,3 @@
-from time import time
-
 from sklearn.utils.validation import check_is_fitted, check_X_y
 
 
@@ -16,13 +14,13 @@ class SklearnWrapper:
 
     Attributes
     ----------
-    is_fitted_: bool
+    is_fitted: bool
         Determines if the model is fitted (evolved).
     """
+
     def __init__(self,
                  algorithm):
         self.algorithm = algorithm
-        self.is_fitted = False
 
     def fit(self, X, y=None):
         """
@@ -46,7 +44,7 @@ class SklearnWrapper:
             sub_pop.evaluator.set_context((X, y))
 
         self.algorithm.evolve()
-        self.is_fitted = True
+        self.is_fitted_ = True
         return self
 
     def predict(self, X):
@@ -71,8 +69,8 @@ class SklearnWrapper:
 
         return self.algorithm.best_of_run_.execute(X)
 
-    def __sklearn_is_fitted__(self):
-        return self.is_fitted
+    # def __sklearn_is_fitted__(self):
+    #     return self.is_fitted_
 
     def get_params(self, deep=True):
         return self.__getstate__()
@@ -87,7 +85,8 @@ class SklearnWrapper:
 
     def __getstate__(self):
         state = self.__dict__.copy()
-        del state['is_fitted_']
+        if 'is_fitted_' in state:
+            del state['is_fitted_']
         return state
 
     def __setstate__(self, state):

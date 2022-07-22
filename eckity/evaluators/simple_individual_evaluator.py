@@ -12,30 +12,35 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
     You will need to extend this class with your user-defined fitness evaluation methods.
     """
     @overrides
-    def evaluate(self, individuals):
+    def evaluate(self, individual, environment_individuals):
         """
         Updates the fitness score of the given individuals, then returns the best individual
 
         Parameters
         ----------
-        individuals: list of individuals
-            individuals to evaluate fitness of  - in Simple Evaluator version the list is of size 1
+        individual: Individual
+            the current individual to evaluate its fitness
+
+        environment_individuals: list of Individuals
+            the individuals in the current individual's environment
+            those individuals will affect the current individual's fitness
+            (not used in simple case)
 
         Returns
         -------
         Individual
             the individual with the best fitness out of the given individuals
         """
-        assert len(individuals) == 1, 'SimpleIndividualEvaluator.evaluate must receive an individuals list of size 1'
-        super().evaluate(individuals)
-        individual = individuals[0]
+        super().evaluate(individual, environment_individuals)
         fitness_score = self._evaluate_individual(individual)
         individual.fitness.set_fitness(fitness_score)
-        return individuals[0]
+        return individual
 
     @abstractmethod
     def _evaluate_individual(self, individual):
         """
+        Evaluate the fitness score for the given individual.
+        This function must be implemented by subclasses of this class (user-defined evaluators)
 
         Parameters
         ----------
@@ -47,4 +52,4 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
         float
             The evaluated fitness value for the given individual
         """
-        pass
+        raise ValueError("_evaluate_individual is an abstract method in SimpleIndividualEvaluator")

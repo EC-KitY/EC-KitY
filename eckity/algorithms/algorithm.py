@@ -197,7 +197,8 @@ class Algorithm(Operator):
         Returns
         -------
         object
-            Result of algorithm execution (for example: best individual in GA, or best individual execution in GP)
+            Result of algorithm execution (for example: the best
+             individual in GA, or the best individual execution in GP)
         """
         raise ValueError("execute is an abstract method in class Algorithm")
 
@@ -300,8 +301,7 @@ class Algorithm(Operator):
                     "max_generation": self.max_generation,
                     "events": self.events,
                     "max_workers": self.max_workers}
-        else:
-            return {}
+        return {}
 
     def set_random_generator(self, rng):
         """

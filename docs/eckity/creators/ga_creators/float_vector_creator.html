@@ -66,8 +66,13 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">gene_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
                  <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">gene_creator</span><span class="p">,</span> <span class="n">FloatVector</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+                         <span class="n">gene_creator</span><span class="o">=</span><span class="n">gene_creator</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+                         <span class="n">vector_type</span><span class="o">=</span><span class="n">FloatVector</span><span class="p">,</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -88,8 +93,13 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">gene_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
                  <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">gene_creator</span><span class="p">,</span> <span class="n">FloatVector</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+                         <span class="n">gene_creator</span><span class="o">=</span><span class="n">gene_creator</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+                         <span class="n">vector_type</span><span class="o">=</span><span class="n">FloatVector</span><span class="p">,</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -100,7 +110,7 @@
                                         <div class="attr function"><a class="headerlink" href="#GAFloatVectorCreator.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">GAFloatVectorCreator</span><span class="signature">(length=1, gene_creator=None, events=None)</span>
+            <span class="name">GAFloatVectorCreator</span><span class="signature">(length=1, gene_creator=None, bounds=(0.0, 1.0), events=None)</span>
     </div>
 
             <details>
@@ -108,8 +118,13 @@
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                  <span class="n">gene_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
                  <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">gene_creator</span><span class="p">,</span> <span class="n">FloatVector</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+                         <span class="n">gene_creator</span><span class="o">=</span><span class="n">gene_creator</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+                         <span class="n">vector_type</span><span class="o">=</span><span class="n">FloatVector</span><span class="p">,</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 </pre></div>
 
         </details>
