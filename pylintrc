@@ -57,7 +57,7 @@ ignore-patterns=^\.#
 # (useful for modules/projects where namespaces are manipulated during runtime
 # and thus existing member attributes cannot be deduced by static analysis). It
 # supports qualified module names, as well as Unix pattern matching.
-ignored-modules=
+ignored-modules=sklearn, overrides, numpy, pandas
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().
@@ -240,13 +240,11 @@ good-names=i,
            ex,
            Run,
            _,
-		   X,
-		   y,
-		   df
+		   X, y, X_test, y_test, X_train, y_train
 
 # Good variable names regexes, separated by a comma. If names match any regex,
 # they will always be accepted
-good-names-rgxs=
+good-names-rgxs=[a-z0-9_]{2,30}$
 
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint=no
