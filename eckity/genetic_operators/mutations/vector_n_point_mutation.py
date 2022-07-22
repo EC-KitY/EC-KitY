@@ -1,4 +1,5 @@
 from random import choices
+from random import sample
 
 from eckity.genetic_operators.failable_operator import FailableOperator
 
@@ -89,7 +90,7 @@ class VectorNPointMutation(FailableOperator):
             old_individual = individual.clone()
 
             # randomly select n points of the vector (without repetitions)
-            m_points = choices(range(individual.size()), k=self.n)
+            m_points = sample(range(individual.size()), k=self.n)
             # obtain the mutated values
             mut_vals = [self.mut_val_getter(individual, m_point) for m_point in m_points]
 
