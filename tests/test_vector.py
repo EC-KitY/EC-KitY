@@ -169,8 +169,6 @@ class TestVector:
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
 
-        print(cnt)
-        print(n_points + 1)
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
 
@@ -185,7 +183,5 @@ class TestVector:
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
 
-        print(cnt)
-        print(n_points + 1)
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
