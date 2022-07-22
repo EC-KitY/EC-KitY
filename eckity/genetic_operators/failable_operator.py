@@ -23,7 +23,7 @@ class FailableOperator(GeneticOperator):
     attempts: int
         number of attempts to be made during the operator execution
     """
-    def __init__(self, probability=0.05, arity=0, events=None, attempts=5):
+    def __init__(self, probability=0.05, arity=0, events=None, attempts=1):
         super().__init__(probability, arity, events)
         if attempts <= 1:
             raise ValueError("Number of attempts must be at least 1")
