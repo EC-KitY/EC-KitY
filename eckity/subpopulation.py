@@ -1,20 +1,18 @@
+import random
 import numpy as np
 
 from eckity.creators.creator import Creator
 from eckity.creators.gp_creators.full import FullCreator
-from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 
-import random
-
 
 class Subpopulation:
     """
-    Sub-group of the experiment population.
+    Subgroup of the experiment population.
 
     Contains a specific encoding, fitness evaluation method, creator list, operator sequence and selection methods.
 
@@ -59,6 +57,7 @@ class Subpopulation:
         In every generation, there will be n_elites slots for the elite individuals
         that will be copied as-is to the next generation.
     """
+
     def __init__(self,
                  evaluator,
                  creators=None,
@@ -119,7 +118,8 @@ class Subpopulation:
     def create_subpopulation_individuals(self):
         if self.individuals is None:
             # Select one creator to generate individuals, with respect to the creators' probabilities
-            selected_creator = random.choices(self.creators, weights=self._pcr)[0]  # random.choices returns [selected_creator]
+            selected_creator = random.choices(self.creators, weights=self._pcr)[
+                0]  # random.choices returns [selected_creator]
             self.individuals = selected_creator.create_individuals(self.population_size, self.higher_is_better)
 
     def get_operators_sequence(self):
