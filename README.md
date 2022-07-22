@@ -83,7 +83,7 @@ print('MAE on test set:', mean_absolute_error(y_test, regressor.predict(X_test))
 ```
 
 ### Feature comparison
-We are working on a paper that describes EC-KitY. For now, here is a table comparing EC-KitY with 8 other libraries:
+Here's a comparison table. The full paper is available [here](https://arxiv.org/abs/2207.10367).
 ![image](https://github.com/EC-KitY/EC-KitY/blob/main/features.JPG?raw=true)
 
 ### Authors
@@ -99,11 +99,10 @@ Citations are always appreciated 😊:
 @article{eckity2022,
     author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
     title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
-    journal = {},
-    volume = {},
-    pages = {},
+    publisher = {arXiv},
     year = {2022},
-    note = {in preparation}
+    url = {https://arxiv.org/abs/2207.10367},
+    doi = {10.48550/ARXIV.2207.10367},
 }
 
 @misc{eckity2022git,
