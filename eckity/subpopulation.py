@@ -119,7 +119,7 @@ class Subpopulation:
     def create_subpopulation_individuals(self):
         if self.individuals is None:
             # Select one creator to generate individuals, with respect to the creators' probabilities
-            selected_creator = random.choices(self.creators, self._pcr)[0]  # random.choices returns [selected_creator]
+            selected_creator = random.choices(self.creators, weights=self._pcr)[0]  # random.choices returns [selected_creator]
             self.individuals = selected_creator.create_individuals(self.population_size, self.higher_is_better)
 
     def get_operators_sequence(self):

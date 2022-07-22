@@ -1,3 +1,7 @@
+"""
+This module implements the Algorithm class.
+"""
+
 from abc import abstractmethod
 from concurrent.futures.thread import ThreadPoolExecutor
 import random
@@ -122,8 +126,8 @@ class Algorithm(Operator):
         elif isinstance(statistics, list):
             for stat in statistics:
                 if not isinstance(stat, Statistics):
-                    raise ValueError('Expected a Statistics instance as an element in Statistics list, '
-                                     'but received', type(stat))
+                    raise ValueError('Expected a Statistics instance as an element'
+                                     ' in Statistics list, but received', type(stat))
             self.statistics = statistics
         else:
             raise ValueError(
@@ -155,6 +159,9 @@ class Algorithm(Operator):
 
     @overrides
     def apply_operator(self, payload):
+        """
+        begin the evolutionary run
+        """
         self.evolve()
 
     def evolve(self):
@@ -177,9 +184,29 @@ class Algorithm(Operator):
 
     @abstractmethod
     def execute(self, **kwargs):
-        pass
+        """
+        Execute the algorithm result after evolution ended.
+
+        Parameters
+        ----------
+        kwargs : keyword arguments (relevant in GP representation)
+            Input to program, including every variable in the terminal set as a keyword argument.
+            For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]`
+            then call `execute(x=..., y=..., z=...)`.
+
+        Returns
+        -------
+        object
+            Result of algorithm execution (for example: best individual in GA, or best individual execution in GP)
+        """
+        raise ValueError("execute is an abstract method in class Algorithm")
 
     def initialize(self):
+        """
+        Initialize the algorithm before beginning the evolution process
+
+        Initialize seed, ThreadPoolExecutor and relevant operators
+        """
         self.set_random_seed(self.random_seed)
         print('debug: random seed =', self.random_seed)
         self.population_evaluator.set_executor(self.executor)
@@ -224,20 +251,47 @@ class Algorithm(Operator):
         bool
             True if the main loop should terminate, False otherwise
         """
-        pass
+        raise ValueError("generation_iteration is an abstract method in class Algorithm")
 
     @abstractmethod
     def finish(self):
-        pass
+        """
+        Finish the evolutionary run
+        """
+        raise ValueError("finish is an abstract method in class Algorithm")
 
     def set_generation_seed(self, seed):
+        """
+        Set the seed for current generation
+
+        Parameters
+        ----------
+        seed: int
+            current generation seed
+        """
         self.random_generator.seed(seed)
         self.generation_seed = seed
 
     def create_population(self):
+        """
+        Create the population for the evolutionary run
+        """
         self.population.create_population_individuals()
 
     def event_name_to_data(self, event_name):
+        """
+        Convert a given event name to relevant data of the Algorithm for the event
+
+        Parameters
+        ----------
+        event_name: string
+            name of the event that is happening
+
+        Returns
+        ----------
+        dict
+            Algorithm data regarding the given event
+        """
         if event_name == "init":
             return {"population": self.population,
                     "statistics": self.statistics,
@@ -250,13 +304,37 @@ class Algorithm(Operator):
             return {}
 
     def set_random_generator(self, rng):
+        """
+        Set random generator object
+
+        Parameters
+        ----------
+        rng: object
+            random number generator
+        """
         self.random_generator = rng
 
     def set_random_seed(self, seed=None):
+        """
+        Set random seed
+
+        Parameters
+        ----------
+        seed: int
+            random seed number
+        """
         self.random_generator.seed(seed)
         self.random_seed = seed
 
     def next_seed(self):
+        """
+        Generate a random seed
+
+        Returns
+        ----------
+        int
+            random seed number
+        """
         return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
 
     # Necessary for valid pickling, since SimpleQueue object cannot be pickled

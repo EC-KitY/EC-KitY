@@ -3,7 +3,7 @@ from random import random
 from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
 
 
-class VectorUniformOnePointFloatMutation(VectorNPointMutation):
+class FloatVectorUniformOnePointMutation(VectorNPointMutation):
     """
     Uniform One Point Float Mutation
     """
@@ -15,7 +15,7 @@ class VectorUniformOnePointFloatMutation(VectorNPointMutation):
                          events=events)
 
 
-class VectorUniformNPointFloatMutation(VectorNPointMutation):
+class FloatVectorUniformNPointMutation(VectorNPointMutation):
     """
     Uniform N Point Float Mutation
     """
@@ -27,41 +27,43 @@ class VectorUniformNPointFloatMutation(VectorNPointMutation):
                          events=events)
 
 
-class VectorGaussOnePointFloatMutation(VectorNPointMutation):
+class FloatVectorGaussOnePointMutation(VectorNPointMutation):
     """
     Gaussian One Point Float Mutation
     """
-    def __init__(self, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None):
+    def __init__(self, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None, attempts=5):
         super().__init__(n=1,
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events)
+                         events=events,
+                         attempts=attempts)
 
     def on_fail(self, payload):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
-        mut = VectorUniformNPointFloatMutation(1, self.probability, self.arity, self.events)
-        return mut.apply_operator
+        mut = FloatVectorUniformNPointMutation(1, self.probability, self.arity, self.events)
+        return mut.apply_operator(payload)
 
 
-class VectorGaussNPointFloatMutation(VectorNPointMutation):
+class FloatVectorGaussNPointMutation(VectorNPointMutation):
     """
     Gaussian N Point Float Mutation
     """
-    def __init__(self, n=1, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None):
+    def __init__(self, n=1, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None, attempts=5):
         super().__init__(n=n,
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events)
+                         events=events,
+                         attempts=attempts)
 
     def on_fail(self, payload):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
-        mut = VectorUniformNPointFloatMutation(self.n, self.probability, self.arity, self.events)
+        mut = FloatVectorUniformNPointMutation(self.n, self.probability, self.arity, self.events)
         return mut.apply_operator
 
 
@@ -105,7 +107,7 @@ class BitStringVectorNFlipMutation(VectorNPointMutation):
     """
     N Point Bit-Flip Mutation
     """
-    def __init__(self, probability=1.0, arity=1, events=None, probability_for_each=0.2, n=100):
+    def __init__(self, probability=1.0, arity=1, events=None, probability_for_each=0.2, n=1):
         self.probability_for_each = probability_for_each
         super().__init__(probability=probability,
                          arity=arity,

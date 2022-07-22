@@ -20,7 +20,7 @@ class FloatVector(Vector):
     length : int
         Vector length - the number of cells in the vector.
 
-    bounds : list of tuples
+    bounds : tuple or list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
     def __init__(self,
@@ -44,7 +44,7 @@ class FloatVector(Vector):
             random value according to bounds field
         """
         if type(self.bounds) == tuple:
-            return uniform(self.bounds[0], self.bounds.get_bounds[1])
+            return uniform(self.bounds[0], self.bounds[1])
         return uniform(self.bounds[index][0], self.bounds[index][1])
 
     def get_random_number_with_gauss(self, index, mu, sigma):

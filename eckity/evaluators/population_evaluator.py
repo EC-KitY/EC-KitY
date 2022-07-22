@@ -10,7 +10,7 @@ class PopulationEvaluator(Operator):
 
     def _evaluate(self, population):
         """
-        Updates the fitness score of the given individuals, then returns the best individual
+        Evaluate the fitness score of the entire population
 
         Parameters
         ----------

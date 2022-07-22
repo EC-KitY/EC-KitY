@@ -1,4 +1,5 @@
 from random import choices
+from random import sample
 
 from eckity.genetic_operators.failable_operator import FailableOperator
 
@@ -30,8 +31,8 @@ class VectorNPointMutation(FailableOperator):
         Events to publish before/after the mutation operator
     """
     def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None,
-                 success_checker=None, events=None):
-        super().__init__(probability=probability, arity=arity, events=events)
+                 success_checker=None, events=None, attempts=5):
+        super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
         self.n = n
 
         if success_checker is None:
@@ -89,7 +90,7 @@ class VectorNPointMutation(FailableOperator):
             old_individual = individual.clone()
 
             # randomly select n points of the vector (without repetitions)
-            m_points = choices(range(individual.size()), k=self.n)
+            m_points = sample(range(individual.size()), k=self.n)
             # obtain the mutated values
             mut_vals = [self.mut_val_getter(individual, m_point) for m_point in m_points]
 
@@ -99,6 +100,7 @@ class VectorNPointMutation(FailableOperator):
 
             if not self.success_checker(old_individual, individual):
                 succeeded = False
+                individual.set_vector(old_individual.vector)
                 break
 
         self.applied_individuals = individuals
