@@ -105,7 +105,7 @@ class BitStringVectorNFlipMutation(VectorNPointMutation):
     """
     N Point Bit-Flip Mutation
     """
-    def __init__(self, probability=1.0, arity=1, events=None, probability_for_each=0.2, n=100):
+    def __init__(self, probability=1.0, arity=1, events=None, probability_for_each=0.2, n=1):
         self.probability_for_each = probability_for_each
         super().__init__(probability=probability,
                          arity=arity,
