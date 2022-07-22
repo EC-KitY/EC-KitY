@@ -6,7 +6,7 @@ from eckity.creators.ga_creators.float_vector_creator import GAFloatVectorCreato
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import BitStringVectorFlipMutation, \
-    BitStringVectorNFlipMutation, VectorUniformNPointFloatMutation
+    BitStringVectorNFlipMutation, FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
@@ -44,7 +44,7 @@ def main():
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           VectorKPointsCrossover(probability=0.7, k=1),
-                          VectorUniformNPointFloatMutation(probability=0.3, n=50)
+                          FloatVectorUniformNPointMutation(probability=0.3, n=50)
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple

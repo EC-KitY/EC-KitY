@@ -6,8 +6,8 @@ from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
 from eckity.genetic_encodings.ga.float_vector import FloatVector
 from eckity.genetic_encodings.ga.int_vector import IntVector
-from eckity.genetic_operators.mutations.vector_random_mutation import VectorGaussOnePointFloatMutation, \
-    VectorUniformNPointFloatMutation, VectorGaussNPointFloatMutation, IntVectorOnePointMutation
+from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorGaussOnePointMutation, \
+    FloatVectorUniformNPointMutation, FloatVectorGaussNPointMutation, IntVectorOnePointMutation
 
 
 class TestVector:
@@ -65,7 +65,7 @@ class TestVector:
         v1 = FloatVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
         init_vec = [2.0] * length
         v1.vector = init_vec.copy()
-        mut = VectorGaussOnePointFloatMutation()
+        mut = FloatVectorGaussOnePointMutation()
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
@@ -78,7 +78,7 @@ class TestVector:
         v1 = FloatVector(SimpleFitness(), length=length, bounds=(-1.0, 1.0))
         init_vec = [1.0] * length
         v1.vector = init_vec.copy()
-        mut = VectorGaussOnePointFloatMutation(mu=1000)
+        mut = FloatVectorGaussOnePointMutation(mu=1000)
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
@@ -163,7 +163,7 @@ class TestVector:
         v1 = FloatVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
         init_vec = [0.0] * length
         v1.vector = init_vec.copy()
-        mut = VectorUniformNPointFloatMutation(n=n_points)
+        mut = FloatVectorUniformNPointMutation(n=n_points)
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
@@ -177,7 +177,7 @@ class TestVector:
         v1 = FloatVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
         init_vec = [0.0] * length
         v1.vector = init_vec.copy()
-        mut = VectorGaussNPointFloatMutation(n=n_points)
+        mut = FloatVectorGaussNPointMutation(n=n_points)
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)

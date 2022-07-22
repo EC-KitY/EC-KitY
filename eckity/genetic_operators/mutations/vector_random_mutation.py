@@ -3,7 +3,7 @@ from random import random
 from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
 
 
-class VectorUniformOnePointFloatMutation(VectorNPointMutation):
+class FloatVectorUniformOnePointMutation(VectorNPointMutation):
     """
     Uniform One Point Float Mutation
     """
@@ -15,7 +15,7 @@ class VectorUniformOnePointFloatMutation(VectorNPointMutation):
                          events=events)
 
 
-class VectorUniformNPointFloatMutation(VectorNPointMutation):
+class FloatVectorUniformNPointMutation(VectorNPointMutation):
     """
     Uniform N Point Float Mutation
     """
@@ -27,7 +27,7 @@ class VectorUniformNPointFloatMutation(VectorNPointMutation):
                          events=events)
 
 
-class VectorGaussOnePointFloatMutation(VectorNPointMutation):
+class FloatVectorGaussOnePointMutation(VectorNPointMutation):
     """
     Gaussian One Point Float Mutation
     """
@@ -43,11 +43,11 @@ class VectorGaussOnePointFloatMutation(VectorNPointMutation):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
-        mut = VectorUniformNPointFloatMutation(1, self.probability, self.arity, self.events)
+        mut = FloatVectorUniformNPointMutation(1, self.probability, self.arity, self.events)
         return mut.apply_operator(payload)
 
 
-class VectorGaussNPointFloatMutation(VectorNPointMutation):
+class FloatVectorGaussNPointMutation(VectorNPointMutation):
     """
     Gaussian N Point Float Mutation
     """
@@ -63,7 +63,7 @@ class VectorGaussNPointFloatMutation(VectorNPointMutation):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
-        mut = VectorUniformNPointFloatMutation(self.n, self.probability, self.arity, self.events)
+        mut = FloatVectorUniformNPointMutation(self.n, self.probability, self.arity, self.events)
         return mut.apply_operator
 
 
