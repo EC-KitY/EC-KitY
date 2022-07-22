@@ -147,8 +147,8 @@ class TestVector:
     def test_uniform_int_n_point_mut(self):
         length = 5
         n_points = 3
-        vec1 = IntVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
-        init_vec = [0.0] * length
+        vec1 = IntVector(SimpleFitness(), length=length, bounds=(-10000, 10000))
+        init_vec = [0] * length
         vec1.vector = init_vec.copy()
         mut = IntVectorNPointMutation(n=n_points)
 
@@ -156,7 +156,7 @@ class TestVector:
         cnt = Counter(vec1.vector)
 
         assert len(cnt.keys()) == n_points + 1
-        assert cnt[0.0] == length - n_points
+        assert cnt[0] == length - n_points
 
     def test_uniform_float_n_point_mut(self):
         length = 5

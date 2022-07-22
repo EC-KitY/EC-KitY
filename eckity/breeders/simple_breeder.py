@@ -61,8 +61,8 @@ class SimpleBreeder(Breeder):
         for operator in operator_seq:
             operator_arity = operator.get_operator_arity()
             for i in range(0, len(individuals_to_apply_on), operator_arity):
-                individuals_to_apply_on[i:i + operator_arity] = \
-                    operator.apply_operator(individuals_to_apply_on[i:i + operator_arity])
+                op_res = operator.apply_operator(individuals_to_apply_on[i:i + operator_arity])
+                individuals_to_apply_on[i:i + operator_arity] = op_res
         return individuals_to_apply_on
 
     def event_name_to_data(self, event_name):
