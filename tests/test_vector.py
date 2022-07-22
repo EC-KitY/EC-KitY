@@ -7,7 +7,8 @@ from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
 from eckity.genetic_encodings.ga.float_vector import FloatVector
 from eckity.genetic_encodings.ga.int_vector import IntVector
 from eckity.genetic_operators.mutations.vector_random_mutation import VectorGaussOnePointFloatMutation, \
-    VectorUniformNPointFloatMutation, VectorGaussNPointFloatMutation, IntVectorOnePointMutation
+    VectorUniformNPointFloatMutation, VectorGaussNPointFloatMutation, IntVectorOnePointMutation, \
+    BitStringVectorFlipMutation, BitStringVectorNFlipMutation, IntVectorNPointMutation
 
 
 class TestVector:
@@ -134,7 +135,7 @@ class TestVector:
         v1 = BitStringVector(SimpleFitness(), length=length)
         init_vec = [0] * length
         v1.vector = init_vec.copy()
-        mut = BitStringVectorFlipMutation(n=n_points, probability_for_each=1.0)
+        mut = BitStringVectorNFlipMutation(n=n_points, probability_for_each=1.0)
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
@@ -149,7 +150,7 @@ class TestVector:
         v1 = IntVector(SimpleFitness(), length=length, bounds=(-100.0, 100.0))
         init_vec = [0.0] * length
         v1.vector = init_vec.copy()
-        mut = IntVectorOnePointMutation(n=n_points)
+        mut = IntVectorNPointMutation(n=n_points)
 
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
@@ -168,6 +169,8 @@ class TestVector:
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
 
+        print(cnt)
+        print(n_points + 1)
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
 
@@ -182,6 +185,8 @@ class TestVector:
         mut.apply_operator([v1])
         cnt = Counter(v1.vector)
 
+        print(cnt)
+        print(n_points + 1)
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
 
