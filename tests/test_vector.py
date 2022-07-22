@@ -75,7 +75,7 @@ class TestVector:
     def test_gauss_mutation_fail(self):
         length = 4
         v1 = FloatVector(SimpleFitness(), length=length, bounds=(-1.0, 1.0))
-        init_vec = [2.0] * length
+        init_vec = [1.0] * length
         v1.vector = init_vec.copy()
         mut = VectorGaussOnePointFloatMutation(mu=1000)
 
@@ -83,7 +83,7 @@ class TestVector:
         cnt = Counter(v1.vector)
 
         assert len(cnt.keys()) == 2
-        assert cnt[2.0] == length - 1
+        assert cnt[1.0] == length - 1
 
     def test_float_get_rand_num_single_bounds(self):
         bounds = (-1.0, 1.0)

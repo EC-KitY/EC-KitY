@@ -31,31 +31,33 @@ class VectorGaussOnePointFloatMutation(VectorNPointMutation):
     """
     Gaussian One Point Float Mutation
     """
-    def __init__(self, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None):
+    def __init__(self, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None, attempts=5):
         super().__init__(n=1,
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events)
+                         events=events,
+                         attempts=attempts)
 
     def on_fail(self, payload):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
         mut = VectorUniformNPointFloatMutation(1, self.probability, self.arity, self.events)
-        return mut.apply_operator
+        return mut.apply_operator(payload)
 
 
 class VectorGaussNPointFloatMutation(VectorNPointMutation):
     """
     Gaussian N Point Float Mutation
     """
-    def __init__(self, n=1, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None):
+    def __init__(self, n=1, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None, attempts=5):
         super().__init__(n=n,
                          probability=probability,
                          arity=arity,
                          mut_val_getter=lambda vec, index: vec.get_random_number_with_gauss(index, mu, sigma),
-                         events=events)
+                         events=events,
+                         attempts=attempts)
 
     def on_fail(self, payload):
         """
