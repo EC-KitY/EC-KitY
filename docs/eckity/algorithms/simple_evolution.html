@@ -82,38 +82,38 @@
 <span class="sd">This module implements the SimpleEvolution class.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">overrides</span> <span class="kn">import</span> <span class="n">overrides</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">overrides</span> <span class="kn">import</span> <span class="n">overrides</span>
 
 <span class="kn">from</span> <span class="nn">eckity.algorithms.algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
 <span class="kn">from</span> <span class="nn">eckity.breeders.simple_breeder</span> <span class="kn">import</span> <span class="n">SimpleBreeder</span>
 <span class="kn">from</span> <span class="nn">eckity.evaluators.simple_population_evaluator</span> <span class="kn">import</span> <span class="n">SimplePopulationEvaluator</span>
-<span class="kn">from</span> <span class="nn">eckity.termination_checkers.threshold_from_target_termination_checker</span> <span class="kn">import</span> <span class="n">ThresholdFromTargetTerminationChecker</span>
+<span class="kn">from</span> <span class="nn">eckity.termination_checkers.threshold_from_target_termination_checker</span>\
+    <span class="kn">import</span> <span class="nn">ThresholdFromTargetTerminationChecker</span>
 
 
 <span class="k">class</span> <span class="nc">SimpleEvolution</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple case evolutionary algorithm.</span>
 
-<span class="sd">    Basic evolutionary algorithm that contains one sub-population.</span>
+<span class="sd">    Basic evolutionary algorithm that contains one subpopulation.</span>
 <span class="sd">    Does not include and is not meant for multi-objective, co-evolution etc.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    population: Population</span>
-<span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
+<span class="sd">        The population to be evolved. Contains only one subpopulation in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
 <span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
-<span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
-<span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
+<span class="sd">        Responsible for applying the selection method and operator sequence on the individuals</span>
+<span class="sd">        in each generation. Applies on one subpopulation in simple case.</span>
 
 <span class="sd">    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator instance</span>
-<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
+<span class="sd">        Responsible for evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
 <span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
 
 <span class="sd">    max_generation: int, default=1000</span>
@@ -127,7 +127,7 @@
 <span class="sd">        Names of events to publish during the evolution.</span>
 
 <span class="sd">    termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()</span>
-<span class="sd">        Responsible of checking if the algorithm should finish before reaching max_generation.</span>
+<span class="sd">        Responsible for checking if the algorithm should finish before reaching max_generation.</span>
 
 <span class="sd">    max_workers: int, default=None</span>
 <span class="sd">        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</span>
@@ -199,6 +199,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the evolutionary algorithm</span>
+
+<span class="sd">        Register statistics to `after_generation` event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
@@ -254,6 +259,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finish the evolutionary run by showing the best individual and printing the best fitness</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
@@ -263,18 +271,23 @@
 
     <span class="k">def</span> <span class="nf">event_name_to_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
-                    <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
-                    <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
-                    <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
-                    <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
-                    <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
-                    <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
+                <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
+                <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
+                <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
+                <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
+                <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
+            <span class="p">}</span>
+
+        <span class="c1"># default case</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
+            <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span>
+        <span class="p">}</span>
 </pre></div>
 
         </details>
@@ -292,28 +305,27 @@
             <details>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">SimpleEvolution</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">):</span>
-
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple case evolutionary algorithm.</span>
 
-<span class="sd">    Basic evolutionary algorithm that contains one sub-population.</span>
+<span class="sd">    Basic evolutionary algorithm that contains one subpopulation.</span>
 <span class="sd">    Does not include and is not meant for multi-objective, co-evolution etc.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    population: Population</span>
-<span class="sd">        The population to be evolved. Contains only one sub-population in simple case.</span>
+<span class="sd">        The population to be evolved. Contains only one subpopulation in simple case.</span>
 <span class="sd">        Consists of a list of individuals.</span>
 
 <span class="sd">    statistics: Statistics or list of Statistics, default=None</span>
 <span class="sd">        Provide multiple statistics on the population during the evolutionary run.</span>
 
 <span class="sd">    breeder: SimpleBreeder, default=SimpleBreeder instance</span>
-<span class="sd">        Responsible of applying the selection method and operator sequence on the individuals</span>
-<span class="sd">        in each generation. Applies on one sub-population in simple case.</span>
+<span class="sd">        Responsible for applying the selection method and operator sequence on the individuals</span>
+<span class="sd">        in each generation. Applies on one subpopulation in simple case.</span>
 
 <span class="sd">    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator instance</span>
-<span class="sd">        Responsible of evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
+<span class="sd">        Responsible for evaluating each individual&#39;s fitness concurrently and returns the best individual</span>
 <span class="sd">        of each subpopulation (returns a single individual in simple case).</span>
 
 <span class="sd">    max_generation: int, default=1000</span>
@@ -327,7 +339,7 @@
 <span class="sd">        Names of events to publish during the evolution.</span>
 
 <span class="sd">    termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()</span>
-<span class="sd">        Responsible of checking if the algorithm should finish before reaching max_generation.</span>
+<span class="sd">        Responsible for checking if the algorithm should finish before reaching max_generation.</span>
 
 <span class="sd">    max_workers: int, default=None</span>
 <span class="sd">        Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</span>
@@ -399,6 +411,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">final_generation_</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the evolutionary algorithm</span>
+
+<span class="sd">        Register statistics to `after_generation` event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
@@ -454,6 +471,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finish the evolutionary run by showing the best individual and printing the best fitness</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
@@ -463,40 +483,45 @@
 
     <span class="k">def</span> <span class="nf">event_name_to_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
-                    <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
-                    <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
-                    <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
-                    <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
-                    <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
-                    <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
+                <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
+                <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
+                <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
+                <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
+                <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
+            <span class="p">}</span>
+
+        <span class="c1"># default case</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
+            <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span>
+        <span class="p">}</span>
 </pre></div>
 
         </details>
 
             <div class="docstring"><p>Simple case evolutionary algorithm.</p>
 
-<p>Basic evolutionary algorithm that contains one sub-population.
+<p>Basic evolutionary algorithm that contains one subpopulation.
 Does not include and is not meant for multi-objective, co-evolution etc.</p>
 
 <h6 id="parameters">Parameters</h6>
 
 <ul>
 <li><strong>population</strong> (Population):
-The population to be evolved. Contains only one sub-population in simple case.
+The population to be evolved. Contains only one subpopulation in simple case.
 Consists of a list of individuals.</li>
 <li><strong>statistics</strong> (Statistics or list of Statistics, default=None):
 Provide multiple statistics on the population during the evolutionary run.</li>
 <li><strong>breeder</strong> (SimpleBreeder, default=SimpleBreeder instance):
-Responsible of applying the selection method and operator sequence on the individuals
-in each generation. Applies on one sub-population in simple case.</li>
+Responsible for applying the selection method and operator sequence on the individuals
+in each generation. Applies on one subpopulation in simple case.</li>
 <li><strong>population_evaluator</strong> (SimplePopulationEvaluator, default=SimplePopulationEvaluator instance):
-Responsible of evaluating each individual's fitness concurrently and returns the best individual
+Responsible for evaluating each individual's fitness concurrently and returns the best individual
 of each subpopulation (returns a single individual in simple case).</li>
 <li><strong>max_generation</strong> (int, default=1000):
 Maximal number of generations to run the evolutionary process.
@@ -506,7 +531,7 @@ Dictionary of events, where each event holds a dictionary of (subscriber, callba
 <li><strong>event_names</strong> (list of strings, default=None):
 Names of events to publish during the evolution.</li>
 <li><strong>termination_checker</strong> (TerminationChecker, default=ThresholdFromTargetTerminationChecker()):
-Responsible of checking if the algorithm should finish before reaching max_generation.</li>
+Responsible for checking if the algorithm should finish before reaching max_generation.</li>
 <li><strong>max_workers</strong> (int, default=None):
 Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.</li>
 <li><strong>random_generator</strong> (module, default=random):
@@ -544,7 +569,7 @@ Current generation number</li>
     termination_checker=&lt;<a href="../termination_checkers/threshold_from_target_termination_checker.html#ThresholdFromTargetTerminationChecker">eckity.termination_checkers.threshold_from_target_termination_checker.ThresholdFromTargetTerminationChecker</a> object&gt;,
     max_workers=None,
     random_generator=None,
-    random_seed=1657616323.2544553,
+    random_seed=1658507422.8935683,
     generation_seed=None,
     best_of_run_=None,
     best_of_run_evaluator=None,
@@ -614,6 +639,11 @@ Current generation number</li>
             <details>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the evolutionary algorithm</span>
+
+<span class="sd">        Register statistics to `after_generation` event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;after_generation&#39;</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">write_statistics</span><span class="p">)</span>
@@ -621,7 +651,11 @@ Current generation number</li>
 
         </details>
 
-    
+            <div class="docstring"><p>Initialize the evolutionary algorithm</p>
+
+<p>Register statistics to <code>after_generation</code> event</p>
+</div>
+
 
                             </div>
                             <div id="SimpleEvolution.generation_iteration" class="classattr">
@@ -750,6 +784,9 @@ The input to the program (tree).</li>
             <details>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finish the evolutionary run by showing the best individual and printing the best fitness</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># todo should move to finisher</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="o">.</span><span class="n">get_pure_fitness</span><span class="p">())</span>
@@ -757,7 +794,9 @@ The input to the program (tree).</li>
 
         </details>
 
-    
+            <div class="docstring"><p>Finish the evolutionary run by showing the best individual and printing the best fitness</p>
+</div>
+
 
                             </div>
                             <div id="SimpleEvolution.get_average_fitness" class="classattr">
@@ -791,23 +830,43 @@ The input to the program (tree).</li>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">event_name_to_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">event_name</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
-                    <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
-                    <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
-                    <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
-                    <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
-                    <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span><span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
-                    <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
-                    <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span><span class="p">}</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+                <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics</span><span class="p">,</span>
+                <span class="s2">&quot;breeder&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">breeder</span><span class="p">,</span>
+                <span class="s2">&quot;termination_checker&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">termination_checker</span><span class="p">,</span>
+                <span class="s2">&quot;max_generation&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_generation</span><span class="p">,</span>
+                <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span>
+                <span class="s2">&quot;max_workers&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_workers</span>
+            <span class="p">}</span>
+
+        <span class="c1"># default case</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;population&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_run_&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">,</span>
+            <span class="s2">&quot;best_of_gen&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_of_gen</span><span class="p">,</span>
+            <span class="s2">&quot;generation_num&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">generation_num</span>
+        <span class="p">}</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>Convert a given event name to relevant data of the Algorithm for the event</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>event_name</strong> (string):
+name of the event that is happening</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<ul>
+<li><strong>dict</strong>: Algorithm data regarding the given event</li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">

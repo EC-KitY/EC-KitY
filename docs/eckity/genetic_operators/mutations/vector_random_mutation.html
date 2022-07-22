@@ -31,43 +31,43 @@
         <h2>API Documentation</h2>
             <ul class="memberlist">
             <li>
-                    <a class="class" href="#VectorUniformOnePointFloatMutation">VectorUniformOnePointFloatMutation</a>
+                    <a class="class" href="#FloatVectorUniformOnePointMutation">FloatVectorUniformOnePointMutation</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#VectorUniformOnePointFloatMutation.__init__">VectorUniformOnePointFloatMutation</a>
+                                <a class="function" href="#FloatVectorUniformOnePointMutation.__init__">FloatVectorUniformOnePointMutation</a>
                         </li>
                 </ul>
 
             </li>
             <li>
-                    <a class="class" href="#VectorUniformNPointFloatMutation">VectorUniformNPointFloatMutation</a>
+                    <a class="class" href="#FloatVectorUniformNPointMutation">FloatVectorUniformNPointMutation</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#VectorUniformNPointFloatMutation.__init__">VectorUniformNPointFloatMutation</a>
+                                <a class="function" href="#FloatVectorUniformNPointMutation.__init__">FloatVectorUniformNPointMutation</a>
                         </li>
                 </ul>
 
             </li>
             <li>
-                    <a class="class" href="#VectorGaussOnePointFloatMutation">VectorGaussOnePointFloatMutation</a>
+                    <a class="class" href="#FloatVectorGaussOnePointMutation">FloatVectorGaussOnePointMutation</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#VectorGaussOnePointFloatMutation.__init__">VectorGaussOnePointFloatMutation</a>
+                                <a class="function" href="#FloatVectorGaussOnePointMutation.__init__">FloatVectorGaussOnePointMutation</a>
                         </li>
                         <li>
-                                <a class="function" href="#VectorGaussOnePointFloatMutation.on_fail">on_fail</a>
+                                <a class="function" href="#FloatVectorGaussOnePointMutation.on_fail">on_fail</a>
                         </li>
                 </ul>
 
             </li>
             <li>
-                    <a class="class" href="#VectorGaussNPointFloatMutation">VectorGaussNPointFloatMutation</a>
+                    <a class="class" href="#FloatVectorGaussNPointMutation">FloatVectorGaussNPointMutation</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#VectorGaussNPointFloatMutation.__init__">VectorGaussNPointFloatMutation</a>
+                                <a class="function" href="#FloatVectorGaussNPointMutation.__init__">FloatVectorGaussNPointMutation</a>
                         </li>
                         <li>
-                                <a class="function" href="#VectorGaussNPointFloatMutation.on_fail">on_fail</a>
+                                <a class="function" href="#FloatVectorGaussNPointMutation.on_fail">on_fail</a>
                         </li>
                 </ul>
 
@@ -132,7 +132,7 @@
 <span class="kn">from</span> <span class="nn">eckity.genetic_operators.mutations.vector_n_point_mutation</span> <span class="kn">import</span> <span class="n">VectorNPointMutation</span>
 
 
-<span class="k">class</span> <span class="nc">VectorUniformOnePointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FloatVectorUniformOnePointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uniform One Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -144,7 +144,7 @@
                          <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uniform N Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -156,42 +156,44 @@
                          <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">VectorGaussOnePointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FloatVectorGaussOnePointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gaussian One Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">VectorGaussNPointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">FloatVectorGaussNPointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gaussian N Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">IntVectorOnePointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
@@ -234,7 +236,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    N Point Bit-Flip Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">probability_for_each</span> <span class="o">=</span> <span class="n">probability_for_each</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
@@ -247,18 +249,18 @@
         </details>
 
             </section>
-                <section id="VectorUniformOnePointFloatMutation">
+                <section id="FloatVectorUniformOnePointMutation">
                                 <div class="attr class">
-        <a class="headerlink" href="#VectorUniformOnePointFloatMutation">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#FloatVectorUniformOnePointMutation">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">VectorUniformOnePointFloatMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
+        <span class="name">FloatVectorUniformOnePointMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">VectorUniformOnePointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FloatVectorUniformOnePointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uniform One Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -276,11 +278,11 @@
 </div>
 
 
-                            <div id="VectorUniformOnePointFloatMutation.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorUniformOnePointFloatMutation.__init__">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorUniformOnePointMutation.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorUniformOnePointMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">VectorUniformOnePointFloatMutation</span><span class="signature">(probability=1.0, arity=1, events=None)</span>
+            <span class="name">FloatVectorUniformOnePointMutation</span><span class="signature">(probability=1.0, arity=1, events=None)</span>
     </div>
 
             <details>
@@ -302,49 +304,49 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></dt>
-                                <dd id="VectorUniformOnePointFloatMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.on_fail" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.on_fail">on_fail</a></dd>
+                                <dd id="FloatVectorUniformOnePointMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.on_fail" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.on_fail">on_fail</a></dd>
 
             </div>
             <div><dt><a href="../failable_operator.html#FailableOperator">eckity.genetic_operators.failable_operator.FailableOperator</a></dt>
-                                <dd id="VectorUniformOnePointFloatMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
+                                <dd id="FloatVectorUniformOnePointMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
 
             </div>
             <div><dt><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></dt>
-                                <dd id="VectorUniformOnePointFloatMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
+                                <dd id="FloatVectorUniformOnePointMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="VectorUniformOnePointFloatMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="FloatVectorUniformOnePointMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="VectorUniformOnePointFloatMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="VectorUniformOnePointFloatMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="FloatVectorUniformOnePointMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="FloatVectorUniformOnePointMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>
                             </div>
                 </section>
-                <section id="VectorUniformNPointFloatMutation">
+                <section id="FloatVectorUniformNPointMutation">
                                 <div class="attr class">
-        <a class="headerlink" href="#VectorUniformNPointFloatMutation">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#FloatVectorUniformNPointMutation">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">VectorUniformNPointFloatMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
+        <span class="name">FloatVectorUniformNPointMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uniform N Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -362,11 +364,11 @@
 </div>
 
 
-                            <div id="VectorUniformNPointFloatMutation.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorUniformNPointFloatMutation.__init__">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorUniformNPointMutation.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorUniformNPointMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">VectorUniformNPointFloatMutation</span><span class="signature">(n=1, probability=1.0, arity=1, events=None)</span>
+            <span class="name">FloatVectorUniformNPointMutation</span><span class="signature">(n=1, probability=1.0, arity=1, events=None)</span>
     </div>
 
             <details>
@@ -388,65 +390,66 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></dt>
-                                <dd id="VectorUniformNPointFloatMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.on_fail" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.on_fail">on_fail</a></dd>
+                                <dd id="FloatVectorUniformNPointMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.on_fail" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.on_fail">on_fail</a></dd>
 
             </div>
             <div><dt><a href="../failable_operator.html#FailableOperator">eckity.genetic_operators.failable_operator.FailableOperator</a></dt>
-                                <dd id="VectorUniformNPointFloatMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
+                                <dd id="FloatVectorUniformNPointMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
 
             </div>
             <div><dt><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></dt>
-                                <dd id="VectorUniformNPointFloatMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
+                                <dd id="FloatVectorUniformNPointMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="VectorUniformNPointFloatMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="FloatVectorUniformNPointMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="VectorUniformNPointFloatMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="VectorUniformNPointFloatMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="FloatVectorUniformNPointMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="FloatVectorUniformNPointMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>
                             </div>
                 </section>
-                <section id="VectorGaussOnePointFloatMutation">
+                <section id="FloatVectorGaussOnePointMutation">
                                 <div class="attr class">
-        <a class="headerlink" href="#VectorGaussOnePointFloatMutation">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#FloatVectorGaussOnePointMutation">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">VectorGaussOnePointFloatMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
+        <span class="name">FloatVectorGaussOnePointMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">VectorGaussOnePointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FloatVectorGaussOnePointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gaussian One Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -455,21 +458,22 @@
 </div>
 
 
-                            <div id="VectorGaussOnePointFloatMutation.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorGaussOnePointFloatMutation.__init__">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorGaussOnePointMutation.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorGaussOnePointMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">VectorGaussOnePointFloatMutation</span><span class="signature">(probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None)</span>
+            <span class="name">FloatVectorGaussOnePointMutation</span><span class="signature">(probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None, attempts=5)</span>
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -477,8 +481,8 @@
     
 
                             </div>
-                            <div id="VectorGaussOnePointFloatMutation.on_fail" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorGaussOnePointFloatMutation.on_fail">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorGaussOnePointMutation.on_fail" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorGaussOnePointMutation.on_fail">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -491,8 +495,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -506,64 +510,65 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></dt>
-                                <dd id="VectorGaussOnePointFloatMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
+                                <dd id="FloatVectorGaussOnePointMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
 
             </div>
             <div><dt><a href="../failable_operator.html#FailableOperator">eckity.genetic_operators.failable_operator.FailableOperator</a></dt>
-                                <dd id="VectorGaussOnePointFloatMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
+                                <dd id="FloatVectorGaussOnePointMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
 
             </div>
             <div><dt><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></dt>
-                                <dd id="VectorGaussOnePointFloatMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
+                                <dd id="FloatVectorGaussOnePointMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="VectorGaussOnePointFloatMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="FloatVectorGaussOnePointMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="VectorGaussOnePointFloatMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="VectorGaussOnePointFloatMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="FloatVectorGaussOnePointMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="FloatVectorGaussOnePointMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>
                             </div>
                 </section>
-                <section id="VectorGaussNPointFloatMutation">
+                <section id="FloatVectorGaussNPointMutation">
                                 <div class="attr class">
-        <a class="headerlink" href="#VectorGaussNPointFloatMutation">#&nbsp;&nbsp</a>
+        <a class="headerlink" href="#FloatVectorGaussNPointMutation">#&nbsp;&nbsp</a>
 
         
         <span class="def">class</span>
-        <span class="name">VectorGaussNPointFloatMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
+        <span class="name">FloatVectorGaussNPointMutation</span><wbr>(<span class="base"><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></span>):
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">VectorGaussNPointFloatMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span class="k">class</span> <span class="nc">FloatVectorGaussNPointMutation</span><span class="p">(</span><span class="n">VectorNPointMutation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gaussian N Point Float Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -572,21 +577,30 @@
 </div>
 
 
-                            <div id="VectorGaussNPointFloatMutation.__init__" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorGaussNPointFloatMutation.__init__">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorGaussNPointMutation.__init__" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorGaussNPointMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">VectorGaussNPointFloatMutation</span><span class="signature">(n=1, probability=1.0, arity=1, mu=0.0, sigma=1.0, events=None)</span>
+            <span class="name">FloatVectorGaussNPointMutation</span><span class="signature">(
+    n=1,
+    probability=1.0,
+    arity=1,
+    mu=0.0,
+    sigma=1.0,
+    events=None,
+    attempts=5
+)</span>
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
                          <span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
                          <span class="n">mut_val_getter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">vec</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">vec</span><span class="o">.</span><span class="n">get_random_number_with_gauss</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">),</span>
-                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+                         <span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">,</span>
+                         <span class="n">attempts</span><span class="o">=</span><span class="n">attempts</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -594,8 +608,8 @@
     
 
                             </div>
-                            <div id="VectorGaussNPointFloatMutation.on_fail" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#VectorGaussNPointFloatMutation.on_fail">#&nbsp;&nbsp</a>
+                            <div id="FloatVectorGaussNPointMutation.on_fail" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#FloatVectorGaussNPointMutation.on_fail">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
@@ -608,8 +622,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handle gauss mutation failure by returning a callable uniform mutation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mut</span> <span class="o">=</span> <span class="n">VectorUniformNPointFloatMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span>
+        <span class="n">mut</span> <span class="o">=</span> <span class="n">FloatVectorUniformNPointMutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mut</span><span class="o">.</span><span class="n">apply_operator</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -623,31 +637,31 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="vector_n_point_mutation.html#VectorNPointMutation">eckity.genetic_operators.mutations.vector_n_point_mutation.VectorNPointMutation</a></dt>
-                                <dd id="VectorGaussNPointFloatMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
+                                <dd id="FloatVectorGaussNPointMutation.default_mut_val_getter" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_mut_val_getter">default_mut_val_getter</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.default_success_checker" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.default_success_checker">default_success_checker</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.attempt_operator" class="function"><a href="vector_n_point_mutation.html#VectorNPointMutation.attempt_operator">attempt_operator</a></dd>
 
             </div>
             <div><dt><a href="../failable_operator.html#FailableOperator">eckity.genetic_operators.failable_operator.FailableOperator</a></dt>
-                                <dd id="VectorGaussNPointFloatMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
+                                <dd id="FloatVectorGaussNPointMutation.apply" class="function"><a href="../failable_operator.html#FailableOperator.apply">apply</a></dd>
 
             </div>
             <div><dt><a href="../genetic_operator.html#GeneticOperator">eckity.genetic_operators.genetic_operator.GeneticOperator</a></dt>
-                                <dd id="VectorGaussNPointFloatMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
+                                <dd id="FloatVectorGaussNPointMutation.apply_operator" class="function"><a href="../genetic_operator.html#GeneticOperator.apply_operator">apply_operator</a></dd>
 
             </div>
             <div><dt><a href="../../event_based_operator.html#Operator">eckity.event_based_operator.Operator</a></dt>
-                                <dd id="VectorGaussNPointFloatMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
+                                <dd id="FloatVectorGaussNPointMutation.initialize" class="function"><a href="../../event_based_operator.html#Operator.initialize">initialize</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.act" class="function"><a href="../../event_based_operator.html#Operator.act">act</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.get_operator_arity" class="function"><a href="../../event_based_operator.html#Operator.get_operator_arity">get_operator_arity</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.event_name_to_data" class="function"><a href="../../event_based_operator.html#Operator.event_name_to_data">event_name_to_data</a></dd>
 
             </div>
             <div><dt><a href="../../before_after_publisher.html#BeforeAfterPublisher">eckity.before_after_publisher.BeforeAfterPublisher</a></dt>
-                                <dd id="VectorGaussNPointFloatMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
-                <dd id="VectorGaussNPointFloatMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
+                                <dd id="FloatVectorGaussNPointMutation.register" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.register">register</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.unregister" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.unregister">unregister</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.publish" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.publish">publish</a></dd>
+                <dd id="FloatVectorGaussNPointMutation.act_and_publish_before_after" class="function"><a href="../../before_after_publisher.html#BeforeAfterPublisher.act_and_publish_before_after">act_and_publish_before_after</a></dd>
 
             </div>
                                 </dl>
@@ -926,7 +940,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    N Point Bit-Flip Mutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">probability_for_each</span> <span class="o">=</span> <span class="n">probability_for_each</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>
@@ -946,18 +960,12 @@
                                         <div class="attr function"><a class="headerlink" href="#BitStringVectorNFlipMutation.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">BitStringVectorNFlipMutation</span><span class="signature">(
-    probability=1.0,
-    arity=1,
-    events=None,
-    probability_for_each=0.2,
-    n=100
-)</span>
+            <span class="name">BitStringVectorNFlipMutation</span><span class="signature">(probability=1.0, arity=1, events=None, probability_for_each=0.2, n=1)</span>
     </div>
 
             <details>
             <summary>View Source</summary>
-            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">arity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">probability_for_each</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">probability_for_each</span> <span class="o">=</span> <span class="n">probability_for_each</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">probability</span><span class="o">=</span><span class="n">probability</span><span class="p">,</span>
                          <span class="n">arity</span><span class="o">=</span><span class="n">arity</span><span class="p">,</span>

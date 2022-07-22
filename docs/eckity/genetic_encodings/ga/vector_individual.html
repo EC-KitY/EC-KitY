@@ -133,14 +133,16 @@
 <span class="sd">    bounds : list of tuples</span>
 <span class="sd">        Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">,</span>
                  <span class="n">bounds</span><span class="p">,</span>
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
 
-        <span class="c1"># TODO do we need this assertion? @tomer</span>
-        <span class="c1">#assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> \
+                <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="n">length</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bounds must be either a tuple of size 2 or a list of </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s1"> tuples&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
@@ -359,7 +361,7 @@
 <span class="sd">        object</span>
 <span class="sd">            vector cell value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -424,14 +426,16 @@
 <span class="sd">    bounds : list of tuples</span>
 <span class="sd">        Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">fitness</span><span class="p">,</span>
                  <span class="n">bounds</span><span class="p">,</span>
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
 
-        <span class="c1"># TODO do we need this assertion? @tomer</span>
-        <span class="c1">#assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> \
+                <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="n">length</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bounds must be either a tuple of size 2 or a list of </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s1"> tuples&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
@@ -650,7 +654,7 @@
 <span class="sd">        object</span>
 <span class="sd">            vector cell value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -716,8 +720,9 @@ Min/Max values for each vector cell (if of length n), or the minimum and maximum
                  <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
 
-        <span class="c1"># TODO do we need this assertion? @tomer</span>
-        <span class="c1">#assert (type(bounds) == tuple and len(bounds == 2)) or (type(bounds) == list and len(bounds) == length)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> \
+                <span class="ow">or</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">!=</span> <span class="n">length</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bounds must be either a tuple of size 2 or a list of </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s1"> tuples&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
@@ -1313,7 +1318,7 @@ new cell value</li>
 <span class="sd">        object</span>
 <span class="sd">            vector cell value</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;get_random_number is an abstract method in vector individual&quot;</span><span class="p">)</span>
 </pre></div>
 
         </details>

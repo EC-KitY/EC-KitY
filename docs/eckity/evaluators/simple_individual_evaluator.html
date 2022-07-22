@@ -72,30 +72,35 @@
 <span class="sd">    You will need to extend this class with your user-defined fitness evaluation methods.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@overrides</span>
-    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the fitness score of the given individuals, then returns the best individual</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        individuals: list of individuals</span>
-<span class="sd">            individuals to evaluate fitness of  - in Simple Evaluator version the list is of size 1</span>
+<span class="sd">        individual: Individual</span>
+<span class="sd">            the current individual to evaluate its fitness</span>
+
+<span class="sd">        environment_individuals: list of Individuals</span>
+<span class="sd">            the individuals in the current individual&#39;s environment</span>
+<span class="sd">            those individuals will affect the current individual&#39;s fitness</span>
+<span class="sd">            (not used in simple case)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Individual</span>
 <span class="sd">            the individual with the best fitness out of the given individuals</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;SimpleIndividualEvaluator.evaluate must receive an individuals list of size 1&#39;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span>
-        <span class="n">individual</span> <span class="o">=</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">)</span>
         <span class="n">fitness_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
         <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">set_fitness</span><span class="p">(</span><span class="n">fitness_score</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">individual</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">_evaluate_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate the fitness score for the given individual.</span>
+<span class="sd">        This function must be implemented by subclasses of this class (user-defined evaluators)</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -107,7 +112,7 @@
 <span class="sd">        float</span>
 <span class="sd">            The evaluated fitness value for the given individual</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;_evaluate_individual is an abstract method in SimpleIndividualEvaluator&quot;</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -131,30 +136,35 @@
 <span class="sd">    You will need to extend this class with your user-defined fitness evaluation methods.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@overrides</span>
-    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the fitness score of the given individuals, then returns the best individual</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        individuals: list of individuals</span>
-<span class="sd">            individuals to evaluate fitness of  - in Simple Evaluator version the list is of size 1</span>
+<span class="sd">        individual: Individual</span>
+<span class="sd">            the current individual to evaluate its fitness</span>
+
+<span class="sd">        environment_individuals: list of Individuals</span>
+<span class="sd">            the individuals in the current individual&#39;s environment</span>
+<span class="sd">            those individuals will affect the current individual&#39;s fitness</span>
+<span class="sd">            (not used in simple case)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Individual</span>
 <span class="sd">            the individual with the best fitness out of the given individuals</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;SimpleIndividualEvaluator.evaluate must receive an individuals list of size 1&#39;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span>
-        <span class="n">individual</span> <span class="o">=</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">)</span>
         <span class="n">fitness_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
         <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">set_fitness</span><span class="p">(</span><span class="n">fitness_score</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">individual</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">_evaluate_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate the fitness score for the given individual.</span>
+<span class="sd">        This function must be implemented by subclasses of this class (user-defined evaluators)</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -166,7 +176,7 @@
 <span class="sd">        float</span>
 <span class="sd">            The evaluated fitness value for the given individual</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;_evaluate_individual is an abstract method in SimpleIndividualEvaluator&quot;</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -183,32 +193,35 @@ You will need to extend this class with your user-defined fitness evaluation met
                 <div class="decorator">@overrides</div>
 
             <span class="def">def</span>
-            <span class="name">evaluate</span><span class="signature">(self, individuals)</span>:
+            <span class="name">evaluate</span><span class="signature">(self, individual, environment_individuals)</span>:
     </div>
 
             <details>
             <summary>View Source</summary>
             <div class="pdoc-code codehilite"><pre><span></span>    <span class="nd">@overrides</span>
-    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the fitness score of the given individuals, then returns the best individual</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        individuals: list of individuals</span>
-<span class="sd">            individuals to evaluate fitness of  - in Simple Evaluator version the list is of size 1</span>
+<span class="sd">        individual: Individual</span>
+<span class="sd">            the current individual to evaluate its fitness</span>
+
+<span class="sd">        environment_individuals: list of Individuals</span>
+<span class="sd">            the individuals in the current individual&#39;s environment</span>
+<span class="sd">            those individuals will affect the current individual&#39;s fitness</span>
+<span class="sd">            (not used in simple case)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        Individual</span>
 <span class="sd">            the individual with the best fitness out of the given individuals</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;SimpleIndividualEvaluator.evaluate must receive an individuals list of size 1&#39;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individuals</span><span class="p">)</span>
-        <span class="n">individual</span> <span class="o">=</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">individual</span><span class="p">,</span> <span class="n">environment_individuals</span><span class="p">)</span>
         <span class="n">fitness_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_individual</span><span class="p">(</span><span class="n">individual</span><span class="p">)</span>
         <span class="n">individual</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">set_fitness</span><span class="p">(</span><span class="n">fitness_score</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">individuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">individual</span>
 </pre></div>
 
         </details>
@@ -218,8 +231,12 @@ You will need to extend this class with your user-defined fitness evaluation met
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>individuals</strong> (list of individuals):
-individuals to evaluate fitness of  - in Simple Evaluator version the list is of size 1</li>
+<li><strong>individual</strong> (Individual):
+the current individual to evaluate its fitness</li>
+<li><strong>environment_individuals</strong> (list of Individuals):
+the individuals in the current individual's environment
+those individuals will affect the current individual's fitness
+(not used in simple case)</li>
 </ul>
 
 <h6 id="returns">Returns</h6>
