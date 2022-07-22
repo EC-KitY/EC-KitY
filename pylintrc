@@ -151,7 +151,8 @@ disable=raw-checker-failed,
         suppressed-message,
         useless-suppression,
         deprecated-pragma,
-        use-symbolic-message-instead
+        use-symbolic-message-instead,
+		import-error
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -239,12 +240,12 @@ good-names=i,
            k,
            ex,
            Run,
-           _,
-		   X, y, X_test, y_test, X_train, y_train
+           _
 
 # Good variable names regexes, separated by a comma. If names match any regex,
 # they will always be accepted
-good-names-rgxs=[a-z0-9_]{2,30}$
+good-names-rgxs=[a-z][0-9],
+				[X, y](_[a-z]+)?
 
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint=no
