@@ -34,12 +34,14 @@ class SimpleFitness(Fitness):
         if not self.is_fitness_evaluated() or not other_fitness.is_fitness_evaluated():
             raise ValueError('Fitnesses must be evaluated before comparison')
 
+    @overrides
     def better_than(self, ind, other_fitness, other_ind):
         self.check_comparable_fitnesses(other_fitness)
         return self.get_augmented_fitness(ind) > other_fitness.get_augmented_fitness(other_ind) \
             if self.higher_is_better \
             else self.get_augmented_fitness(ind) < other_fitness.get_augmented_fitness(other_ind)
 
+    @overrides
     def equal_to(self, ind, other_fitness, other_ind):
         self.check_comparable_fitnesses(other_fitness)
         return self.get_augmented_fitness(ind) == other_fitness.get_augmented_fitness(other_ind)
