@@ -34,7 +34,7 @@ API is available [here](https://api.eckity.org)
 (Work in progress - some modules and functions are not documented yet.)
 
 ### Tutorials
-There are 4 tutorials available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials), walking you through running EC-KitY both in sklearn mode and in non-sklearn mode.
+The tutorials are available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials), walking you through running EC-KitY both in sklearn mode and in non-sklearn mode.
 
 ### Examples
 More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
