@@ -1,9 +1,9 @@
 ![image](https://user-images.githubusercontent.com/62753120/163423530-1c85e43f-48a9-4fbd-827e-f97a1f174db0.png)
-[![GitHub license](https://img.shields.io/github/license/ec-kity/ec-kity)](https://github.com/EC-KitY/EC-KitY/blob/main/LICENSE)
 ![PyPI](https://img.shields.io/pypi/v/eckity)
 
 
-**EC-KitY** is a Python tool kit for doing evolutionary computation, and it is scikit-learn compatible. 
+**EC-KitY** is a Python tool kit for doing evolutionary computation, and it is scikit-learn compatible.
+
 Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
 **EC-KitY** is:
