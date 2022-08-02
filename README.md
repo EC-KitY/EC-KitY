@@ -118,6 +118,10 @@ Citations are always appreciated 😊:
 
 ```
 
+### Project that use EC-KitY
+- [EC-KitY-Maze-Example](https://github.com/RonMichal/EC-KitY-Maze-Example/tree/maze_example/examples/vectorga/maze)
+- [EvolutionTSP](https://github.com/nogazax/EvolutionTSP)
+
 
 
 
