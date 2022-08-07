@@ -121,6 +121,7 @@ Citations are always appreciated 😊:
 ### Projects that use EC-KitY
 - [EC-KitY-Maze-Example](https://github.com/RonMichal/EC-KitY-Maze-Example/tree/maze_example/examples/vectorga/maze)
 - [EvolutionTSP](https://github.com/nogazax/EvolutionTSP)
+- [Solving The 'Nurse Scheduling Problem' With EC-KitY](https://github.com/harelaf/Nurse-Scheduling-Problem)
 
 
 
