@@ -38,10 +38,8 @@ class SubtreeCrossover(GeneticOperator):
 
         # assign the next individual's subtree to the current individual's tree
         for i in range(len(individuals) - 1):
-            individuals[i].replace_subtree(subtrees[i+1])
-
+            individuals[i].replace_subtree(subtrees[i + 1])
         # to complete the crossover circle, assign the first subtree to the last individual
         individuals[-1].replace_subtree(subtrees[0])
 
-        self.applied_individuals = individuals
         return individuals

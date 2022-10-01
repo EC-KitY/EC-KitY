@@ -27,8 +27,10 @@ class SubtreeMutation(GeneticOperator):
                                        erc_range=ind.erc_range)
 
             # TODO refactor dummy individual creation, only the tree should be generated
-            subtree_individual = tree_creator.create_individuals(1, None)[0]
-            ind.replace_subtree(subtree_individual.tree)
+            for i in range(ind.size()):  # mutation can fail due to type mismatch
+                subtree_individual = tree_creator.create_individuals(1, None)[0]
+                if ind.replace_subtree(subtree_individual.tree):
+                    break
 
         self.applied_individuals = individuals
         return individuals
