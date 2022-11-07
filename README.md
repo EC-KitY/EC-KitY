@@ -38,6 +38,7 @@ The tutorials are available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutor
 ### Examples
 More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
 All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
+You can run the examples with ease by opening this [colab notebook](https://colab.research.google.com/drive/1mpr3EGb1rpoK-_zugszQkv1sWVm-ZQiB?usp=sharing).
 
 ### Basic example (no sklearn)
 You can run an EA with just 3 lines of code. The problem being solved herein is simple symbolic regression.
