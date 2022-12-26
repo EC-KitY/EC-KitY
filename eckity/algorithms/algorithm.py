@@ -3,8 +3,9 @@ This module implements the Algorithm class.
 """
 
 from abc import abstractmethod
-from concurrent.futures.thread import ThreadPoolExecutor
+
 import random
+from concurrent.futures.thread import ThreadPoolExecutor
 from time import time
 
 from overrides import overrides
@@ -34,11 +35,11 @@ class Algorithm(Operator):
         Provide multiple statistics on the population during the evolutionary run.
 
     breeder: Breeder, default=SimpleBreeder()
-        Responsible of applying the selection method and operator sequence on the individuals
+        Responsible for applying the selection method and operator sequence on the individuals
         in each generation. Applies on one sub-population in simple case.
 
     population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
-        Responsible of evaluating each individual's fitness concurrently and returns the best
+        Responsible for evaluating each individual's fitness concurrently and returns the best
          individual of each subpopulation (returns a single individual in simple case).
 
     max_generation: int, default=1000
@@ -53,7 +54,7 @@ class Algorithm(Operator):
         Names of events to publish during the evolution.
 
     termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()
-        Responsible of checking if the algorithm should finish before reaching max_generation.
+        Responsible for checking if the algorithm should finish before reaching max_generation.
 
     max_workers: int, default=None
         Maximal number of worker nodes for the Executor object
@@ -206,7 +207,7 @@ class Algorithm(Operator):
         """
         Initialize the algorithm before beginning the evolution process
 
-        Initialize seed, ThreadPoolExecutor and relevant operators
+        Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
         print('debug: random seed =', self.random_seed)
@@ -236,6 +237,8 @@ class Algorithm(Operator):
                 self.publish('after_generation')
                 break
             self.publish('after_generation')
+
+        self.executor.shutdown()
 
     @abstractmethod
     def generation_iteration(self, gen):

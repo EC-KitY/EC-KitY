@@ -184,7 +184,6 @@ class SimpleEvolution(Algorithm):
         """
         # todo should move to finisher
         self.best_of_run_.show()
-        print(self.best_of_run_.get_pure_fitness())
 
     def get_average_fitness(self):  # TODO check if it should be here or register statistic to breeder or sub pop
         return self.population.get_average_fitness()

@@ -25,10 +25,13 @@ from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
 
 def main():
     """
-    Demnstrate sklearn compatibility through use of pipeline.
+    Demonstrate sklearn compatibility through use of pipeline.
 
     Sequentially apply a Pipeline of transforms with a final estimator (a regression algorithm in our case).
     In this example, we will use sklearn GridSearchCV to solve Symbolic Regression GP problem.
+
+    Expected runtime: ~30 minutes (on 2 cores, 2.5 GHz CPU)
+    Example output: same as in sklearn Symbolic Regression problem
     """
     start_time = time()
 

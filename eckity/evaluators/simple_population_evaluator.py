@@ -31,8 +31,7 @@ class SimplePopulationEvaluator(PopulationEvaluator):
             ]
 
             # wait for all fitness values to be evaluated before returning from this method
-            for future in eval_futures:
-                future.result()
+            results = [future.result() for future in eval_futures]
 
         # only one subpopulation in simple case
         individuals = population.sub_populations[0].individuals

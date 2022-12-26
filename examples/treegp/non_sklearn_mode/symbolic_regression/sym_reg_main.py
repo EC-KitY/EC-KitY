@@ -19,9 +19,21 @@ from examples.treegp.non_sklearn_mode.symbolic_regression.sym_reg_evaluator impo
 
 def main():
     """
-    Evolutionary experiment to create a GP tree that solves a Symbolic Regression problem
-    In this example every GP Tree is a mathematical function.
-    The goal is to create a GP Tree that produces the closest function to the regression target function
+    Solve the Symbolic Regression problem by approximating the regression target function.
+
+    Expected runtime: less than a minute (on 2 cores, 2.5 GHz CPU)
+    Example of an optimal evolved tree:
+    f_add
+       f_add
+          f_add
+             f_add
+                y
+                z
+             x
+          z
+       f_add
+          y
+          z
     """
 
     # each node of the GP tree is either a terminal or a function
