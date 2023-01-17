@@ -16,7 +16,7 @@ jobs:
       - name: Scan for 'random' in changed files
         id: random-detector
         run: |
-          git diff HEAD..origin/master | grep -i -n "random" > detections.txt
+          git diff HEAD..origin/main | grep -i -n "random" > detections.txt
           if [ -s detections.txt ]; then
             cat detections.txt
             echo "RANDOM_DETECTED=true" >> $GITHUB_OUTPUT
