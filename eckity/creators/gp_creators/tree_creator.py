@@ -1,4 +1,5 @@
 from eckity.creators.creator import Creator
+from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_sub, f_mul, f_div
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp.tree.tree_individual import Tree
@@ -12,11 +13,12 @@ class GPTreeCreator(Creator):
                  function_set=None,
                  terminal_set=None,
                  erc_range=None,
+                 fitness_type=SimpleFitness,
                  bloat_weight=0.1,
                  events=None):
         if events is None:
             events = ["after_creation"]
-        super().__init__(events)
+        super().__init__(events,fitness_type)
 
         if init_depth is None:
             init_depth = (2, 4)

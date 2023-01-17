@@ -9,10 +9,12 @@ class GAVectorCreator(Creator):
                  gene_creator=None,
                  bounds=(0.0, 1.0),
                  vector_type=BitStringVector,
+                 fitness_type = SimpleFitness,
                  events=None):
         if events is None:
             events = ["after_creation"]
-        super().__init__(events)
+        super().__init__(events,fitness_type)
+
 
         if gene_creator is None:
             gene_creator = self.default_gene_creator
@@ -25,7 +27,7 @@ class GAVectorCreator(Creator):
     def create_individuals(self, n_individuals, higher_is_better):
         individuals = [self.type(length=self.length,
                                  bounds=self.bounds,
-                                 fitness=SimpleFitness(higher_is_better=higher_is_better))
+                                 fitness=self.fitness_type(higher_is_better=higher_is_better))
                        for _ in range(n_individuals)]
         for ind in individuals:
             self.create_vector(ind)

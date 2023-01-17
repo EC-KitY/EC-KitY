@@ -34,7 +34,7 @@ def main():
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(creators=GABitStringVectorCreator(length=100),
-                      population_size=300,
+                      population_size=301,
                       # user-defined fitness evaluation method
                       evaluator=OneMaxEvaluator(),
                       # maximization problem (fitness is sum of values), so higher fitness is better
