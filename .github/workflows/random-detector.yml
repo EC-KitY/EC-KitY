@@ -13,20 +13,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-
       - name: Scan for 'random' in changed files
         id: random-detector
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            if grep -q -i "random" "$file"; then
-              echo "Found random in $file"
-              echo "RANDOM_DETECTED=true" >> $GITHUB_OUTPUT
-              break
-            fi
-          done
+          git diff HEAD..origin/master | grep -i -n "random" > detections.txt
+          if [ -s detections.txt ]; then
+            cat detections.txt
+            echo "RANDOM_DETECTED=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Comment PR
         if: ${{ steps.random-detector.outputs.RANDOM_DETECTED == 'true' }}
@@ -34,4 +28,4 @@ jobs:
         with:
           message: |
             🚨 This PR contains the word 'random' in its changed files 🚨
-            Before merging, please verify that algorithm's random generator is being used
+            Before merging, please verify that the algorithm's random generator is being used
