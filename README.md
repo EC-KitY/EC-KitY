@@ -1,11 +1,10 @@
 ![image](https://user-images.githubusercontent.com/62753120/163423530-1c85e43f-48a9-4fbd-827e-f97a1f174db0.png)
-[![GitHub license](https://img.shields.io/github/license/ec-kity/ec-kity)](https://github.com/EC-KitY/EC-KitY/blob/main/LICENSE)
 ![PyPI](https://img.shields.io/pypi/v/eckity)
 
 
-**EC-KitY** is a Python tool kit for doing evolutionary computation. 
-It is scikit-learn-compatible and is distributed under the GNU General Public License v3.0.
-Currently we have implemented tree-based genetic programming (GP), but EC-KitY will grow!
+**EC-KitY** is a Python tool kit for doing evolutionary computation, and it is scikit-learn compatible.
+
+Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
 **EC-KitY** is:
 - A comprehensive toolkit for running evolutionary algorithms
@@ -34,11 +33,12 @@ API is available [here](https://api.eckity.org)
 (Work in progress - some modules and functions are not documented yet.)
 
 ### Tutorials
-There are 4 tutorials available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials), walking you through running EC-KitY both in sklearn mode and in non-sklearn mode.
+The tutorials are available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials), walking you through running EC-KitY both in sklearn mode and in non-sklearn mode.
 
 ### Examples
 More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
 All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
+You can run the examples with ease by opening this [colab notebook](https://colab.research.google.com/drive/1mpr3EGb1rpoK-_zugszQkv1sWVm-ZQiB?usp=sharing).
 
 ### Basic example (no sklearn)
 You can run an EA with just 3 lines of code. The problem being solved herein is simple symbolic regression.
@@ -118,6 +118,11 @@ Citations are always appreciated 😊:
 }
 
 ```
+
+### Projects that use EC-KitY
+- [EC-KitY-Maze-Example](https://github.com/RonMichal/EC-KitY-Maze-Example/tree/maze_example/examples/vectorga/maze)
+- [EvolutionTSP](https://github.com/nogazax/EvolutionTSP)
+- [Solving The 'Nurse Scheduling Problem' With EC-KitY](https://github.com/harelaf/Nurse-Scheduling-Problem)
 
 
 
