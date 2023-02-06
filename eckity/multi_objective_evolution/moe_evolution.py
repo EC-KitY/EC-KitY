@@ -1,7 +1,6 @@
 from time import time
 from overrides import overrides
 
-
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
@@ -99,7 +98,6 @@ class MOEvolution(Algorithm):
 		for stat in self.statistics:
 			self.register('after_generation', stat.write_statistics)
 
-
 	def execute(self, **kwargs):
 		"""
 		Compute output using best evolved individual.
@@ -147,5 +145,3 @@ class MOEvolution(Algorithm):
 			"best_of_gen": self.best_of_gen,
 			"generation_num": self.generation_num
 		}
-
-

@@ -61,7 +61,7 @@ def main():
 				# (selection method, selection probability) tuple
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
-			)]),
+		)]),
 		breeder=MOEBreeder(),
 		max_workers=4,
 		max_generation=150,
@@ -79,7 +79,6 @@ def main():
 
 	# Execute (show) the best solution
 	print(algo.execute())
-
 
 
 if __name__ == '__main__':

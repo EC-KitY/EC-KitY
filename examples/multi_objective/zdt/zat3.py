@@ -59,7 +59,7 @@ def main():
 				# (selection method, selection probability) tuple
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
-			)]),
+		)]),
 		breeder=MOEBreeder(),
 		max_workers=4,
 		max_generation=150,

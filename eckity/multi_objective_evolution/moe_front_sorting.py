@@ -1,7 +1,4 @@
 from collections import defaultdict
-from random import choices
-
-from eckity.genetic_operators.selections.selection_method import SelectionMethod
 from eckity.individual import Individual
 from eckity.population import Population
 
@@ -41,7 +38,7 @@ class MOE_front_sorting():
 		self._init_domination_dict(source_inds)
 		while len(dest_inds) < pop_size:
 			new_pareto_front = self._pareto_front_finding(source_inds)
-			self._calc_fronts_crowdnig(new_pareto_front)
+			self._calc_fronts_crowding(new_pareto_front)
 			self._update_new_pareto_front_rank(new_pareto_front, front_rank)
 
 			total_pareto_size = len(new_pareto_front) + len(dest_inds)
@@ -65,7 +62,7 @@ class MOE_front_sorting():
 		for ind in new_pareto_front:
 			ind.fitness.front_rank = front_rank
 
-	def _calc_fronts_crowdnig(self, front: list[Individual]):
+	def _calc_fronts_crowding(self, front: list[Individual]):
 		for ind in front:
 			ind.fitness.crowding = 0
 

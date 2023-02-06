@@ -1,6 +1,5 @@
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
-from copy import deepcopy
 
 
 class MOEBreeder(SimpleBreeder):
