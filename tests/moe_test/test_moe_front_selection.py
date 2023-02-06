@@ -3,7 +3,7 @@ from eckity.creators.ga_creators.moe_vector_creator import MOEitStringVectorCrea
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.multi_objective_evolution.moe_fitness import MOEFitness
 from eckity.genetic_encodings.ga.float_vector import FloatVector
-from eckity.multi_objective_evolution.moe_front_sorting import MOE_front_sorting
+from eckity.multi_objective_evolution.MOGA_front_sorting import MOGA_front_sorting
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.population import Population
 from eckity.subpopulation import Subpopulation
@@ -22,7 +22,7 @@ class TestMoeFrontSelection:
 		""" setup any state specific to the execution of the given class (which
 		usually contains tests).
 		"""
-		self.selection = MOE_front_sorting(higher_is_better=True)
+		self.selection = MOGA_front_sorting(higher_is_better=True)
 
 	def _init_pop(self, values):
 		self.sub_pop = Subpopulation(creators=MOEitStringVectorCreator(length=len(values[0])),

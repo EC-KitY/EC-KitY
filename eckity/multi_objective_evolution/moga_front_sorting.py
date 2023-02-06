@@ -3,7 +3,7 @@ from eckity.individual import Individual
 from eckity.population import Population
 
 
-class MOE_front_sorting():
+class MOGA_front_sorting():
 	'''
     This class is incharge of setitng the value of selecting only the best individuals
     out of the population
