@@ -14,6 +14,10 @@ class MOEFitness(Fitness):
 		self.fitness: list[float] = fitness  # list of objectivs
 		self.crowding = 0
 		self.front_rank = float("inf")
+		if self.fitness!=None and type(self.higher_is_better) is bool:
+			self.higher_is_better = [self.higher_is_better] * len(fitness)
+
+
 
 	def set_fitness(self, fitness):
 		if self._is_evaluated:
