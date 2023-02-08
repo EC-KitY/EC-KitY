@@ -1,10 +1,12 @@
 import pytest
-from eckity.creators.ga_creators.moe_vector_creator import MOEitStringVectorCreator
+
+from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.multi_objective_evolution.moe_fitness import MOEFitness
 from eckity.genetic_encodings.ga.float_vector import FloatVector
-from eckity.multi_objective_evolution.MOGA_front_sorting import MOGA_front_sorting
+
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
+from eckity.multi_objective_evolution.moga_front_sorting import MOGA_front_sorting
 from eckity.population import Population
 from eckity.subpopulation import Subpopulation
 
@@ -22,15 +24,16 @@ class TestMoeFrontSelection:
 		""" setup any state specific to the execution of the given class (which
 		usually contains tests).
 		"""
-		self.selection = MOGA_front_sorting(higher_is_better=True)
+		self.selection = MOGA_front_sorting()
+
 
 	def _init_pop(self, values):
-		self.sub_pop = Subpopulation(creators=MOEitStringVectorCreator(length=len(values[0])),
+		self.sub_pop = Subpopulation(creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=MOEFitness, vector_type=FloatVector),
 									 population_size=len(values),
 									 # user-defined fitness evaluation method
 									 evaluator=FitnessIsVectorEval(),
 									 # maximization problem (fitness is sum of values), so higher fitness is better
-									 higher_is_better=True,
+									 higher_is_better=[True,True],
 									 elitism_rate=1 / 300,
 									 # genetic operators sequence to be applied in each generation
 									 operators_sequence=[],
