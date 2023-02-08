@@ -1,3 +1,5 @@
+from typing import List
+
 from overrides import overrides
 
 from eckity.fitness.fitness import Fitness
@@ -7,11 +9,11 @@ import random as rd
 
 class MOEFitness(Fitness):
 	def __init__(self,
-				 fitness: list[float] = None,
+				 fitness: List[float] = None,
 				 higher_is_better=False):
 		is_evaluated = fitness is not None
 		super().__init__(higher_is_better=higher_is_better, is_evaluated=is_evaluated)
-		self.fitness: list[float] = fitness  # list of objectivs
+		self.fitness: List[float] = fitness  # list of objectivs
 		self.crowding = 0
 		self.front_rank = float("inf")
 		if self.fitness!=None and type(self.higher_is_better) is bool:

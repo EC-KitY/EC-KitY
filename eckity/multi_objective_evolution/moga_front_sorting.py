@@ -1,4 +1,6 @@
 from collections import defaultdict
+from typing import List
+
 from eckity.individual import Individual
 from eckity.population import Population
 
@@ -18,7 +20,7 @@ class MOGA_front_sorting():
 			dest_inds = self._select(sub_population.individuals, dest_inds, new_pop_size)
 			sub_population.individuals = dest_inds
 
-	def _select(self, source_inds: list[Individual], dest_inds: list[Individual], pop_size: int):
+	def _select(self, source_inds: List[Individual], dest_inds: List[Individual], pop_size: int):
 		'''
 
         Parameters
@@ -58,11 +60,11 @@ class MOGA_front_sorting():
 				self.domination_dict[dominated_ind].domination_counter -= 1
 		return list(set(source_inds) - set(pareto_front))
 
-	def _update_new_pareto_front_rank(self, new_pareto_front: list[Individual], front_rank: int):
+	def _update_new_pareto_front_rank(self, new_pareto_front: List[Individual], front_rank: int):
 		for ind in new_pareto_front:
 			ind.fitness.front_rank = front_rank
 
-	def _calc_fronts_crowding(self, front: list[Individual]):
+	def _calc_fronts_crowding(self, front: List[Individual]):
 		for ind in front:
 			ind.fitness.crowding = 0
 
@@ -78,7 +80,7 @@ class MOGA_front_sorting():
 					objective_index])
 				front[i].fitness.crowding += curr_crowding
 
-	def _init_domination_dict(self, source_inds: list[Individual]):
+	def _init_domination_dict(self, source_inds: List[Individual]):
 		self.domination_dict = defaultdict(lambda: DominationCounter())
 		for i, ind1 in enumerate(source_inds):
 			for ind2 in source_inds[i + 1:]:
@@ -94,7 +96,7 @@ class MOGA_front_sorting():
 		self.domination_dict[dominating].dominates.append(dominated)
 		self.domination_dict[dominated].domination_counter += 1
 
-	def _pareto_front_finding(self, source_inds: list[Individual]):
+	def _pareto_front_finding(self, source_inds: List[Individual]):
 		pareto_front = [ind for ind in source_inds if self.domination_dict[ind].domination_counter == 0]
 		return pareto_front
 
