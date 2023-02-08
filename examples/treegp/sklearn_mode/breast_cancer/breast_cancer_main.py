@@ -28,8 +28,57 @@ from eckity.sklearn_compatible.classification_evaluator import ClassificationEva
 
 def main():
     """
-    In this experiment we use the sklearn breast cancer dataset
-    The goal of this experiment is to create a GP Tree that classifies cases of breast cancer
+    Evolve a GP Tree that classifies breast cancer, using a dataset from sklearn
+
+    Expected running time: ~6 minutes (on 2 cores, 2.5 GHz CPU)
+    Example output (with over 92% accuracy on test set):
+    f_div
+       f_log
+          x10
+       f_min
+          f_div
+             f_log
+                f_sqrt
+                   f_sqrt
+                      x7
+             f_max
+                x19
+                x23
+          f_div
+             f_log
+                f_mul
+                   f_add
+                      f_abs
+                         f_neg
+                            f_sqrt
+                               x19
+                      f_sub
+                         f_inv
+                            x23
+                         x26
+                   f_log
+                      x4
+             f_max
+                f_add
+                   f_abs
+                      f_max
+                         f_sub
+                            f_inv
+                               x23
+                            x26
+                         x23
+                   f_add
+                      x12
+                      f_sqrt
+                         f_sqrt
+                            f_log
+                               f_sqrt
+                                  f_sqrt
+                                     x7
+                f_inv
+                   f_mul
+                      x19
+                      x25
     """
     start_time = time()
 

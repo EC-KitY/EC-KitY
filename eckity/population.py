@@ -7,7 +7,7 @@ class Population:
     Parameters
     ----------
     sub_populations: list of Subpopulations
-        sub-populations contained in the population.
+        subpopulations contained in the population.
         For more information, see eckity.subpopulation.
     """
     def __init__(self, sub_populations):

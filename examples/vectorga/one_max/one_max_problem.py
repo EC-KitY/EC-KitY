@@ -1,4 +1,3 @@
-
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.ga_creators.bit_string_vector_creator import GABitStringVectorCreator

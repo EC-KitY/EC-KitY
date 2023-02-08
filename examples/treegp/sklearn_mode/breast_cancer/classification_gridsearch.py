@@ -62,8 +62,8 @@ def main():
 
     # Grid search parameters.
     # The Grid Search model will fit the classifier with every pair combination of the parameter lists
-    # For example: (max_workers=1, max_generation=50), (max_workers=1, max_generation=100) and so on.
-    parameters = {'max_workers': [1, 2, 4], 'max_generation': [50, 100, 150]}
+    # For example: (max_workers=1, max_generation=10), (max_workers=1, max_generation=20) and so on.
+    parameters = {'max_workers': [1, 2, 4], 'max_generation': [10, 20, 30]}
 
     # create the grid search model and fit it several times, each time with a different combination of the parameters
     model = GridSearchCV(classifier, parameters)

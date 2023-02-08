@@ -26,6 +26,9 @@ def main():
 
     Perform an exhaustive search over a given set of parameters to find the best parameters.
     In this example, we will use sklearn GridSearchCV to solve Symbolic Regression GP problem.
+
+    Expected output:    best params: {'max_generation': 30, 'max_workers': 1}
+    Expected runtime: ~16 minutes (on 2 cores, 2.5 GHz CPU)
     """
     start_time = time()
 
