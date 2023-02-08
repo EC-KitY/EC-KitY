@@ -1,3 +1,5 @@
+from typing import List
+
 import pytest
 import math
 import numpy as np
@@ -28,7 +30,7 @@ class TestMOEBasicTestEvaluator:
 		for val1, val2 in zip(vec1, vec2):
 			assert val1 == pytest.approx(val2, tolerance)
 
-	def evaluation_valid(self, my_list: list[float]) -> list[float]:
+	def evaluation_valid(self, my_list: List[float]) -> List[float]:
 		n = 3  # use the instance with n = 3
 		chromosome = np.array(my_list)
 		ans = []
