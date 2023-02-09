@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-class MOEPlot:
+class NSGAIIPlot:
 	def print_plots(self, sender, data_dict):
 		population = data_dict["population"]
 		ind = population.sub_populations[0].individuals[0]

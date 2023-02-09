@@ -4,19 +4,19 @@ from overrides import overrides
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.multi_objective_evolution.moga_front_sorting import MOGA_front_sorting
+from eckity.multi_objective_evolution.NSGAII_front_sorting import NSGAIIFrontSorting
 
 from eckity.termination_checkers.threshold_from_target_termination_checker \
 	import ThresholdFromTargetTerminationChecker
 
 
-class MOEvolution(Algorithm):
+class NSGAIIEvolution(Algorithm):
 	def __init__(self,
 				 population,
 				 statistics=None,
 				 breeder=SimpleBreeder(),
 				 population_evaluator=SimplePopulationEvaluator(),
-				 MOGA_front_sorting=MOGA_front_sorting(),
+				 NSGAIIFrontSorting=NSGAIIFrontSorting(),
 				 max_generation=500,
 				 events=None,
 				 event_names=None,
@@ -52,7 +52,7 @@ class MOEvolution(Algorithm):
 		self.max_generation = max_generation
 
 		self.final_generation_ = None
-		self.MOGA_front_sorting = MOGA_front_sorting
+		self.NSGAIIFrontSorting = NSGAIIFrontSorting
 
 	#
 	@overrides
@@ -76,7 +76,7 @@ class MOEvolution(Algorithm):
 
 		self.population_evaluator.act(self.population)
 
-		self.MOGA_front_sorting.select_for_population(self.population)
+		self.NSGAIIFrontSorting.select_for_population(self.population)
 		self.best_of_gen = self._get_pareto_fronts()
 
 	def _get_pareto_fronts(self):

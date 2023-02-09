@@ -1,23 +1,27 @@
-from math import sqrt, pi, sin
+import math
 import time
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
-from eckity.multi_objective_evolution.moe_evolution import MOEvolution
-from eckity.multi_objective_evolution.moe_breeder import MOEBreeder
-from eckity.creators.ga_creators.moe_vector_creator import MOEitStringVectorCreator
+from eckity.multi_objective_evolution.NSGAII_evolution import NSGAIIEvolution
+from eckity.multi_objective_evolution.NSGAII_breeder import NSGAIIBreeder
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.moe_fitness import MOEFitness
+from eckity.multi_objective_evolution.NSGAII_fitness import NSGAIIFitness
+from eckity.multi_objective_evolution.NSGAII_plot import NSGAIIPlot
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.genetic_encodings.ga.float_vector import FloatVector
-from eckity.termination_checkers.iteration_termination_checker import IterationTerminationChecker
+from eckity.multi_objective_evolution.crowding_termination_checker import CrowdingTerminationChecker
 
 
-class Zdt3Evaluator(SimpleIndividualEvaluator):
+import random
+random.seed(0)
+
+
+class NSGAIIBasicTestEvaluator(SimpleIndividualEvaluator):
 	def _evaluate_individual(self, individual):
 		"""
             Compute the fitness value of a given individual.
@@ -32,23 +36,22 @@ class Zdt3Evaluator(SimpleIndividualEvaluator):
             list
                 The evaluated fitness value for each of the objectives of the given individual.
         """
-		k = len(individual.vector)
-		f1 = individual.vector[0]
-		g = 1 + (9 / (k - 1)) * sum(individual.vector[1:])
-		f2 = 1 - sqrt(f1 / g) - (f1 / g) * sin(10 * pi * f1)
-		return [f1, f2]
+		n = len(individual.vector)
+		fit1 = 1 - math.exp(-sum([(x - 1 / math.sqrt(n)) ** 2 for x in individual.vector]))
+		fit2 = 1 - math.exp(-sum([(x + 1 / math.sqrt(n)) ** 2 for x in individual.vector]))
+		return [fit1, fit2]
 
 
 def main():
 	# Initialize the evolutionary algorithm
-	algo = MOEvolution(
+	algo = NSGAIIEvolution(
 		Population([Subpopulation(
-			creators=GAVectorCreator(length=30, bounds=(0, 1), fitness_type=MOEFitness, vector_type=FloatVector),
+			creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGAIIFitness, vector_type=FloatVector),
 			population_size=150,
 			# user-defined fitness evaluation method
-			evaluator=Zdt3Evaluator(),
+			evaluator=NSGAIIBasicTestEvaluator(),
 			# maximization problem (fitness is sum of values), so higher fitness is better
-			higher_is_better=True,
+			higher_is_better=False,
 			elitism_rate=1 / 300,
 			# genetic operators sequence to be applied in each generation
 			operators_sequence=[
@@ -60,14 +63,15 @@ def main():
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
 		)]),
-		breeder=MOEBreeder(),
+		breeder=NSGAIIBreeder(),
 		max_workers=4,
 		max_generation=150,
 
-		termination_checker=IterationTerminationChecker(),
+		termination_checker=CrowdingTerminationChecker(0.01),
 		statistics=MinimalPrintStatistics()
 	)
-
+	ploter = NSGAIIPlot()
+	algo.register('evolution_finished', ploter.print_plots)
 	# evolve the generated initial population
 	start_time = time.time()
 	algo.evolve()

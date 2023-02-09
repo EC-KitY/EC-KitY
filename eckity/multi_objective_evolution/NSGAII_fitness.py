@@ -7,7 +7,7 @@ from eckity.individual import Individual
 import random as rd
 
 
-class MOEFitness(Fitness):
+class NSGAIIFitness(Fitness):
 	def __init__(self,
 				 fitness: List[float] = None,
 				 higher_is_better=False):
@@ -43,8 +43,8 @@ class MOEFitness(Fitness):
 		self.front_rank = float("inf")
 
 	def check_comparable_fitnesses(self, other_fitness: Fitness, ind: Individual, other_ind: Individual):
-		if not isinstance(other_fitness, MOEFitness):
-			raise TypeError('Expected MOEFitness object in better_than, got', type(other_fitness))
+		if not isinstance(other_fitness, NSGAIIFitness):
+			raise TypeError('Expected NSGAIIFitness object in better_than, got', type(other_fitness))
 		if not self.is_fitness_evaluated() or not other_fitness.is_fitness_evaluated():
 			raise ValueError('Fitnesses must be evaluated before comparison')
 		if len(other_fitness.get_augmented_fitness(other_ind)) != len(self.get_augmented_fitness(ind)):
@@ -56,7 +56,7 @@ class MOEFitness(Fitness):
 		Parameters
 		----------
 		ind:Individual
-		other_fitness:MOEFitness
+		other_fitness:NSGAIIFitness
 		other_ind:Individual
 
 		Returns : True ind has lower rank or equal rank and bigger crwoding value
