@@ -2,11 +2,13 @@ import pytest
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
-from eckity.multi_objective_evolution.moe_fitness import MOEFitness
+
 from eckity.genetic_encodings.ga.float_vector import FloatVector
 
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.moga_front_sorting import MOGA_front_sorting
+from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
+from eckity.multi_objective_evolution.nsga2_front_sorting import NSGA2FrontSorting
+
 from eckity.population import Population
 from eckity.subpopulation import Subpopulation
 
@@ -17,18 +19,18 @@ class FitnessIsVectorEval(SimpleIndividualEvaluator):
 		return individual.vector
 
 
-class TestMoeFrontSelection:
+class TestNSGA2FrontSelection:
 
 	@classmethod
 	def setup_class(self):
 		""" setup any state specific to the execution of the given class (which
 		usually contains tests).
 		"""
-		self.selection = MOGA_front_sorting()
+		self.selection = NSGA2FrontSorting()
 
 
 	def _init_pop(self, values):
-		self.sub_pop = Subpopulation(creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=MOEFitness, vector_type=FloatVector),
+		self.sub_pop = Subpopulation(creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector),
 									 population_size=len(values),
 									 # user-defined fitness evaluation method
 									 evaluator=FitnessIsVectorEval(),
@@ -46,7 +48,7 @@ class TestMoeFrontSelection:
 		self.pop = Population([self.sub_pop])
 		individuals = []
 		for vector in values:
-			fitness = MOEFitness(vector, higher_is_better=True)
+			fitness = NSGA2Fitness(vector, higher_is_better=True)
 			ind = FloatVector(fitness=fitness, bounds=(float("-inf"), float("inf")), length=len(vector))
 			ind.set_vector(vector)
 			individuals.append(ind)
