@@ -2,19 +2,18 @@ from math import sqrt, pi, sin
 import time
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
-from eckity.multi_objective_evolution.moe_evolution import MOEvolution
-from eckity.multi_objective_evolution.moe_breeder import MOEBreeder
-from eckity.creators.ga_creators.moe_vector_creator import MOEitStringVectorCreator
+from eckity.multi_objective_evolution.crowding_termination_checker import CrowdingTerminationChecker
+from eckity.multi_objective_evolution.nsga2_evolution import NSGA2Evolution
+from eckity.multi_objective_evolution.nsga2_breeder import NSGA2Breeder
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.moe_fitness import MOEFitness
+from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.genetic_encodings.ga.float_vector import FloatVector
-from eckity.termination_checkers.iteration_termination_checker import IterationTerminationChecker
 
 
 class Zdt3Evaluator(SimpleIndividualEvaluator):
@@ -41,9 +40,9 @@ class Zdt3Evaluator(SimpleIndividualEvaluator):
 
 def main():
 	# Initialize the evolutionary algorithm
-	algo = MOEvolution(
+	algo = NSGA2Evolution(
 		Population([Subpopulation(
-			creators=GAVectorCreator(length=30, bounds=(0, 1), fitness_type=MOEFitness, vector_type=FloatVector),
+			creators=GAVectorCreator(length=30, bounds=(0, 1), fitness_type=NSGA2Fitness, vector_type=FloatVector),
 			population_size=150,
 			# user-defined fitness evaluation method
 			evaluator=Zdt3Evaluator(),
@@ -60,11 +59,11 @@ def main():
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
 		)]),
-		breeder=MOEBreeder(),
+		breeder=NSGA2Breeder(),
 		max_workers=4,
 		max_generation=150,
 
-		termination_checker=IterationTerminationChecker(),
+		termination_checker=CrowdingTerminationChecker(0.01),
 		statistics=MinimalPrintStatistics()
 	)
 

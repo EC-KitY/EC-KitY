@@ -2,52 +2,55 @@ import math
 import time
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
-from eckity.multi_objective_evolution.moe_evolution import MOEvolution
-from eckity.multi_objective_evolution.moe_breeder import MOEBreeder
-from eckity.creators.ga_creators.moe_vector_creator import MOEitStringVectorCreator
+from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
+from eckity.multi_objective_evolution.nsga2_plot import NSGA2Plot
+from eckity.multi_objective_evolution.nsga2_evolution import NSGA2Evolution
+from eckity.multi_objective_evolution.nsga2_breeder import NSGA2Breeder
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.moe_fitness import MOEFitness
+
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.genetic_encodings.ga.float_vector import FloatVector
+from eckity.multi_objective_evolution.crowding_termination_checker import CrowdingTerminationChecker
 
-from eckity.termination_checkers.iteration_termination_checker import IterationTerminationChecker
+
+import random
+random.seed(0)
 
 
-class Zdt2Evaluator(SimpleIndividualEvaluator):
+class NSGA2BasicTestEvaluator(SimpleIndividualEvaluator):
 	def _evaluate_individual(self, individual):
 		"""
-			Compute the fitness value of a given individual.
+            Compute the fitness value of a given individual.
 
-			Parameters
-			----------
-			individual: Vector
-				The individual to compute the fitness value for.
+            Parameters
+            ----------
+            individual: Vector
+                The individual to compute the fitness value for.
 
-			Returns
-			-------
-			list
-				The evaluated fitness value for each of the objectives of the given individual.
-		"""
-		k = len(individual.vector)
-		f1 = individual.vector[0]
-		g = 1 + (9 / (k - 1)) * sum(individual.vector[1:])
-		f2 = 1 - math.pow(f1 / g, 2)
-		return [f1, f2]
+            Returns
+            -------
+            list
+                The evaluated fitness value for each of the objectives of the given individual.
+        """
+		n = len(individual.vector)
+		fit1 = 1 - math.exp(-sum([(x - 1 / math.sqrt(n)) ** 2 for x in individual.vector]))
+		fit2 = 1 - math.exp(-sum([(x + 1 / math.sqrt(n)) ** 2 for x in individual.vector]))
+		return [fit1, fit2]
 
 
 def main():
 	# Initialize the evolutionary algorithm
-	algo = MOEvolution(
+	algo = NSGA2Evolution(
 		Population([Subpopulation(
-			creators=GAVectorCreator(length=3, bounds=(0, 1), fitness_type=MOEFitness, vector_type=FloatVector),
+			creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector),
 			population_size=150,
 			# user-defined fitness evaluation method
-			evaluator=Zdt2Evaluator(),
+			evaluator=NSGA2BasicTestEvaluator(),
 			# maximization problem (fitness is sum of values), so higher fitness is better
 			higher_is_better=False,
 			elitism_rate=1 / 300,
@@ -60,15 +63,16 @@ def main():
 				# (selection method, selection probability) tuple
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
-			)]),
-		breeder=MOEBreeder(),
+		)]),
+		breeder=NSGA2Breeder(),
 		max_workers=4,
 		max_generation=150,
 
-		termination_checker=IterationTerminationChecker(),
+		termination_checker=CrowdingTerminationChecker(0.01),
 		statistics=MinimalPrintStatistics()
 	)
-
+	ploter = NSGA2Plot()
+	algo.register('evolution_finished', ploter.print_plots)
 	# evolve the generated initial population
 	start_time = time.time()
 	algo.evolve()
