@@ -2,11 +2,12 @@ import pytest
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
-from eckity.multi_objective_evolution.NSGA2_fitness import NSGA2Fitness
+
 from eckity.genetic_encodings.ga.float_vector import FloatVector
 
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.NSGA2_front_sorting import NSGA2FrontSorting
+from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
+from eckity.multi_objective_evolution.nsga2_front_sorting import NSGA2FrontSorting
 
 from eckity.population import Population
 from eckity.subpopulation import Subpopulation

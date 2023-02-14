@@ -4,7 +4,7 @@ from overrides import overrides
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.multi_objective_evolution.NSGA2_front_sorting import NSGA2FrontSorting
+from eckity.multi_objective_evolution.nsga2_front_sorting import NSGA2FrontSorting
 
 from eckity.termination_checkers.threshold_from_target_termination_checker \
 	import ThresholdFromTargetTerminationChecker

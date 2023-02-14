@@ -2,14 +2,15 @@ import math
 import time
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
-from eckity.multi_objective_evolution.NSGA2_evolution import NSGA2Evolution
+from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
+from eckity.multi_objective_evolution.nsga2_plot import NSGA2Plot
+from eckity.multi_objective_evolution.nsga2_evolution import NSGA2Evolution
 from eckity.multi_objective_evolution.nsga2_breeder import NSGA2Breeder
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.NSGA2_fitness import NSGA2Fitness
-from eckity.multi_objective_evolution.NSGA2_plot import NSGA2Plot
+
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.subpopulation import Subpopulation
