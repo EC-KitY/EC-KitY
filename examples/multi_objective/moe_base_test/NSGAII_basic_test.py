@@ -2,14 +2,14 @@ import math
 import time
 
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
-from eckity.multi_objective_evolution.NSGAII_evolution import NSGAIIEvolution
-from eckity.multi_objective_evolution.NSGAII_breeder import NSGAIIBreeder
+from eckity.multi_objective_evolution.NSGA2_evolution import NSGA2Evolution
+from eckity.multi_objective_evolution.nsga2_breeder import NSGA2Breeder
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
 from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.multi_objective_evolution.NSGAII_fitness import NSGAIIFitness
-from eckity.multi_objective_evolution.NSGAII_plot import NSGAIIPlot
+from eckity.multi_objective_evolution.NSGA2_fitness import NSGA2Fitness
+from eckity.multi_objective_evolution.NSGA2_plot import NSGA2Plot
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.subpopulation import Subpopulation
@@ -21,7 +21,7 @@ import random
 random.seed(0)
 
 
-class NSGAIIBasicTestEvaluator(SimpleIndividualEvaluator):
+class NSGA2BasicTestEvaluator(SimpleIndividualEvaluator):
 	def _evaluate_individual(self, individual):
 		"""
             Compute the fitness value of a given individual.
@@ -44,12 +44,12 @@ class NSGAIIBasicTestEvaluator(SimpleIndividualEvaluator):
 
 def main():
 	# Initialize the evolutionary algorithm
-	algo = NSGAIIEvolution(
+	algo = NSGA2Evolution(
 		Population([Subpopulation(
-			creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGAIIFitness, vector_type=FloatVector),
+			creators=GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector),
 			population_size=150,
 			# user-defined fitness evaluation method
-			evaluator=NSGAIIBasicTestEvaluator(),
+			evaluator=NSGA2BasicTestEvaluator(),
 			# maximization problem (fitness is sum of values), so higher fitness is better
 			higher_is_better=False,
 			elitism_rate=1 / 300,
@@ -63,14 +63,14 @@ def main():
 				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
 			]
 		)]),
-		breeder=NSGAIIBreeder(),
+		breeder=NSGA2Breeder(),
 		max_workers=4,
 		max_generation=150,
 
 		termination_checker=CrowdingTerminationChecker(0.01),
 		statistics=MinimalPrintStatistics()
 	)
-	ploter = NSGAIIPlot()
+	ploter = NSGA2Plot()
 	algo.register('evolution_finished', ploter.print_plots)
 	# evolve the generated initial population
 	start_time = time.time()

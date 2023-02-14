@@ -4,19 +4,19 @@ from overrides import overrides
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators.simple_population_evaluator import SimplePopulationEvaluator
-from eckity.multi_objective_evolution.NSGAII_front_sorting import NSGAIIFrontSorting
+from eckity.multi_objective_evolution.NSGA2_front_sorting import NSGA2FrontSorting
 
 from eckity.termination_checkers.threshold_from_target_termination_checker \
 	import ThresholdFromTargetTerminationChecker
 
 
-class NSGAIIEvolution(Algorithm):
+class NSGA2Evolution(Algorithm):
 	def __init__(self,
 				 population,
 				 statistics=None,
 				 breeder=SimpleBreeder(),
 				 population_evaluator=SimplePopulationEvaluator(),
-				 NSGAIIFrontSorting=NSGAIIFrontSorting(),
+				 NSGA2FrontSorting=NSGA2FrontSorting(),
 				 max_generation=500,
 				 events=None,
 				 event_names=None,
@@ -52,7 +52,7 @@ class NSGAIIEvolution(Algorithm):
 		self.max_generation = max_generation
 
 		self.final_generation_ = None
-		self.NSGAIIFrontSorting = NSGAIIFrontSorting
+		self.NSGA2FrontSorting = NSGA2FrontSorting
 
 	#
 	@overrides
@@ -76,7 +76,7 @@ class NSGAIIEvolution(Algorithm):
 
 		self.population_evaluator.act(self.population)
 
-		self.NSGAIIFrontSorting.select_for_population(self.population)
+		self.NSGA2FrontSorting.select_for_population(self.population)
 		self.best_of_gen = self._get_pareto_fronts()
 
 	def _get_pareto_fronts(self):

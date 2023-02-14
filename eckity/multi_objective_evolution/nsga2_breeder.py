@@ -2,7 +2,7 @@ from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
 
 
-class NSGAIIBreeder(SimpleBreeder):
+class NSGA2Breeder(SimpleBreeder):
 	def __init__(self,
 				 events=None):
 		super().__init__(events=events)

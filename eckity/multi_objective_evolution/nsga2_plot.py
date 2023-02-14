@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-class NSGAIIPlot:
+class NSGA2Plot:
 	def print_plots(self, sender, data_dict):
 		population = data_dict["population"]
 		ind = population.sub_populations[0].individuals[0]
