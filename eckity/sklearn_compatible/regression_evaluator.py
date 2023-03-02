@@ -19,12 +19,17 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
 
     y: array-like of shape (n_samples,) or (n_samples, 1), default=None
     Target vector. used during the training phase.
+
+    metric: callable (optional, default=mean_absolute_error)
+    A function which receives two array-like of shapes (n_samples,) or (n_samples, 1) and returns a float or
+    ndarray of floats
     """
         
-    def __init__(self, X=None, y=None):
+    def __init__(self, X=None, y=None, metric=mean_absolute_error):
         super().__init__()
         self.X = X
         self.y = y
+        self.metric = metric
 
     def set_context(self, context):
         """
@@ -65,6 +70,7 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
         Returns
         ----------
         float
-            Computed fitness value - evaluated using MAE between the execution result of X and the vector y.
+            Computed fitness value - evaluated using the provided scoring function between the execution result of X and
+            the vector y.
         """
-        return mean_absolute_error(self.y, individual.execute(self.X))
+        return self.metric(self.y, individual.execute(self.X))
