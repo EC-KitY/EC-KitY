@@ -64,9 +64,6 @@ class SimpleEvolution(Algorithm):
 	best_of_run_: Individual, default=None
 		The individual that has the best fitness in the entire evolutionary run.
 
-	best_of_run_evaluator: IndividualEvaluator, default=None
-		The evaluator of the best_of_run individual's sub-population.
-
 	best_of_gen: Individual, default=None
 		The individual that has the best fitness in the current generation.
 
@@ -91,7 +88,6 @@ class SimpleEvolution(Algorithm):
 				 random_seed=time(),
 				 generation_seed=None,
 				 best_of_run_=None,
-				 best_of_run_evaluator=None,
 				 best_of_gen=None,
 				 worst_of_gen=None,
 				 generation_num=0):
@@ -111,7 +107,6 @@ class SimpleEvolution(Algorithm):
 
 		self.termination_checker = termination_checker
 		self.best_of_run_ = best_of_run_
-		self.best_of_run_evaluator = best_of_run_evaluator
 		self.best_of_gen = best_of_gen
 		self.worst_of_gen = worst_of_gen
 		self.max_generation = max_generation
@@ -151,10 +146,6 @@ class SimpleEvolution(Algorithm):
 
 		if self.best_of_gen.better_than(self.best_of_run_):
 			self.best_of_run_ = self.best_of_gen
-
-			# TODO maybe it's better for population_evaluator.act to return best of gen and its appropriate evaluator?
-			best_of_run_subpopulation = self.population.find_individual_subpopulation(self.best_of_run_)
-			self.best_of_run_evaluator = best_of_run_subpopulation.evaluator
 
 		self.worst_of_gen = self.population.sub_populations[0].get_worst_individual()
 
