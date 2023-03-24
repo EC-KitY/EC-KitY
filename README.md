@@ -99,13 +99,12 @@ Tomer Halperin
 
 Citations are always appreciated 😊:
 ```
-@article{eckity2022,
+@article{eckity2023,
     author = {Sipper, Moshe and Halperin, Tomer and Tzruia, Itai and  Elyasaf, Achiya},
     title = {{EC-KitY}: Evolutionary Computation Tool Kit in {Python}},
-    publisher = {arXiv},
-    year = {2022},
+    journal = {SoftwareX},
+    year = {2023},
     url = {https://arxiv.org/abs/2207.10367},
-    doi = {10.48550/ARXIV.2207.10367},
 }
 
 @misc{eckity2022git,
