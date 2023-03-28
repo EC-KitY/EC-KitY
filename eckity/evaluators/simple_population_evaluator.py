@@ -24,15 +24,22 @@ class SimplePopulationEvaluator(PopulationEvaluator):
 		"""
 		super()._evaluate(population)
 		for sub_population in population.sub_populations:
-			sp_eval: IndividualEvaluator = sub_population.evaluator
-			eval_futures = [
-				self.executor.submit(sp_eval.evaluate, ind, sub_population.individuals)
-				for ind in sub_population.individuals
-			]
+			# sp_eval: IndividualEvaluator = sub_population.evaluator
+			# eval_futures = [
+			# 	self.executor.submit(sp_eval.evaluate, ind, sub_population.individuals)
+			# 	for ind in sub_population.individuals
+			# ]
 
-			# wait for all fitness values to be evaluated before returning from this method
-			for future in eval_futures:
-				future.result()
+			# # wait for all fitness values to be evaluated before returning from this method
+			# for future in eval_futures:
+			# 	future.result()
+
+			sub_population = population.sub_populations[0]
+			sp_eval: IndividualEvaluator = sub_population.evaluator
+			eval_results = self.executor.map(sp_eval._evaluate_individual, sub_population.individuals)
+			for ind, fitness_score in zip(sub_population.individuals, eval_results):
+				ind.fitness.set_fitness(fitness_score)
+
 
 		# only one subpopulation in simple case
 		individuals = population.sub_populations[0].individuals

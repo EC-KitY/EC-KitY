@@ -1,4 +1,4 @@
-from concurrent.futures.thread import ThreadPoolExecutor
+from concurrent.futures import Executor
 
 from eckity.event_based_operator import Operator
 
@@ -27,5 +27,5 @@ class PopulationEvaluator(Operator):
 	def apply_operator(self, payload):
 		return self._evaluate(payload)
 
-	def set_executor(self, executor: ThreadPoolExecutor):
+	def set_executor(self, executor: Executor):
 		self.executor = executor
