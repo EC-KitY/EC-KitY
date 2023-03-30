@@ -6,6 +6,7 @@ from abc import abstractmethod
 
 import random
 from concurrent.futures.thread import ThreadPoolExecutor
+from concurrent.futures.process import ProcessPoolExecutor
 from time import time
 
 from overrides import overrides
@@ -89,6 +90,7 @@ class Algorithm(Operator):
 				 random_generator=None,
 				 random_seed=time(),
 				 generation_seed=None,
+				 executor='thread',
 				 max_workers=None,
 				 generation_num=0):
 
@@ -153,7 +155,15 @@ class Algorithm(Operator):
 		self.generation_num = generation_num
 
 		self.max_workers = max_workers
-		self.executor = ThreadPoolExecutor(max_workers=max_workers)
+
+		if executor == 'thread':
+			self.executor = ThreadPoolExecutor(max_workers=max_workers)
+		elif executor == 'process':
+			self.executor = ProcessPoolExecutor(max_workers=max_workers)
+		else:
+			raise ValueError('Executor must be either "thread" or "process"')
+		self._executor_type = executor
+		
 
 		self.final_generation_ = 0
 
@@ -350,5 +360,8 @@ class Algorithm(Operator):
 	# Necessary for valid unpickling, since SimpleQueue object cannot be pickled
 	def __setstate__(self, state):
 		self.__dict__.update(state)
-		self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
+		if self._executor_type == 'thread':
+			self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
+		else:
+			self.executor = ProcessPoolExecutor(max_workers=self.max_workers)
 		self.random_generator = random
