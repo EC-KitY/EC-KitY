@@ -6,6 +6,7 @@ from eckity.genetic_operators.mutations.vector_random_mutation import BitStringV
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
+from time import process_time
 
 from examples.vectorga.knapsack.knapsack_evaluator import KnapsackEvaluator, NUM_ITEMS
 
@@ -20,6 +21,8 @@ def main():
     ----------
     DEAP Knapsack Example: https://deap.readthedocs.io/en/master/examples/ga_knapsack.html
     """
+    start_time = process_time()
+
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(creators=GABitStringVectorCreator(length=NUM_ITEMS),
@@ -39,7 +42,8 @@ def main():
                           (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
                       ]),
         breeder=SimpleBreeder(),
-        max_workers=1,
+        # executor='thread',
+        max_workers=4,
         max_generation=500,
         statistics=BestAverageWorstStatistics()
     )
@@ -48,6 +52,8 @@ def main():
     algo.evolve()
     # Execute (show) the best solution
     print(algo.execute())
+
+    print(f"Total time: {process_time() - start_time}")
 
 
 if __name__ == '__main__':

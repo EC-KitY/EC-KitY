@@ -38,7 +38,7 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
 		return individual
 
 	@abstractmethod
-	def _evaluate_individual(self, individual):
+	def evaluate_individual(self, individual):
 		"""
 		Evaluate the fitness score for the given individual.
 		This function must be implemented by subclasses of this class (user-defined evaluators)
@@ -53,4 +53,12 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
 		float
 			The evaluated fitness value for the given individual
 		"""
-		raise ValueError("_evaluate_individual is an abstract method in SimpleIndividualEvaluator")
+		raise ValueError("evaluate_individual is an abstract method in SimpleIndividualEvaluator")
+
+	def _evaluate_individual(self, individual):
+		"""
+		Evaluate the fitness score for the given individual.
+		Used for backward compatability, since this evaluate_individual is now public.
+		"""
+		return self.evaluate_individual(individual)
+
