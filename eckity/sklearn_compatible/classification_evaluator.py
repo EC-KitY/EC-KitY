@@ -15,10 +15,11 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
     Class to compute the fitness of an individual in classification problems.
     """
 
-    def __init__(self, X=None, y=None):
+    def __init__(self, X=None, y=None, metric=accuracy_score):
         super().__init__()
         self.X = X
         self.y = y
+        self.metric = metric
 
     def set_context(self, context):
         """
@@ -55,7 +56,7 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
             computed fitness value
         """
         y_pred = self.classify_individual(individual)
-        return accuracy_score(y_true=self.y, y_pred=y_pred)
+        return self.metric(y_true=self.y, y_pred=y_pred)
 
     def classify_individual(self, individual):
         return np.where(individual.execute(self.X) > CLASSIFICATION_THRESHOLD, 1, 0)
