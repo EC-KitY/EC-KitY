@@ -1,6 +1,7 @@
 from random import sample
 
 from eckity.genetic_operators.genetic_operator import GeneticOperator
+from eckity.genetic_encodings.ga.vector_individual import Vector
 
 
 class VectorKPointsCrossover(GeneticOperator):
@@ -45,14 +46,20 @@ class VectorKPointsCrossover(GeneticOperator):
             individuals after the crossover
         """
         self.individuals = individuals
-        self.points = sorted(sample(range(0, individuals[0].size()), self.k))
-
+        self.points = sorted(sample(range(1, individuals[0].size()), self.k))
+        
         start_index = 0
-        for end_point in self.points:
+        for i in range(0, len(self.points), 2):
+            end_point = self.points[i]
             replaced_part = individuals[0].get_vector_part(start_index, end_point)
             replaced_part = individuals[1].replace_vector_part(replaced_part, start_index)
             individuals[0].replace_vector_part(replaced_part, start_index)
-            start_index = end_point  # todo add last iter
+            start_index = end_point
+
+        # replace the last part (from last point to end)
+        replaced_part = individuals[0].get_vector_part(self.points[-1], individuals[0].size())
+        replaced_part = individuals[1].replace_vector_part(replaced_part, self.points[-1])
+        individuals[0].replace_vector_part(replaced_part, self.points[-1])
 
         self.applied_individuals = individuals
         return individuals

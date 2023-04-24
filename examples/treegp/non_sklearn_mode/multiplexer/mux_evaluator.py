@@ -71,7 +71,7 @@ class MuxEvaluator(SimpleIndividualEvaluator):
         self.inputs = truth_tbl.iloc[:, :NUM_COLUMNS]
         self.output = truth_tbl['output']
 
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
         Compute the fitness value of a given individual.
 

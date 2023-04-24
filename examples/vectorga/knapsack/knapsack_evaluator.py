@@ -35,7 +35,7 @@ class KnapsackEvaluator(SimpleIndividualEvaluator):
         self.items = items
         self.max_weight = max_weight
 
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
         Compute the fitness value of a given individual.
 

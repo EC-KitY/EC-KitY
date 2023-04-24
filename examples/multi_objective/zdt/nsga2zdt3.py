@@ -17,7 +17,7 @@ from eckity.genetic_encodings.ga.float_vector import FloatVector
 
 
 class Zdt3Evaluator(SimpleIndividualEvaluator):
-	def _evaluate_individual(self, individual):
+	def evaluate_individual(self, individual):
 		"""
             Compute the fitness value of a given individual.
 

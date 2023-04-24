@@ -33,7 +33,7 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
 			the individual with the best fitness out of the given individuals
 		"""
 		super().evaluate(individual, environment_individuals)
-		fitness_score = self._evaluate_individual(individual)
+		fitness_score = self.evaluate_individual(individual)
 		individual.fitness.set_fitness(fitness_score)
 		return individual
 
@@ -54,11 +54,3 @@ class SimpleIndividualEvaluator(IndividualEvaluator):
 			The evaluated fitness value for the given individual
 		"""
 		raise ValueError("evaluate_individual is an abstract method in SimpleIndividualEvaluator")
-
-	def _evaluate_individual(self, individual):
-		"""
-		Evaluate the fitness score for the given individual.
-		Used for backward compatability, since this evaluate_individual is now public.
-		"""
-		return self.evaluate_individual(individual)
-

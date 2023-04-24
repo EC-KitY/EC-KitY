@@ -38,7 +38,7 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
         self.X = context[0]
         self.y = context[1]
 
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
         Compute the fitness value by comparing the program tree execution result to the result vector y
 

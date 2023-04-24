@@ -55,7 +55,7 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
         self.X = context[0]
         self.y = context[1]
 
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
         compute fitness value by computing the MAE between program tree execution result and y result vector
 

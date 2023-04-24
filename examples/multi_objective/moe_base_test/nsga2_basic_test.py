@@ -23,7 +23,7 @@ random.seed(0)
 
 
 class NSGA2BasicTestEvaluator(SimpleIndividualEvaluator):
-	def _evaluate_individual(self, individual):
+	def evaluate_individual(self, individual):
 		"""
             Compute the fitness value of a given individual.
 
