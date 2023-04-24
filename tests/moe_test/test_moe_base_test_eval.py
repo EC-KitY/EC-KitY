@@ -41,35 +41,35 @@ class TestNSGA2BasicTestEvaluator:
 	def test_eval_fixed_vals(self):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = [-1.04, 2.844, -2.54]
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = [0.999, 0.999]
 		self.assert_vector_almost_equal(actual, expected, 0.01)
 
 	def test_eval_fixed_vals_2_first_half(self):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = [-3.5158362080315237, 0.06631935351665152, -2.921231400536878]
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = [0.9999999999998029, 0.999999516777658]
 		self.assert_vector_almost_equal(actual, expected, tolerance=0.000000000000001)
 
 	def test_eval_fixed_5_vals_grate_values(self):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = [-3.4817449392563073, -2.728885522520228, 3.7399170615305213]
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = [1.0, 0.9999999999999993]
 		self.assert_vector_almost_equal(actual, expected, tolerance=0.000000000000001)
 
 	def test_eval_fixed_vals_6_first_half(self):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = [-2.841398594290565, -1.4434725567566344, 3.6928271437413196]
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = [0.9999999999913871, 0.9999999999661979]
 		self.assert_vector_almost_equal(actual, expected, tolerance=0.000000000000001)
 
 	def test_eval_fixed_vals_7_second_half(self):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = [3.768444634957887, -1.2647927144943072, 3.5023114497554335]
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = [0.9999999997555407, 0.9999999999999998]
 		self.assert_vector_almost_equal(actual, expected, tolerance=0.000000000000001)
 
@@ -82,6 +82,6 @@ class TestNSGA2BasicTestEvaluator:
 	def check_sigel_vector(self, initial_vector):
 		ind = GAVectorCreator(length=3, bounds=(-4, 4), fitness_type=NSGA2Fitness, vector_type=FloatVector)
 		ind.vector = initial_vector
-		actual = self.evaluator._evaluate_individual(ind)
+		actual = self.evaluator.evaluate_individual(ind)
 		expected = self.evaluation_valid(initial_vector)
 		self.assert_vector_almost_equal(actual, expected)

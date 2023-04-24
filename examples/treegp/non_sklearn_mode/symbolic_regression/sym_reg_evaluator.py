@@ -39,7 +39,7 @@ class SymbolicRegressionEvaluator(SimpleIndividualEvaluator):
         self.df = pd.DataFrame(data, columns=['x', 'y', 'z'])
         self.df['target'] = _target_func(self.df['x'], self.df['y'], self.df['z'])
 
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
         Parameters
         ----------

@@ -14,7 +14,7 @@ from eckity.subpopulation import Subpopulation
 
 
 class FitnessIsVectorEval(SimpleIndividualEvaluator):
-	def _evaluate_individual(self, individual):
+	def evaluate_individual(self, individual):
 		''' sets the fitness to be the value of the vector'''
 		return individual.vector
 

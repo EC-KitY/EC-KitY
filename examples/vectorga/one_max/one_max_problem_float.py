@@ -14,7 +14,7 @@ from eckity.termination_checkers.threshold_from_target_termination_checker impor
 
 
 class OneMaxEvaluator(SimpleIndividualEvaluator):
-    def _evaluate_individual(self, individual):
+    def evaluate_individual(self, individual):
         """
             Compute the fitness value of a given individual.
 
