@@ -1,7 +1,9 @@
-from random import choices
-from random import sample
+import random
 
 from eckity.genetic_operators.failable_operator import FailableOperator
+from eckity.genetic_encodings.ga.vector_individual import Vector
+
+from typing import List, Tuple, Union
 
 
 class VectorNPointMutation(FailableOperator):
@@ -21,6 +23,9 @@ class VectorNPointMutation(FailableOperator):
     arity : int
         The number of individuals this mutation is applied on
 
+    cell_selector: callable
+        Returns the indices of the cells to mutate
+
     mut_val_getter: callable
         Returns a mutated value of a certain cell
 
@@ -30,10 +35,21 @@ class VectorNPointMutation(FailableOperator):
     events: list of strings
         Events to publish before/after the mutation operator
     """
-    def __init__(self, n=1, probability=1, arity=1, mut_val_getter=None,
-                 success_checker=None, events=None, attempts=5):
+    def __init__(self,
+                 n=1,
+                 probability=1.0,
+                 arity=1,
+                 cell_selector=None,
+                 mut_val_getter=None,
+                 success_checker=None,
+                 events=None,
+                 attempts=5):
         super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
         self.n = n
+
+        if cell_selector is None:
+            cell_selector = self.default_cell_selector
+        self.cell_selector = cell_selector
 
         if success_checker is None:
             success_checker = self.default_success_checker
@@ -44,44 +60,32 @@ class VectorNPointMutation(FailableOperator):
         self.mut_val_getter = mut_val_getter
 
     @staticmethod
-    def default_mut_val_getter(vec, idx):
-        """
-        Default implementation for mutated value getter
-
-        Parameters
-        ----------
-        vec : Vector
-            a vector individual
-
-        idx : int
-            vector cell index
-
-        Returns
-        ----------
-        object
-            Mutated vector cell value
-        """
+    def default_mut_val_getter(vec: Vector, idx: int) -> Union[int, float]:
         return vec.get_random_number_in_bounds(vec, idx)
 
     @staticmethod
-    def default_success_checker(old_vec, new_vec):
+    def default_success_checker(old_vec: Vector, new_vec: Vector) -> bool:
         return new_vec.check_if_in_bounds()
+    
+    def default_cell_selector(self, vec: Vector) -> List[int]:
+        vector_indices = range(vec.size())
+        return random.sample(vector_indices, k=self.n)
 
-    def attempt_operator(self, individuals, attempt_num):
+    def attempt_operator(self, individuals: List[Vector], attempt_num) -> Tuple[bool, List[Vector]]:
         """
         Attempt to perform the mutation operator
 
         Parameters
         ----------
-        individuals : list of individuals
-            individuals to mutate
+        individuals : list of vectors
+            vectors to mutate
 
         attempt_num : int
             Current attempt number
 
         Returns
         ----------
-        tuple of (bool, list of individuals)
+        tuple of (bool, list of vectors)
             first return value determines if the the attempt succeeded
             second return value is the operator result
         """
@@ -90,7 +94,7 @@ class VectorNPointMutation(FailableOperator):
             old_individual = individual.clone()
 
             # randomly select n points of the vector (without repetitions)
-            m_points = sample(range(individual.size()), k=self.n)
+            m_points = self.cell_selector(individual)
             # obtain the mutated values
             mut_vals = [self.mut_val_getter(individual, m_point) for m_point in m_points]
 

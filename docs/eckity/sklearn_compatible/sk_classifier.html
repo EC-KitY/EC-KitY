@@ -70,40 +70,41 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span> <span class="nn">eckity.sklearn_compatible.sklearn_wrapper</span> <span class="kn">import</span> <span class="n">SklearnWrapper</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span> <span class="nn">eckity.sklearn_compatible.classification_evaluator</span> <span class="kn">import</span> <span class="n">ClassificationEvaluator</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">        Compute output using best evolved individual.</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">        Input is a numpy array.</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">        Parameters</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">        ----------</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">        Returns</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">        -------</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">        y : array, shape (num samples,)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">            Returns predicted values after applying classification.</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="c1"># Check is fit had been called</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="n">ind_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="n">ind_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="n">ind_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">        Compute output using best evolved individual.</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">        Input is a numpy array.</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">        Parameters</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">        ----------</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">        Returns</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="sd">        -------</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">        y : array, shape (num samples,)</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">            Returns predicted values after applying classification.</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="c1"># Check is fit had been called</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="n">clf_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">clf_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">clf_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -119,38 +120,38 @@
 
     </div>
     <a class="headerlink" href="#SKClassifier"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier-8"><a href="#SKClassifier-8"><span class="linenos"> 8</span></a><span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
-</span><span id="SKClassifier-9"><a href="#SKClassifier-9"><span class="linenos"> 9</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier-10"><a href="#SKClassifier-10"><span class="linenos">10</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SKClassifier-11"><a href="#SKClassifier-11"><span class="linenos">11</span></a><span class="sd">        Compute output using best evolved individual.</span>
-</span><span id="SKClassifier-12"><a href="#SKClassifier-12"><span class="linenos">12</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
-</span><span id="SKClassifier-13"><a href="#SKClassifier-13"><span class="linenos">13</span></a><span class="sd">        Input is a numpy array.</span>
-</span><span id="SKClassifier-14"><a href="#SKClassifier-14"><span class="linenos">14</span></a>
-</span><span id="SKClassifier-15"><a href="#SKClassifier-15"><span class="linenos">15</span></a><span class="sd">        Parameters</span>
-</span><span id="SKClassifier-16"><a href="#SKClassifier-16"><span class="linenos">16</span></a><span class="sd">        ----------</span>
-</span><span id="SKClassifier-17"><a href="#SKClassifier-17"><span class="linenos">17</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
-</span><span id="SKClassifier-18"><a href="#SKClassifier-18"><span class="linenos">18</span></a>
-</span><span id="SKClassifier-19"><a href="#SKClassifier-19"><span class="linenos">19</span></a><span class="sd">        Returns</span>
-</span><span id="SKClassifier-20"><a href="#SKClassifier-20"><span class="linenos">20</span></a><span class="sd">        -------</span>
-</span><span id="SKClassifier-21"><a href="#SKClassifier-21"><span class="linenos">21</span></a><span class="sd">        y : array, shape (num samples,)</span>
-</span><span id="SKClassifier-22"><a href="#SKClassifier-22"><span class="linenos">22</span></a><span class="sd">            Returns predicted values after applying classification.</span>
-</span><span id="SKClassifier-23"><a href="#SKClassifier-23"><span class="linenos">23</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SKClassifier-24"><a href="#SKClassifier-24"><span class="linenos">24</span></a>
-</span><span id="SKClassifier-25"><a href="#SKClassifier-25"><span class="linenos">25</span></a>        <span class="c1"># Check is fit had been called</span>
-</span><span id="SKClassifier-26"><a href="#SKClassifier-26"><span class="linenos">26</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="SKClassifier-27"><a href="#SKClassifier-27"><span class="linenos">27</span></a>
-</span><span id="SKClassifier-28"><a href="#SKClassifier-28"><span class="linenos">28</span></a>        <span class="n">ind_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
-</span><span id="SKClassifier-29"><a href="#SKClassifier-29"><span class="linenos">29</span></a>
-</span><span id="SKClassifier-30"><a href="#SKClassifier-30"><span class="linenos">30</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
-</span><span id="SKClassifier-31"><a href="#SKClassifier-31"><span class="linenos">31</span></a>        <span class="n">ind_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-</span><span id="SKClassifier-32"><a href="#SKClassifier-32"><span class="linenos">32</span></a>
-</span><span id="SKClassifier-33"><a href="#SKClassifier-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">ind_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
-</span><span id="SKClassifier-34"><a href="#SKClassifier-34"><span class="linenos">34</span></a>
-</span><span id="SKClassifier-35"><a href="#SKClassifier-35"><span class="linenos">35</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier-36"><a href="#SKClassifier-36"><span class="linenos">36</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
-</span><span id="SKClassifier-37"><a href="#SKClassifier-37"><span class="linenos">37</span></a>
-</span><span id="SKClassifier-38"><a href="#SKClassifier-38"><span class="linenos">38</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier-39"><a href="#SKClassifier-39"><span class="linenos">39</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier-9"><a href="#SKClassifier-9"><span class="linenos"> 9</span></a><span class="k">class</span> <span class="nc">SKClassifier</span><span class="p">(</span><span class="n">SklearnWrapper</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+</span><span id="SKClassifier-10"><a href="#SKClassifier-10"><span class="linenos">10</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier-11"><a href="#SKClassifier-11"><span class="linenos">11</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SKClassifier-12"><a href="#SKClassifier-12"><span class="linenos">12</span></a><span class="sd">        Compute output using best evolved individual.</span>
+</span><span id="SKClassifier-13"><a href="#SKClassifier-13"><span class="linenos">13</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
+</span><span id="SKClassifier-14"><a href="#SKClassifier-14"><span class="linenos">14</span></a><span class="sd">        Input is a numpy array.</span>
+</span><span id="SKClassifier-15"><a href="#SKClassifier-15"><span class="linenos">15</span></a>
+</span><span id="SKClassifier-16"><a href="#SKClassifier-16"><span class="linenos">16</span></a><span class="sd">        Parameters</span>
+</span><span id="SKClassifier-17"><a href="#SKClassifier-17"><span class="linenos">17</span></a><span class="sd">        ----------</span>
+</span><span id="SKClassifier-18"><a href="#SKClassifier-18"><span class="linenos">18</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
+</span><span id="SKClassifier-19"><a href="#SKClassifier-19"><span class="linenos">19</span></a>
+</span><span id="SKClassifier-20"><a href="#SKClassifier-20"><span class="linenos">20</span></a><span class="sd">        Returns</span>
+</span><span id="SKClassifier-21"><a href="#SKClassifier-21"><span class="linenos">21</span></a><span class="sd">        -------</span>
+</span><span id="SKClassifier-22"><a href="#SKClassifier-22"><span class="linenos">22</span></a><span class="sd">        y : array, shape (num samples,)</span>
+</span><span id="SKClassifier-23"><a href="#SKClassifier-23"><span class="linenos">23</span></a><span class="sd">            Returns predicted values after applying classification.</span>
+</span><span id="SKClassifier-24"><a href="#SKClassifier-24"><span class="linenos">24</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SKClassifier-25"><a href="#SKClassifier-25"><span class="linenos">25</span></a>
+</span><span id="SKClassifier-26"><a href="#SKClassifier-26"><span class="linenos">26</span></a>        <span class="c1"># Check is fit had been called</span>
+</span><span id="SKClassifier-27"><a href="#SKClassifier-27"><span class="linenos">27</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="SKClassifier-28"><a href="#SKClassifier-28"><span class="linenos">28</span></a>
+</span><span id="SKClassifier-29"><a href="#SKClassifier-29"><span class="linenos">29</span></a>        <span class="n">clf_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
+</span><span id="SKClassifier-30"><a href="#SKClassifier-30"><span class="linenos">30</span></a>
+</span><span id="SKClassifier-31"><a href="#SKClassifier-31"><span class="linenos">31</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
+</span><span id="SKClassifier-32"><a href="#SKClassifier-32"><span class="linenos">32</span></a>        <span class="n">clf_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+</span><span id="SKClassifier-33"><a href="#SKClassifier-33"><span class="linenos">33</span></a>
+</span><span id="SKClassifier-34"><a href="#SKClassifier-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="n">clf_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
+</span><span id="SKClassifier-35"><a href="#SKClassifier-35"><span class="linenos">35</span></a>
+</span><span id="SKClassifier-36"><a href="#SKClassifier-36"><span class="linenos">36</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier-37"><a href="#SKClassifier-37"><span class="linenos">37</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+</span><span id="SKClassifier-38"><a href="#SKClassifier-38"><span class="linenos">38</span></a>
+</span><span id="SKClassifier-39"><a href="#SKClassifier-39"><span class="linenos">39</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier-40"><a href="#SKClassifier-40"><span class="linenos">40</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -185,31 +186,31 @@ Determines if the model is fitted (evolved).</li>
 
     </div>
     <a class="headerlink" href="#SKClassifier.predict"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict-9"><a href="#SKClassifier.predict-9"><span class="linenos"> 9</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier.predict-10"><a href="#SKClassifier.predict-10"><span class="linenos">10</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SKClassifier.predict-11"><a href="#SKClassifier.predict-11"><span class="linenos">11</span></a><span class="sd">        Compute output using best evolved individual.</span>
-</span><span id="SKClassifier.predict-12"><a href="#SKClassifier.predict-12"><span class="linenos">12</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
-</span><span id="SKClassifier.predict-13"><a href="#SKClassifier.predict-13"><span class="linenos">13</span></a><span class="sd">        Input is a numpy array.</span>
-</span><span id="SKClassifier.predict-14"><a href="#SKClassifier.predict-14"><span class="linenos">14</span></a>
-</span><span id="SKClassifier.predict-15"><a href="#SKClassifier.predict-15"><span class="linenos">15</span></a><span class="sd">        Parameters</span>
-</span><span id="SKClassifier.predict-16"><a href="#SKClassifier.predict-16"><span class="linenos">16</span></a><span class="sd">        ----------</span>
-</span><span id="SKClassifier.predict-17"><a href="#SKClassifier.predict-17"><span class="linenos">17</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
-</span><span id="SKClassifier.predict-18"><a href="#SKClassifier.predict-18"><span class="linenos">18</span></a>
-</span><span id="SKClassifier.predict-19"><a href="#SKClassifier.predict-19"><span class="linenos">19</span></a><span class="sd">        Returns</span>
-</span><span id="SKClassifier.predict-20"><a href="#SKClassifier.predict-20"><span class="linenos">20</span></a><span class="sd">        -------</span>
-</span><span id="SKClassifier.predict-21"><a href="#SKClassifier.predict-21"><span class="linenos">21</span></a><span class="sd">        y : array, shape (num samples,)</span>
-</span><span id="SKClassifier.predict-22"><a href="#SKClassifier.predict-22"><span class="linenos">22</span></a><span class="sd">            Returns predicted values after applying classification.</span>
-</span><span id="SKClassifier.predict-23"><a href="#SKClassifier.predict-23"><span class="linenos">23</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SKClassifier.predict-24"><a href="#SKClassifier.predict-24"><span class="linenos">24</span></a>
-</span><span id="SKClassifier.predict-25"><a href="#SKClassifier.predict-25"><span class="linenos">25</span></a>        <span class="c1"># Check is fit had been called</span>
-</span><span id="SKClassifier.predict-26"><a href="#SKClassifier.predict-26"><span class="linenos">26</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="SKClassifier.predict-27"><a href="#SKClassifier.predict-27"><span class="linenos">27</span></a>
-</span><span id="SKClassifier.predict-28"><a href="#SKClassifier.predict-28"><span class="linenos">28</span></a>        <span class="n">ind_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
-</span><span id="SKClassifier.predict-29"><a href="#SKClassifier.predict-29"><span class="linenos">29</span></a>
-</span><span id="SKClassifier.predict-30"><a href="#SKClassifier.predict-30"><span class="linenos">30</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
-</span><span id="SKClassifier.predict-31"><a href="#SKClassifier.predict-31"><span class="linenos">31</span></a>        <span class="n">ind_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-</span><span id="SKClassifier.predict-32"><a href="#SKClassifier.predict-32"><span class="linenos">32</span></a>
-</span><span id="SKClassifier.predict-33"><a href="#SKClassifier.predict-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">ind_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict-10"><a href="#SKClassifier.predict-10"><span class="linenos">10</span></a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier.predict-11"><a href="#SKClassifier.predict-11"><span class="linenos">11</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SKClassifier.predict-12"><a href="#SKClassifier.predict-12"><span class="linenos">12</span></a><span class="sd">        Compute output using best evolved individual.</span>
+</span><span id="SKClassifier.predict-13"><a href="#SKClassifier.predict-13"><span class="linenos">13</span></a><span class="sd">        Use `predict` in a sklearn setting.</span>
+</span><span id="SKClassifier.predict-14"><a href="#SKClassifier.predict-14"><span class="linenos">14</span></a><span class="sd">        Input is a numpy array.</span>
+</span><span id="SKClassifier.predict-15"><a href="#SKClassifier.predict-15"><span class="linenos">15</span></a>
+</span><span id="SKClassifier.predict-16"><a href="#SKClassifier.predict-16"><span class="linenos">16</span></a><span class="sd">        Parameters</span>
+</span><span id="SKClassifier.predict-17"><a href="#SKClassifier.predict-17"><span class="linenos">17</span></a><span class="sd">        ----------</span>
+</span><span id="SKClassifier.predict-18"><a href="#SKClassifier.predict-18"><span class="linenos">18</span></a><span class="sd">        X : array-like or sparse matrix of (num samples, num feautres)</span>
+</span><span id="SKClassifier.predict-19"><a href="#SKClassifier.predict-19"><span class="linenos">19</span></a>
+</span><span id="SKClassifier.predict-20"><a href="#SKClassifier.predict-20"><span class="linenos">20</span></a><span class="sd">        Returns</span>
+</span><span id="SKClassifier.predict-21"><a href="#SKClassifier.predict-21"><span class="linenos">21</span></a><span class="sd">        -------</span>
+</span><span id="SKClassifier.predict-22"><a href="#SKClassifier.predict-22"><span class="linenos">22</span></a><span class="sd">        y : array, shape (num samples,)</span>
+</span><span id="SKClassifier.predict-23"><a href="#SKClassifier.predict-23"><span class="linenos">23</span></a><span class="sd">            Returns predicted values after applying classification.</span>
+</span><span id="SKClassifier.predict-24"><a href="#SKClassifier.predict-24"><span class="linenos">24</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SKClassifier.predict-25"><a href="#SKClassifier.predict-25"><span class="linenos">25</span></a>
+</span><span id="SKClassifier.predict-26"><a href="#SKClassifier.predict-26"><span class="linenos">26</span></a>        <span class="c1"># Check is fit had been called</span>
+</span><span id="SKClassifier.predict-27"><a href="#SKClassifier.predict-27"><span class="linenos">27</span></a>        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="SKClassifier.predict-28"><a href="#SKClassifier.predict-28"><span class="linenos">28</span></a>
+</span><span id="SKClassifier.predict-29"><a href="#SKClassifier.predict-29"><span class="linenos">29</span></a>        <span class="n">clf_eval</span><span class="p">:</span> <span class="n">ClassificationEvaluator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">get_individual_evaluator</span><span class="p">()</span>
+</span><span id="SKClassifier.predict-30"><a href="#SKClassifier.predict-30"><span class="linenos">30</span></a>
+</span><span id="SKClassifier.predict-31"><a href="#SKClassifier.predict-31"><span class="linenos">31</span></a>        <span class="c1"># y doesn&#39;t matter since we only need execute result and evolution has already finished</span>
+</span><span id="SKClassifier.predict-32"><a href="#SKClassifier.predict-32"><span class="linenos">32</span></a>        <span class="n">clf_eval</span><span class="o">.</span><span class="n">set_context</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+</span><span id="SKClassifier.predict-33"><a href="#SKClassifier.predict-33"><span class="linenos">33</span></a>
+</span><span id="SKClassifier.predict-34"><a href="#SKClassifier.predict-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="n">clf_eval</span><span class="o">.</span><span class="n">classify_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">best_of_run_</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -244,8 +245,8 @@ Returns predicted values after applying classification.</li>
 
     </div>
     <a class="headerlink" href="#SKClassifier.predict_proba"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict_proba-35"><a href="#SKClassifier.predict_proba-35"><span class="linenos">35</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier.predict_proba-36"><a href="#SKClassifier.predict_proba-36"><span class="linenos">36</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict_proba-36"><a href="#SKClassifier.predict_proba-36"><span class="linenos">36</span></a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier.predict_proba-37"><a href="#SKClassifier.predict_proba-37"><span class="linenos">37</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -263,8 +264,8 @@ Returns predicted values after applying classification.</li>
 
     </div>
     <a class="headerlink" href="#SKClassifier.predict_log_proba"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict_log_proba-38"><a href="#SKClassifier.predict_log_proba-38"><span class="linenos">38</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-</span><span id="SKClassifier.predict_log_proba-39"><a href="#SKClassifier.predict_log_proba-39"><span class="linenos">39</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SKClassifier.predict_log_proba-39"><a href="#SKClassifier.predict_log_proba-39"><span class="linenos">39</span></a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span><span id="SKClassifier.predict_log_proba-40"><a href="#SKClassifier.predict_log_proba-40"><span class="linenos">40</span></a>        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;not implemented yet&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
