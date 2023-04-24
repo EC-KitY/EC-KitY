@@ -1,6 +1,7 @@
 from random import random
 
 from eckity.genetic_operators.mutations.vector_n_point_mutation import VectorNPointMutation
+from eckity.genetic_encodings.ga.vector_individual import Vector
 
 
 class FloatVectorUniformOnePointMutation(VectorNPointMutation):
