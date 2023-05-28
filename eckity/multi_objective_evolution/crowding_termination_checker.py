@@ -40,6 +40,9 @@ class CrowdingTerminationChecker(TerminationChecker):
 	def _find_max_crowding(self, population):
 		crowdings = []
 		for sup_pop in population.sub_populations:
-			crowdings.append(
-				max([ind.fitness.crowding for ind in sup_pop.individuals if ind.fitness.crowding != float("inf")]))
+			values = [ind.fitness.crowding for ind in sup_pop.individuals if ind.fitness.crowding != float("inf")]
+			if values:
+				crowdings.append(max(values))
+			else:
+				crowdings.append(float("inf"))
 		return max(crowdings)
