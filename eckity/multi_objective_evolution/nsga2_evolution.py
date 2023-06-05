@@ -21,6 +21,7 @@ class NSGA2Evolution(Algorithm):
 				 events=None,
 				 event_names=None,
 				 termination_checker=ThresholdFromTargetTerminationChecker(threshold=0),
+				 executor='thread',
 				 max_workers=None,
 				 random_generator=None,
 				 random_seed=time(),
@@ -40,7 +41,7 @@ class NSGA2Evolution(Algorithm):
 			statistics = []
 
 		super().__init__(population, statistics=statistics, breeder=breeder, population_evaluator=population_evaluator,
-						 events=events, event_names=_event_names, max_workers=max_workers,
+						 events=events, event_names=_event_names, max_workers=max_workers, executor=executor,
 						 random_generator=random_generator, random_seed=random_seed, generation_seed=generation_seed,
 						 termination_checker=termination_checker, generation_num=generation_num)
 

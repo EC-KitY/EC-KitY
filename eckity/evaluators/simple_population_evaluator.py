@@ -1,4 +1,7 @@
 from overrides import overrides
+from concurrent.futures import Executor
+
+import dask.bag as db
 
 from eckity.evaluators.individual_evaluator import IndividualEvaluator
 from eckity.evaluators.population_evaluator import PopulationEvaluator
@@ -26,7 +29,13 @@ class SimplePopulationEvaluator(PopulationEvaluator):
 		for sub_population in population.sub_populations:
 			sub_population = population.sub_populations[0]
 			sp_eval: IndividualEvaluator = sub_population.evaluator
-			eval_results = self.executor.map(sp_eval.evaluate_individual, sub_population.individuals)
+			if isinstance(self.executor, Executor):
+				eval_results = self.executor.map(sp_eval.evaluate_individual, sub_population.individuals)
+			else:
+				bag = db.from_sequence(sub_population.individuals)
+				bag = bag.map(sp_eval.evaluate_individual)
+				eval_results = bag.compute()
+
 			for ind, fitness_score in zip(sub_population.individuals, eval_results):
 				ind.fitness.set_fitness(fitness_score)
 
