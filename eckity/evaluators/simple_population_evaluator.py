@@ -34,8 +34,7 @@ class SimplePopulationEvaluator(PopulationEvaluator):
             for ind, fitness_score in zip(sub_population.individuals, eval_results):
                 ind.fitness.set_fitness(fitness_score)
 
-        assert self.best_on <= len(
-            population.sub_populations), "Can't pick best solution on non-existing sub-population."
+        assert self.best_on < len(population.sub_populations), "Can't pick best solution on non-existing sub-population."
         individuals = population.sub_populations[self.best_on].individuals
 
         best_ind: Individual = population.sub_populations[self.best_on].individuals[self.best_on]
