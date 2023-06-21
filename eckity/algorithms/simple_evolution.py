@@ -192,7 +192,8 @@ class SimpleEvolution(Algorithm):
 				"termination_checker": self.termination_checker,
 				"max_generation": self.max_generation,
 				"events": self.events,
-				"max_workers": self.max_workers
+				"max_workers": self.max_workers,
+				"generation_num": self.generation_num,
 			}
 
 		# default case

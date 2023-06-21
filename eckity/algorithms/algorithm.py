@@ -226,6 +226,9 @@ class Algorithm(Operator):
 			if isinstance(field, Operator):
 				field.initialize()
 
+		for stat in self.statistics:
+			self.register('init', stat.write_statistics)
+
 		self.create_population()
 		self.best_of_run_ = self.population_evaluator.act(self.population)
 		self.publish('init')
