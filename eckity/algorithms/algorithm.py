@@ -234,7 +234,7 @@ class Algorithm(Operator):
 		"""
 		Performs the evolutionary main loop
 		"""
-		for gen in range(self.max_generation):
+		for gen in range(1, self.max_generation):
 			self.generation_num = gen
 
 			self.set_generation_seed(self.next_seed())
