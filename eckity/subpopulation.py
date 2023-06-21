@@ -1,4 +1,5 @@
 import random
+import math
 import numpy as np
 
 from eckity.creators.creator import Creator
@@ -112,7 +113,7 @@ class Subpopulation:
         self.higher_is_better = higher_is_better
         self.evaluator = evaluator
 
-        self.n_elite = round(elitism_rate * self.population_size)
+        self.n_elite = math.ceil(elitism_rate * self.population_size)   # if the user requested more than 0, give them at least 1
         self.individuals = individuals
 
     def create_subpopulation_individuals(self):
