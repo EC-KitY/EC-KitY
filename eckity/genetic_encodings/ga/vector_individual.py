@@ -3,9 +3,11 @@ This module implements the vector class.
 """
 from abc import abstractmethod
 from random import randint
+import logging
 
 from eckity.individual import Individual
 
+logger = logging.getLogger(__name__)
 
 class Vector(Individual):
     """
@@ -281,6 +283,6 @@ class Vector(Individual):
         -------
         None.
         """
-        print(self.vector)
+        logger.info(self.vector)
 
 # end class Vector

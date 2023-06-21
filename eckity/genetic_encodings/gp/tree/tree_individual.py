@@ -2,6 +2,7 @@
 This module implements the tree class.
 """
 
+import logging
 import numpy as np
 from numbers import Number
 from random import randint, uniform, random
@@ -12,6 +13,7 @@ from eckity.genetic_encodings.gp.tree.utils import _generate_args
 from eckity.individual import Individual
 from eckity.genetic_encodings.gp.tree.functions import f_add, f_sub, f_mul, f_div
 
+logger = logging.getLogger(__name__)
 
 class Tree(Individual):
     """
@@ -220,7 +222,7 @@ class Tree(Individual):
         index = randint(0, self.size() - 1)  # select a random node (index)
         end_i = self._find_subtree_end([index])
         if isinstance(self.tree[end_i], list):
-            print(self.tree[end_i], list)
+            logger.info(self.tree[end_i], list)
         left_part = self.tree[:index]
         right_part = self.tree[(end_i + 1):]
         self.tree = left_part + subtree + right_part
@@ -239,18 +241,32 @@ class Tree(Individual):
         """
         return node.__name__ if node in self.function_set else str(node)
 
-    def _show(self, prefix, pos):
+    def _str_rec(self, prefix, pos, result, use_python_syntax):
         """Recursively produce a simple textual printout of the tree 
         (pos is a size-1 list so as to pass "by reference" on successive recursive calls)."""
 
         node = self.tree[pos[0]]
         if node in self.function_set:
-            print(f'{prefix}{self._node_label(node)}')
+            result.append(f'{prefix}{self._node_label(node)}{"(" if use_python_syntax else ""}\n')
             for i in range(self.arity[node]):
                 pos[0] += 1
-                self._show(prefix + "   ", pos)
+                self._str_rec(prefix + "   ", pos, result, use_python_syntax)
+                if use_python_syntax:
+                    result.append(',')
+                if use_python_syntax or i < self.arity[node] - 1:
+                    result.append('\n')
+            if use_python_syntax:
+                result.append(prefix + ')')
         else:  # terminal
-            print(f'{prefix}{self._node_label(node)}')
+            result.append(f'{prefix}{self._node_label(node)}')
+
+    def __str__(self, use_python_syntax=False):
+        if use_python_syntax:
+            result = [f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "]
+        else:
+            result = []
+        self._str_rec("   " if use_python_syntax else "", [0], result, use_python_syntax)
+        return ''.join(result)
 
     def show(self):
         """
@@ -260,6 +276,6 @@ class Tree(Individual):
         -------
         None.
         """
-        self._show("", [0])
+        logger.info('\n' + str(self))
 
 # end class tree
