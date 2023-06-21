@@ -11,7 +11,10 @@ class GeneticOperator(Operator):
 
     def apply_operator(self, individuals):
         if uniform(0, 1) <= self.probability:
-            return self.apply(individuals)
+            op_res = self.apply(individuals)
+            for ind in op_res:
+                ind.applied_operators.append(type(self).__name__)
+            return op_res
         return individuals
 
     @abstractmethod

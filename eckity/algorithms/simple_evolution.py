@@ -142,6 +142,8 @@ class SimpleEvolution(Algorithm):
 		# breed population
 		self.breeder.breed(self.population)
 
+		self.update_gen(self.population, gen)
+
 		# Evaluate the entire population and get the best individual
 		self.best_of_gen = self.population_evaluator.act(self.population)
 
@@ -149,6 +151,13 @@ class SimpleEvolution(Algorithm):
 			self.best_of_run_ = self.best_of_gen
 
 		self.worst_of_gen = self.population.sub_populations[0].get_worst_individual()
+
+
+	def update_gen(self, population, gen):
+		for subpopulation in population.sub_populations:
+			for ind in subpopulation.individuals:
+				ind.gen = gen
+
 
 	def execute(self, **kwargs):
 		"""
@@ -169,6 +178,7 @@ class SimpleEvolution(Algorithm):
 
 		"""
 		return self.best_of_run_.execute(**kwargs)
+
 
 	def finish(self):
 		"""
@@ -192,7 +202,8 @@ class SimpleEvolution(Algorithm):
 				"termination_checker": self.termination_checker,
 				"max_generation": self.max_generation,
 				"events": self.events,
-				"max_workers": self.max_workers
+				"max_workers": self.max_workers,
+				"generation_num": self.generation_num,
 			}
 
 		# default case
