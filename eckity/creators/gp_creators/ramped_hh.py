@@ -24,7 +24,7 @@ class RampedHalfAndHalfCreator(GPTreeCreator):
 			a tree creator that creates trees using the grow method
 
 		full_creator: FullCreator
-			a tree creator that creates trees using the grow method
+			a tree creator that creates trees using the full method
 
 		init_depth : (int, int)
 		Min and max depths of initial random trees. The default is None.
