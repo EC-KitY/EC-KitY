@@ -222,7 +222,7 @@ class Tree(Individual):
         index = randint(0, self.size() - 1)  # select a random node (index)
         end_i = self._find_subtree_end([index])
         if isinstance(self.tree[end_i], list):
-            logger.info(self.tree[end_i], list)
+            logger.debug(self.tree[end_i], list)
         left_part = self.tree[:index]
         right_part = self.tree[(end_i + 1):]
         self.tree = left_part + subtree + right_part

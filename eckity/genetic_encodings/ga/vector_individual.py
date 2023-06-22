@@ -283,6 +283,6 @@ class Vector(Individual):
         -------
         None.
         """
-        logger.info(self.vector)
+        logger.debug(self.vector)
 
 # end class Vector
