@@ -53,7 +53,7 @@ class Algorithm(Operator):
 	event_names: list of strings, default=None
 		Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()
+    termination_checker: TerminationChecker or a list of TerminationCheckers, default=ThresholdFromTargetTerminationChecker()
         Responsible for checking if the algorithm should finish before reaching max_generation.
 
 	max_workers: int, default=None
@@ -181,9 +181,9 @@ class Algorithm(Operator):
 		"""
 		self.initialize()
 
-		if self.termination_checker.should_terminate(self.population,
-													 self.best_of_run_,
-													 self.generation_num):
+		if self.should_terminate(self.population,
+                                 self.best_of_run_,
+                                 self.generation_num):
 			self.final_generation_ = 0
 			self.publish('after_generation')
 		else:
@@ -239,9 +239,9 @@ class Algorithm(Operator):
 
 			self.set_generation_seed(self.next_seed())
 			self.generation_iteration(gen)
-			if self.termination_checker.should_terminate(self.population,
-														 self.best_of_run_,
-														 self.generation_num):
+			if self.should_terminate(self.population,
+                                     self.best_of_run_,
+                                     self.generation_num):
 				self.final_generation_ = gen
 				self.publish('after_generation')
 				break
@@ -349,7 +349,13 @@ class Algorithm(Operator):
 		"""
 		return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
 
-	# Necessary for valid pickling, since SimpleQueue object cannot be pickled
+	def should_terminate(self, population, best_of_run_, generation_num):
+		if isinstance(self.termination_checker, list):
+			return any([t.should_terminate(population, best_of_run_, generation_num) for t in self.termination_checker])
+		else:
+			return self.termination_checker.should_terminate(population, best_of_run_, generation_num)
+
+    # Necessary for valid pickling, since SimpleQueue object cannot be pickled
 	def __getstate__(self):
 		state = self.__dict__.copy()
 		del state['executor']
