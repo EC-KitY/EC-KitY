@@ -34,7 +34,7 @@ class ThresholdFromTargetTerminationChecker(TerminationChecker):
             The evolutionary experiment population of individuals.
 
         best_individual: Individual
-            The individual that has the best fitness of the current generation.
+            The individual that has the best fitness of the algorithm.
 
         gen_number: int
             Current generation number.
