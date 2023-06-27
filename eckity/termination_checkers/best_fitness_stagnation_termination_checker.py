@@ -16,7 +16,7 @@ class BestFitnessStagnationTerminationChecker(TerminationChecker):
     def __init__(self, stagnation_generations_to_terminate=100):
         super().__init__()
         self.stagnation_generations_to_terminate = stagnation_generations_to_terminate
-        self.best_fitness = float('inf')
+        self.best_fitnesses = None
         self.stagnation_generations = 0
 
     def should_terminate(self, population, best_individual, gen_number):
@@ -30,7 +30,7 @@ class BestFitnessStagnationTerminationChecker(TerminationChecker):
             The evolutionary experiment population of individuals.
 
         best_individual: Individual
-            The individual that has the best fitness of the current generation.
+            The individual that has the best fitness of the algorithm.
 
         gen_number: int
             Current generation number.
@@ -40,10 +40,11 @@ class BestFitnessStagnationTerminationChecker(TerminationChecker):
         bool
             True if the algorithm should terminate early, False otherwise.
         """
-        if math.isclose(best_individual.get_pure_fitness(), self.best_fitness):
+        best_fitnesses = [ind.get_pure_fitness() for ind in population.get_best_individuals()]
+        if self.best_fitnesses and all([math.isclose(a, b) for a, b in zip(best_fitnesses, self.best_fitnesses)]):
             self.stagnation_generations += 1
             return self.stagnation_generations >= self.stagnation_generations_to_terminate
         else:
             self.stagnation_generations = 0
-            self.best_fitness = best_individual.get_pure_fitness()
+            self.best_fitnesses = best_fitnesses
             return False
