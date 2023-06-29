@@ -8,7 +8,7 @@ class TestFloatVector:
 	def test_vector_direct_initialization(self):
 		length = 5
 		cells = [0., 0., 1., 1., 1.]
-		vec = FloatVector(SimpleFitness(), length=length, vector=cells)
+		vec = FloatVector(SimpleFitness(), length=length,vector=cells)
 		assert len(vec.vector) == length
 		assert vec.vector == cells
 	
