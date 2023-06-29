@@ -22,7 +22,7 @@ def main():
                       evaluator=OneMaxEvaluator(),
                       # maximization problem (fitness is sum of values), so higher fitness is better
                       higher_is_better=True,
-                      elitism_rate=0,
+                      elitism_rate=1/300,
                       # genetic operators sequence to be applied in each generation
                       operators_sequence=[
                           VectorKPointsCrossover(probability=0.5, k=1),
