@@ -46,6 +46,8 @@ class Algorithm(Operator):
 		Maximal number of generations to run the evolutionary process.
 		Note the evolution could end before reaching max_generation,
 		depends on the termination checker.
+		Note that there are max_generation + 1 (at max) fitness calculations,
+		but only max_generation (at max) of selection
 
 	events: dict(str, dict(object, function)), default=None
 		Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
@@ -234,7 +236,9 @@ class Algorithm(Operator):
 		"""
 		Performs the evolutionary main loop
 		"""
-		for gen in range(self.max_generation):
+		# there was already "preprocessing" generation created - gen #0
+		# now create another self.max_generation generations (at maximum), starting for gen #1
+		for gen in range(1, self.max_generation + 1):
 			self.generation_num = gen
 
 			self.set_generation_seed(self.next_seed())
