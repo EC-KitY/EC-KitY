@@ -29,8 +29,9 @@ class IntVector(Vector):
     def __init__(self,
                  fitness,
                  length,
-                 bounds=(MIN_BOUND, MAX_BOUND)):
-        super().__init__(fitness, length=length, bounds=bounds)
+                 bounds=(MIN_BOUND, MAX_BOUND),
+                 vector=None):
+        super().__init__(fitness, length=length, bounds=bounds, vector=vector)
 
     def get_random_number_in_bounds(self, index):
         """
