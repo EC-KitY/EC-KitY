@@ -83,15 +83,18 @@ class TestBitStringVector:
         assert v1.get_vector_part(length - 1, length) == [1]
 
     def test_clone(self):
-        length = 2
+        cells = [0, 1]
         score = 0.1
-        v1 = BitStringVector(SimpleFitness(), length, vector=[0, 1])
-        v1.fitness.set_fitness(score)
+        v1 = BitStringVector(SimpleFitness(score), len(cells), vector=cells)
 
         v2 = v1.clone()
         assert v2.vector == v1.vector
+        assert v2.length == v1.length
+        assert v2.bounds == v1.bounds
+        assert v2.get_pure_fitness() == v1.get_pure_fitness()
+        assert v1.id == v2.id - 1
+        assert v2.cloned_from == [v1.id]
 
         # Check that fitness is evaluated and equal to original one
         assert v2.fitness.get_pure_fitness() == score
         assert v2.fitness.is_fitness_evaluated()
-

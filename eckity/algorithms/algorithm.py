@@ -240,18 +240,22 @@ class Algorithm(Operator):
 		# now create another self.max_generation generations (at maximum), starting for gen #1
 		for gen in range(1, self.max_generation + 1):
 			self.generation_num = gen
+			self.update_gen(self.population, gen)
 
 			self.set_generation_seed(self.next_seed())
 			self.generation_iteration(gen)
-			if self.should_terminate(self.population,
-                                     self.best_of_run_,
-                                     self.generation_num):
+			if self.should_terminate(self.population, self.best_of_run_, gen):
 				self.final_generation_ = gen
 				self.publish('after_generation')
 				break
 			self.publish('after_generation')
 
 		self.executor.shutdown()
+
+	def update_gen(self, population, gen):
+		for subpopulation in population.sub_populations:
+			for ind in subpopulation.individuals:
+				ind.gen = gen
 
 	@abstractmethod
 	def generation_iteration(self, gen):
