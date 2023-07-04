@@ -66,12 +66,10 @@ class TestMutations:
         vec.vector = init_vec.copy()
         mut = FloatVectorGaussOnePointMutation(mu=1000, probability=1.0)
 
-        print(vec)
         mut.apply_operator([vec])
 
         cnt = Counter(vec.vector)
 
         assert len(cnt.keys()) == 2
         assert cnt[1.0] == length - 1
-        print(vec.applied_operators)
         assert vec.applied_operators == ['FloatVectorUniformOnePointMutation', 'FloatVectorGaussOnePointMutation']
