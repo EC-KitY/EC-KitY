@@ -11,6 +11,8 @@ class GeneticOperator(Operator):
 
     def apply_operator(self, individuals):
         if uniform(0, 1) <= self.probability:
+            for individual in individuals:
+                individual.set_fitness_not_evaluated()
             op_res = self.apply(individuals)
             for ind in op_res:
                 ind.applied_operators.append(type(self).__name__)

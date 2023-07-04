@@ -34,7 +34,7 @@ class Fitness:
                  trials=None,
                  is_evaluated=False,
                  is_relative_fitness=False,
-                 should_cache_between_gens=False,
+                 should_cache_between_gens=True,
                  higher_is_better=False):
         self.context = context
         self.trials = trials
@@ -118,8 +118,6 @@ class Fitness:
         """
         Set this fitness score status to be not evaluated
         """
-        if not self.is_fitness_evaluated():
-            raise ValueError('Fitness already not evaluated')
         self._is_evaluated = False
 
     def is_fitness_evaluated(self):
