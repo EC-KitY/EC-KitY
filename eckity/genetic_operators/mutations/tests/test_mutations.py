@@ -22,6 +22,7 @@ class TestMutations:
 
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
+        assert vec1.applied_operators == ['FloatVectorUniformNPointMutation']
 
     def test_gauss_float_n_point_mut(self):
         length = 5
@@ -38,6 +39,7 @@ class TestMutations:
         assert vec.vector != init_vec
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
+        assert vec.applied_operators == ['FloatVectorGaussNPointMutation']
 
     def test_gauss_mutation_success(self):
         length = 4
@@ -53,6 +55,7 @@ class TestMutations:
         assert vec.vector != init_vec
         assert len(cnt.keys()) == 2
         assert cnt[2.0] == length - 1
+        assert vec.applied_operators == ['FloatVectorGaussOnePointMutation']
 
     def test_gauss_mutation_fail(self):
         length = 4
@@ -70,3 +73,5 @@ class TestMutations:
 
         assert len(cnt.keys()) == 2
         assert cnt[1.0] == length - 1
+        print(vec.applied_operators)
+        assert vec.applied_operators == ['FloatVectorUniformOnePointMutation', 'FloatVectorGaussOnePointMutation']

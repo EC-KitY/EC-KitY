@@ -4,6 +4,33 @@ from eckity.fitness.fitness import Fitness
 
 
 class Individual:
+    """
+    A candidate solution to the problem.
+    This class is abstract and should not be instansiated directly.
+
+    Parameters
+    ----------
+    fitness: Fitness
+        This object manages the fitness state of the individual.
+
+    Attributes
+    ----------
+    id: int
+        The unique id of the individual.
+    gen: int
+        The generation number of the individual.
+    fitness: Fitness
+        This object manages the fitness state of the individual.
+    cloned_from: list
+        A list of ids of individuals that this individual was cloned from.
+    selected_by: list
+        A list of selection methods that selected this individual in
+        the last generation.
+    applied_operators: list
+        A list of genetic operators that were applied on this individual
+        in the last generation.
+        *** Note that failed operators are still included in this list. ***
+    """
     id = 1
 
     def __init__(self, fitness: Fitness):
