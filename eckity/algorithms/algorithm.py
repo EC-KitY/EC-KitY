@@ -1,12 +1,12 @@
 """
 This module implements the Algorithm class.
 """
-
 from abc import abstractmethod
 
 import random
 from concurrent.futures.thread import ThreadPoolExecutor
 from concurrent.futures.process import ProcessPoolExecutor
+from concurrent.futures import Executor
 from time import time
 
 from overrides import overrides
@@ -162,8 +162,10 @@ class Algorithm(Operator):
 			self.executor = ThreadPoolExecutor(max_workers=max_workers)
 		elif executor == 'process':
 			self.executor = ProcessPoolExecutor(max_workers=max_workers)
+		elif executor == 'dask':
+			self.executor = executor
 		else:
-			raise ValueError('Executor must be either "thread" or "process"')
+			raise ValueError('Executor must be either "thread", "process" or "dask"')
 		self._executor_type = executor
 		
 
@@ -250,7 +252,8 @@ class Algorithm(Operator):
 				break
 			self.publish('after_generation')
 
-		self.executor.shutdown()
+		if isinstance(self.executor, Executor):
+			self.executor.shutdown()
 
 	def update_gen(self, population, gen):
 		for subpopulation in population.sub_populations:
@@ -376,6 +379,8 @@ class Algorithm(Operator):
 		self.__dict__.update(state)
 		if self._executor_type == 'thread':
 			self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
-		else:
+		elif self._executor_type == 'process':
 			self.executor = ProcessPoolExecutor(max_workers=self.max_workers)
+		else:
+			self.executor = self._executor_type
 		self.random_generator = random
