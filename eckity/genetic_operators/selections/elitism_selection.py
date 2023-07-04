@@ -12,7 +12,9 @@ class ElitismSelection(SelectionMethod):
                         key=lambda ind: ind.get_augmented_fitness(),
                         reverse=self.higher_is_better)[:self.num_elites]
         for elite in elites:
-            dest_inds.append(elite.clone())
+            cloned = elite.clone()
+            cloned.selected_by.append(type(self).__name__)
+            dest_inds.append(cloned)
         self.selected_individuals = dest_inds
         # TODO shouldn't it be after_operator? why is this needed?
         # self.publish("after_selection")

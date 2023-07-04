@@ -32,4 +32,6 @@ class TournamentSelection(SelectionMethod):
         for participant in tournament[1:]:
             if participant.fitness.better_than(participant, winner.fitness, winner):
                 winner = participant
-        return winner.clone()
+        result = winner.clone()
+        result.selected_by.append(type(self).__name__)
+        return result
