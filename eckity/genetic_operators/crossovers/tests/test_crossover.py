@@ -15,10 +15,12 @@ class TestCrossover:
         v2.set_vector(list(range(5, 9)))
 
         # random sample will return [2, 3]
-        expected_v1 = [5, 6, 3, 8]
-        expected_v2 = [1, 2, 7, 4]
+        expected_v1 = [5, 2, 7, 8]
+        expected_v2 = [1, 6, 3, 4]
 
         crossover = VectorKPointsCrossover(k=2)
-        crossover.apply([v1, v2])
+        crossover.apply_operator([v1, v2])
         assert v1.vector == expected_v1
         assert v2.vector == expected_v2
+        assert v1.applied_operators == ['VectorKPointsCrossover']
+        assert v2.applied_operators == ['VectorKPointsCrossover']
