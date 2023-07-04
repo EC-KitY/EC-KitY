@@ -170,6 +170,7 @@ class SimpleEvolution(Algorithm):
 		"""
 		return self.best_of_run_.execute(**kwargs)
 
+
 	def finish(self):
 		"""
 		Finish the evolutionary run by showing the best individual and printing the best fitness
@@ -192,7 +193,8 @@ class SimpleEvolution(Algorithm):
 				"termination_checker": self.termination_checker,
 				"max_generation": self.max_generation,
 				"events": self.events,
-				"max_workers": self.max_workers
+				"max_workers": self.max_workers,
+				"generation_num": self.generation_num,
 			}
 
 		# default case

@@ -36,8 +36,6 @@ class SimpleFitness(Fitness):
         fitness: float
             the fitness score to be updated
         """
-        if self._is_evaluated:
-            raise AttributeError('fitness already evaluated and set to', self.fitness)
         self.fitness = fitness
         self._is_evaluated = True
 

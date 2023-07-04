@@ -43,6 +43,8 @@ class FailableOperator(GeneticOperator):
             relevant data for the applied operator (usually a list of individuals)
         """
         for i in range(self.attempts):
+            print('attempt', i)
+            print(payload[0].applied_operators)
             # attempt to execute the operator
             succeeded, result = self.attempt_operator(payload, i)
 

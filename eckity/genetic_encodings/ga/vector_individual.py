@@ -27,7 +27,8 @@ class Vector(Individual):
     def __init__(self,
                  fitness,
                  bounds,
-                 length=1):
+                 length,
+                 vector=None):
         super().__init__(fitness)
 
         if (type(bounds) == tuple and len(bounds) != 2) \
@@ -36,7 +37,16 @@ class Vector(Individual):
 
         self.bounds = bounds
         self.length = length
-        self.vector = []
+        
+        if vector is None:
+            self.vector = []
+        
+        else:
+            if not isinstance(vector, list):
+                raise ValueError(f'Expected vector argument in Vector constructor to be a list, got {type(vector)}')
+            if len(vector) != length:
+                raise ValueError(f'Expected vector argument in Vector constructor to be of length {length}, got {len(vector)}')
+            self.vector = vector
 
     def size(self):
         """

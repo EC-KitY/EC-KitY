@@ -46,6 +46,8 @@ class Algorithm(Operator):
 		Maximal number of generations to run the evolutionary process.
 		Note the evolution could end before reaching max_generation,
 		depends on the termination checker.
+		Note that there are max_generation + 1 (at max) fitness calculations,
+		but only max_generation (at max) of selection
 
 	events: dict(str, dict(object, function)), default=None
 		Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
@@ -53,7 +55,7 @@ class Algorithm(Operator):
 	event_names: list of strings, default=None
 		Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()
+    termination_checker: TerminationChecker or a list of TerminationCheckers, default=ThresholdFromTargetTerminationChecker()
         Responsible for checking if the algorithm should finish before reaching max_generation.
 
 	max_workers: int, default=None
@@ -181,9 +183,9 @@ class Algorithm(Operator):
 		"""
 		self.initialize()
 
-		if self.termination_checker.should_terminate(self.population,
-													 self.best_of_run_,
-													 self.generation_num):
+		if self.should_terminate(self.population,
+                                 self.best_of_run_,
+                                 self.generation_num):
 			self.final_generation_ = 0
 			self.publish('after_generation')
 		else:
@@ -234,20 +236,26 @@ class Algorithm(Operator):
 		"""
 		Performs the evolutionary main loop
 		"""
-		for gen in range(self.max_generation):
+		# there was already "preprocessing" generation created - gen #0
+		# now create another self.max_generation generations (at maximum), starting for gen #1
+		for gen in range(1, self.max_generation + 1):
 			self.generation_num = gen
+			self.update_gen(self.population, gen)
 
 			self.set_generation_seed(self.next_seed())
 			self.generation_iteration(gen)
-			if self.termination_checker.should_terminate(self.population,
-														 self.best_of_run_,
-														 self.generation_num):
+			if self.should_terminate(self.population, self.best_of_run_, gen):
 				self.final_generation_ = gen
 				self.publish('after_generation')
 				break
 			self.publish('after_generation')
 
 		self.executor.shutdown()
+
+	def update_gen(self, population, gen):
+		for subpopulation in population.sub_populations:
+			for ind in subpopulation.individuals:
+				ind.gen = gen
 
 	@abstractmethod
 	def generation_iteration(self, gen):
@@ -349,7 +357,13 @@ class Algorithm(Operator):
 		"""
 		return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
 
-	# Necessary for valid pickling, since SimpleQueue object cannot be pickled
+	def should_terminate(self, population, best_of_run_, generation_num):
+		if isinstance(self.termination_checker, list):
+			return any([t.should_terminate(population, best_of_run_, generation_num) for t in self.termination_checker])
+		else:
+			return self.termination_checker.should_terminate(population, best_of_run_, generation_num)
+
+    # Necessary for valid pickling, since SimpleQueue object cannot be pickled
 	def __getstate__(self):
 		state = self.__dict__.copy()
 		del state['executor']
