@@ -170,12 +170,11 @@ class SimpleEvolution(Algorithm):
 		"""
 		return self.best_of_run_.execute(**kwargs)
 
-
 	def finish(self):
 		"""
 		Finish the evolutionary run by showing the best individual and printing the best fitness
 		"""
-		# todo should move to finisher
+		super().finish()
 		self.best_of_run_.show()
 
 	def get_individual_evaluator(self):

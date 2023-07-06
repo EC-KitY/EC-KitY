@@ -191,8 +191,8 @@ class Algorithm(Operator):
 		else:
 			self.evolve_main_loop()
 
-		self.finish()
 		self.publish('evolution_finished')
+		self.finish()
 
 	@abstractmethod
 	def execute(self, **kwargs):
@@ -250,7 +250,6 @@ class Algorithm(Operator):
 				break
 			self.publish('after_generation')
 
-		self.executor.shutdown()
 
 	def update_gen(self, population, gen):
 		for subpopulation in population.sub_populations:
@@ -274,12 +273,11 @@ class Algorithm(Operator):
 		"""
 		raise ValueError("generation_iteration is an abstract method in class Algorithm")
 
-	@abstractmethod
 	def finish(self):
 		"""
 		Finish the evolutionary run
 		"""
-		raise ValueError("finish is an abstract method in class Algorithm")
+		self.executor.shutdown()
 
 	def set_generation_seed(self, seed):
 		"""
