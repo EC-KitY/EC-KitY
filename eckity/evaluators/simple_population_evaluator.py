@@ -7,6 +7,12 @@ from eckity.individual import Individual
 
 
 class SimplePopulationEvaluator(PopulationEvaluator):
+	def __init__(self, executor_method='map'):
+		super().__init__()
+		if executor_method not in ['map', 'submit']:
+			raise ValueError(f'executor_method must be either "map" or "submit", got {executor_method}')
+		self.executor_method = executor_method
+
 	@overrides
 	def _evaluate(self, population):
 		"""
@@ -26,7 +32,14 @@ class SimplePopulationEvaluator(PopulationEvaluator):
 		for sub_population in population.sub_populations:
 			sub_population = population.sub_populations[0]
 			sp_eval: IndividualEvaluator = sub_population.evaluator
-			eval_results = self.executor.map(sp_eval.evaluate_individual, sub_population.individuals)
+
+			if self.executor_method == 'submit':
+				eval_futures = [self.executor.submit(sp_eval.evaluate, ind, sub_population.individuals)
+		    					for ind in sub_population.individuals]
+				eval_results = [future.result() for future in eval_futures]
+			elif self.executor_method == 'map':
+				eval_results = self.executor.map(sp_eval.evaluate, sub_population.individuals)
+			
 			for ind, fitness_score in zip(sub_population.individuals, eval_results):
 				ind.fitness.set_fitness(fitness_score)
 
