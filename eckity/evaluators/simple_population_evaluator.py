@@ -38,7 +38,7 @@ class SimplePopulationEvaluator(PopulationEvaluator):
 		    					for ind in sub_population.individuals]
 				eval_results = [future.result() for future in eval_futures]
 			elif self.executor_method == 'map':
-				eval_results = self.executor.map(sp_eval.evaluate, sub_population.individuals)
+				eval_results = self.executor.map(sp_eval.evaluate_individual, sub_population.individuals)
 			
 			for ind, fitness_score in zip(sub_population.individuals, eval_results):
 				ind.fitness.set_fitness(fitness_score)
