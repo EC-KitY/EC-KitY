@@ -42,7 +42,6 @@ class Individual:
         self.cloned_from = []  # chain of ids from gen 0
         self.selected_by = []  # last gen
         self.applied_operators = []  # last gen
-        self.parents = []  # individuals that were used to create this individual in the last gen
 
 
     def update_id(self):
