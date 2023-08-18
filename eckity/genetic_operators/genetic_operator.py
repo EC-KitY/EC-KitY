@@ -11,12 +11,12 @@ class GeneticOperator(Operator):
 
     def apply_operator(self, individuals):
         if uniform(0, 1) <= self.probability:
-            for individual in individuals:
-                individual.set_fitness_not_evaluated()
-            
             update_parents = individuals[0].update_parents
             if update_parents:
                 parents = [ind.clone() for ind in individuals]
+
+            for individual in individuals:
+                individual.set_fitness_not_evaluated()
 
             op_res = self.apply(individuals)
             for ind in op_res:
