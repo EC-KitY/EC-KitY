@@ -61,10 +61,7 @@ class SimpleBreeder(Breeder):
 		for operator in operator_seq:
 			operator_arity = operator.get_operator_arity()
 			for i in range(0, len(individuals_to_apply_on), operator_arity):
-				cloned_individuals = [ind.clone() for ind in individuals_to_apply_on[i:i + operator_arity]] # TODO will ruin id? should we clone once per individual?
 				op_res = operator.apply_operator(individuals_to_apply_on[i:i + operator_arity])
-				for ind in op_res:
-					ind.parents = cloned_individuals # TODO should we write a setter for parents?
 				individuals_to_apply_on[i:i + operator_arity] = op_res
 		return individuals_to_apply_on
 

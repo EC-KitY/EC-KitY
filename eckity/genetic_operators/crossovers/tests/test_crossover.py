@@ -9,10 +9,14 @@ class TestCrossover:
     def test_vector_two_point_crossover(self):
         random.seed(0)
         length = 4
+
+        og_v1 = list(range(1, 5))
+        og_v2 = list(range(5, 9))
+
         v1 = IntVector(SimpleFitness(), length, bounds=(1, 10))
-        v1.set_vector(list(range(1, 5)))
+        v1.set_vector(og_v1)
         v2 = IntVector(SimpleFitness(), length, bounds=(1, 10))
-        v2.set_vector(list(range(5, 9)))
+        v2.set_vector(og_v2)
 
         # random sample will return [2, 3]
         expected_v1 = [5, 2, 7, 8]
@@ -24,3 +28,10 @@ class TestCrossover:
         assert v2.vector == expected_v2
         assert v1.applied_operators == ['VectorKPointsCrossover']
         assert v2.applied_operators == ['VectorKPointsCrossover']
+
+        # test parents field
+        for v in [v1, v2]:
+            assert len(v.parents) == 2
+            assert v.parents[0].get_vector() == og_v1
+            assert v.parents[1].get_vector() == og_v2
+        
