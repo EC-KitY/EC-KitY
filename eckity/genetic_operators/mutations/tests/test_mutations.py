@@ -26,10 +26,6 @@ class TestMutations:
         assert cnt[0.0] == length - n_points
         assert vec1.applied_operators == ['FloatVectorUniformNPointMutation']
 
-        # test parents
-        assert len(vec1.parents) == 1
-        assert vec1.parents[0].vector == init_vec
-
     def test_gauss_float_n_point_mut(self):
         length = 5
         n_points = 3

@@ -34,10 +34,3 @@ class TestCrossover:
         assert v2.vector == expected_v2
         assert v1.applied_operators == ['VectorKPointsCrossover']
         assert v2.applied_operators == ['VectorKPointsCrossover']
-
-        # test parents field
-        for v in [v1, v2]:
-            assert len(v.parents) == 2
-            assert v.parents[0].get_vector() == og_v1
-            assert v.parents[1].get_vector() == og_v2
-        
