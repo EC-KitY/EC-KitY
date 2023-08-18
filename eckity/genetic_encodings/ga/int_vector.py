@@ -30,8 +30,13 @@ class IntVector(Vector):
                  fitness,
                  length,
                  bounds=(MIN_BOUND, MAX_BOUND),
-                 vector=None):
-        super().__init__(fitness, length=length, bounds=bounds, vector=vector)
+                 vector=None,
+                 update_parents=False):
+        super().__init__(fitness,
+                         length=length,
+                         bounds=bounds,
+                         vector=vector,
+                         update_parents=update_parents)
 
     def get_random_number_in_bounds(self, index):
         """

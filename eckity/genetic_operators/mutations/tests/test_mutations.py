@@ -12,7 +12,9 @@ class TestMutations:
         length = 5
         n_points = 3
         vec1 = FloatVector(SimpleFitness(0.),
-                           length=length, bounds=(-100.0, 100.0))
+                           length=length,
+                           bounds=(-100.0, 100.0),
+                           update_parents=True)
         init_vec = [0.0] * length
         vec1.vector = init_vec.copy()
         mut = FloatVectorUniformNPointMutation(n=n_points, probability=1.0)

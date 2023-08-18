@@ -13,9 +13,15 @@ class TestCrossover:
         og_v1 = list(range(1, 5))
         og_v2 = list(range(5, 9))
 
-        v1 = IntVector(SimpleFitness(), length, bounds=(1, 10))
+        v1 = IntVector(SimpleFitness(),
+                       length,
+                       bounds=(1, 10),
+                       update_parents=True)
         v1.set_vector(og_v1)
-        v2 = IntVector(SimpleFitness(), length, bounds=(1, 10))
+        v2 = IntVector(SimpleFitness(),
+                       length,
+                       bounds=(1, 10),
+                       update_parents=True)
         v2.set_vector(og_v2)
 
         # random sample will return [2, 3]

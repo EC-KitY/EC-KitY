@@ -40,8 +40,10 @@ class Tree(Individual):
                  function_set=None,
                  terminal_set=None,
                  erc_range=None,
-                 init_depth=(1, 2)):
-        super().__init__(fitness)
+                 init_depth=(1, 2),
+                 update_parents=False):
+        super().__init__(fitness=fitness,
+                         update_parents=update_parents)
         if function_set is None:
             function_set = [f_add, f_sub, f_mul, f_div]
 
