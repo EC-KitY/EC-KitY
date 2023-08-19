@@ -5,8 +5,8 @@ from eckity.genetic_operators.selections.selection_method import SelectionMethod
 
 
 class TournamentSelection(SelectionMethod):
-    def __init__(self, tournament_size, higher_is_better=False, events=None):
-        super().__init__(events=events, higher_is_better=higher_is_better)
+    def __init__(self, tournament_size, higher_is_better=False, events=None, arity=1):
+        super().__init__(events=events, higher_is_better=higher_is_better, arity=arity)
         self.tournament_size = tournament_size
 
     def select(self, source_inds, dest_inds):
@@ -23,7 +23,6 @@ class TournamentSelection(SelectionMethod):
         dest_inds.extend(winners)
 
         self.selected_individuals = dest_inds
-        # self.publish("after_selection")   # TODO this already publishes 'after_operator' event
 
         return dest_inds
 

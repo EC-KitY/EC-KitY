@@ -4,10 +4,8 @@ from eckity.event_based_operator import Operator
 
 
 class SelectionMethod(Operator):
-    def __init__(self, events=None, higher_is_better=False):
-        if events is None:
-            events = ["after_selection"]
-        super().__init__(events=events)
+    def __init__(self, events=None, higher_is_better=False, arity=1):
+        super().__init__(events=events, arity=arity)
         self.higher_is_better = higher_is_better
         self.selected_individuals = None
 
