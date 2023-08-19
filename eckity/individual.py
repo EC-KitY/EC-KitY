@@ -59,6 +59,8 @@ class Individual:
     def clone(self):
         result = deepcopy(self)
         result.cloned_from.append(self.id)
+        if result.update_parents:
+            result.parents = []
         result.update_id()
         return result
 

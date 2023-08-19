@@ -34,3 +34,11 @@ class TestCrossover:
         assert v2.vector == expected_v2
         assert v1.applied_operators == ['VectorKPointsCrossover']
         assert v2.applied_operators == ['VectorKPointsCrossover']
+
+        # test that parents are updated
+        assert len(v1.parents) == 2
+        assert len(v2.parents) == 2
+        assert v1.id in v1.parents
+        assert v2.id in v1.parents
+        assert v1.id in v2.parents
+        assert v2.id in v2.parents
