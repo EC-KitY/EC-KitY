@@ -122,4 +122,4 @@ def f_if_then_else(test, dit, dif):
 
 
 full_function_set = [f_add, f_sub, f_mul, f_div, f_sqrt, f_log, f_abs, f_neg, f_inv, f_max, f_min, f_sin, f_cos, f_tan,
-                     f_iflte0, f_ifgt0, f_iflte, f_ifgt, f_add, f_or, f_not, f_if_then_else]
+                     f_iflte0, f_ifgt0, f_iflte, f_ifgt, f_and, f_or, f_not, f_if_then_else]
