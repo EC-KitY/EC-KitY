@@ -1,9 +1,11 @@
 from eckity.genetic_encodings.ga.float_vector import FloatVector
+from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.mutations.vector_random_mutation \
     import FloatVectorUniformNPointMutation, \
     FloatVectorGaussNPointMutation, FloatVectorGaussOnePointMutation
-
+from eckity.fitness.gp_fitness import GPFitness
 from eckity.fitness.simple_fitness import SimpleFitness
+from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 from collections import Counter
 
 
@@ -73,3 +75,26 @@ class TestMutations:
         assert len(cnt.keys()) == 2
         assert cnt[1.0] == length - 1
         assert vec.applied_operators == ['FloatVectorUniformOnePointMutation', 'FloatVectorGaussOnePointMutation']
+
+    def test_subtree_mutation(self):
+        tree1 = Tree(fitness=GPFitness(fitness=0.5))
+        tree2 = Tree(fitness=GPFitness(fitness=1.0))
+
+        # Set the trees with known structures for easier verification
+        tree1.tree = ['f_add', 'x0', 'x1']
+        tree2.tree = ['f_sub', 'x0', 'x1']
+
+        # Save the initial trees for comparison
+        initial_tree1 = tree1.clone()
+        initial_tree2 = tree2.clone()
+
+        # Set up SubtreeMutation operator
+        mutation = SubtreeMutation()
+
+        # Perform mutation
+        mutation.apply_operator([tree1, tree2])
+
+        # Assert that the mutation has been applied
+        assert tree1.tree != initial_tree1
+        assert tree2.tree != initial_tree2
+        assert tree1.applied_operators == ['SubtreeMutation']

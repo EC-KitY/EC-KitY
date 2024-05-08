@@ -80,6 +80,9 @@ class RampedHalfAndHalfCreator(GPTreeCreator):
 
 		"""
 
+		if n_individuals < 0:
+			raise ValueError("n_individuals cannot be negative")
+
 		min_depth, max_depth = self.init_depth[0], self.init_depth[1]
 
 		# if pop size is 100 and we want depths 2,3,4,5,6 then group_size is 10:

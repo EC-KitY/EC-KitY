@@ -56,6 +56,8 @@ class GrowCreator(GPTreeCreator):
 		-------
 		None.
 		"""
+		if max_depth < 0:
+			raise ValueError("max_depth cannot be negative")
 		self._create_tree(tree_ind, max_depth, 0)
 
 	def _create_tree(self, tree_ind, max_depth=5, depth=0):

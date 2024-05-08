@@ -262,4 +262,55 @@ class Tree(Individual):
         """
         self._show("", [0])
 
+    def __eq__(self, other):
+        """
+        Check if this tree is equal to another tree.
+
+        Parameters
+        ----------
+        other : Tree
+            Another tree to compare.
+
+        Returns
+        -------
+        bool
+            True if the trees are equal, False otherwise.
+        """
+        if not isinstance(other, Tree):
+            return False
+
+        if self.size() != other.size():
+            return False
+
+        def _equals(node1, node2):
+            if node1 in self.function_set and node2 in other.function_set:
+                return (node1.__name__ == node2.__name__ and
+                        self.arity[node1] == other.arity[node2])
+            elif node1 in self.terminal_set and node2 in other.terminal_set:
+                return node1 == node2
+            else:
+                return False
+
+        for node1, node2 in zip(self.tree, other.tree):
+            if not _equals(node1, node2):
+                return False
+
+        return True
+
+    def __ne__(self, other):
+        """
+        Check if this tree is not equal to another tree.
+
+        Parameters
+        ----------
+        other : Tree
+            Another tree to compare.
+
+        Returns
+        -------
+        bool
+            True if the trees are not equal, False if they are equal.
+        """
+        return not self.__eq__(other)
+
 # end class tree

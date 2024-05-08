@@ -23,6 +23,9 @@ class GPTreeCreator(Creator):
 		if init_depth is None:
 			init_depth = (2, 4)
 
+		elif init_depth[0] > init_depth[1]:
+			raise ValueError("max depth < min depth")
+
 		if function_set is None:
 			function_set = [f_add, f_sub, f_mul, f_div]
 
@@ -36,6 +39,8 @@ class GPTreeCreator(Creator):
 		self.bloat_weight = bloat_weight
 
 	def create_individuals(self, n_individuals, higher_is_better):
+		if n_individuals < 0:
+			raise ValueError("n_individuals cannot be negative")
 		individuals = [Tree(function_set=self.function_set,
 							terminal_set=self.terminal_set,
 							erc_range=self.erc_range,
