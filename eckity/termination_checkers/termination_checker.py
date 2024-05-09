@@ -20,7 +20,7 @@ class TerminationChecker:
             The population of the experiment.
 
         best_individual: Individual
-            The best individual in the current generation of the algorithm.
+            The individual that has the best fitness of the algorithm.
 
         gen_number: int
             Current generation number.
