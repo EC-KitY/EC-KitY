@@ -1,3 +1,4 @@
+import logging
 from time import time
 from overrides import overrides
 
@@ -9,6 +10,7 @@ from eckity.multi_objective_evolution.nsga2_front_sorting import NSGA2FrontSorti
 from eckity.termination_checkers.threshold_from_target_termination_checker \
 	import ThresholdFromTargetTerminationChecker
 
+logger = logging.getLogger(__name__)
 
 class NSGA2Evolution(Algorithm):
 	def __init__(self,
@@ -125,7 +127,7 @@ class NSGA2Evolution(Algorithm):
 		Finish the evolutionary run by showing the best individual and printing the best fitness
 		"""
 		self.best_of_run_.show()
-		print(self.best_of_run_.get_pure_fitness())
+		logger.info(self.best_of_run_.get_pure_fitness())
 
 	def event_name_to_data(self, event_name):
 		if event_name == "init":
