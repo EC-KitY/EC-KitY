@@ -2,7 +2,7 @@
 EC-KitY: Evolutionary Computation Tool Kit in Python
 """
 
-__version__ = '0.3.2'
+__version__ = '0.3.5'
 
 from .before_after_publisher import BeforeAfterPublisher
 from .individual import Individual
