@@ -2,12 +2,12 @@
 This module implements the Operator class
 """
 
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 from eckity.before_after_publisher import BeforeAfterPublisher
 
 
-class Operator(BeforeAfterPublisher):
+class Operator(BeforeAfterPublisher, ABC):
     def __init__(self, arity=1, events=None, event_names=None):
         super().__init__(events=events, event_names=event_names)
         self.applied_individuals = None
