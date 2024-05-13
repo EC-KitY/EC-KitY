@@ -85,7 +85,9 @@ class TestBitStringVector:
     def test_clone(self):
         cells = [0, 1]
         score = 0.1
-        v1 = BitStringVector(SimpleFitness(score), len(cells), vector=cells)
+        v1 = BitStringVector(SimpleFitness(score, cache=True),
+                             length=len(cells),
+                             vector=cells)
 
         v2 = v1.clone()
         assert v2.vector == v1.vector
