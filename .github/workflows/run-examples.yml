@@ -27,7 +27,7 @@ jobs:
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
-      
+
     - name: Find and run Python files in parallel
       run: |
-        find examples -type f -name "*.py" | xargs -P 4 -I {} bash -c 'python "{}"'
+        find examples -type f -name "*.py" | xargs -P 4 -I {} bash -c 'echo "Running {}"; python "{}"'
