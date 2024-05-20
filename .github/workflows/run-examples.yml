@@ -25,4 +25,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Find and run Python files in parallel
       run: |
-        find . -type f -name "*.py" | xargs -n 1 -P 4 -I {} bash -c 'python "{}"'
+        find examples -type f -name "*.py" | xargs -P 4 -I {} bash -c 'python "{}"'
