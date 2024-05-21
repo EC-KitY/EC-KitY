@@ -32,5 +32,11 @@ jobs:
 
     - name: Find and run Python files in parallel
       run: |
-        NUM_PROCS=$(nproc)
-        find examples -type f -name "*.py" | parallel --halt now,fail=1 -j $NUM_PROCS 'echo "Running {}"; python {}'
+        for file in $(find examples -type f -name "*.py"); do
+          echo "Running $file"
+          python "$file" 2>&1 | tee -a "$file.log"
+          if grep -q "Error" "$file.log"; then
+            echo "Error found in $file"
+            exit 1
+          fi
+        done
