@@ -32,12 +32,5 @@ jobs:
 
     - name: Find and run Python files in parallel
       run: |
-        find examples -type f -name "*.py" | xargs -P 4 -I {} bash -c 'echo "Running {}"; python "{}" 2>> error.log || echo "Failed: {}" >> error.log'
-
-        - name: Check for failed tests
-          run: |
-            if [ -s error.log ]; then
-              echo "Some tests failed. See below for details:"
-              cat error.log
-              exit 1
-            fi
+        NUM_PROCS=$(nproc)
+        find examples -type f -name "*.py" | parallel --halt now,fail=1 -j $NUM_PROCS 'echo "Running {}"; python {}'
