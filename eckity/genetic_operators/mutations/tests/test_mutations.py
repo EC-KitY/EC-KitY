@@ -12,7 +12,9 @@ class TestMutations:
         length = 5
         n_points = 3
         vec1 = FloatVector(SimpleFitness(0.),
-                           length=length, bounds=(-100.0, 100.0))
+                           length=length,
+                           bounds=(-100.0, 100.0),
+                           update_parents=True)
         init_vec = [0.0] * length
         vec1.vector = init_vec.copy()
         mut = FloatVectorUniformNPointMutation(n=n_points, probability=1.0)
@@ -23,6 +25,9 @@ class TestMutations:
         assert len(cnt.keys()) == n_points + 1
         assert cnt[0.0] == length - n_points
         assert vec1.applied_operators == ['FloatVectorUniformNPointMutation']
+
+        assert len(vec1.parents) == 1
+        assert vec1.id in vec1.parents
 
     def test_gauss_float_n_point_mut(self):
         length = 5

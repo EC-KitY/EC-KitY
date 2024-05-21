@@ -32,7 +32,7 @@ class SimpleBreeder(Breeder):
 				elitism_sel.apply_operator((subpopulation.individuals, nextgen_population))
 
 			self.selected_individuals = subpopulation.get_selection_methods()[0][0] \
-				.select(subpopulation.individuals, nextgen_population)
+				.act((subpopulation.individuals, nextgen_population))
 
 			# then runs all operators on next_gen
 			nextgen_population = self._apply_operators(subpopulation.get_operators_sequence(),

@@ -30,8 +30,10 @@ class Vector(Individual):
                  fitness,
                  bounds,
                  length,
-                 vector=None):
-        super().__init__(fitness)
+                 vector=None,
+                 update_parents=False):
+        super().__init__(fitness,
+                         update_parents=update_parents)
 
         if (type(bounds) == tuple and len(bounds) != 2) \
                 or (type(bounds) == list and len(bounds) != length):
