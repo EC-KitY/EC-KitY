@@ -3,13 +3,12 @@ name: Scan Changed Files
 on:
   pull_request:
     branches: [main, develop]
-    
-permissions: 
-   pull-requests: write
-   
+
 jobs:
   scan-changed-files:
     runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write
     name: Scan Changed Files
     steps:
       - uses: actions/checkout@v4
