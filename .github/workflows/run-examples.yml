@@ -2,9 +2,11 @@ name: Run Examples
 
 on: 
   push:
-    branches: [ main, develop ]
+    # TODO replace with [main, develop]
+    branches: [ examples ]
   pull_request:
-    branches: [ main, develop ]
+    # TODO replace with [main, develop]
+    branches: []
   workflow_dispatch:
 
 jobs:
@@ -28,6 +30,17 @@ jobs:
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
+      # Shortening runtime significantly
+    - name: Replace generations and population size hyperparameters
+      run: |
+        find examples -type f -name "*.py" -exec sed -i 's/max_generation=[0-9]\+/max_generation=3/g' {} \;
+        find examples -type f -name "*.py" -exec sed -i 's/population_size=[0-9]\+/population_size=6/g' {} \;
+
+        - name: Display modified files
+        run: |
+          echo "Modified files:"
+          find examples -type f -name "*.py" -exec sh -c 'echo "File: {}\n"; cat {}' \;
 
     - name: Find and run Python files in parallel
       run: |
