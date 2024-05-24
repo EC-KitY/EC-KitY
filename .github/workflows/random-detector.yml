@@ -2,7 +2,7 @@ name: Scan Changed Files
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   scan-changed-files:
