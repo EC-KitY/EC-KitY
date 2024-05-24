@@ -32,7 +32,8 @@ jobs:
         run: |
           # Use GitHub API to create a comment on the PR
           PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMENT="🚨 This PR contains the word 'random' in its changed files 🚨\nBefore merging, please verify that the algorithm's random generator is being used."
+          COMMENT="🚨 This PR contains the word 'random' in its changed files 🚨
+          Before merging, please verify that the algorithm's random generator is being used."
           GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
           gh api \
