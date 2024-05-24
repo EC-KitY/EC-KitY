@@ -76,9 +76,10 @@ class NSGA2FrontSorting():
 			for i in range(1, len(front) - 1):
 				curr_crowding = front[i + 1].get_pure_fitness()[objective_index] - front[i - 1].get_pure_fitness()[
 					objective_index]
-				curr_crowding /= (front[-1].get_pure_fitness()[objective_index] - front[0].get_pure_fitness()[
-					objective_index])
-				front[i].fitness.crowding += curr_crowding
+				d = front[-1].get_pure_fitness()[objective_index] - front[0].get_pure_fitness()[objective_index]
+				if d:
+					curr_crowding /= d
+					front[i].fitness.crowding += curr_crowding
 
 	def _init_domination_dict(self, source_inds: List[Individual]):
 		self.domination_dict = defaultdict(lambda: DominationCounter())
