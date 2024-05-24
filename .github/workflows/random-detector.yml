@@ -26,6 +26,9 @@ jobs:
 
       - name: Comment PR
         if: ${{ steps.random-detector.outputs.RANDOM_DETECTED == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Use GitHub API to create a comment on the PR
           PR_NUMBER=${{ github.event.pull_request.number }}
