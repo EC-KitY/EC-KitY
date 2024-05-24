@@ -28,6 +28,7 @@ jobs:
         if: ${{ steps.random-detector.outputs.RANDOM_DETECTED == 'true' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           message: |
             🚨 This PR contains the word "random" in its changed files 🚨
             Before merging, please verify that the algorithm's random generator is being used.
