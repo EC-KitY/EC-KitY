@@ -21,14 +21,22 @@ class KnapsackEvaluator(SimpleIndividualEvaluator):
         super().__init__()
 
         if items is None:
-            # Generate ramdom items for the problem (keys=weights, values=values)
-            items = {i: (random.randint(1, 10), random.uniform(0, 100)) for i in range(NUM_ITEMS)}
-        elif type(items) == list:
-
+            # Generate ramdom items (keys=weights, values=values)
+            items = {
+                i: (random.randint(1, 10), random.uniform(0, 100))
+                for i in range(NUM_ITEMS)
+            }
+        elif isinstance(items, list):
             for item in items:
-                if type(item) is not tuple or type(item[0]) is not int \
-                        or (type(item[1]) is not int and type(item[1]) is not float):
-                    raise ValueError('Elements in items list must be tuples of (weight: int, price: int or float)')
+                if (
+                    not isinstance(item, tuple)
+                    or not isinstance(item[0], int)
+                    or type(item[1] not in [int, float])
+                ):
+                    raise ValueError(
+                        """Elements in items list must be tuples of
+                        (weight: int, price: int or float)"""
+                    )
 
             # Convert items list to dictionary by adding item id
             items = {i: items[i] for i in range(len(items))}

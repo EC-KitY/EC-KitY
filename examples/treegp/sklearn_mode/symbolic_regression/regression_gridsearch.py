@@ -15,7 +15,9 @@ from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
-from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
+from eckity.termination_checkers.threshold_from_target_termination_checker import (
+    ThresholdFromTargetTerminationChecker,
+)
 
 from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
 
@@ -27,7 +29,7 @@ def main():
     Perform an exhaustive search over a given set of parameters to find the best parameters.
     In this example, we will use sklearn GridSearchCV to solve Symbolic Regression GP problem.
 
-    Expected output:    best params: {'max_generation': 30, 'max_workers': 1}
+    Expected output:    best params: {'max_generation': 30}
     Expected runtime: ~16 minutes (on 2 cores, 2.5 GHz CPU)
     """
     start_time = time()
@@ -44,51 +46,55 @@ def main():
 
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(
-        Subpopulation(creators=RampedHalfAndHalfCreator(init_depth=(2, 4),
-                                                        terminal_set=terminal_set,
-                                                        function_set=function_set,
-                                                        erc_range=(-100, 100),
-                                                        bloat_weight=0.0001),
-                      population_size=1000,
-                      # user-defined fitness evaluation method
-                      evaluator=RegressionEvaluator(),
-                      # minimization problem (fitness is MAE), so higher fitness is worse
-                      higher_is_better=False,
-                      elitism_rate=0.05,
-                      # genetic operators sequence to be applied in each generation
-                      operators_sequence=[
-                          SubtreeCrossover(probability=0.9, arity=2),
-                          SubtreeMutation(probability=0.2, arity=1),
-                          ERCMutation(probability=0.05, arity=1)
-                      ],
-                      selection_methods=[
-                          # (selection method, selection probability) tuple
-                          (TournamentSelection(tournament_size=4, higher_is_better=False), 1)
-                      ]
-                      ),
+        Subpopulation(
+            creators=RampedHalfAndHalfCreator(
+                init_depth=(2, 4),
+                terminal_set=terminal_set,
+                function_set=function_set,
+                erc_range=(-100, 100),
+                bloat_weight=0.0001,
+            ),
+            population_size=1000,
+            # user-defined fitness evaluation method
+            evaluator=RegressionEvaluator(),
+            # minimization problem (fitness is MAE), so higher fitness is worse
+            higher_is_better=False,
+            elitism_rate=0.05,
+            # genetic operators sequence to be applied in each generation
+            operators_sequence=[
+                SubtreeCrossover(probability=0.9, arity=2),
+                SubtreeMutation(probability=0.2, arity=1),
+                ERCMutation(probability=0.05, arity=1),
+            ],
+            selection_methods=[
+                # (selection method, selection probability) tuple
+                (TournamentSelection(tournament_size=4, higher_is_better=False), 1)
+            ],
+        ),
         breeder=SimpleBreeder(),
         max_workers=1,
         max_generation=1000,
         # optimal fitness is 0, evolution ("training") process will be finished when best fitness <= threshold
-        termination_checker=ThresholdFromTargetTerminationChecker(optimal=0, threshold=0.01),
-        statistics=BestAverageWorstStatistics()
+        termination_checker=ThresholdFromTargetTerminationChecker(
+            optimal=0, threshold=0.01
+        ),
+        statistics=BestAverageWorstStatistics(),
     )
     # wrap the simple evolutionary algorithm with sklearn compatible regressor
     regressor = SKRegressor(algo)
 
-    print('Showcasing GridSearchCV...')
+    print("Showcasing GridSearchCV...")
 
     # Grid search parameters.
-    # The Grid Search model will fit the classifier with every pair combination of the parameter lists
-    # For example: (max_workers=1, max_generation=50), (max_workers=1, max_generation=100) and so on.
-    parameters = {'max_workers': [1, 2, 4], 'max_generation': [10, 20, 30]}
+    # The Grid Search model will fit the classifier with each parameter value
+    parameters = {"max_generation": [10, 20, 30]}
 
     # create the grid search model and fit it several times, each time with a different combination of the parameters
     model = GridSearchCV(regressor, parameters)
     model.fit(X, y)
 
-    print(f'best params: {model.best_params_}')
-    print(f'Total runtime: {time() - start_time} seconds.')
+    print(f"best params: {model.best_params_}")
+    print(f"Total runtime: {time() - start_time} seconds.")
 
 
 if __name__ == "__main__":
