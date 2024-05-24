@@ -31,5 +31,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚨 This PR contains the word 'random' in its changed files 🚨\nBefore merging, please verify that the algorithm's random generator is being used'
+              body: '🚨 This PR contains the word "random" in its changed files 🚨\nBefore merging, please verify that the algorithm's random generator is being used.'
             })
