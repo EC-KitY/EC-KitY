@@ -37,10 +37,10 @@ jobs:
         find examples -type f -name "*.py" -exec sed -i 's/max_generation=[0-9]\+/max_generation=3/g' {} \;
         find examples -type f -name "*.py" -exec sed -i 's/population_size=[0-9]\+/population_size=6/g' {} \;
 
-        - name: Display modified files
-        run: |
-          echo "Modified files:"
-          find examples -type f -name "*.py" -exec sh -c 'echo "File: {}\n"; cat {}' \;
+    - name: Display modified files
+      run: |
+        echo "Modified files:"
+        find examples -type f -name "*.py" -exec sh -c 'echo "File: {}\n"; cat {}' \;
 
     - name: Find and run Python files in parallel
       run: |
