@@ -1,4 +1,4 @@
-name: Scan Changed Files
+name: Random usage detector
 
 on:
   pull_request:
