@@ -2,9 +2,9 @@ name: Run Examples
 
 on: 
   push:
-    branches: [ main, develop ]
+    branches: [ examples ]
   pull_request:
-    branches: [ main, develop ]
+    branches: []
   workflow_dispatch:
 
 jobs:
@@ -34,6 +34,11 @@ jobs:
       run: |
         find examples -type f -name "*.py" -exec sed -E -i 's/max_generation\s*=\s*[0-9]+/max_generation=3/g' {} \;
         find examples -type f -name "*.py" -exec sed -E -i 's/population_size\s*=\s*[0-9]+/population_size=6/g' {} \;
+
+    - name: Display modified files
+      run: |
+        echo "Modified files:"
+        find examples -type f -name "*.py" -exec sh -c 'echo "File: {}"; cat {}' \;
 
     - name: Find and run Python files in parallel
       run: |

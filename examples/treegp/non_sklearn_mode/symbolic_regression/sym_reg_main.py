@@ -80,7 +80,7 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.0001,
             ),
-            population_size=200,
+            population_size = 200,
             # user-defined fitness evaluation method
             evaluator=SymbolicRegressionEvaluator(),
             # minimization problem (fitness is MAE), so higher fitness is worse
@@ -99,7 +99,7 @@ def main():
         ),
         breeder=SimpleBreeder(),
         max_workers=4,
-        max_generation=500,
+        max_generation = 500,
         # random_seed=0,
         termination_checker=ThresholdFromTargetTerminationChecker(
             optimal=0, threshold=0.001

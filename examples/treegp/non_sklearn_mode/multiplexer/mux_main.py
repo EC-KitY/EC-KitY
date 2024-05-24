@@ -212,7 +212,7 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.00001,
             ),
-            population_size=40,
+            population_size= 40,
             # user-defined fitness evaluation method
             evaluator=MuxEvaluator(),
             # this is a maximization problem (fitness is accuracy), so higher fitness is better
@@ -230,7 +230,7 @@ def main():
         ),
         breeder=SimpleBreeder(),
         max_workers=1,
-        max_generation=40,
+        max_generation =40,
         termination_checker=ThresholdFromTargetTerminationChecker(
             optimal=1, threshold=0.01
         ),
