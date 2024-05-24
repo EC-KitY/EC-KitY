@@ -32,8 +32,8 @@ jobs:
       # Shortening runtime significantly
     - name: Replace generations and population size
       run: |
-        find examples -type f -name "*.py" -exec sed -i 's/max_generation=[0-9]\+/max_generation=3/g' {} \;
-        find examples -type f -name "*.py" -exec sed -i 's/population_size=[0-9]\+/population_size=6/g' {} \;
+        find examples -type f -name "*.py" -exec sed -E -i 's/max_generation\s*=\s*[0-9]+/max_generation=3/g' {} \;
+        find examples -type f -name "*.py" -exec sed -E -i 's/population_size\s*=\s*[0-9]+/population_size=6/g' {} \;
 
     - name: Find and run Python files in parallel
       run: |
