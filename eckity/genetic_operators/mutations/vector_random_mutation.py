@@ -44,7 +44,7 @@ class FloatVectorGaussOnePointMutation(VectorNPointMutation):
         """
         Handle gauss mutation failure by returning a callable uniform mutation
         """
-        mut = FloatVectorUniformNPointMutation(1, self.probability, self.arity, self.events)
+        mut = FloatVectorUniformOnePointMutation(self.probability, self.arity, self.events)
         return mut.apply_operator(payload)
 
 

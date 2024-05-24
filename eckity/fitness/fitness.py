@@ -2,47 +2,42 @@
 This module implements the class `Fitness`
 """
 
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 
-class Fitness:
+class Fitness(ABC):
     """
     This class is responsible for handling the fitness score of some Individual
     (checking if fitness is evaluated, comparing fitness scores with other individuals etc.)
 
-    context: list of Individuals
-        individuals involved in calculating the fitness (co-evolution)
-
-    trials: list of floats
-        fitness results for previous trials done to calculate fitness (co-evolution)
-
-    _is_evaluated: bool
+    is_evaluated: bool
         declares if fitness score is evaluated and updated in the current generation
-
-    is_relative_fitness: bool
-        declares whether the fitness score is absolute or relative
-
-    should_cache_between_gens: bool
-        declares whether the fitness score should reset at the end of each generation
 
     higher_is_better: bool
         declares the fitness direction.
         i.e., if it should be minimized or maximized
+
+    cache: bool
+        declares whether the fitness score should reset at the end of each generation
+
+    is_relative_fitness: bool
+        declares whether the fitness score is absolute or relative
     """
-    def __init__(self,
-                 context=None,
-                 trials=None,
-                 is_evaluated=False,
-                 is_relative_fitness=False,
-                 should_cache_between_gens=False,
-                 higher_is_better=False):
-        self.context = context
-        self.trials = trials
+
+    def __init__(
+        self,
+        is_evaluated: bool = False,
+        higher_is_better: bool = None,
+        is_relative_fitness: bool = False,
+        cache: bool = False,
+    ):
         self._is_evaluated = is_evaluated
         self.is_relative_fitness = is_relative_fitness
-        self.should_cache_between_gens = False if is_relative_fitness else should_cache_between_gens
+        self.cache = False if is_relative_fitness else cache
+
+        if higher_is_better is None:
+            raise ValueError("higher_is_better must be set to True/False")
         self.higher_is_better = higher_is_better
-        self.optimal_fitness = 1 if higher_is_better else 0
 
     @abstractmethod
     def get_pure_fitness(self):
@@ -118,8 +113,6 @@ class Fitness:
         """
         Set this fitness score status to be not evaluated
         """
-        if not self.is_fitness_evaluated():
-            raise ValueError('Fitness already not evaluated')
         self._is_evaluated = False
 
     def is_fitness_evaluated(self):

@@ -10,23 +10,7 @@ from eckity.statistics.best_average_worst_statistics import BestAverageWorstStat
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
 
-
-class OneMaxEvaluator(SimpleIndividualEvaluator):
-    def evaluate_individual(self, individual):
-        """
-            Compute the fitness value of a given individual.
-
-            Parameters
-            ----------
-            individual: Vector
-                The individual to compute the fitness value for.
-
-            Returns
-            -------
-            float
-                The evaluated fitness value of the given individual.
-        """
-        return sum(individual.vector)
+from one_max_evaluator import OneMaxEvaluator
 
 
 def main():
@@ -50,7 +34,7 @@ def main():
                       ]
                       ),
         breeder=SimpleBreeder(),
-        max_workers=4,
+        max_workers=1,
         max_generation=500,
 
         termination_checker=ThresholdFromTargetTerminationChecker(optimal=100, threshold=0.0),

@@ -5,30 +5,13 @@ from eckity.creators.ga_creators.bit_string_vector_creator import GABitStringVec
 from eckity.creators.ga_creators.float_vector_creator import GAFloatVectorCreator
 from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
 from eckity.genetic_operators.crossovers.vector_k_point_crossover import VectorKPointsCrossover
-from eckity.genetic_operators.mutations.vector_random_mutation import BitStringVectorFlipMutation, \
-    BitStringVectorNFlipMutation, FloatVectorUniformNPointMutation
+from eckity.genetic_operators.mutations.vector_random_mutation import FloatVectorUniformNPointMutation
 from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
 from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import ThresholdFromTargetTerminationChecker
 
-
-class OneMaxEvaluator(SimpleIndividualEvaluator):
-    def evaluate_individual(self, individual):
-        """
-            Compute the fitness value of a given individual.
-
-            Parameters
-            ----------
-            individual: Vector
-                The individual to compute the fitness value for.
-
-            Returns
-            -------
-            float
-                The evaluated fitness value of the given individual.
-        """
-        return sum(individual.vector)
+from one_max_evaluator import OneMaxEvaluator
 
 
 def main():

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 13.0.0"/>
+    <meta name="generator" content="pdoc 14.0.0"/>
     <title>eckity.fitness.simple_fitness API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -28,13 +28,16 @@
 
 
 
-        <h2>API Documentation</h2>
-            <ul class="memberlist">
+            <h2>API Documentation</h2>
+                <ul class="memberlist">
             <li>
                     <a class="class" href="#SimpleFitness">SimpleFitness</a>
                             <ul class="memberlist">
                         <li>
                                 <a class="function" href="#SimpleFitness.__init__">SimpleFitness</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SimpleFitness.fitness">fitness</a>
                         </li>
                         <li>
                                 <a class="function" href="#SimpleFitness.set_fitness">set_fitness</a>
@@ -116,105 +119,103 @@
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="sd">        fitness: float</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="sd">            the fitness score to be updated</span>
 </span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;fitness already evaluated and set to&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="nd">@overrides</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">        Returns</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">        ----------</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">        float</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">            fitness score of the individual</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="nd">@overrides</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="sd">        Returns</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">        ----------</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="sd">        bool</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="nd">@overrides</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        Parameters</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">        ----------</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        ind: Individual</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">        Returns</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">        ----------</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        bool</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="nd">@overrides</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        Parameters</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">        ----------</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        ind: Individual</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">        Returns</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">        ----------</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        bool</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_cache_between_gens</span><span class="p">:</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_is_evaluated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>        <span class="k">return</span> <span class="n">state</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>    <span class="nd">@overrides</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">        Returns</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">        ----------</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">        float</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">            fitness score of the individual</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="nd">@overrides</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">        Returns</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        ----------</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="sd">        bool</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="nd">@overrides</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        Parameters</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">        ----------</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        ind: Individual</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        Returns</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="sd">        ----------</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">        bool</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>    <span class="nd">@overrides</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        Parameters</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="sd">        ----------</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        ind: Individual</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        Returns</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        ----------</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">        bool</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_cache_between_gens</span><span class="p">:</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_is_evaluated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="k">return</span> <span class="n">state</span>
 </span></pre></div>
 
 
@@ -260,105 +261,103 @@
 </span><span id="SimpleFitness-37"><a href="#SimpleFitness-37"><span class="linenos"> 37</span></a><span class="sd">        fitness: float</span>
 </span><span id="SimpleFitness-38"><a href="#SimpleFitness-38"><span class="linenos"> 38</span></a><span class="sd">            the fitness score to be updated</span>
 </span><span id="SimpleFitness-39"><a href="#SimpleFitness-39"><span class="linenos"> 39</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-40"><a href="#SimpleFitness-40"><span class="linenos"> 40</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="SimpleFitness-41"><a href="#SimpleFitness-41"><span class="linenos"> 41</span></a>            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;fitness already evaluated and set to&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness-42"><a href="#SimpleFitness-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
-</span><span id="SimpleFitness-43"><a href="#SimpleFitness-43"><span class="linenos"> 43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="SimpleFitness-44"><a href="#SimpleFitness-44"><span class="linenos"> 44</span></a>
-</span><span id="SimpleFitness-45"><a href="#SimpleFitness-45"><span class="linenos"> 45</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness-46"><a href="#SimpleFitness-46"><span class="linenos"> 46</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SimpleFitness-47"><a href="#SimpleFitness-47"><span class="linenos"> 47</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-48"><a href="#SimpleFitness-48"><span class="linenos"> 48</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
-</span><span id="SimpleFitness-49"><a href="#SimpleFitness-49"><span class="linenos"> 49</span></a>
-</span><span id="SimpleFitness-50"><a href="#SimpleFitness-50"><span class="linenos"> 50</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness-51"><a href="#SimpleFitness-51"><span class="linenos"> 51</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-52"><a href="#SimpleFitness-52"><span class="linenos"> 52</span></a><span class="sd">        float</span>
-</span><span id="SimpleFitness-53"><a href="#SimpleFitness-53"><span class="linenos"> 53</span></a><span class="sd">            fitness score of the individual</span>
-</span><span id="SimpleFitness-54"><a href="#SimpleFitness-54"><span class="linenos"> 54</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-55"><a href="#SimpleFitness-55"><span class="linenos"> 55</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="SimpleFitness-56"><a href="#SimpleFitness-56"><span class="linenos"> 56</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
-</span><span id="SimpleFitness-57"><a href="#SimpleFitness-57"><span class="linenos"> 57</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
-</span><span id="SimpleFitness-58"><a href="#SimpleFitness-58"><span class="linenos"> 58</span></a>
-</span><span id="SimpleFitness-59"><a href="#SimpleFitness-59"><span class="linenos"> 59</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness-60"><a href="#SimpleFitness-60"><span class="linenos"> 60</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SimpleFitness-61"><a href="#SimpleFitness-61"><span class="linenos"> 61</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-62"><a href="#SimpleFitness-62"><span class="linenos"> 62</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
-</span><span id="SimpleFitness-63"><a href="#SimpleFitness-63"><span class="linenos"> 63</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-64"><a href="#SimpleFitness-64"><span class="linenos"> 64</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
-</span><span id="SimpleFitness-65"><a href="#SimpleFitness-65"><span class="linenos"> 65</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="SimpleFitness-66"><a href="#SimpleFitness-66"><span class="linenos"> 66</span></a>
-</span><span id="SimpleFitness-67"><a href="#SimpleFitness-67"><span class="linenos"> 67</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
-</span><span id="SimpleFitness-68"><a href="#SimpleFitness-68"><span class="linenos"> 68</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-69"><a href="#SimpleFitness-69"><span class="linenos"> 69</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
-</span><span id="SimpleFitness-70"><a href="#SimpleFitness-70"><span class="linenos"> 70</span></a>
-</span><span id="SimpleFitness-71"><a href="#SimpleFitness-71"><span class="linenos"> 71</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness-72"><a href="#SimpleFitness-72"><span class="linenos"> 72</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-73"><a href="#SimpleFitness-73"><span class="linenos"> 73</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness-74"><a href="#SimpleFitness-74"><span class="linenos"> 74</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
-</span><span id="SimpleFitness-75"><a href="#SimpleFitness-75"><span class="linenos"> 75</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-76"><a href="#SimpleFitness-76"><span class="linenos"> 76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
-</span><span id="SimpleFitness-77"><a href="#SimpleFitness-77"><span class="linenos"> 77</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
-</span><span id="SimpleFitness-78"><a href="#SimpleFitness-78"><span class="linenos"> 78</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
-</span><span id="SimpleFitness-79"><a href="#SimpleFitness-79"><span class="linenos"> 79</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
-</span><span id="SimpleFitness-80"><a href="#SimpleFitness-80"><span class="linenos"> 80</span></a>
-</span><span id="SimpleFitness-81"><a href="#SimpleFitness-81"><span class="linenos"> 81</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness-82"><a href="#SimpleFitness-82"><span class="linenos"> 82</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="SimpleFitness-83"><a href="#SimpleFitness-83"><span class="linenos"> 83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-84"><a href="#SimpleFitness-84"><span class="linenos"> 84</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="SimpleFitness-85"><a href="#SimpleFitness-85"><span class="linenos"> 85</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="SimpleFitness-86"><a href="#SimpleFitness-86"><span class="linenos"> 86</span></a>
-</span><span id="SimpleFitness-87"><a href="#SimpleFitness-87"><span class="linenos"> 87</span></a><span class="sd">        Parameters</span>
-</span><span id="SimpleFitness-88"><a href="#SimpleFitness-88"><span class="linenos"> 88</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-89"><a href="#SimpleFitness-89"><span class="linenos"> 89</span></a><span class="sd">        ind: Individual</span>
-</span><span id="SimpleFitness-90"><a href="#SimpleFitness-90"><span class="linenos"> 90</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="SimpleFitness-91"><a href="#SimpleFitness-91"><span class="linenos"> 91</span></a>
-</span><span id="SimpleFitness-92"><a href="#SimpleFitness-92"><span class="linenos"> 92</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="SimpleFitness-93"><a href="#SimpleFitness-93"><span class="linenos"> 93</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="SimpleFitness-94"><a href="#SimpleFitness-94"><span class="linenos"> 94</span></a>
-</span><span id="SimpleFitness-95"><a href="#SimpleFitness-95"><span class="linenos"> 95</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="SimpleFitness-96"><a href="#SimpleFitness-96"><span class="linenos"> 96</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="SimpleFitness-97"><a href="#SimpleFitness-97"><span class="linenos"> 97</span></a>
-</span><span id="SimpleFitness-98"><a href="#SimpleFitness-98"><span class="linenos"> 98</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness-99"><a href="#SimpleFitness-99"><span class="linenos"> 99</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-100"><a href="#SimpleFitness-100"><span class="linenos">100</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness-101"><a href="#SimpleFitness-101"><span class="linenos">101</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
-</span><span id="SimpleFitness-102"><a href="#SimpleFitness-102"><span class="linenos">102</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-103"><a href="#SimpleFitness-103"><span class="linenos">103</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness-104"><a href="#SimpleFitness-104"><span class="linenos">104</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
-</span><span id="SimpleFitness-105"><a href="#SimpleFitness-105"><span class="linenos">105</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
-</span><span id="SimpleFitness-106"><a href="#SimpleFitness-106"><span class="linenos">106</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
-</span><span id="SimpleFitness-107"><a href="#SimpleFitness-107"><span class="linenos">107</span></a>
-</span><span id="SimpleFitness-108"><a href="#SimpleFitness-108"><span class="linenos">108</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness-109"><a href="#SimpleFitness-109"><span class="linenos">109</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="SimpleFitness-110"><a href="#SimpleFitness-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-111"><a href="#SimpleFitness-111"><span class="linenos">111</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="SimpleFitness-112"><a href="#SimpleFitness-112"><span class="linenos">112</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="SimpleFitness-113"><a href="#SimpleFitness-113"><span class="linenos">113</span></a>
-</span><span id="SimpleFitness-114"><a href="#SimpleFitness-114"><span class="linenos">114</span></a><span class="sd">        Parameters</span>
-</span><span id="SimpleFitness-115"><a href="#SimpleFitness-115"><span class="linenos">115</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-116"><a href="#SimpleFitness-116"><span class="linenos">116</span></a><span class="sd">        ind: Individual</span>
-</span><span id="SimpleFitness-117"><a href="#SimpleFitness-117"><span class="linenos">117</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="SimpleFitness-118"><a href="#SimpleFitness-118"><span class="linenos">118</span></a>
-</span><span id="SimpleFitness-119"><a href="#SimpleFitness-119"><span class="linenos">119</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="SimpleFitness-120"><a href="#SimpleFitness-120"><span class="linenos">120</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="SimpleFitness-121"><a href="#SimpleFitness-121"><span class="linenos">121</span></a>
-</span><span id="SimpleFitness-122"><a href="#SimpleFitness-122"><span class="linenos">122</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="SimpleFitness-123"><a href="#SimpleFitness-123"><span class="linenos">123</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="SimpleFitness-124"><a href="#SimpleFitness-124"><span class="linenos">124</span></a>
-</span><span id="SimpleFitness-125"><a href="#SimpleFitness-125"><span class="linenos">125</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness-126"><a href="#SimpleFitness-126"><span class="linenos">126</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness-127"><a href="#SimpleFitness-127"><span class="linenos">127</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness-128"><a href="#SimpleFitness-128"><span class="linenos">128</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
-</span><span id="SimpleFitness-129"><a href="#SimpleFitness-129"><span class="linenos">129</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness-130"><a href="#SimpleFitness-130"><span class="linenos">130</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness-131"><a href="#SimpleFitness-131"><span class="linenos">131</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
-</span><span id="SimpleFitness-132"><a href="#SimpleFitness-132"><span class="linenos">132</span></a>
-</span><span id="SimpleFitness-133"><a href="#SimpleFitness-133"><span class="linenos">133</span></a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SimpleFitness-134"><a href="#SimpleFitness-134"><span class="linenos">134</span></a>        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</span><span id="SimpleFitness-135"><a href="#SimpleFitness-135"><span class="linenos">135</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_cache_between_gens</span><span class="p">:</span>
-</span><span id="SimpleFitness-136"><a href="#SimpleFitness-136"><span class="linenos">136</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_is_evaluated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="SimpleFitness-137"><a href="#SimpleFitness-137"><span class="linenos">137</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="SimpleFitness-138"><a href="#SimpleFitness-138"><span class="linenos">138</span></a>        <span class="k">return</span> <span class="n">state</span>
+</span><span id="SimpleFitness-40"><a href="#SimpleFitness-40"><span class="linenos"> 40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
+</span><span id="SimpleFitness-41"><a href="#SimpleFitness-41"><span class="linenos"> 41</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="SimpleFitness-42"><a href="#SimpleFitness-42"><span class="linenos"> 42</span></a>
+</span><span id="SimpleFitness-43"><a href="#SimpleFitness-43"><span class="linenos"> 43</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness-44"><a href="#SimpleFitness-44"><span class="linenos"> 44</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SimpleFitness-45"><a href="#SimpleFitness-45"><span class="linenos"> 45</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-46"><a href="#SimpleFitness-46"><span class="linenos"> 46</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
+</span><span id="SimpleFitness-47"><a href="#SimpleFitness-47"><span class="linenos"> 47</span></a>
+</span><span id="SimpleFitness-48"><a href="#SimpleFitness-48"><span class="linenos"> 48</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness-49"><a href="#SimpleFitness-49"><span class="linenos"> 49</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-50"><a href="#SimpleFitness-50"><span class="linenos"> 50</span></a><span class="sd">        float</span>
+</span><span id="SimpleFitness-51"><a href="#SimpleFitness-51"><span class="linenos"> 51</span></a><span class="sd">            fitness score of the individual</span>
+</span><span id="SimpleFitness-52"><a href="#SimpleFitness-52"><span class="linenos"> 52</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-53"><a href="#SimpleFitness-53"><span class="linenos"> 53</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
+</span><span id="SimpleFitness-54"><a href="#SimpleFitness-54"><span class="linenos"> 54</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
+</span><span id="SimpleFitness-55"><a href="#SimpleFitness-55"><span class="linenos"> 55</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+</span><span id="SimpleFitness-56"><a href="#SimpleFitness-56"><span class="linenos"> 56</span></a>
+</span><span id="SimpleFitness-57"><a href="#SimpleFitness-57"><span class="linenos"> 57</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness-58"><a href="#SimpleFitness-58"><span class="linenos"> 58</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SimpleFitness-59"><a href="#SimpleFitness-59"><span class="linenos"> 59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-60"><a href="#SimpleFitness-60"><span class="linenos"> 60</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
+</span><span id="SimpleFitness-61"><a href="#SimpleFitness-61"><span class="linenos"> 61</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-62"><a href="#SimpleFitness-62"><span class="linenos"> 62</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
+</span><span id="SimpleFitness-63"><a href="#SimpleFitness-63"><span class="linenos"> 63</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="SimpleFitness-64"><a href="#SimpleFitness-64"><span class="linenos"> 64</span></a>
+</span><span id="SimpleFitness-65"><a href="#SimpleFitness-65"><span class="linenos"> 65</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
+</span><span id="SimpleFitness-66"><a href="#SimpleFitness-66"><span class="linenos"> 66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-67"><a href="#SimpleFitness-67"><span class="linenos"> 67</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
+</span><span id="SimpleFitness-68"><a href="#SimpleFitness-68"><span class="linenos"> 68</span></a>
+</span><span id="SimpleFitness-69"><a href="#SimpleFitness-69"><span class="linenos"> 69</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness-70"><a href="#SimpleFitness-70"><span class="linenos"> 70</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-71"><a href="#SimpleFitness-71"><span class="linenos"> 71</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness-72"><a href="#SimpleFitness-72"><span class="linenos"> 72</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
+</span><span id="SimpleFitness-73"><a href="#SimpleFitness-73"><span class="linenos"> 73</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-74"><a href="#SimpleFitness-74"><span class="linenos"> 74</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
+</span><span id="SimpleFitness-75"><a href="#SimpleFitness-75"><span class="linenos"> 75</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
+</span><span id="SimpleFitness-76"><a href="#SimpleFitness-76"><span class="linenos"> 76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
+</span><span id="SimpleFitness-77"><a href="#SimpleFitness-77"><span class="linenos"> 77</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
+</span><span id="SimpleFitness-78"><a href="#SimpleFitness-78"><span class="linenos"> 78</span></a>
+</span><span id="SimpleFitness-79"><a href="#SimpleFitness-79"><span class="linenos"> 79</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness-80"><a href="#SimpleFitness-80"><span class="linenos"> 80</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="SimpleFitness-81"><a href="#SimpleFitness-81"><span class="linenos"> 81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-82"><a href="#SimpleFitness-82"><span class="linenos"> 82</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="SimpleFitness-83"><a href="#SimpleFitness-83"><span class="linenos"> 83</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="SimpleFitness-84"><a href="#SimpleFitness-84"><span class="linenos"> 84</span></a>
+</span><span id="SimpleFitness-85"><a href="#SimpleFitness-85"><span class="linenos"> 85</span></a><span class="sd">        Parameters</span>
+</span><span id="SimpleFitness-86"><a href="#SimpleFitness-86"><span class="linenos"> 86</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-87"><a href="#SimpleFitness-87"><span class="linenos"> 87</span></a><span class="sd">        ind: Individual</span>
+</span><span id="SimpleFitness-88"><a href="#SimpleFitness-88"><span class="linenos"> 88</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="SimpleFitness-89"><a href="#SimpleFitness-89"><span class="linenos"> 89</span></a>
+</span><span id="SimpleFitness-90"><a href="#SimpleFitness-90"><span class="linenos"> 90</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="SimpleFitness-91"><a href="#SimpleFitness-91"><span class="linenos"> 91</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="SimpleFitness-92"><a href="#SimpleFitness-92"><span class="linenos"> 92</span></a>
+</span><span id="SimpleFitness-93"><a href="#SimpleFitness-93"><span class="linenos"> 93</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="SimpleFitness-94"><a href="#SimpleFitness-94"><span class="linenos"> 94</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="SimpleFitness-95"><a href="#SimpleFitness-95"><span class="linenos"> 95</span></a>
+</span><span id="SimpleFitness-96"><a href="#SimpleFitness-96"><span class="linenos"> 96</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness-97"><a href="#SimpleFitness-97"><span class="linenos"> 97</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-98"><a href="#SimpleFitness-98"><span class="linenos"> 98</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness-99"><a href="#SimpleFitness-99"><span class="linenos"> 99</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
+</span><span id="SimpleFitness-100"><a href="#SimpleFitness-100"><span class="linenos">100</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-101"><a href="#SimpleFitness-101"><span class="linenos">101</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="SimpleFitness-102"><a href="#SimpleFitness-102"><span class="linenos">102</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
+</span><span id="SimpleFitness-103"><a href="#SimpleFitness-103"><span class="linenos">103</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
+</span><span id="SimpleFitness-104"><a href="#SimpleFitness-104"><span class="linenos">104</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+</span><span id="SimpleFitness-105"><a href="#SimpleFitness-105"><span class="linenos">105</span></a>
+</span><span id="SimpleFitness-106"><a href="#SimpleFitness-106"><span class="linenos">106</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness-107"><a href="#SimpleFitness-107"><span class="linenos">107</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="SimpleFitness-108"><a href="#SimpleFitness-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-109"><a href="#SimpleFitness-109"><span class="linenos">109</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="SimpleFitness-110"><a href="#SimpleFitness-110"><span class="linenos">110</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="SimpleFitness-111"><a href="#SimpleFitness-111"><span class="linenos">111</span></a>
+</span><span id="SimpleFitness-112"><a href="#SimpleFitness-112"><span class="linenos">112</span></a><span class="sd">        Parameters</span>
+</span><span id="SimpleFitness-113"><a href="#SimpleFitness-113"><span class="linenos">113</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-114"><a href="#SimpleFitness-114"><span class="linenos">114</span></a><span class="sd">        ind: Individual</span>
+</span><span id="SimpleFitness-115"><a href="#SimpleFitness-115"><span class="linenos">115</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="SimpleFitness-116"><a href="#SimpleFitness-116"><span class="linenos">116</span></a>
+</span><span id="SimpleFitness-117"><a href="#SimpleFitness-117"><span class="linenos">117</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="SimpleFitness-118"><a href="#SimpleFitness-118"><span class="linenos">118</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="SimpleFitness-119"><a href="#SimpleFitness-119"><span class="linenos">119</span></a>
+</span><span id="SimpleFitness-120"><a href="#SimpleFitness-120"><span class="linenos">120</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="SimpleFitness-121"><a href="#SimpleFitness-121"><span class="linenos">121</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="SimpleFitness-122"><a href="#SimpleFitness-122"><span class="linenos">122</span></a>
+</span><span id="SimpleFitness-123"><a href="#SimpleFitness-123"><span class="linenos">123</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness-124"><a href="#SimpleFitness-124"><span class="linenos">124</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness-125"><a href="#SimpleFitness-125"><span class="linenos">125</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness-126"><a href="#SimpleFitness-126"><span class="linenos">126</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
+</span><span id="SimpleFitness-127"><a href="#SimpleFitness-127"><span class="linenos">127</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness-128"><a href="#SimpleFitness-128"><span class="linenos">128</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="SimpleFitness-129"><a href="#SimpleFitness-129"><span class="linenos">129</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+</span><span id="SimpleFitness-130"><a href="#SimpleFitness-130"><span class="linenos">130</span></a>
+</span><span id="SimpleFitness-131"><a href="#SimpleFitness-131"><span class="linenos">131</span></a>    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SimpleFitness-132"><a href="#SimpleFitness-132"><span class="linenos">132</span></a>        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span id="SimpleFitness-133"><a href="#SimpleFitness-133"><span class="linenos">133</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_cache_between_gens</span><span class="p">:</span>
+</span><span id="SimpleFitness-134"><a href="#SimpleFitness-134"><span class="linenos">134</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_is_evaluated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="SimpleFitness-135"><a href="#SimpleFitness-135"><span class="linenos">135</span></a>            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="SimpleFitness-136"><a href="#SimpleFitness-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="n">state</span>
 </span></pre></div>
 
 
@@ -398,6 +397,17 @@
     
 
                             </div>
+                            <div id="SimpleFitness.fitness" class="classattr">
+                                <div class="attr variable">
+            <span class="name">fitness</span><span class="annotation">: float</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SimpleFitness.fitness"></a>
+    
+    
+
+                            </div>
                             <div id="SimpleFitness.set_fitness" class="classattr">
                                         <input id="SimpleFitness.set_fitness-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -418,14 +428,12 @@
 </span><span id="SimpleFitness.set_fitness-37"><a href="#SimpleFitness.set_fitness-37"><span class="linenos">37</span></a><span class="sd">        fitness: float</span>
 </span><span id="SimpleFitness.set_fitness-38"><a href="#SimpleFitness.set_fitness-38"><span class="linenos">38</span></a><span class="sd">            the fitness score to be updated</span>
 </span><span id="SimpleFitness.set_fitness-39"><a href="#SimpleFitness.set_fitness-39"><span class="linenos">39</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.set_fitness-40"><a href="#SimpleFitness.set_fitness-40"><span class="linenos">40</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="SimpleFitness.set_fitness-41"><a href="#SimpleFitness.set_fitness-41"><span class="linenos">41</span></a>            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;fitness already evaluated and set to&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness.set_fitness-42"><a href="#SimpleFitness.set_fitness-42"><span class="linenos">42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
-</span><span id="SimpleFitness.set_fitness-43"><a href="#SimpleFitness.set_fitness-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="SimpleFitness.set_fitness-40"><a href="#SimpleFitness.set_fitness-40"><span class="linenos">40</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="n">fitness</span>
+</span><span id="SimpleFitness.set_fitness-41"><a href="#SimpleFitness.set_fitness-41"><span class="linenos">41</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span> <span class="o">=</span> <span class="kc">True</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Updates the fitness score to <code>fitness</code></p>
+            <div class="docstring"><p>Updates the fitness score to <code><a href="#SimpleFitness.fitness">fitness</a></code></p>
 
 <h6 id="parameters">Parameters</h6>
 
@@ -449,19 +457,19 @@ the fitness score to be updated</li>
 
     </div>
     <a class="headerlink" href="#SimpleFitness.get_pure_fitness"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.get_pure_fitness-45"><a href="#SimpleFitness.get_pure_fitness-45"><span class="linenos">45</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness.get_pure_fitness-46"><a href="#SimpleFitness.get_pure_fitness-46"><span class="linenos">46</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SimpleFitness.get_pure_fitness-47"><a href="#SimpleFitness.get_pure_fitness-47"><span class="linenos">47</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.get_pure_fitness-48"><a href="#SimpleFitness.get_pure_fitness-48"><span class="linenos">48</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
-</span><span id="SimpleFitness.get_pure_fitness-49"><a href="#SimpleFitness.get_pure_fitness-49"><span class="linenos">49</span></a>
-</span><span id="SimpleFitness.get_pure_fitness-50"><a href="#SimpleFitness.get_pure_fitness-50"><span class="linenos">50</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness.get_pure_fitness-51"><a href="#SimpleFitness.get_pure_fitness-51"><span class="linenos">51</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.get_pure_fitness-52"><a href="#SimpleFitness.get_pure_fitness-52"><span class="linenos">52</span></a><span class="sd">        float</span>
-</span><span id="SimpleFitness.get_pure_fitness-53"><a href="#SimpleFitness.get_pure_fitness-53"><span class="linenos">53</span></a><span class="sd">            fitness score of the individual</span>
-</span><span id="SimpleFitness.get_pure_fitness-54"><a href="#SimpleFitness.get_pure_fitness-54"><span class="linenos">54</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.get_pure_fitness-55"><a href="#SimpleFitness.get_pure_fitness-55"><span class="linenos">55</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
-</span><span id="SimpleFitness.get_pure_fitness-56"><a href="#SimpleFitness.get_pure_fitness-56"><span class="linenos">56</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
-</span><span id="SimpleFitness.get_pure_fitness-57"><a href="#SimpleFitness.get_pure_fitness-57"><span class="linenos">57</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.get_pure_fitness-43"><a href="#SimpleFitness.get_pure_fitness-43"><span class="linenos">43</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness.get_pure_fitness-44"><a href="#SimpleFitness.get_pure_fitness-44"><span class="linenos">44</span></a>    <span class="k">def</span> <span class="nf">get_pure_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SimpleFitness.get_pure_fitness-45"><a href="#SimpleFitness.get_pure_fitness-45"><span class="linenos">45</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.get_pure_fitness-46"><a href="#SimpleFitness.get_pure_fitness-46"><span class="linenos">46</span></a><span class="sd">        Returns the pure fitness score of the individual (before applying balancing methods like bloat control)</span>
+</span><span id="SimpleFitness.get_pure_fitness-47"><a href="#SimpleFitness.get_pure_fitness-47"><span class="linenos">47</span></a>
+</span><span id="SimpleFitness.get_pure_fitness-48"><a href="#SimpleFitness.get_pure_fitness-48"><span class="linenos">48</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness.get_pure_fitness-49"><a href="#SimpleFitness.get_pure_fitness-49"><span class="linenos">49</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.get_pure_fitness-50"><a href="#SimpleFitness.get_pure_fitness-50"><span class="linenos">50</span></a><span class="sd">        float</span>
+</span><span id="SimpleFitness.get_pure_fitness-51"><a href="#SimpleFitness.get_pure_fitness-51"><span class="linenos">51</span></a><span class="sd">            fitness score of the individual</span>
+</span><span id="SimpleFitness.get_pure_fitness-52"><a href="#SimpleFitness.get_pure_fitness-52"><span class="linenos">52</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.get_pure_fitness-53"><a href="#SimpleFitness.get_pure_fitness-53"><span class="linenos">53</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_evaluated</span><span class="p">:</span>
+</span><span id="SimpleFitness.get_pure_fitness-54"><a href="#SimpleFitness.get_pure_fitness-54"><span class="linenos">54</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness not evaluated yet&#39;</span><span class="p">)</span>
+</span><span id="SimpleFitness.get_pure_fitness-55"><a href="#SimpleFitness.get_pure_fitness-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
 </span></pre></div>
 
 
@@ -488,13 +496,13 @@ the fitness score to be updated</li>
 
     </div>
     <a class="headerlink" href="#SimpleFitness.set_not_evaluated"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.set_not_evaluated-59"><a href="#SimpleFitness.set_not_evaluated-59"><span class="linenos">59</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness.set_not_evaluated-60"><a href="#SimpleFitness.set_not_evaluated-60"><span class="linenos">60</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SimpleFitness.set_not_evaluated-61"><a href="#SimpleFitness.set_not_evaluated-61"><span class="linenos">61</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.set_not_evaluated-62"><a href="#SimpleFitness.set_not_evaluated-62"><span class="linenos">62</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
-</span><span id="SimpleFitness.set_not_evaluated-63"><a href="#SimpleFitness.set_not_evaluated-63"><span class="linenos">63</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.set_not_evaluated-64"><a href="#SimpleFitness.set_not_evaluated-64"><span class="linenos">64</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
-</span><span id="SimpleFitness.set_not_evaluated-65"><a href="#SimpleFitness.set_not_evaluated-65"><span class="linenos">65</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.set_not_evaluated-57"><a href="#SimpleFitness.set_not_evaluated-57"><span class="linenos">57</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness.set_not_evaluated-58"><a href="#SimpleFitness.set_not_evaluated-58"><span class="linenos">58</span></a>    <span class="k">def</span> <span class="nf">set_not_evaluated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SimpleFitness.set_not_evaluated-59"><a href="#SimpleFitness.set_not_evaluated-59"><span class="linenos">59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.set_not_evaluated-60"><a href="#SimpleFitness.set_not_evaluated-60"><span class="linenos">60</span></a><span class="sd">        Set this fitness score status to be not evaluated</span>
+</span><span id="SimpleFitness.set_not_evaluated-61"><a href="#SimpleFitness.set_not_evaluated-61"><span class="linenos">61</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.set_not_evaluated-62"><a href="#SimpleFitness.set_not_evaluated-62"><span class="linenos">62</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_not_evaluated</span><span class="p">()</span>
+</span><span id="SimpleFitness.set_not_evaluated-63"><a href="#SimpleFitness.set_not_evaluated-63"><span class="linenos">63</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -514,19 +522,19 @@ the fitness score to be updated</li>
 
     </div>
     <a class="headerlink" href="#SimpleFitness.check_comparable_fitness_scores"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.check_comparable_fitness_scores-67"><a href="#SimpleFitness.check_comparable_fitness_scores-67"><span class="linenos">67</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-68"><a href="#SimpleFitness.check_comparable_fitness_scores-68"><span class="linenos">68</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-69"><a href="#SimpleFitness.check_comparable_fitness_scores-69"><span class="linenos">69</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-70"><a href="#SimpleFitness.check_comparable_fitness_scores-70"><span class="linenos">70</span></a>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-71"><a href="#SimpleFitness.check_comparable_fitness_scores-71"><span class="linenos">71</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-72"><a href="#SimpleFitness.check_comparable_fitness_scores-72"><span class="linenos">72</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-73"><a href="#SimpleFitness.check_comparable_fitness_scores-73"><span class="linenos">73</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-74"><a href="#SimpleFitness.check_comparable_fitness_scores-74"><span class="linenos">74</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-75"><a href="#SimpleFitness.check_comparable_fitness_scores-75"><span class="linenos">75</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-76"><a href="#SimpleFitness.check_comparable_fitness_scores-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-77"><a href="#SimpleFitness.check_comparable_fitness_scores-77"><span class="linenos">77</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-78"><a href="#SimpleFitness.check_comparable_fitness_scores-78"><span class="linenos">78</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
-</span><span id="SimpleFitness.check_comparable_fitness_scores-79"><a href="#SimpleFitness.check_comparable_fitness_scores-79"><span class="linenos">79</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.check_comparable_fitness_scores-65"><a href="#SimpleFitness.check_comparable_fitness_scores-65"><span class="linenos">65</span></a>    <span class="k">def</span> <span class="nf">check_comparable_fitness_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">):</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-66"><a href="#SimpleFitness.check_comparable_fitness_scores-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-67"><a href="#SimpleFitness.check_comparable_fitness_scores-67"><span class="linenos">67</span></a><span class="sd">        Check if `this` fitness score is comparable to `other_fitness`</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-68"><a href="#SimpleFitness.check_comparable_fitness_scores-68"><span class="linenos">68</span></a>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-69"><a href="#SimpleFitness.check_comparable_fitness_scores-69"><span class="linenos">69</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-70"><a href="#SimpleFitness.check_comparable_fitness_scores-70"><span class="linenos">70</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-71"><a href="#SimpleFitness.check_comparable_fitness_scores-71"><span class="linenos">71</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-72"><a href="#SimpleFitness.check_comparable_fitness_scores-72"><span class="linenos">72</span></a><span class="sd">            True if fitness scores are comparable, False otherwise</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-73"><a href="#SimpleFitness.check_comparable_fitness_scores-73"><span class="linenos">73</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-74"><a href="#SimpleFitness.check_comparable_fitness_scores-74"><span class="linenos">74</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">,</span> <span class="n">SimpleFitness</span><span class="p">):</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-75"><a href="#SimpleFitness.check_comparable_fitness_scores-75"><span class="linenos">75</span></a>            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Expected SimpleFitness object in better_than, got&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">))</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-76"><a href="#SimpleFitness.check_comparable_fitness_scores-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">is_fitness_evaluated</span><span class="p">():</span>
+</span><span id="SimpleFitness.check_comparable_fitness_scores-77"><a href="#SimpleFitness.check_comparable_fitness_scores-77"><span class="linenos">77</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fitness scores must be evaluated before comparison&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -553,32 +561,32 @@ the fitness score to be updated</li>
 
     </div>
     <a class="headerlink" href="#SimpleFitness.better_than"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.better_than-81"><a href="#SimpleFitness.better_than-81"><span class="linenos"> 81</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness.better_than-82"><a href="#SimpleFitness.better_than-82"><span class="linenos"> 82</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="SimpleFitness.better_than-83"><a href="#SimpleFitness.better_than-83"><span class="linenos"> 83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.better_than-84"><a href="#SimpleFitness.better_than-84"><span class="linenos"> 84</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="SimpleFitness.better_than-85"><a href="#SimpleFitness.better_than-85"><span class="linenos"> 85</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="SimpleFitness.better_than-86"><a href="#SimpleFitness.better_than-86"><span class="linenos"> 86</span></a>
-</span><span id="SimpleFitness.better_than-87"><a href="#SimpleFitness.better_than-87"><span class="linenos"> 87</span></a><span class="sd">        Parameters</span>
-</span><span id="SimpleFitness.better_than-88"><a href="#SimpleFitness.better_than-88"><span class="linenos"> 88</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.better_than-89"><a href="#SimpleFitness.better_than-89"><span class="linenos"> 89</span></a><span class="sd">        ind: Individual</span>
-</span><span id="SimpleFitness.better_than-90"><a href="#SimpleFitness.better_than-90"><span class="linenos"> 90</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="SimpleFitness.better_than-91"><a href="#SimpleFitness.better_than-91"><span class="linenos"> 91</span></a>
-</span><span id="SimpleFitness.better_than-92"><a href="#SimpleFitness.better_than-92"><span class="linenos"> 92</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="SimpleFitness.better_than-93"><a href="#SimpleFitness.better_than-93"><span class="linenos"> 93</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="SimpleFitness.better_than-94"><a href="#SimpleFitness.better_than-94"><span class="linenos"> 94</span></a>
-</span><span id="SimpleFitness.better_than-95"><a href="#SimpleFitness.better_than-95"><span class="linenos"> 95</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="SimpleFitness.better_than-96"><a href="#SimpleFitness.better_than-96"><span class="linenos"> 96</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="SimpleFitness.better_than-97"><a href="#SimpleFitness.better_than-97"><span class="linenos"> 97</span></a>
-</span><span id="SimpleFitness.better_than-98"><a href="#SimpleFitness.better_than-98"><span class="linenos"> 98</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness.better_than-99"><a href="#SimpleFitness.better_than-99"><span class="linenos"> 99</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.better_than-100"><a href="#SimpleFitness.better_than-100"><span class="linenos">100</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness.better_than-101"><a href="#SimpleFitness.better_than-101"><span class="linenos">101</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
-</span><span id="SimpleFitness.better_than-102"><a href="#SimpleFitness.better_than-102"><span class="linenos">102</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.better_than-103"><a href="#SimpleFitness.better_than-103"><span class="linenos">103</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness.better_than-104"><a href="#SimpleFitness.better_than-104"><span class="linenos">104</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
-</span><span id="SimpleFitness.better_than-105"><a href="#SimpleFitness.better_than-105"><span class="linenos">105</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
-</span><span id="SimpleFitness.better_than-106"><a href="#SimpleFitness.better_than-106"><span class="linenos">106</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.better_than-79"><a href="#SimpleFitness.better_than-79"><span class="linenos"> 79</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness.better_than-80"><a href="#SimpleFitness.better_than-80"><span class="linenos"> 80</span></a>    <span class="k">def</span> <span class="nf">better_than</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="SimpleFitness.better_than-81"><a href="#SimpleFitness.better_than-81"><span class="linenos"> 81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.better_than-82"><a href="#SimpleFitness.better_than-82"><span class="linenos"> 82</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="SimpleFitness.better_than-83"><a href="#SimpleFitness.better_than-83"><span class="linenos"> 83</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="SimpleFitness.better_than-84"><a href="#SimpleFitness.better_than-84"><span class="linenos"> 84</span></a>
+</span><span id="SimpleFitness.better_than-85"><a href="#SimpleFitness.better_than-85"><span class="linenos"> 85</span></a><span class="sd">        Parameters</span>
+</span><span id="SimpleFitness.better_than-86"><a href="#SimpleFitness.better_than-86"><span class="linenos"> 86</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.better_than-87"><a href="#SimpleFitness.better_than-87"><span class="linenos"> 87</span></a><span class="sd">        ind: Individual</span>
+</span><span id="SimpleFitness.better_than-88"><a href="#SimpleFitness.better_than-88"><span class="linenos"> 88</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="SimpleFitness.better_than-89"><a href="#SimpleFitness.better_than-89"><span class="linenos"> 89</span></a>
+</span><span id="SimpleFitness.better_than-90"><a href="#SimpleFitness.better_than-90"><span class="linenos"> 90</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="SimpleFitness.better_than-91"><a href="#SimpleFitness.better_than-91"><span class="linenos"> 91</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="SimpleFitness.better_than-92"><a href="#SimpleFitness.better_than-92"><span class="linenos"> 92</span></a>
+</span><span id="SimpleFitness.better_than-93"><a href="#SimpleFitness.better_than-93"><span class="linenos"> 93</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="SimpleFitness.better_than-94"><a href="#SimpleFitness.better_than-94"><span class="linenos"> 94</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="SimpleFitness.better_than-95"><a href="#SimpleFitness.better_than-95"><span class="linenos"> 95</span></a>
+</span><span id="SimpleFitness.better_than-96"><a href="#SimpleFitness.better_than-96"><span class="linenos"> 96</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness.better_than-97"><a href="#SimpleFitness.better_than-97"><span class="linenos"> 97</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.better_than-98"><a href="#SimpleFitness.better_than-98"><span class="linenos"> 98</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness.better_than-99"><a href="#SimpleFitness.better_than-99"><span class="linenos"> 99</span></a><span class="sd">            True if this fitness score is better than the `other` fitness score, False otherwise</span>
+</span><span id="SimpleFitness.better_than-100"><a href="#SimpleFitness.better_than-100"><span class="linenos">100</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.better_than-101"><a href="#SimpleFitness.better_than-101"><span class="linenos">101</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="SimpleFitness.better_than-102"><a href="#SimpleFitness.better_than-102"><span class="linenos">102</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span> \
+</span><span id="SimpleFitness.better_than-103"><a href="#SimpleFitness.better_than-103"><span class="linenos">103</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">higher_is_better</span> \
+</span><span id="SimpleFitness.better_than-104"><a href="#SimpleFitness.better_than-104"><span class="linenos">104</span></a>            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -617,30 +625,30 @@ the <code>other</code> individual instance which is being compared to the indivi
 
     </div>
     <a class="headerlink" href="#SimpleFitness.equal_to"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.equal_to-108"><a href="#SimpleFitness.equal_to-108"><span class="linenos">108</span></a>    <span class="nd">@overrides</span>
-</span><span id="SimpleFitness.equal_to-109"><a href="#SimpleFitness.equal_to-109"><span class="linenos">109</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
-</span><span id="SimpleFitness.equal_to-110"><a href="#SimpleFitness.equal_to-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.equal_to-111"><a href="#SimpleFitness.equal_to-111"><span class="linenos">111</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
-</span><span id="SimpleFitness.equal_to-112"><a href="#SimpleFitness.equal_to-112"><span class="linenos">112</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
-</span><span id="SimpleFitness.equal_to-113"><a href="#SimpleFitness.equal_to-113"><span class="linenos">113</span></a>
-</span><span id="SimpleFitness.equal_to-114"><a href="#SimpleFitness.equal_to-114"><span class="linenos">114</span></a><span class="sd">        Parameters</span>
-</span><span id="SimpleFitness.equal_to-115"><a href="#SimpleFitness.equal_to-115"><span class="linenos">115</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.equal_to-116"><a href="#SimpleFitness.equal_to-116"><span class="linenos">116</span></a><span class="sd">        ind: Individual</span>
-</span><span id="SimpleFitness.equal_to-117"><a href="#SimpleFitness.equal_to-117"><span class="linenos">117</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
-</span><span id="SimpleFitness.equal_to-118"><a href="#SimpleFitness.equal_to-118"><span class="linenos">118</span></a>
-</span><span id="SimpleFitness.equal_to-119"><a href="#SimpleFitness.equal_to-119"><span class="linenos">119</span></a><span class="sd">        other_fitness: Fitness</span>
-</span><span id="SimpleFitness.equal_to-120"><a href="#SimpleFitness.equal_to-120"><span class="linenos">120</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
-</span><span id="SimpleFitness.equal_to-121"><a href="#SimpleFitness.equal_to-121"><span class="linenos">121</span></a>
-</span><span id="SimpleFitness.equal_to-122"><a href="#SimpleFitness.equal_to-122"><span class="linenos">122</span></a><span class="sd">        other_ind: Individual</span>
-</span><span id="SimpleFitness.equal_to-123"><a href="#SimpleFitness.equal_to-123"><span class="linenos">123</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
-</span><span id="SimpleFitness.equal_to-124"><a href="#SimpleFitness.equal_to-124"><span class="linenos">124</span></a>
-</span><span id="SimpleFitness.equal_to-125"><a href="#SimpleFitness.equal_to-125"><span class="linenos">125</span></a><span class="sd">        Returns</span>
-</span><span id="SimpleFitness.equal_to-126"><a href="#SimpleFitness.equal_to-126"><span class="linenos">126</span></a><span class="sd">        ----------</span>
-</span><span id="SimpleFitness.equal_to-127"><a href="#SimpleFitness.equal_to-127"><span class="linenos">127</span></a><span class="sd">        bool</span>
-</span><span id="SimpleFitness.equal_to-128"><a href="#SimpleFitness.equal_to-128"><span class="linenos">128</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
-</span><span id="SimpleFitness.equal_to-129"><a href="#SimpleFitness.equal_to-129"><span class="linenos">129</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SimpleFitness.equal_to-130"><a href="#SimpleFitness.equal_to-130"><span class="linenos">130</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
-</span><span id="SimpleFitness.equal_to-131"><a href="#SimpleFitness.equal_to-131"><span class="linenos">131</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SimpleFitness.equal_to-106"><a href="#SimpleFitness.equal_to-106"><span class="linenos">106</span></a>    <span class="nd">@overrides</span>
+</span><span id="SimpleFitness.equal_to-107"><a href="#SimpleFitness.equal_to-107"><span class="linenos">107</span></a>    <span class="k">def</span> <span class="nf">equal_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">,</span> <span class="n">other_fitness</span><span class="p">,</span> <span class="n">other_ind</span><span class="p">):</span>
+</span><span id="SimpleFitness.equal_to-108"><a href="#SimpleFitness.equal_to-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.equal_to-109"><a href="#SimpleFitness.equal_to-109"><span class="linenos">109</span></a><span class="sd">        Compares between the current fitness of the individual `ind` to the fitness score `other_fitness` of `other_ind`</span>
+</span><span id="SimpleFitness.equal_to-110"><a href="#SimpleFitness.equal_to-110"><span class="linenos">110</span></a><span class="sd">        In the simple case, compares the float fitness scores of the two individuals</span>
+</span><span id="SimpleFitness.equal_to-111"><a href="#SimpleFitness.equal_to-111"><span class="linenos">111</span></a>
+</span><span id="SimpleFitness.equal_to-112"><a href="#SimpleFitness.equal_to-112"><span class="linenos">112</span></a><span class="sd">        Parameters</span>
+</span><span id="SimpleFitness.equal_to-113"><a href="#SimpleFitness.equal_to-113"><span class="linenos">113</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.equal_to-114"><a href="#SimpleFitness.equal_to-114"><span class="linenos">114</span></a><span class="sd">        ind: Individual</span>
+</span><span id="SimpleFitness.equal_to-115"><a href="#SimpleFitness.equal_to-115"><span class="linenos">115</span></a><span class="sd">            the individual instance that holds this Fitness instance</span>
+</span><span id="SimpleFitness.equal_to-116"><a href="#SimpleFitness.equal_to-116"><span class="linenos">116</span></a>
+</span><span id="SimpleFitness.equal_to-117"><a href="#SimpleFitness.equal_to-117"><span class="linenos">117</span></a><span class="sd">        other_fitness: Fitness</span>
+</span><span id="SimpleFitness.equal_to-118"><a href="#SimpleFitness.equal_to-118"><span class="linenos">118</span></a><span class="sd">            the Fitness instance of the `other` individual</span>
+</span><span id="SimpleFitness.equal_to-119"><a href="#SimpleFitness.equal_to-119"><span class="linenos">119</span></a>
+</span><span id="SimpleFitness.equal_to-120"><a href="#SimpleFitness.equal_to-120"><span class="linenos">120</span></a><span class="sd">        other_ind: Individual</span>
+</span><span id="SimpleFitness.equal_to-121"><a href="#SimpleFitness.equal_to-121"><span class="linenos">121</span></a><span class="sd">            the `other` individual instance which is being compared to the individual `ind`</span>
+</span><span id="SimpleFitness.equal_to-122"><a href="#SimpleFitness.equal_to-122"><span class="linenos">122</span></a>
+</span><span id="SimpleFitness.equal_to-123"><a href="#SimpleFitness.equal_to-123"><span class="linenos">123</span></a><span class="sd">        Returns</span>
+</span><span id="SimpleFitness.equal_to-124"><a href="#SimpleFitness.equal_to-124"><span class="linenos">124</span></a><span class="sd">        ----------</span>
+</span><span id="SimpleFitness.equal_to-125"><a href="#SimpleFitness.equal_to-125"><span class="linenos">125</span></a><span class="sd">        bool</span>
+</span><span id="SimpleFitness.equal_to-126"><a href="#SimpleFitness.equal_to-126"><span class="linenos">126</span></a><span class="sd">            True if this fitness score is equal to the `other` fitness score, False otherwise</span>
+</span><span id="SimpleFitness.equal_to-127"><a href="#SimpleFitness.equal_to-127"><span class="linenos">127</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SimpleFitness.equal_to-128"><a href="#SimpleFitness.equal_to-128"><span class="linenos">128</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">check_comparable_fitness_scores</span><span class="p">(</span><span class="n">other_fitness</span><span class="p">)</span>
+</span><span id="SimpleFitness.equal_to-129"><a href="#SimpleFitness.equal_to-129"><span class="linenos">129</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span> <span class="o">==</span> <span class="n">other_fitness</span><span class="o">.</span><span class="n">get_augmented_fitness</span><span class="p">(</span><span class="n">other_ind</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -671,7 +679,13 @@ the <code>other</code> individual instance which is being compared to the indivi
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="fitness.html#Fitness">eckity.fitness.fitness.Fitness</a></dt>
-                                <dd id="SimpleFitness.get_augmented_fitness" class="function"><a href="fitness.html#Fitness.get_augmented_fitness">get_augmented_fitness</a></dd>
+                                <dd id="SimpleFitness.context" class="variable"><a href="fitness.html#Fitness.context">context</a></dd>
+                <dd id="SimpleFitness.trials" class="variable"><a href="fitness.html#Fitness.trials">trials</a></dd>
+                <dd id="SimpleFitness.is_relative_fitness" class="variable"><a href="fitness.html#Fitness.is_relative_fitness">is_relative_fitness</a></dd>
+                <dd id="SimpleFitness.should_cache_between_gens" class="variable"><a href="fitness.html#Fitness.should_cache_between_gens">should_cache_between_gens</a></dd>
+                <dd id="SimpleFitness.higher_is_better" class="variable"><a href="fitness.html#Fitness.higher_is_better">higher_is_better</a></dd>
+                <dd id="SimpleFitness.optimal_fitness" class="variable"><a href="fitness.html#Fitness.optimal_fitness">optimal_fitness</a></dd>
+                <dd id="SimpleFitness.get_augmented_fitness" class="function"><a href="fitness.html#Fitness.get_augmented_fitness">get_augmented_fitness</a></dd>
                 <dd id="SimpleFitness.is_fitness_evaluated" class="function"><a href="fitness.html#Fitness.is_fitness_evaluated">is_fitness_evaluated</a></dd>
 
             </div>
