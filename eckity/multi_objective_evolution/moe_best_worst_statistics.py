@@ -26,6 +26,7 @@ class MOEBestWorstStatistics(Statistics):
         if format_string is None:
             format_string = "first front has {} individuals ({:.1f}%)\nfirst front's corners: {}\nlast front's corners: {}\n"
         super().__init__(format_string)
+        self.output_stream = output_stream
 
     def write_statistics(self, sender, data_dict):
         print(
