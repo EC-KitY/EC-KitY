@@ -31,32 +31,36 @@ class MultiObjectiveBestWorstStatistics(Statistics):
         print(f'generation #{data_dict["generation_num"]}', file=self.output_stream)
         for index, sub_pop in enumerate(data_dict["population"].sub_populations):
             first_front_corners = self.get_corners(sub_pop, 1)
-            last_rank = sorted(list(set([indiv.fitness.front_rank for indiv in sub_pop.individuals])))[-1]
+            last_rank = sorted(
+                list(set([indiv.fitness.front_rank for indiv in sub_pop.individuals]))
+            )[-1]
             last_front_corners = self.get_corners(sub_pop, last_rank)
-            first_front = [indiv.get_pure_fitness() for indiv in sub_pop.individuals if indiv.fitness.front_rank == 1]
-            print(f'subpopulation #{index} has {last_rank} fronts', file=self.output_stream)
-            print(self.format_string.format(
-                len(first_front),
-                len(first_front) / len(sub_pop.individuals) * 100,
-                first_front_corners,
-                last_front_corners), file=self.output_stream)
+            first_front = [
+                indiv.get_pure_fitness()
+                for indiv in sub_pop.individuals
+                if indiv.fitness.front_rank == 1
+            ]
+            print(
+                f"subpopulation #{index} has {last_rank} fronts",
+                file=self.output_stream,
+            )
+            print(
+                self.format_string.format(
+                    len(first_front),
+                    len(first_front) / len(sub_pop.individuals) * 100,
+                    first_front_corners,
+                    last_front_corners,
+                ),
+                file=self.output_stream,
+            )
 
     def get_corners(self, sub_pop, rank):
-        result = [indiv.get_pure_fitness() for indiv in sub_pop.individuals if
-                  indiv.fitness.front_rank == rank and indiv.fitness.crowding == float('inf')]
+        result = [
+            indiv.get_pure_fitness()
+            for indiv in sub_pop.individuals
+            if indiv.fitness.front_rank == rank
+            and indiv.fitness.crowding == float("inf")
+        ]
         result = [list(x) for x in set(tuple(x) for x in result)]  # unique
         assert len(result) in [1, 2]
         return result
-
-    # TODO tostring to indiv
-
-    # Necessary for valid pickling, since modules cannot be pickled
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        del state['output_stream']
-        return state
-
-    # Necessary for valid unpickling, since modules cannot be pickled
-    def __setstate__(self, state):
-        self.__dict__.update(state)
-        self.output_stream = stdout
