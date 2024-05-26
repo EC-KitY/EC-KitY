@@ -3,7 +3,7 @@ from sys import stdout
 from eckity.statistics.statistics import Statistics
 
 
-class MultiObjectiveBestWorstStatistics(Statistics):
+class MOEBestWorstStatistics(Statistics):
     """
     Concrete Statistics class.
     Intended for Multi Objective Evolution.
@@ -25,7 +25,7 @@ class MultiObjectiveBestWorstStatistics(Statistics):
     def __init__(self, format_string=None, output_stream=stdout):
         if format_string is None:
             format_string = "first front has {} individuals ({:.1f}%)\nfirst front's corners: {}\nlast front's corners: {}\n"
-        super().__init__(format_string, output_stream)
+        super().__init__(format_string)
 
     def write_statistics(self, sender, data_dict):
         print(
