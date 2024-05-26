@@ -28,11 +28,23 @@ class MultiObjectiveBestWorstStatistics(Statistics):
         super().__init__(format_string, output_stream)
 
     def write_statistics(self, sender, data_dict):
-        print(f'generation #{data_dict["generation_num"]}', file=self.output_stream)
-        for index, sub_pop in enumerate(data_dict["population"].sub_populations):
+        print(
+            f'generation #{data_dict["generation_num"]}',
+            file=self.output_stream,
+        )
+        for index, sub_pop in enumerate(
+            data_dict["population"].sub_populations
+        ):
             first_front_corners = self.get_corners(sub_pop, 1)
             last_rank = sorted(
-                list(set([indiv.fitness.front_rank for indiv in sub_pop.individuals]))
+                list(
+                    set(
+                        [
+                            indiv.fitness.front_rank
+                            for indiv in sub_pop.individuals
+                        ]
+                    )
+                )
             )[-1]
             last_front_corners = self.get_corners(sub_pop, last_rank)
             first_front = [
