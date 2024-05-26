@@ -22,7 +22,7 @@ from eckity.genetic_operators.selections.tournament_selection import (
 from eckity.population import Population
 from eckity.statistics.minimal_print_statistics import MinimalPrintStatistics
 from eckity.multi_objective_evolution.moe_best_worst_statistics import (
-    MultiObjectiveBestWorstStatistics,
+    MOEBestWorstStatistics,
 )
 from eckity.subpopulation import Subpopulation
 from eckity.genetic_encodings.ga.float_vector import FloatVector
@@ -102,7 +102,7 @@ def main():
         max_generation=150,
         termination_checker=CrowdingTerminationChecker(0.01),
         statistics=[
-            MultiObjectiveBestWorstStatistics(),
+            MOEBestWorstStatistics(),
             MinimalPrintStatistics(),
         ],
     )
