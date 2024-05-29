@@ -2,9 +2,13 @@ name: Run Examples
 
 on: 
   push:
-    branches: [ main, develop ]
+    # TODO switch back
+    # branches: [ main, develop ]
+    branches: [ deps ]
   pull_request:
-    branches: [ main, develop ]
+    # TODO switch back
+    # branches: [ main, develop ]
+    branches: [ deps ]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
     steps:
     - uses: actions/checkout@v4.1.5
     - name: Set up Python ${{ matrix.python-version }}
