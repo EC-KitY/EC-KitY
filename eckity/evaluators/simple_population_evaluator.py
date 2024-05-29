@@ -7,6 +7,10 @@ from eckity.individual import Individual
 
 
 class SimplePopulationEvaluator(PopulationEvaluator):
+    """
+    Computes fitness value for the whole population.
+    All simple classes assume only one sub-population.
+    """
     def __init__(self, executor_method="map"):
         super().__init__()
         if executor_method not in ["map", "submit"]:
@@ -28,7 +32,7 @@ class SimplePopulationEvaluator(PopulationEvaluator):
         Returns
         -------
         individual
-                the individual with the best fitness out of the given individuals
+                the individual with the best fitness of the given individuals
         """
         super()._evaluate(population)
         sub_population = population.sub_populations[0]
@@ -36,7 +40,9 @@ class SimplePopulationEvaluator(PopulationEvaluator):
         sp_eval: IndividualEvaluator = sub_population.evaluator
         if self.executor_method == "submit":
             eval_futures = [
-                self.executor.submit(sp_eval.evaluate, ind, sub_population.individuals)
+                self.executor.submit(
+                    sp_eval.evaluate, ind, sub_population.individuals
+                )
                 for ind in sub_population.individuals
             ]
             eval_results = [future.result() for future in eval_futures]
@@ -44,7 +50,9 @@ class SimplePopulationEvaluator(PopulationEvaluator):
             eval_results = self.executor.map(
                 sp_eval.evaluate_individual, sub_population.individuals
             )
-        for ind, fitness_score in zip(sub_population.individuals, eval_results):
+        for ind, fitness_score in zip(
+            sub_population.individuals, eval_results
+        ):
             ind.fitness.set_fitness(fitness_score)
         best_ind: Individual = individuals[0]
         best_fitness: Fitness = best_ind.fitness
