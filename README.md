@@ -14,14 +14,11 @@ Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Prog
 - Designed to support all popular EC paradigms (GA, GP, ES, coevolution, multi-objective, etc').
 
 ### Dependencies
-For the basic evolution mode, EC-KitY requires:
-- Python (>=3.6)
-- Numpy (>=1.14.6)
-- Pandas (>=0.25.0)
-- Overrides (>= 6.1.0)
+The minimal Python Version for EC-KitY is Python 3.8
+The dependencies of our package are described in `requirements.txt` 
 
 For sklearn mode, EC-KitY additionally requires:
-- scikit-learn (>=0.24.2)
+- scikit-learn (>=1.1)
 
 ### User installation
 
