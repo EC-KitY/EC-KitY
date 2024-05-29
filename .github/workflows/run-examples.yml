@@ -2,13 +2,9 @@ name: Run Examples
 
 on: 
   push:
-    # TODO switch back
-    # branches: [ main, develop ]
-    branches: [ deps ]
+    branches: [ main, develop ]
   pull_request:
-    # TODO switch back
-    # branches: [ main, develop ]
-    branches: [ deps ]
+    branches: [ main, develop ]
   workflow_dispatch:
 
 jobs:
