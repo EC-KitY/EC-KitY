@@ -19,16 +19,21 @@ class SubtreeMutation(GeneticOperator):
         """
 
         for ind in individuals:
-            init_depth = (ind.init_depth[0], randint(ind.init_depth[0], ind.init_depth[1])) \
-                if self.init_depth is None \
+            init_depth = (
+                (ind.init_depth[0], randint(ind.init_depth[0], ind.init_depth[1]))
+                if self.init_depth is None
                 else self.init_depth
-            tree_creator = GrowCreator(init_depth=init_depth,
-                                       function_set=ind.function_set, terminal_set=ind.terminal_set,
-                                       erc_range=ind.erc_range)
+            )
+            tree_creator = GrowCreator(
+                init_depth=init_depth,
+                function_set=ind.function_set,
+                terminal_set=ind.terminal_set,
+                erc_range=ind.erc_range,
+            )
 
             # TODO refactor dummy individual creation, only the tree should be generated
             for i in range(ind.size()):  # mutation can fail due to type mismatch
-                subtree_individual = tree_creator.create_individuals(1, None)[0]
+                subtree_individual = tree_creator.create_individuals(1, ind.fitness.higher_is_better)[0]
                 if ind.replace_subtree(subtree_individual.tree):
                     break
 

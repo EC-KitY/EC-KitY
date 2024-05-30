@@ -17,7 +17,6 @@ class CrowdingTerminationChecker(TerminationChecker):
 
 	def should_terminate(self, population=None, best_individual=None, gen_number=None):
 		"""
-		allawys return false so the program wont terminate until it finishes its iteration
 		Parameters
 		----------
 		population: Population
@@ -34,12 +33,15 @@ class CrowdingTerminationChecker(TerminationChecker):
 		bool
 			True if the algorithm should terminate early, False otherwise.
 		"""
-		max_crwding_in_pop = self._find_max_crowding(population)
-		return max_crwding_in_pop < self.threshold and max_crwding_in_pop != 0
+		max_crowding_in_pop = self._find_max_crowding(population)
+		return max_crowding_in_pop < self.threshold and max_crowding_in_pop != 0
 
 	def _find_max_crowding(self, population):
 		crowdings = []
 		for sup_pop in population.sub_populations:
-			crowdings.append(
-				max([ind.fitness.crowding for ind in sup_pop.individuals if ind.fitness.crowding != float("inf")]))
+			values = [ind.fitness.crowding for ind in sup_pop.individuals if ind.fitness.crowding != float("inf")]
+			if values:
+				crowdings.append(max(values))
+			else:
+				crowdings.append(float("inf"))
 		return max(crowdings)

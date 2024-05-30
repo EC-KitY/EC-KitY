@@ -49,10 +49,6 @@ class GPTreeCreator(Creator):
         for ind in individuals:
             self.create_tree(ind, self.init_depth[1])
         self.created_individuals = individuals
-
-        # TODO do we need this event? creator is instance of Operator and already has before/after operator
-        # self.publish("after_creation")
-
         return individuals
 
     @abstractmethod
