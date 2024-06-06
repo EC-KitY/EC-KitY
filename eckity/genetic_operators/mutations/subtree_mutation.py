@@ -20,7 +20,10 @@ class SubtreeMutation(GeneticOperator):
 
         for ind in individuals:
             init_depth = (
-                (ind.init_depth[0], randint(ind.init_depth[0], ind.init_depth[1]))
+                (
+                    ind.init_depth[0],
+                    randint(ind.init_depth[0], ind.init_depth[1]),
+                )
                 if self.init_depth is None
                 else self.init_depth
             )
@@ -28,7 +31,6 @@ class SubtreeMutation(GeneticOperator):
                 init_depth=init_depth,
                 function_set=ind.function_set,
                 terminal_set=ind.terminal_set,
-                erc_range=ind.erc_range,
             )
 
             # TODO refactor dummy individual creation, only the tree should be generated

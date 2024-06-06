@@ -123,7 +123,6 @@ def main():
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
-                erc_range=(-100, 100),
                 bloat_weight=0.0001,
             ),
             population_size=1000,
@@ -136,7 +135,7 @@ def main():
             operators_sequence=[
                 SubtreeCrossover(probability=0.9, arity=2),
                 SubtreeMutation(probability=0.2, arity=1),
-                ERCMutation(probability=0.05, arity=1),
+                ERCMutation(probability=0.05, erc_range=(-100, 100), arity=1),
             ],
             selection_methods=[
                 # (selection method, selection probability) tuple

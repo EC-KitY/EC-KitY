@@ -3,17 +3,25 @@ This module implements the tree class.
 """
 
 import logging
-import numpy as np
+import random
 from numbers import Number
-from random import randint, uniform, random
+from typing import Callable, List, Union
+
+import numpy as np
 
 from eckity.base.utils import arity
+from eckity.fitness.fitness import Fitness
+from eckity.genetic_encodings.gp.tree.functions import (
+    f_add,
+    f_div,
+    f_mul,
+    f_sub,
+)
 from eckity.genetic_encodings.gp.tree.utils import _generate_args
-
 from eckity.individual import Individual
-from eckity.genetic_encodings.gp.tree.functions import f_add, f_sub, f_mul, f_div
 
 logger = logging.getLogger(__name__)
+
 
 class Tree(Individual):
     """
@@ -21,44 +29,41 @@ class Tree(Individual):
     It is represented by a list of nodes in depth-first order.
     There are two types of nodes: functions and terminals.
 
-    (tree is not meant as a stand-alone -- parameters are supplied through the call from the Tree Creators)
+    (tree is not meant as a stand-alone,
+    parameters are supplied through the call from the Tree Creators)
 
     Parameters
     ----------
-    init_depth : (int, int)
-        Min and max depths of initial random trees. The default is None.
-        
-    function_set : list
-        List of functions used as internal nodes in the GP tree. The default is None.
-        
-    terminal_set : list
-        List of terminals used in the GP-tree leaves. The default is None.
-        
-    erc_range : (float, float)
-        Range of values for ephemeral random constant (ERC). The default is None.
+    init_depth: (int, int), default=None
+        Min and max depths of initial random trees.
+
+    function_set: list, default=None
+        List of functions used as internal nodes in the GP tree.
+
+    terminal_set: list, default=None
+        List of terminals used in the GP-tree leaves.
     """
-    def __init__(self,
-                 fitness,
-                 function_set=None,
-                 terminal_set=None,
-                 erc_range=None,
-                 init_depth=(1, 2)):
+
+    def __init__(
+        self,
+        fitness: Fitness,
+        function_set: List[Callable] = None,
+        terminal_set: List[Union[str, Number]] = None,
+        init_depth=(1, 2),
+    ):
         super().__init__(fitness)
         if function_set is None:
             function_set = [f_add, f_sub, f_mul, f_div]
 
         if terminal_set is None:
-            terminal_set = ['x', 'y', 'z', 0, 1, -1]
+            terminal_set = ["x", "y", "z", 0, 1, -1]
 
         self.function_set = function_set
         self.terminal_set = terminal_set
-        self.n_terminals = len(terminal_set)
-        self.arity = dict([(func, arity(func)) for func in self.function_set])
+        self.arity = {func: arity(func) for func in self.function_set}
         self.vars = [t for t in terminal_set if not isinstance(t, Number)]
-        self.erc_range = erc_range
-        self.n_functions = len(self.function_set)
         self.init_depth = init_depth
-        self.tree = []
+        self.tree = []  # actual tree representation
 
     def size(self):
         """
@@ -78,8 +83,10 @@ class Tree(Individual):
         self.tree = []
 
     def _depth(self, pos, depth):
-        """Recursively compute depth 
-           (pos is a size-1 list so as to pass "by reference" on successive recursive calls)."""
+        """Recursively compute depth
+        (pos is a size-1 list so as to pass
+        "by reference"on successive recursive calls).
+        """
 
         node = self.tree[pos[0]]
 
@@ -89,7 +96,7 @@ class Tree(Individual):
                 pos[0] += 1
                 depths.append(1 + self._depth(pos, depth + 1))
             return max(depths)
-        else:
+        else:  # terminal node
             return 0
 
     def depth(self):
@@ -106,22 +113,16 @@ class Tree(Individual):
 
     def random_function(self):
         """select a random function"""
-        return self.function_set[randint(0, self.n_functions - 1)]
+        return random.choice(self.function_set)
 
     def random_terminal(self):
-        """Select a random terminal or create an ERC terminal"""
-        if self.erc_range is None:
-            node = self.terminal_set[randint(0, self.n_terminals - 1)]
-        else:
-            if random() > 0.5:
-                node = self.terminal_set[randint(0, self.n_terminals - 1)]
-            else:
-                node = round(uniform(*self.erc_range), 4)
-        return node
+        """Select a random terminal"""
+        return random.choice(self.terminal_set)
 
     def _execute(self, pos, **kwargs):
-        """Recursively execute the tree by traversing it in a depth-first order 
-           (pos is a size-1 list so as to pass "by reference" on successive recursive calls)."""
+        """Recursively execute the tree by traversing it in a depth-first order
+        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
 
         node = self.tree[pos[0]]
 
@@ -140,17 +141,17 @@ class Tree(Individual):
 
     def execute(self, *args, **kwargs):
         """
-        Execute the program (tree). 
+        Execute the program (tree).
         Input is a numpy array or keyword arguments (but not both).
 
         Parameters
         ----------
         args : arguments
             A numpy array.
-        
+
         kwargs : keyword arguments
             Input to program, including every variable in the terminal set as a keyword argument.
-            For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]` 
+            For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]`
             then call `execute(x=..., y=..., z=...)`.
 
         Returns
@@ -166,18 +167,23 @@ class Tree(Individual):
                 kwargs = _generate_args(X)
                 reshape = True
             except Exception:
-                raise ValueError(f'Bad argument to tree.execute, must be numpy array or kwargs: {args}')
+                raise ValueError(
+                    f"Bad argument to tree.execute, must be numpy array or kwargs: {args}"
+                )
 
         kw = list(kwargs.keys())
 
         bad_vars = [item for item in kw if item not in self.vars]
         if len(bad_vars) > 0:
-            raise ValueError(f'tree.execute received variable arguments not in terminal set: {bad_vars}')
+            raise ValueError(
+                f"tree.execute received variable arguments not in terminal set: {bad_vars}"
+            )
 
         missing_vars = [item for item in self.vars if item not in kw]
         if len(missing_vars) > 0:
             raise ValueError(
-                f'Some variable terminals were not passed to tree.execute as keyword arguments: {missing_vars}')
+                f"Some variable terminals were not passed to tree.execute as keyword arguments: {missing_vars}"
+            )
 
         res = self._execute([0], **kwargs)
         if reshape and (isinstance(res, Number) or res.shape == np.shape(0)):
@@ -187,15 +193,16 @@ class Tree(Individual):
 
     def random_subtree(self):
         # select a random node index from this individual's tree
-        rnd_i = randint(0, self.size() - 1)
+        rnd_i = random.randint(0, self.size() - 1)
         # find the subtree's end
         end_i = self._find_subtree_end([rnd_i])
         # now we have a random subtree from this individual
-        return self.tree[rnd_i:end_i + 1]
+        return self.tree[rnd_i: end_i + 1]
 
     def _find_subtree_end(self, pos):
-        """find index of final node of subtree that starts at `pos` 
-          (pos is a size-1 list so as to pass "by reference" on successive recursive calls)."""
+        """find index of final node of subtree that starts at `pos`
+        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
 
         node = self.tree[pos[0]]
 
@@ -219,12 +226,14 @@ class Tree(Individual):
         None
         """
 
-        index = randint(0, self.size() - 1)  # select a random node (index)
+        # select a random node (index)
+        index = random.randint(0, self.size() - 1)
+        
         end_i = self._find_subtree_end([index])
         if isinstance(self.tree[end_i], list):
             logger.debug(self.tree[end_i], list)
         left_part = self.tree[:index]
-        right_part = self.tree[(end_i + 1):]
+        right_part = self.tree[(end_i + 1) :]
         self.tree = left_part + subtree + right_part
 
     def _node_label(self, node):
@@ -242,31 +251,38 @@ class Tree(Individual):
         return node.__name__ if node in self.function_set else str(node)
 
     def _str_rec(self, prefix, pos, result, use_python_syntax):
-        """Recursively produce a simple textual printout of the tree 
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls)."""
+        """Recursively produce a simple textual printout of the tree
+        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
 
         node = self.tree[pos[0]]
         if node in self.function_set:
-            result.append(f'{prefix}{self._node_label(node)}{"(" if use_python_syntax else ""}\n')
+            result.append(
+                f'{prefix}{self._node_label(node)}{"(" if use_python_syntax else ""}\n'
+            )
             for i in range(self.arity[node]):
                 pos[0] += 1
                 self._str_rec(prefix + "   ", pos, result, use_python_syntax)
                 if use_python_syntax:
-                    result.append(',')
+                    result.append(",")
                 if use_python_syntax or i < self.arity[node] - 1:
-                    result.append('\n')
+                    result.append("\n")
             if use_python_syntax:
-                result.append(prefix + ')')
+                result.append(prefix + ")")
         else:  # terminal
-            result.append(f'{prefix}{self._node_label(node)}')
+            result.append(f"{prefix}{self._node_label(node)}")
 
     def __str__(self, use_python_syntax=False):
         if use_python_syntax:
-            result = [f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "]
+            result = [
+                f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "
+            ]
         else:
             result = []
-        self._str_rec("   " if use_python_syntax else "", [0], result, use_python_syntax)
-        return ''.join(result)
+        self._str_rec(
+            "   " if use_python_syntax else "", [0], result, use_python_syntax
+        )
+        return "".join(result)
 
     def show(self):
         """
@@ -276,6 +292,7 @@ class Tree(Individual):
         -------
         None.
         """
-        logger.info('\n' + str(self))
+        logger.info("\n" + str(self))
+
 
 # end class tree

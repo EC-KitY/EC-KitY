@@ -5,8 +5,19 @@ from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
 class ERCMutation(GeneticOperator):
-    def __init__(self, probability=1, arity=1, events=None):
+    def __init__(
+        self,
+        probability=1.0,
+        arity=1,
+        erc_range=(-5, 5),
+        mu=0,
+        sigma=1,
+        events=None,
+    ):
         super().__init__(probability=probability, arity=arity, events=events)
+        self.erc_range = erc_range
+        self.mu = mu
+        self.sigma = sigma
 
     def apply(self, individuals):
         """
@@ -17,11 +28,18 @@ class ERCMutation(GeneticOperator):
         -------
         None.
         """
-        for j in range(len(individuals)):
-            erc_indexes = [i for i, node in enumerate(individuals[j].tree) if
-                           isinstance(node, (int, float)) and node not in individuals[j].terminal_set]
-            if len(erc_indexes) > 0:
-                m_point = choice(erc_indexes)
-                individuals[j].tree[m_point] = round(individuals[j].tree[m_point] + gauss(mu=0, sigma=1), 4)
+        mu, sigma = self.mu, self.sigma
+        for ind in individuals:
+            erc_indices = [
+                i
+                for i, node in enumerate(ind.tree)
+                if isinstance(node, (int, float))
+                and node not in ind.terminal_set
+            ]
+            if len(erc_indices) > 0:
+                m_point = choice(erc_indices)
+                ind.tree[m_point] = round(
+                    ind.tree[m_point] + gauss(mu, sigma), 4
+                )
         self.applied_individuals = individuals
         return individuals
