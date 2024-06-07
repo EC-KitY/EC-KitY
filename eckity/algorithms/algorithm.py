@@ -2,13 +2,13 @@
 This module implements the Algorithm class.
 """
 
-from abc import abstractmethod, ABC
-
-import random
-from concurrent.futures.thread import ThreadPoolExecutor
-from concurrent.futures.process import ProcessPoolExecutor
-from time import time
 import logging
+import random
+from abc import ABC, abstractmethod
+from concurrent.futures.process import ProcessPoolExecutor
+from concurrent.futures.thread import ThreadPoolExecutor
+from time import time
+from typing import List, Literal, Union
 
 from overrides import overrides
 
@@ -18,7 +18,7 @@ from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
 SEED_MIN_VALUE = 0
-SEED_MAX_VALUE = 1000000
+SEED_MAX_VALUE = 1e6
 
 logger = logging.getLogger(__name__)
 
@@ -65,8 +65,8 @@ class Algorithm(Operator, ABC):
                 Maximal number of worker nodes for the Executor object
                 that evaluates the fitness of the individuals.
 
-        random_generator: module, default=random
-                Random generator module.
+        random_generator: str, default="random"
+                Random generator.
 
         random_seed: float or int, default=current system time
                 Random seed for deterministic experiment.
@@ -85,15 +85,15 @@ class Algorithm(Operator, ABC):
 
     def __init__(
         self,
-        population,
-        statistics=None,
+        population: Union[Population, Subpopulation, List[Subpopulation]],
+        statistics: Union[Statistics, List[Statistics]] = None,
         breeder=None,
         population_evaluator=None,
         termination_checker=None,
         max_generation=None,
         events=None,
         event_names=None,
-        random_generator=None,
+        random_generator: Literal["random", "numpy", "torch"] = "random",
         random_seed=time(),
         generation_seed=None,
         executor="thread",
@@ -103,34 +103,12 @@ class Algorithm(Operator, ABC):
 
         ext_event_names = event_names.copy() if event_names is not None else []
 
-        ext_event_names.extend(["init", "evolution_finished", "after_generation"])
+        ext_event_names.extend(
+            ["init", "evolution_finished", "after_generation"]
+        )
         super().__init__(events=events, event_names=ext_event_names)
 
-        # Assert valid population input
-        if population is None:
-            raise ValueError("Population cannot be None")
-
-        if isinstance(population, Population):
-            self.population = population
-        elif isinstance(population, Subpopulation):
-            self.population = Population([population])
-        elif isinstance(population, list):
-            if len(population) == 0:
-                raise ValueError("Population cannot be empty")
-            for sub_pop in population:
-                if not isinstance(sub_pop, Subpopulation):
-                    raise ValueError(
-                        "Detected a non-Subpopulation "
-                        "instance as an element in Population"
-                    )
-            self.population = Population(population)
-        else:
-            raise ValueError(
-                "Parameter population must be either a Population, "
-                "a Subpopulation or a list of Subpopulations\n "
-                "received population with unexpected type of",
-                type(population),
-            )
+        self._validate_population()
 
         # Assert valid statistics input
         if isinstance(statistics, Statistics):
@@ -243,12 +221,39 @@ class Algorithm(Operator, ABC):
         self.best_of_run_ = self.population_evaluator.act(self.population)
         self.publish("init")
 
+    def _validate_population(self, population):
+        # Assert valid population input
+        if population is None:
+            raise ValueError("Population cannot be None")
+
+        if isinstance(population, Population):
+            self.population = population
+        elif isinstance(population, Subpopulation):
+            self.population = Population([population])
+        elif isinstance(population, list):
+            if len(population) == 0:
+                raise ValueError("Population cannot be empty")
+            for sub_pop in population:
+                if not isinstance(sub_pop, Subpopulation):
+                    raise ValueError(
+                        "Detected a non-Subpopulation "
+                        "instance as an element in Population"
+                    )
+            self.population = Population(population)
+        else:
+            raise ValueError(
+                "Parameter population must be either a Population, "
+                "a Subpopulation or a list of Subpopulations. "
+                "Received population with unexpected type of",
+                type(population),
+            )
+
     def evolve_main_loop(self):
         """
         Performs the evolutionary main loop
         """
         # there was already "preprocessing" generation created - gen #0
-        # now create another self.max_generation generations (at maximum), starting for gen #1
+        # now create another self.max_generation generations, starting for gen #1
         for gen in range(1, self.max_generation + 1):
             self.generation_num = gen
             self.update_gen(self.population, gen)
@@ -365,7 +370,7 @@ class Algorithm(Operator, ABC):
         Returns
         ----------
         int
-                random seed number
+        random seed number
         """
         return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
 
@@ -373,7 +378,9 @@ class Algorithm(Operator, ABC):
         if isinstance(self.termination_checker, list):
             return any(
                 [
-                    t.should_terminate(population, best_of_run_, generation_num)
+                    t.should_terminate(
+                        population, best_of_run_, generation_num
+                    )
                     for t in self.termination_checker
                 ]
             )
@@ -382,20 +389,17 @@ class Algorithm(Operator, ABC):
                 population, best_of_run_, generation_num
             )
 
-            # Necessary for valid pickling, since SimpleQueue object cannot be pickled
-
+    # Necessary for pickling, since executor objects cannot be pickled
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["executor"]
-        del state["random_generator"]
 
         return state
 
-    # Necessary for valid unpickling, since SimpleQueue object cannot be pickled
+    # Necessary for unpickling, since executor objects cannot be pickled
     def __setstate__(self, state):
         self.__dict__.update(state)
         if self._executor_type == "thread":
             self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
         else:
             self.executor = ProcessPoolExecutor(max_workers=self.max_workers)
-        self.random_generator = random
