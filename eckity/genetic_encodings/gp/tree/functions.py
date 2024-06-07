@@ -4,9 +4,11 @@ Note: all functions work on numpy arrays.
 """
 
 import numpy as np
+from pydantic import validate_call
 
 
-def f_add(x, y):
+@validate_call
+def f_add(x: int, y: int) -> int:
     """x+y"""
     return np.add(x, y)
 

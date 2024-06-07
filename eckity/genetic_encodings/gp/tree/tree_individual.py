@@ -17,6 +17,7 @@ from eckity.genetic_encodings.gp.tree.functions import (
     f_mul,
     f_sub,
 )
+from eckity.genetic_encodings.gp.tree.tree_node import GPNode
 from eckity.genetic_encodings.gp.tree.utils import _generate_args
 from eckity.individual import Individual
 
@@ -63,7 +64,7 @@ class Tree(Individual):
         self.arity = {func: arity(func) for func in self.function_set}
         self.vars = [t for t in terminal_set if not isinstance(t, Number)]
         self.init_depth = init_depth
-        self.tree = []  # actual tree representation
+        self.tree: GPNode = None  # actual tree representation
 
     def size(self):
         """
@@ -76,13 +77,15 @@ class Tree(Individual):
         """
         return len(self.tree)
 
-    def add_tree(self, node):
+    def add_tree(self, node, parent=None):
+        # TODO update implementation to be GPNode compatible
         self.tree.append(node)
 
     def empty_tree(self):
-        self.tree = []
+        self.tree = None
 
     def _depth(self, pos, depth):
+        # TODO update implementation to be GPNode compatible
         """Recursively compute depth
         (pos is a size-1 list so as to pass
         "by reference"on successive recursive calls).
@@ -100,6 +103,8 @@ class Tree(Individual):
             return 0
 
     def depth(self):
+        # TODO update implementation to be GPNode compatible
+
         """
         Compute depth of tree (maximal path length to a leaf).
 
@@ -108,7 +113,6 @@ class Tree(Individual):
         int
             tree depth.
         """
-
         return self._depth([0], 0)
 
     def random_function(self):
@@ -197,7 +201,7 @@ class Tree(Individual):
         # find the subtree's end
         end_i = self._find_subtree_end([rnd_i])
         # now we have a random subtree from this individual
-        return self.tree[rnd_i: end_i + 1]
+        return self.tree[rnd_i : end_i + 1]
 
     def _find_subtree_end(self, pos):
         """find index of final node of subtree that starts at `pos`
@@ -228,7 +232,7 @@ class Tree(Individual):
 
         # select a random node (index)
         index = random.randint(0, self.size() - 1)
-        
+
         end_i = self._find_subtree_end([index])
         if isinstance(self.tree[end_i], list):
             logger.debug(self.tree[end_i], list)
