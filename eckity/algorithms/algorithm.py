@@ -134,7 +134,9 @@ class Algorithm(Operator, ABC):
 
         self.random_generator = random_generator
         self.random_seed = random_seed
-        self.generation_seed = generation_seed
+        self.generation_seed = (
+            generation_seed if generation_seed is not None else random_seed
+        )
 
         self.best_of_run_ = None
         self.worst_of_gen = None
