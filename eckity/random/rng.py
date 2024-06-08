@@ -1,18 +1,35 @@
-from abc import ABC, abstractmethod
 from typing import Union
+import random
+import numpy as np
 
 
-class RNG(ABC):
-    def __init__(self, seed: Union[int, float]):
+class RNG:
+    """
+    Random number generator.
+    Necessary for experiment reproducibility.
+    Currently supports `random` and `numpy` modules.
+    For additional modules, extend this class and override `set_seed`.
+
+    Example:
+    class TorchRNG(RNG):
+        @override
+        def set_seed(self, seed: Union[int, float]) -> None:
+            super().set_seed(seed)
+            torch.manual_seed(seed)
+    """
+
+    def __init__(self) -> None:
+        self._seed = None
+
+    def set_seed(self, seed: Union[int, float]) -> None:
+        """
+        Set seed for random number generator.
+
+        Parameters
+        ----------
+        seed : Union[int, float]
+            Seed for random number generator
+        """
         self._seed = seed
-
-    def generation_seed(self, seed):
-        pass
-
-    @abstractmethod
-    def random_seed(self, seed: Union[int, float]):
-        pass
-
-    @abstractmethod
-    def randint(self, a: int, b: int):
-        pass
+        random.seed(seed)
+        np.random.seed(seed)

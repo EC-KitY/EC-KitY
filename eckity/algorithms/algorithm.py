@@ -3,12 +3,12 @@ This module implements the Algorithm class.
 """
 
 import logging
-import random
 from abc import ABC, abstractmethod
 from concurrent.futures.process import ProcessPoolExecutor
 from concurrent.futures.thread import ThreadPoolExecutor
 from time import time
-from typing import List, Literal, Union
+from typing import List, Union
+from eckity.random import RNG
 
 from overrides import overrides
 
@@ -16,9 +16,6 @@ from eckity.event_based_operator import Operator
 from eckity.population import Population
 from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
-
-SEED_MIN_VALUE = 0
-SEED_MAX_VALUE = 1e6
 
 logger = logging.getLogger(__name__)
 
@@ -65,8 +62,8 @@ class Algorithm(Operator, ABC):
                 Maximal number of worker nodes for the Executor object
                 that evaluates the fitness of the individuals.
 
-        random_generator: str, default="random"
-                Random generator.
+        random_generator: RNG, default=RNG()
+                Random Number Generator.
 
         random_seed: float or int, default=current system time
                 Random seed for deterministic experiment.
@@ -93,7 +90,7 @@ class Algorithm(Operator, ABC):
         max_generation=None,
         events=None,
         event_names=None,
-        random_generator: Literal["random", "numpy", "torch"] = "random",
+        random_generator: RNG = RNG(),
         random_seed=time(),
         generation_seed=None,
         executor="thread",
@@ -108,7 +105,7 @@ class Algorithm(Operator, ABC):
         )
         super().__init__(events=events, event_names=ext_event_names)
 
-        self._validate_population()
+        self._validate_population(population)
 
         # Assert valid statistics input
         if isinstance(statistics, Statistics):
@@ -134,9 +131,6 @@ class Algorithm(Operator, ABC):
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
         self.max_generation = max_generation
-
-        if random_generator is None:
-            random_generator = random
 
         self.random_generator = random_generator
         self.random_seed = random_seed
@@ -296,18 +290,6 @@ class Algorithm(Operator, ABC):
         """
         self.executor.shutdown()
 
-    def set_generation_seed(self, seed):
-        """
-        Set the seed for current generation
-
-        Parameters
-        ----------
-        seed: int
-                current generation seed
-        """
-        self.random_generator.seed(seed)
-        self.generation_seed = seed
-
     def create_population(self):
         """
         Create the population for the evolutionary run
@@ -340,28 +322,31 @@ class Algorithm(Operator, ABC):
             }
         return {}
 
-    def set_random_generator(self, rng):
-        """
-        Set random generator object
-
-        Parameters
-        ----------
-        rng: object
-                random number generator
-        """
-        self.random_generator = rng
-
     def set_random_seed(self, seed=None):
         """
-        Set random seed
+        Set the initial seed for the random generator
+        This method is called once at the beginning of the run.
 
         Parameters
         ----------
         seed: int
                 random seed number
         """
-        self.random_generator.seed(seed)
+        self.random_generator.set_seed(seed)
         self.random_seed = seed
+
+    def set_generation_seed(self, seed):
+        """
+        Set the seed for current generation.
+        This method is called once every generation.
+
+        Parameters
+        ----------
+        seed: int
+                current generation seed
+        """
+        self.random_generator.set_seed(seed)
+        self.generation_seed = seed
 
     def next_seed(self):
         """
@@ -372,7 +357,7 @@ class Algorithm(Operator, ABC):
         int
         random seed number
         """
-        return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
+        return self.generation_seed + 1
 
     def should_terminate(self, population, best_of_run_, generation_num):
         if isinstance(self.termination_checker, list):
@@ -393,7 +378,6 @@ class Algorithm(Operator, ABC):
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["executor"]
-
         return state
 
     # Necessary for unpickling, since executor objects cannot be pickled
