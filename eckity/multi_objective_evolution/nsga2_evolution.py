@@ -6,7 +6,9 @@ from overrides import overrides
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.evaluators import SimplePopulationEvaluator
-from eckity.multi_objective_evolution import NSGA2FrontSorting
+from eckity.multi_objective_evolution.nsga2_front_sorting import (
+	NSGA2FrontSorting
+)
 from eckity.random import RNG
 from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
 
