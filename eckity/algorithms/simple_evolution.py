@@ -56,7 +56,7 @@ class SimpleEvolution(Algorithm):
     rng: RNG
             Random number generator
 
-    random_seed: float or int, default=current system time
+    random_seed: int, default=current system time
             Initial random seed for deterministic experiment.
 
     generation_seed: int, default=None

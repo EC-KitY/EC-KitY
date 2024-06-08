@@ -65,7 +65,7 @@ class Algorithm(Operator, ABC):
         random_generator: RNG, default=RNG()
                 Random Number Generator.
 
-        random_seed: float or int, default=current system time
+        random_seed: int, default=current system time
                 Random seed for deterministic experiment.
 
         generation_seed: int, default=None

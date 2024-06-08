@@ -1,4 +1,3 @@
-from typing import Union
 import random
 import numpy as np
 
@@ -27,7 +26,7 @@ class RNG:
 
         Parameters
         ----------
-        seed : Union[int, float]
+        seed : int
             Seed for random number generator
         """
         self._seed = seed
