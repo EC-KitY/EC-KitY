@@ -99,7 +99,7 @@ class Tree(Individual):
         return self.add_child(node, parent)
 
     def empty_tree(self):
-        self.tree = None
+        self.root = None
 
     def _depth(self, pos, depth):
         # TODO update implementation to be TreeNode compatible

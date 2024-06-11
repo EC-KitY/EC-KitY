@@ -12,6 +12,7 @@ from functions import (
     untyped_mul,
     untyped_div,
 )
+from eckity.base.utils import arity
 
 
 class TestTree:
@@ -34,9 +35,9 @@ class TestTree:
     )
 
     @pytest.fixture
-    def teardown(self) -> None:
+    def setup(self) -> None:
         """
-        Empties both trees between tests
+        Empties both trees before each test
         Returns
         -------
         None
@@ -44,7 +45,7 @@ class TestTree:
         self.typed_tree.empty_tree()
         self.untyped_tree.empty_tree()
 
-    def test_add_child_typed(self):
+    def test_add_child_typed(self, setup):
         """
         Test that add_child method adds child to the tree
         """
@@ -53,7 +54,7 @@ class TestTree:
         assert self.typed_tree.root == typed_child
         assert self.typed_tree.root.node_type == int
 
-    def test_add_child_untyped(self):
+    def test_add_child_untyped(self, setup):
         """
         Test that add_child method adds child to the tree
         """
@@ -61,3 +62,47 @@ class TestTree:
         self.untyped_tree.add_child(untyped_child)
         assert self.untyped_tree.root == untyped_child
         assert self.untyped_tree.root.node_type is None
+
+    @pytest.mark.parametrize(
+        "typed, root, child",
+        [
+            (
+                True,
+                FunctionNode(typed_add),
+                TerminalNode(1, int),
+            ),
+            (
+                False,
+                FunctionNode(untyped_add),
+                TerminalNode(1),
+            ),
+        ],
+    )
+    def test_add_child_too_many_children(self, setup, typed, root, child):
+        """
+        Test that add_child raises ValueError when too many children are added
+        """
+        tree = self.typed_tree if typed else self.untyped_tree
+        tree.add_child(root)
+
+        # add all children
+        for _ in range(arity(root.function)):
+            tree.add_child(child, root)
+
+        # add one more child
+        with pytest.raises(ValueError):
+            tree.add_child(child, root)
+
+    @pytest.mark.parametrize(
+        "function, expected_types",
+        [
+            (typed_add, [int, int, int]),
+            (untyped_add, []),
+        ],
+    )
+    def test_get_func_types(self, function, expected_types):
+        """
+        Test that get_func_types returns the correct function types
+        """
+        func_types = FunctionNode.get_func_types(function)
+        assert func_types == expected_types
