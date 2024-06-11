@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from types import BuiltinFunctionType, FunctionType
-from typing import Any, Dict, List, Union, get_type_hints
+from typing import Any, Callable, Dict, List, Optional, get_type_hints
 
 from overrides import override
 
@@ -15,7 +14,7 @@ class TreeNode(ABC):
         node type
     """
 
-    def __init__(self, node_type) -> None:
+    def __init__(self, node_type: Optional[type] = None) -> None:
         self.node_type: type = node_type
 
     @abstractmethod
@@ -28,10 +27,12 @@ class TreeNode(ABC):
 
 
 class FunctionNode(TreeNode):
-    def __init__(
-        self, function: Union[FunctionType, BuiltinFunctionType]
-    ) -> None:
-        super().__init__(type(function))
+    def __init__(self, function: Callable) -> None:
+        # infer the return type of the function
+        func_types = FunctionNode.get_func_types(function)
+        return_type = func_types[-1] if func_types else None
+
+        super().__init__(return_type)
         self.function = function
         self.children: List[TreeNode] = []
 
@@ -39,10 +40,9 @@ class FunctionNode(TreeNode):
     def apply(self):
         return self.function(*[child.apply() for child in self.children])
 
-    def add_child(self, child: TreeNode):
+    def add_child(self, child: TreeNode) -> None:
         # Check if child is of the correct type
-        params_types: Dict = get_type_hints(self.function)
-        func_types = list(params_types.values())
+        func_types = FunctionNode.get_func_types(self.function)
         child_idx = len(self.children)
 
         # Check if there are too many children
@@ -54,16 +54,39 @@ class FunctionNode(TreeNode):
         # Check if the child is of the correct type
         expected_type = func_types[child_idx]
         if child.node_type != expected_type:
-            raise ValueError(
+            raise TypeError(
                 f"Expected Child {child_idx} of function {self.function} "
                 f"to be of type {expected_type}. Got {child.node_type}"
             )
         self.children.append(child)
 
+    @staticmethod
+    def get_func_types(f: Callable) -> List[type]:
+        """
+        Return list of function types in the following format:
+        [type_arg_1, type_arg_2, ..., type_arg_n, return_type]
+
+        Parameters
+        ----------
+        f : Callable
+            function (builtin or user-defined)
+
+        Returns
+        -------
+        List[type]
+            _description_
+        """
+        params_types: Dict = get_type_hints(f)
+        return list(params_types.values())
+
 
 class TerminalNode(TreeNode):
-    def __init__(self, value: Any) -> None:
-        super().__init__(type(value))
+    def __init__(self, value: Any, node_type=None) -> None:
+        # set node type, not always using type inference since
+        # value may be a string variable with int value
+        if node_type is None:
+            node_type = type(value)
+        super().__init__(node_type)
         self.value = value
 
     @override

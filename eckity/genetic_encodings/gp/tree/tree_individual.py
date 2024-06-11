@@ -17,7 +17,7 @@ from eckity.genetic_encodings.gp.tree.functions import (
     f_mul,
     f_sub,
 )
-from eckity.genetic_encodings.gp.tree.tree_node import GPNode
+from eckity.genetic_encodings.gp.tree.tree_node import TreeNode
 from eckity.genetic_encodings.gp.tree.utils import _generate_args
 from eckity.individual import Individual
 
@@ -64,7 +64,15 @@ class Tree(Individual):
         self.arity = {func: arity(func) for func in self.function_set}
         self.vars = [t for t in terminal_set if not isinstance(t, Number)]
         self.init_depth = init_depth
-        self.tree: GPNode = None  # actual tree representation
+
+        self.root: TreeNode = None  # actual tree representation
+
+    @property
+    def tree(self) -> TreeNode:
+        logger.warn(
+            "Tree.tree is deprecated in version 0.2 and will be \
+                removed in version 0.3. Please use Tree.root instead."
+        )
 
     def size(self):
         """
@@ -77,15 +85,22 @@ class Tree(Individual):
         """
         return len(self.tree)
 
+    def add_child(self, node, parent=None):
+        if self.root is None:
+            self.root = node
+        else:
+            parent.add_child(node)
+
     def add_tree(self, node, parent=None):
-        # TODO update implementation to be GPNode compatible
-        self.tree.append(node)
+        logger.warn("Tree.add_tree is deprecated and will be removed in\
+                     version 0.3. Please use Tree.add_child instead.")
+        return self.add_child(node, parent)
 
     def empty_tree(self):
         self.tree = None
 
     def _depth(self, pos, depth):
-        # TODO update implementation to be GPNode compatible
+        # TODO update implementation to be TreeNode compatible
         """Recursively compute depth
         (pos is a size-1 list so as to pass
         "by reference"on successive recursive calls).
@@ -103,7 +118,7 @@ class Tree(Individual):
             return 0
 
     def depth(self):
-        # TODO update implementation to be GPNode compatible
+        # TODO update implementation to be TreeNode compatible
 
         """
         Compute depth of tree (maximal path length to a leaf).
