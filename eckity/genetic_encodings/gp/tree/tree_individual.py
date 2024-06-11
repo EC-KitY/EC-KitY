@@ -92,8 +92,10 @@ class Tree(Individual):
             parent.add_child(node)
 
     def add_tree(self, node, parent=None):
-        logger.warn("Tree.add_tree is deprecated and will be removed in\
-                     version 0.3. Please use Tree.add_child instead.")
+        logger.warn(
+            "Tree.add_tree is deprecated and will be removed in\
+                     version 0.3. Please use Tree.add_child instead."
+        )
         return self.add_child(node, parent)
 
     def empty_tree(self):
