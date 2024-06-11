@@ -13,10 +13,6 @@ class TreeNode(ABC):
     ----------
     node_type : type
         node type
-    value : node_type
-        node value
-    children: List[GPNode]
-        list of children nodes
     """
 
     def __init__(self, node_type) -> None:
