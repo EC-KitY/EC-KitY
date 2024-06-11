@@ -1,4 +1,4 @@
-from typing import List, get_type_hints
+from typing import List, Callable, get_type_hints
 
 
 class TreeNode:
@@ -7,9 +7,9 @@ class TreeNode:
 
     Attributes
     ----------
-    node_type : type_
+    node_type : type
         node type
-    value : _type_
+    value : node_type
         node value
     children: List[GPNode]
         list of children nodes
@@ -24,13 +24,13 @@ class TreeNode:
             self.node_type = type(self.value)
 
     def apply(self):
-        if isinstance(self.value, callable):
+        if isinstance(self.value, Callable):
             return self.value(*[child.apply() for child in self.children])
         else:
             return self.value
 
     def add_child(self, child: "TreeNode"):
-        if type(self.value) is not callable:
+        if type(self.value) is not Callable:
             raise ValueError("Cannot add child to terminal node.")
 
         # Check if child is of the correct type
