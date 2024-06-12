@@ -23,12 +23,17 @@ jobs:
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
           git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
+
           if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
             cat detections.txt
             echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not `main`."
             exit 1
+          fi
+          
           if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
             cat detections.txt
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
           fi
+
+          echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
