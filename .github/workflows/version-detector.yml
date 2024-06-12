@@ -1,8 +1,11 @@
 name: Check version changes
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+    pull_request:
+        branches:
+          - main
+          - develop
+          - '*'  # This ensures it runs on PRs to any branch
 
 jobs:
   check_version_change:
@@ -16,7 +19,9 @@ jobs:
     # and not updated on a PR to other branches
     - name: Check for changes in __init__ file
       run: |
-        if [[ "${{ github.event.pull_request.base.ref }}" == "main" ]]; then
+        TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+
+        if [ "$TARGET_BRANCH" == "main" ]; then
           if not git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '__version__'; then
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
