@@ -91,7 +91,7 @@ class Algorithm(Operator, ABC):
         events=None,
         event_names=None,
         random_generator: RNG = RNG(),
-        random_seed=int(time()),
+        random_seed=None,
         generation_seed=None,
         executor="thread",
         max_workers=None,

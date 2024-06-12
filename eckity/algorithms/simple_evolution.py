@@ -88,7 +88,7 @@ class SimpleEvolution(Algorithm):
         executor="thread",
         max_workers=None,
         random_generator: RNG = RNG(),
-        random_seed=int(time()),
+        random_seed=round(time()),
         generation_seed=None,
         best_of_run_=None,
         best_of_gen=None,
