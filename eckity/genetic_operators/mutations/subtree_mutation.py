@@ -32,7 +32,9 @@ class SubtreeMutation(GeneticOperator):
             )
 
             # TODO refactor dummy individual creation, only the tree should be generated
-            subtree_individual = tree_creator.create_individuals(1, None)[0]
+            subtree_individual = tree_creator.create_individuals(
+                1, ind.fitness.higher_is_better
+            )[0]
             ind.replace_subtree(subtree_individual.tree)
 
         self.applied_individuals = individuals

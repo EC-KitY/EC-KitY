@@ -100,3 +100,10 @@ class TestBitStringVector:
         # Check that fitness is evaluated and equal to original one
         assert v2.fitness.get_pure_fitness() == score
         assert v2.fitness.is_fitness_evaluated()
+
+    def test_parents(self):
+        v1 = BitStringVector(SimpleFitness(), length=2, update_parents=True)
+        v2 = BitStringVector(SimpleFitness(), length=2, update_parents=True)
+
+        v1.parents = [v2]
+        assert v1.parents == [v2]

@@ -22,6 +22,7 @@ class GeneticOperator(Operator):
                     parents = [p.id for p in individuals]
                     ind.parents.extend(parents)
             return op_res
+
         return individuals
 
     @abstractmethod
