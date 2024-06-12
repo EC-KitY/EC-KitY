@@ -1,39 +1,34 @@
 name: Check version changes
 
 on:
-    pull_request:
-        branches:
-          - main
-          - develop
-          - '*'  # This ensures it runs on PRs to any branch
+  pull_request:
+    branches:
+      - main
+      - "*" # This ensures it runs on PRs to any branch
 
 jobs:
   check_version_change:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Fetch all history for all branches and tags
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
 
-    # check that the version is updated on a PR to main
-    # and not updated on a PR to other branches
-    - name: Check for changes in __init__ file
-      run: |
-        TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-        BASE_COMMIT="${{ github.event.pull_request.base.sha }}"
-        HEAD_COMMIT="${{ github.sha }}"
-
-        if [ "$TARGET_BRANCH" == "main" ]; then
-          if ! git diff $BASE_COMMIT $HEAD_COMMIT | grep -q '^\+__version__ = '; then
+      # check that the version is updated on a PR to main
+      # and not updated on a PR to other branches
+      - name: Scan for '__version__' in changed files
+        id: version-detector
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
+          if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
+            cat detections.txt
+            echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not `main`."
+            exit 1
+          if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
+            cat detections.txt
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
           fi
-        else
-          git diff $BASE_COMMIT $HEAD_COMMIT -- __init__.py
-          if git diff $BASE_COMMIT $HEAD_COMMIT | grep -q '^\+__version__ = '; then
-            echo "ERROR: The __version__ line should not be changed in pull requests to '${{ github.event.pull_request.base.ref }}' branch."
-            exit 1
-          fi
-        fi
