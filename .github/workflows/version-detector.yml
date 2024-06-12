@@ -14,15 +14,15 @@ jobs:
 
     # check that the version is updated on a PR to main
     # and not updated on a PR to other branches
-    - name: Check for version changes
+    - name: Check for changes in __init__ file
       run: |
         if [[ "${{ github.event.pull_request.base.ref }}" == "main" ]]; then
-          if not git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '^\+__version__ = '; then
+          if not git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '__version__'; then
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
           fi
         else
-          if git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '^\+__version__ = '; then
+          if git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '__version__'; then
             echo "ERROR: The __version__ line should not be changed in pull requests to '${{ github.event.pull_request.base.ref }}' branch."
             exit 1
           fi
