@@ -1,0 +1,29 @@
+name: Check version changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check_version_change:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # check that the version is updated on a PR to main
+    # and not updated on a PR to other branches
+    - name: Check for version changes
+      run: |
+        if [[ "${{ github.event.pull_request.base.ref }}" == "main" ]]; then
+          if not git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '^\+__version__ = '; then
+            echo "ERROR: The __version__ line was not changed in a pull request to main."
+            exit 1
+          fi
+        else
+          if git diff ${{ github.event.before }} ${{ github.sha }} -- __init__.py | grep -q '^\+__version__ = '; then
+            echo "ERROR: The __version__ line should not be changed in pull requests to '${{ github.event.pull_request.base.ref }}' branch."
+            exit 1
+          fi
+        fi
