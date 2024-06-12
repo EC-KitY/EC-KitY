@@ -66,7 +66,7 @@ class FunctionNode(TreeNode):
                 f"{self.function.__name__} to be {expected_type}. "
                 f"Got {child.node_type}."
             )
-        
+
         self.children.append(child)
 
     @staticmethod
