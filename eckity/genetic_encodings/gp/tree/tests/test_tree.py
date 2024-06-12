@@ -94,6 +94,38 @@ class TestTree:
             tree.add_child(child, root)
 
     @pytest.mark.parametrize(
+        "typed, root, child",
+        [
+            (
+                True,
+                FunctionNode(typed_add),
+                TerminalNode(1, float),
+            ),
+            (
+                True,
+                FunctionNode(typed_add),
+                TerminalNode(1, None),
+            ),
+            (
+                False,
+                FunctionNode(untyped_add),
+                TerminalNode(1, int),
+            ),
+        ],
+    )
+    def test_add_child_bad_type(self, setup, typed, root, child):
+        tree = self.typed_tree if typed else self.untyped_tree
+        expected_type = int if typed else None
+        tree.add_child(root)
+
+        with pytest.raises(TypeError) as e:
+            tree.add_child(child, root)
+        assert str(e.value) == (
+            f"Expected Child 0 of function {root.function.__name__} "
+            f"to be {expected_type}. Got {child.node_type}."
+        )
+
+    @pytest.mark.parametrize(
         "function, expected_types",
         [
             (typed_add, [int, int, int]),

@@ -53,14 +53,20 @@ class FunctionNode(TreeNode):
 
         # Check if child is of the correct type
         func_types = FunctionNode.get_func_types(self.function)
-        if func_types:
-            # Check if the child is of the correct type
-            expected_type = func_types[child_idx]
-            if child.node_type != expected_type:
-                raise TypeError(
-                    f"Expected Child {child_idx} of function {self.function} "
-                    f"to be of type {expected_type}. Got {child.node_type}"
-                )
+
+        if not func_types:
+            # If we don't have type hints, assign None types
+            func_types = [None] * (arity(self.function) + 1)
+
+        # Check if the child is of the correct type
+        expected_type = func_types[child_idx]
+        if child.node_type != expected_type:
+            raise TypeError(
+                f"Expected Child {child_idx} of function "
+                f"{self.function.__name__} to be {expected_type}. "
+                f"Got {child.node_type}."
+            )
+        
         self.children.append(child)
 
     @staticmethod
@@ -86,10 +92,6 @@ class FunctionNode(TreeNode):
 
 class TerminalNode(TreeNode):
     def __init__(self, value: Any, node_type=None) -> None:
-        # set node type, not always using type inference since
-        # value may be a string variable with int value
-        if node_type is None:
-            node_type = type(value)
         super().__init__(node_type)
         self.value = value
 
