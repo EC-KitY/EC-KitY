@@ -11,7 +11,7 @@ class TournamentSelection(SelectionMethod):
         self,
         tournament_size,
         higher_is_better=False,
-        replace=False,
+        replace=True,
         events=None,
     ):
         """
