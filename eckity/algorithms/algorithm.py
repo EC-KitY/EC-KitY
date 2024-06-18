@@ -151,6 +151,22 @@ class Algorithm(Operator, ABC):
                 "received statistics with unexpected type of",
                 type(statistics),
             )
+        
+        # Assert that operator arities are compatible with pop size
+        for sub_pop in self.population.sub_populations:
+            # tuples of (selection, probability)
+            selection_methods = sub_pop.get_selection_methods()
+            selection_methods = [t[0] for t in selection_methods]
+
+            operators_sequence = sub_pop.get_operators_sequence()
+            operators = selection_methods + operators_sequence
+
+            for oper in operators:
+                if sub_pop.population_size % oper.arity != 0:
+                    raise ValueError(
+                        f"Operator {oper} arity must be "
+                        f"dividable by population size"
+                    )
 
         self.breeder = breeder
         self.population_evaluator = population_evaluator

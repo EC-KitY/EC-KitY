@@ -37,7 +37,6 @@ class SimpleBreeder(Breeder):
 			# then runs all operators on next_gen
 			nextgen_population = self._apply_operators(subpopulation.get_operators_sequence(),
 													   self.selected_individuals)
-			# TODO assert simple operators the has %0 with pop size
 
 			subpopulation.individuals = nextgen_population
 
