@@ -50,10 +50,10 @@ class TournamentSelection(SelectionMethod):
 
         """
         Select the appropriate tournament creation function.
-        `random.choices` selects k elements with replacements,
-        while `random.sample` selects k unique elements
+        `random.sample` selects k unique elements, and
+        `random.choices` selects k elements with replacements
         """
-        sel_func = random.choices if self.unique else random.sample
+        sel_func = random.sample if self.unique else random.choices
 
         # create all tournaments beforehand
         tournaments = [
