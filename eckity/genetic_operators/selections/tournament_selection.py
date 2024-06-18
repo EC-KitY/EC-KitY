@@ -12,6 +12,7 @@ class TournamentSelection(SelectionMethod):
         tournament_size,
         higher_is_better=False,
         unique=False,
+        arity=1,
         events=None,
     ):
         """
@@ -34,7 +35,9 @@ class TournamentSelection(SelectionMethod):
         events : List[str], optional
             selection events, by default None
         """
-        super().__init__(events=events, higher_is_better=higher_is_better)
+        super().__init__(
+            arity=arity, events=events, higher_is_better=higher_is_better
+        )
         self.tournament_size = tournament_size
         self.unique = unique
 
