@@ -154,7 +154,7 @@ class Algorithm(Operator, ABC):
         
         # Assert that operator arities are compatible with pop size
         for sub_pop in self.population.sub_populations:
-            # tuples of (selection, probability)
+            # tuples of (selection, probability)p
             selection_methods = sub_pop.get_selection_methods()
             selection_methods = [t[0] for t in selection_methods]
 

@@ -13,5 +13,5 @@ class TestElitism:
         ]
 		selected = elitism.select(inds, [])
 		chosen = selected[0]
-		assert chosen.selected_by == ['ElitismSelection']
+		assert chosen.selected_by == [type(elitism).__name__]
 		assert chosen.cloned_from == [inds[1].id]

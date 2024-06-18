@@ -11,8 +11,7 @@ class TournamentSelection(SelectionMethod):
         self,
         tournament_size,
         higher_is_better=False,
-        unique=False,
-        arity=1,
+        replace=False,
         events=None,
     ):
         """
@@ -29,17 +28,17 @@ class TournamentSelection(SelectionMethod):
             while small tournaments focus on exploration.
         higher_is_better : bool, optional
             is higher fitness better or worse, by default False
-        unique : bool, optional
+        replace : bool, optional
             whether tournaments can contain multiple copies of the same
             individual, by default False
         events : List[str], optional
             selection events, by default None
         """
         super().__init__(
-            arity=arity, events=events, higher_is_better=higher_is_better
+            events=events, higher_is_better=higher_is_better
         )
         self.tournament_size = tournament_size
-        self.unique = unique
+        self.replace = replace
 
     @override
     def select(self, source_inds, dest_inds):
@@ -56,7 +55,7 @@ class TournamentSelection(SelectionMethod):
         `random.sample` selects k unique elements, and
         `random.choices` selects k elements with replacements
         """
-        sel_func = random.sample if self.unique else random.choices
+        sel_func = random.sample if self.replace else random.choices
 
         # create all tournaments beforehand
         tournaments = [

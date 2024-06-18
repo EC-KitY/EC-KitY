@@ -13,5 +13,5 @@ class TestTournament:
         ]
 		selected = tournament.select(inds, [])
 		winner = selected[0]
-		assert winner.selected_by == ['TournamentSelection']
+		assert winner.selected_by == [type(tournament).__name__]
 		assert winner.cloned_from == [inds[0].id]
