@@ -101,24 +101,6 @@ class Tree(Individual):
     def empty_tree(self):
         self.root = None
 
-    def _depth(self, pos, depth):
-        # TODO update implementation to be TreeNode compatible
-        """Recursively compute depth
-        (pos is a size-1 list so as to pass
-        "by reference"on successive recursive calls).
-        """
-
-        node = self.tree[pos[0]]
-
-        depths = []
-        if node in self.function_set:
-            for i in range(self.arity[node]):
-                pos[0] += 1
-                depths.append(1 + self._depth(pos, depth + 1))
-            return max(depths)
-        else:  # terminal node
-            return 0
-
     def depth(self):
         # TODO update implementation to be TreeNode compatible
 
@@ -130,7 +112,9 @@ class Tree(Individual):
         int
             tree depth.
         """
-        return self._depth([0], 0)
+        if self.root is None:
+            return 0
+        return self.root.depth(0)
 
     def random_function(self):
         """select a random function"""
@@ -139,26 +123,6 @@ class Tree(Individual):
     def random_terminal(self):
         """Select a random terminal"""
         return random.choice(self.terminal_set)
-
-    def _execute(self, pos, **kwargs):
-        """Recursively execute the tree by traversing it in a depth-first order
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
-        """
-
-        node = self.tree[pos[0]]
-
-        if node in self.function_set:
-            arglist = []
-            for i in range(self.arity[node]):
-                pos[0] += 1
-                res = self._execute(pos, **kwargs)
-                arglist.append(res)
-            return node(*arglist)
-        else:  # terminal
-            if isinstance(node, Number):  # terminal is a constant
-                return node
-            else:  # terminal is a variable, return its value
-                return kwargs[node]
 
     def execute(self, *args, **kwargs):
         """
@@ -180,6 +144,9 @@ class Tree(Individual):
         object
             Result of tree execution.
         """
+
+        if self.root is None:
+            raise ValueError("Tree is empty, cannot execute.")
 
         reshape = False
         if args != ():  # numpy array -- convert to kwargs
@@ -206,103 +173,25 @@ class Tree(Individual):
                 f"Some variable terminals were not passed to tree.execute as keyword arguments: {missing_vars}"
             )
 
-        res = self._execute([0], **kwargs)
+        res = self.root.execute(**kwargs)
         if reshape and (isinstance(res, Number) or res.shape == np.shape(0)):
             # sometimes a tree degenrates to a scalar value
             res = np.full_like(X[:, 0], res)
         return res
 
-    def random_subtree(self):
-        # select a random node index from this individual's tree
-        rnd_i = random.randint(0, self.size() - 1)
-        # find the subtree's end
-        end_i = self._find_subtree_end([rnd_i])
-        # now we have a random subtree from this individual
-        return self.tree[rnd_i : end_i + 1]
+    def random_subtree(self, node_type=None):
+        relevant_nodes = self.root.filter_by_type(node_type, [])
+        return random.choice(relevant_nodes)
 
-    def _find_subtree_end(self, pos):
-        """find index of final node of subtree that starts at `pos`
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
-        """
-
-        node = self.tree[pos[0]]
-
-        if node in self.function_set:
-            for i in range(self.arity[node]):
-                pos[0] += 1
-                self._find_subtree_end(pos)
-
-        return pos[0]
-
-    def replace_subtree(self, subtree):
-        """
-        Replace the subtree starting at `index` with `subtree`
-
-        Parameters
-        ----------
-        subtree - new subtree to replace the some existing subtree in this individual's tree
-
-        Returns
-        -------
-        None
-        """
-
-        # select a random node (index)
-        index = random.randint(0, self.size() - 1)
-
-        end_i = self._find_subtree_end([index])
-        if isinstance(self.tree[end_i], list):
-            logger.debug(self.tree[end_i], list)
-        left_part = self.tree[:index]
-        right_part = self.tree[(end_i + 1) :]
-        self.tree = left_part + subtree + right_part
-
-    def _node_label(self, node):
-        """
-        return a string label for the node
-
-        Parameters
-        ----------
-        node - some node in the tree's function/terminal set
-
-        Returns
-        -------
-        node name - either a terminal (x0, x1,...) or a function (f_add, f_or, ...)
-        """
-        return node.__name__ if node in self.function_set else str(node)
-
-    def _str_rec(self, prefix, pos, result, use_python_syntax):
-        """Recursively produce a simple textual printout of the tree
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
-        """
-
-        node = self.tree[pos[0]]
-        if node in self.function_set:
-            result.append(
-                f'{prefix}{self._node_label(node)}{"(" if use_python_syntax else ""}\n'
-            )
-            for i in range(self.arity[node]):
-                pos[0] += 1
-                self._str_rec(prefix + "   ", pos, result, use_python_syntax)
-                if use_python_syntax:
-                    result.append(",")
-                if use_python_syntax or i < self.arity[node] - 1:
-                    result.append("\n")
-            if use_python_syntax:
-                result.append(prefix + ")")
-        else:  # terminal
-            result.append(f"{prefix}{self._node_label(node)}")
-
-    def __str__(self, use_python_syntax=False):
-        if use_python_syntax:
-            result = [
-                f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "
-            ]
+    def replace_subtree(self, old_subtree: TreeNode, new_subtree: TreeNode):
+        if self.root == old_subtree:
+            self.root = new_subtree
         else:
-            result = []
-        self._str_rec(
-            "   " if use_python_syntax else "", [0], result, use_python_syntax
-        )
+            self.root.replace_child(old_subtree, new_subtree)
+
+    def __str__(self):
+        result = [f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "]
+        self.root.generate_tree_code("   ", result)
         return "".join(result)
 
     def show(self):

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any, Callable, Dict, List, Optional, get_type_hints
 from eckity.base.utils import arity
+from numbers import Number
+
 
 from overrides import override
 
@@ -19,12 +21,32 @@ class TreeNode(ABC):
         self.node_type: type = node_type
 
     @abstractmethod
-    def apply(self):
+    def execute(self, **kwargs):
         """
         Returns the value of this node
         Return type must match the type of this node
         """
+        # TODO: Add type checking
         pass
+
+    @abstractmethod
+    def depth(self, d):
+        """Recursively compute depth"""
+        pass
+
+    @abstractmethod
+    def generate_tree_code(self, prefix, result):
+        """Recursively produce a simple textual printout of the tree
+        """
+        pass
+
+    def replace_child(self, old_child, new_child):
+        pass
+
+    def filter_by_type(self, node_type, nodes):
+        if self.node_type == node_type:
+            nodes.append(self)
+        return nodes
 
 
 class FunctionNode(TreeNode):
@@ -38,8 +60,16 @@ class FunctionNode(TreeNode):
         self.children: List[TreeNode] = []
 
     @override
-    def apply(self):
-        return self.function(*[child.apply() for child in self.children])
+    def execute(self, **kwargs):
+        """Recursively execute the tree by traversing it in a depth-first order
+        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
+
+        arglist = []
+        for child in self.children:
+            res = child.execute(**kwargs)
+            arglist.append(res)
+        return self.function(*arglist)
 
     def add_child(self, child: TreeNode) -> None:
 
@@ -47,9 +77,7 @@ class FunctionNode(TreeNode):
 
         # Check if there are too many children
         if child_idx >= arity(self.function):
-            raise ValueError(
-                f"Too many children for function {self.function}."
-            )
+            raise ValueError(f"Too many children for function {self.function}.")
 
         # Check if child is of the correct type
         func_types = FunctionNode.get_func_types(self.function)
@@ -68,6 +96,38 @@ class FunctionNode(TreeNode):
             )
 
         self.children.append(child)
+
+    @override
+    def depth(self, d):
+        """Recursively compute depth"""
+        return 1 + max([child.depth(d) for child in self.children], default=0)
+    
+    @override
+    def generate_tree_code(self, prefix, result):
+        """Recursively produce a simple textual printout of the tree
+        """
+        result.append(f'{prefix}{self.function.__name__}{"("}\n')
+        for i, child in enumerate(self.children):
+            child.str_rec(prefix + "   ", result)
+            result.append(",")
+            if i < len(self.children) - 1:
+                result.append("\n")
+        result.append(prefix + ")")
+
+    @override
+    def filter_by_type(self, node_type, nodes):
+        nodes = super().filter_by_type(node_type, nodes)
+        for child in self.children:
+            nodes = child.filter_by_type(node_type, nodes)
+        return nodes
+    
+    @override
+    def replace_child(self, old_child, new_child):
+        for i, child in enumerate(self.children):
+            if child == old_child:
+                self.children[i] = new_child
+                return
+            child.replace_child(old_child, new_child)
 
     @staticmethod
     def get_func_types(f: Callable) -> List[type]:
@@ -96,5 +156,23 @@ class TerminalNode(TreeNode):
         self.value = value
 
     @override
-    def apply(self):
-        return self.value
+    def depth(self, d):
+        """Recursively compute depth"""
+        return 1
+
+    @override
+    def execute(self, **kwargs):
+        """Recursively execute the tree by traversing it in a depth-first order
+        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
+
+        if isinstance(self.value, Number):  # terminal is a constant
+            return self.value
+        else:  # terminal is a variable, return its value
+            return kwargs[self.value]
+
+    @override
+    def generate_tree_code(self, prefix, result):
+        """Recursively produce a simple textual printout of the tree
+        """
+        result.append(f"{prefix}{str(self.value)}")
