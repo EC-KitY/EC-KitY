@@ -83,7 +83,7 @@ class Tree(Individual):
         int
             tree size (= number of nodes).
         """
-        return len(self.tree)
+        return 0 if self.root is None else self.root.size()
 
     def add_child(self, node, parent=None):
         if self.root is None:
@@ -102,8 +102,6 @@ class Tree(Individual):
         self.root = None
 
     def depth(self):
-        # TODO update implementation to be TreeNode compatible
-
         """
         Compute depth of tree (maximal path length to a leaf).
 
@@ -190,7 +188,9 @@ class Tree(Individual):
             self.root.replace_child(old_subtree, new_subtree)
 
     def __str__(self):
-        result = [f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "]
+        result = [
+            f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "
+        ]
         self.root.generate_tree_code("   ", result)
         return "".join(result)
 

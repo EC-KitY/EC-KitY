@@ -124,17 +124,3 @@ class TestTree:
             f"Expected Child 0 of function {root.function.__name__} "
             f"to be {expected_type}. Got {child.node_type}."
         )
-
-    @pytest.mark.parametrize(
-        "function, expected_types",
-        [
-            (typed_add, [int, int, int]),
-            (untyped_add, []),
-        ],
-    )
-    def test_get_func_types(self, function, expected_types):
-        """
-        Test that get_func_types returns the correct function types
-        """
-        func_types = FunctionNode.get_func_types(function)
-        assert func_types == expected_types

@@ -30,18 +30,20 @@ class TreeNode(ABC):
         pass
 
     @abstractmethod
-    def depth(self, d):
+    def depth(self, d=0):
         """Recursively compute depth"""
         pass
 
     @abstractmethod
     def generate_tree_code(self, prefix, result):
-        """Recursively produce a simple textual printout of the tree
-        """
+        """Recursively produce a simple textual printout of the tree"""
         pass
 
     def replace_child(self, old_child, new_child):
         pass
+
+    def size(self):
+        return 1
 
     def filter_by_type(self, node_type, nodes):
         if self.node_type == node_type:
@@ -50,14 +52,16 @@ class TreeNode(ABC):
 
 
 class FunctionNode(TreeNode):
-    def __init__(self, function: Callable) -> None:
+    def __init__(
+        self, function: Callable, children: List[TreeNode] = None
+    ) -> None:
         # infer the return type of the function
         func_types = FunctionNode.get_func_types(function)
         return_type = func_types[-1] if func_types else None
 
         super().__init__(return_type)
         self.function = function
-        self.children: List[TreeNode] = []
+        self.children: List[TreeNode] = children if children else []
 
     @override
     def execute(self, **kwargs):
@@ -77,7 +81,9 @@ class FunctionNode(TreeNode):
 
         # Check if there are too many children
         if child_idx >= arity(self.function):
-            raise ValueError(f"Too many children for function {self.function}.")
+            raise ValueError(
+                f"Too many children for function {self.function}."
+            )
 
         # Check if child is of the correct type
         func_types = FunctionNode.get_func_types(self.function)
@@ -98,14 +104,17 @@ class FunctionNode(TreeNode):
         self.children.append(child)
 
     @override
-    def depth(self, d):
+    def depth(self, d=0):
         """Recursively compute depth"""
         return 1 + max([child.depth(d) for child in self.children], default=0)
-    
+
+    @override
+    def size(self):
+        return 1 + sum([child.size() for child in self.children])
+
     @override
     def generate_tree_code(self, prefix, result):
-        """Recursively produce a simple textual printout of the tree
-        """
+        """Recursively produce a simple textual printout of the tree"""
         result.append(f'{prefix}{self.function.__name__}{"("}\n')
         for i, child in enumerate(self.children):
             child.str_rec(prefix + "   ", result)
@@ -120,7 +129,7 @@ class FunctionNode(TreeNode):
         for child in self.children:
             nodes = child.filter_by_type(node_type, nodes)
         return nodes
-    
+
     @override
     def replace_child(self, old_child, new_child):
         for i, child in enumerate(self.children):
@@ -156,7 +165,7 @@ class TerminalNode(TreeNode):
         self.value = value
 
     @override
-    def depth(self, d):
+    def depth(self, d=0):
         """Recursively compute depth"""
         return 1
 
@@ -173,6 +182,5 @@ class TerminalNode(TreeNode):
 
     @override
     def generate_tree_code(self, prefix, result):
-        """Recursively produce a simple textual printout of the tree
-        """
+        """Recursively produce a simple textual printout of the tree"""
         result.append(f"{prefix}{str(self.value)}")
