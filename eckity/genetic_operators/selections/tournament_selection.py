@@ -34,14 +34,20 @@ class TournamentSelection(SelectionMethod):
         events : List[str], optional
             selection events, by default None
         """
-        super().__init__(
-            events=events, higher_is_better=higher_is_better
-        )
+        super().__init__(events=events, higher_is_better=higher_is_better)
         self.tournament_size = tournament_size
         self.replace = replace
 
     @override
     def select(self, source_inds, dest_inds):
+        if not self.replace and len(source_inds) < self.tournament_size:
+            raise ValueError(
+                f"""Tournament size must be greater or equal to
+                            the number of individuals to be selected from.
+                             Tournament size={self.tournament_size},
+                             number of individuals: {len(source_inds)}"""
+            )
+
         """
         The selection should add len(source_inds) individuals to dest_inds,
         so the required number of tournaments is the size of source
