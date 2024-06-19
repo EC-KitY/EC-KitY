@@ -5,11 +5,10 @@ This module implements the tree class.
 import logging
 import random
 from numbers import Number
-from typing import Callable, List, Union
+from typing import Any, Callable, Dict, List, Union
 
 import numpy as np
 
-from eckity.base.utils import arity
 from eckity.fitness.fitness import Fitness
 from eckity.genetic_encodings.gp.tree.functions import (
     f_add,
@@ -17,7 +16,11 @@ from eckity.genetic_encodings.gp.tree.functions import (
     f_mul,
     f_sub,
 )
-from eckity.genetic_encodings.gp.tree.tree_node import TreeNode
+from eckity.genetic_encodings.gp.tree.tree_node import (
+    TreeNode,
+    FunctionNode,
+    TerminalNode,
+)
 from eckity.genetic_encodings.gp.tree.utils import _generate_args
 from eckity.individual import Individual
 
@@ -49,7 +52,7 @@ class Tree(Individual):
         self,
         fitness: Fitness,
         function_set: List[Callable] = None,
-        terminal_set: List[Union[str, Number]] = None,
+        terminal_set: Union[Dict[Any, type], List[Any]] = None,
         init_depth=(1, 2),
         root: TreeNode = None,
     ):
@@ -58,12 +61,22 @@ class Tree(Individual):
             function_set = [f_add, f_sub, f_mul, f_div]
 
         if terminal_set is None:
-            terminal_set = ["x", "y", "z", 0, 1, -1]
+            terminal_set = {
+                "x": float,
+                "y": float,
+                "z": float,
+                0: int,
+                1: int,
+                -1: int,
+            }
+
+        # untyped case - convert to dict for consistency
+        if isinstance(terminal_set, list):
+            terminal_set = {t: None for t in terminal_set}
 
         self.function_set = function_set
         self.terminal_set = terminal_set
-        self.arity = {func: arity(func) for func in self.function_set}
-        self.vars = [t for t in terminal_set if not isinstance(t, Number)]
+
         self.init_depth = init_depth
 
         self.root: TreeNode = root  # actual tree representation
@@ -71,9 +84,10 @@ class Tree(Individual):
     @property
     def tree(self) -> TreeNode:
         logger.warn(
-            "Tree.tree is deprecated in version 0.2 and will be \
-                removed in version 0.3. Please use Tree.root instead."
+            "Tree.tree is deprecated in version 0.4 and will be \
+                removed in version 0.5. Please use Tree.root instead."
         )
+        return self.root
 
     def size(self):
         """
@@ -95,7 +109,7 @@ class Tree(Individual):
     def add_tree(self, node, parent=None):
         logger.warn(
             "Tree.add_tree is deprecated and will be removed in\
-                     version 0.3. Please use Tree.add_child instead."
+                     version 0.5. Please use Tree.add_child instead."
         )
         return self.add_child(node, parent)
 
@@ -115,13 +129,18 @@ class Tree(Individual):
             return 0
         return self.root.depth(0)
 
-    def random_function(self):
+    def random_function_node(self, parent=None) -> FunctionNode:
         """select a random function"""
-        return random.choice(self.function_set)
+        func = random.choice(self.function_set)
+        return FunctionNode(func, parent=parent)
 
-    def random_terminal(self):
+    def random_terminal_node(self, parent=None) -> TerminalNode:
         """Select a random terminal"""
-        return random.choice(self.terminal_set)
+        keys = list(self.terminal_set.keys())
+        terminal = random.choice(keys)
+        return TerminalNode(
+            terminal, self.terminal_set[terminal], parent=parent
+        )
 
     def execute(self, *args, **kwargs):
         """

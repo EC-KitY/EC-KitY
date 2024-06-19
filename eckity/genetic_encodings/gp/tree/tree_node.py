@@ -17,8 +17,11 @@ class TreeNode(ABC):
         node type
     """
 
-    def __init__(self, node_type: Optional[type] = None) -> None:
-        self.node_type: type = node_type
+    def __init__(
+        self, node_type: Optional[type] = None, parent: "TreeNode" = None
+    ) -> None:
+        self.node_type = node_type
+        self.parent = parent
 
     @abstractmethod
     def execute(self, **kwargs):
@@ -58,7 +61,10 @@ class TreeNode(ABC):
 
 class FunctionNode(TreeNode):
     def __init__(
-        self, function: Callable, children: List[TreeNode] = None
+        self,
+        function: Callable,
+        children: List[TreeNode] = None,
+        parent: TreeNode = None,
     ) -> None:
         # infer the return type of the function
         func_types = FunctionNode.get_func_types(function)
@@ -70,9 +76,11 @@ class FunctionNode(TreeNode):
                 f"Please provide type hints for all arguments and return type."
             )
 
-        super().__init__(return_type)
+        super().__init__(return_type, parent)
+
         self.function = function
         self.children: List[TreeNode] = children if children else []
+        self.n_children = arity(function)
 
     @override
     def execute(self, **kwargs):
@@ -180,8 +188,8 @@ class FunctionNode(TreeNode):
 
 
 class TerminalNode(TreeNode):
-    def __init__(self, value: Any, node_type=None) -> None:
-        super().__init__(node_type)
+    def __init__(self, value: Any, node_type=None, parent=None) -> None:
+        super().__init__(node_type, parent)
         self.value = value
 
     @override

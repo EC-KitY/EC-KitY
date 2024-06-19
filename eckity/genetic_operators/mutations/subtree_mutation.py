@@ -19,6 +19,9 @@ class SubtreeMutation(GeneticOperator):
         """
 
         for ind in individuals:
+            # Select a random subtree
+            subtree = ind.random_subtree()
+
             init_depth = (
                 (
                     ind.init_depth[0],
@@ -33,11 +36,8 @@ class SubtreeMutation(GeneticOperator):
                 terminal_set=ind.terminal_set,
             )
 
-            # TODO refactor dummy individual creation, only the tree should be generated
-            subtree_individual = tree_creator.create_individuals(
-                1, ind.fitness.higher_is_better
-            )[0]
-            ind.replace_subtree(subtree_individual.tree)
+            tree_creator.create_tree_rec(ind, 0, parent=subtree.parent)
+            ind.replace_subtree(old_subtree=subtree, new_subtree=ind.root)
 
         self.applied_individuals = individuals
         return individuals

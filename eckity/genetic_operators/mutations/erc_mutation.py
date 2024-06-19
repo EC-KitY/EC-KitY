@@ -1,6 +1,5 @@
-from random import choice, gauss
+from random import gauss
 
-from eckity.event_based_operator import Operator
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
@@ -30,16 +29,8 @@ class ERCMutation(GeneticOperator):
         """
         mu, sigma = self.mu, self.sigma
         for ind in individuals:
-            erc_indices = [
-                i
-                for i, node in enumerate(ind.tree)
-                if isinstance(node, (int, float))
-                and node not in ind.terminal_set
-            ]
-            if len(erc_indices) > 0:
-                m_point = choice(erc_indices)
-                ind.tree[m_point] = round(
-                    ind.tree[m_point] + gauss(mu, sigma), 4
-                )
+            subtree = ind.random_subtree(node_type=float)
+            subtree.value = subtree.value + gauss(mu, sigma)
+
         self.applied_individuals = individuals
         return individuals
