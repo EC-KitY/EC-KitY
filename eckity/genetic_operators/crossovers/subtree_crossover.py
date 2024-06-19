@@ -1,47 +1,59 @@
-from eckity.genetic_operators.genetic_operator import GeneticOperator
+from typing import List, Tuple
+
+from overrides import override
+
+from eckity import Individual
+from eckity.genetic_operators.failable_operator import FailableOperator
 
 
-class SubtreeCrossover(GeneticOperator):
-    def __init__(self, probability=1, arity=2, events=None):
+class SubtreeCrossover(FailableOperator):
+    def __init__(self, node_type=None, probability=1, arity=2, events=None):
+        super().__init__(probability=probability, arity=arity, events=events)
         self.individuals = None
         self.applied_individuals = None
-        super().__init__(probability=probability, arity=arity, events=events)
+        self.node_type = node_type
 
-    def apply(self, individuals):
+    # TODO add type hints
+    @override
+    def attempt_operator(self, payload, attempt_num):
         """
-        Perform subtree crossover between this tree and `other` tree:
-            1. Select random node from `other` tree
-            2. Get subtree rooted at selected node
-            1. Select a random node in this tree
-            2. Place `other` selected subtree at this node, replacing current subtree
+        Perform subtree crossover between a list of trees in a cyclic manner.
+        Meaning, the second individual will have a subtree from the first,
+        and the first individual will have a subtree from the last individual.
 
         Parameters
         ----------
-        individuals
-        select_func: callable
-        Selection method used to receive additional individuals to perform crossover on
+        payload: List[Individual]
+            List of Trees to perform crossover on
 
         individual: Tree
         tree individual to perform crossover on
 
         Returns
         -------
-        a new, modified individual
+        List
+            List of individuals after crossover (modified in-place)
         """
+        individuals = payload
 
-        assert len(individuals) == self.arity, f'Expected individuals list of size {self.arity}, got {len(individuals)}'
+        if len(individuals) != self.arity:
+            raise ValueError(
+                f"Expected individuals of size {self.arity}, "
+                f"got {len(individuals)}."
+            )
 
         self.individuals = individuals
 
         # select a random subtree from each individual's tree
-        subtrees = [ind.random_subtree() for ind in individuals]
+        subtrees = [ind.random_subtree(self.node_type) for ind in individuals]
 
-        # assign the next individual's subtree to the current individual's tree
+        # replace subtrees for all individuals in a cyclic manner
         for i in range(len(individuals) - 1):
-            individuals[i].replace_subtree(subtrees[i+1])
+            individuals[i].replace_subtree(
+                old_subtree=subtrees[i], new_subtree=subtrees[i + 1]
+            )
+        individuals[-1].replace_subtree(
+            old_subtree=subtrees[-1], new_subtree=subtrees[0]
+        )
 
-        # to complete the crossover circle, assign the first subtree to the last individual
-        individuals[-1].replace_subtree(subtrees[0])
-
-        self.applied_individuals = individuals
         return individuals

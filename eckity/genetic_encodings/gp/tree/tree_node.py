@@ -39,6 +39,11 @@ class TreeNode(ABC):
         """Recursively produce a simple textual printout of the tree"""
         pass
 
+    def __eq__(self, other):
+        return (
+            isinstance(other, TreeNode) and self.node_type == other.node_type
+        )
+
     def replace_child(self, old_child, new_child):
         pass
 
@@ -59,14 +64,20 @@ class FunctionNode(TreeNode):
         func_types = FunctionNode.get_func_types(function)
         return_type = func_types[-1] if func_types else None
 
+        if 0 < len(func_types) < arity(function) + 1:
+            raise ValueError(
+                f"Function {function.__name__} has missing type hints."
+                f"Please provide type hints for all arguments and return type."
+            )
+
         super().__init__(return_type)
         self.function = function
         self.children: List[TreeNode] = children if children else []
 
     @override
     def execute(self, **kwargs):
-        """Recursively execute the tree by traversing it in a depth-first order
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
+        """
+        Recursively execute the tree by traversing it in a depth-first order
         """
 
         arglist = []
@@ -138,6 +149,15 @@ class FunctionNode(TreeNode):
                 return
             child.replace_child(old_child, new_child)
 
+    @override
+    def __eq__(self, other):
+        return (
+            super().__eq__(other)
+            and isinstance(other, FunctionNode)
+            and self.function == other.function
+            and self.children == other.children
+        )
+
     @staticmethod
     def get_func_types(f: Callable) -> List[type]:
         """
@@ -184,3 +204,11 @@ class TerminalNode(TreeNode):
     def generate_tree_code(self, prefix, result):
         """Recursively produce a simple textual printout of the tree"""
         result.append(f"{prefix}{str(self.value)}")
+
+    @override
+    def __eq__(self, other):
+        return (
+            super().__eq__(other)
+            and isinstance(other, TerminalNode)
+            and self.value == other.value
+        )

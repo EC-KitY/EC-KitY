@@ -51,6 +51,7 @@ class Tree(Individual):
         function_set: List[Callable] = None,
         terminal_set: List[Union[str, Number]] = None,
         init_depth=(1, 2),
+        root: TreeNode = None,
     ):
         super().__init__(fitness)
         if function_set is None:
@@ -65,7 +66,7 @@ class Tree(Individual):
         self.vars = [t for t in terminal_set if not isinstance(t, Number)]
         self.init_depth = init_depth
 
-        self.root: TreeNode = None  # actual tree representation
+        self.root: TreeNode = root  # actual tree representation
 
     @property
     def tree(self) -> TreeNode:

@@ -67,3 +67,25 @@ def test_depth(node, expected):
 )
 def test_execute(node, expected):
     assert node.execute(x=1) == expected
+
+
+def test_missing_type_hints():
+    # define some bad functions
+    # not using pytest decorator because lambda expressions have no type hints
+
+    # missing return type hint
+    def add_no_return_type(x: int, y: int):
+        return x + y
+
+    # missing x type hint
+    def add_no_x_type(x, y: int) -> int:
+        return x + y
+
+    # missing y type hint
+    def add_no_y_type(x: int, y) -> int:
+        return x + y
+
+    for func in [add_no_return_type, add_no_x_type, add_no_y_type]:
+        with pytest.raises(ValueError) as excinfo:
+            FunctionNode(func)
+        assert "missing type hints" in str(excinfo)

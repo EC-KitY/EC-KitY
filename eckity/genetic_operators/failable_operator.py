@@ -23,9 +23,10 @@ class FailableOperator(GeneticOperator):
     attempts: int
         number of attempts to be made during the operator execution
     """
+
     def __init__(self, probability=0.05, arity=0, events=None, attempts=1):
         super().__init__(probability, arity, events)
-        if attempts <= 1:
+        if attempts < 1:
             raise ValueError("Number of attempts must be at least 1")
         self.attempts = attempts
 
@@ -72,12 +73,11 @@ class FailableOperator(GeneticOperator):
         """
         pass
 
-    @abstractmethod
     def on_fail(self, payload):
         """
         What to do when all operator attempts failed
-
         This method is called once all operator attempts have failed
+        By default, this method does nothing.
 
         Parameters
         -------
@@ -89,4 +89,4 @@ class FailableOperator(GeneticOperator):
         object
             result value
         """
-        pass
+        return payload
