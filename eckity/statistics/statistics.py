@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 
-class Statistics:
+class Statistics(ABC):
     """
     Abstract Statistics class.
     Provides statistics about the current evolution state.
