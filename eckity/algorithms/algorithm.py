@@ -2,12 +2,13 @@
 This module implements the Algorithm class.
 """
 
+import hashlib
 import logging
+import struct
 from abc import ABC, abstractmethod
 from concurrent.futures.process import ProcessPoolExecutor
 from concurrent.futures.thread import ThreadPoolExecutor
 from time import time
-import struct
 from typing import Any, List, Union
 
 from overrides import overrides
@@ -116,10 +117,11 @@ class Algorithm(Operator, ABC):
 
         # set random seed to current time if not provided
         if random_seed is None:
-            float_time = time()
+            t = time()
             # convert seed to int for np.random compatibility
-            bytes_time = struct.pack("d", float_time)
-            random_seed = struct.unpack("q", bytes_time)[0]
+            pre_dec_pnt, post_dec_pnt = str(t).split(".")
+            int_seed = int(pre_dec_pnt + post_dec_pnt)
+            random_seed = int_seed % (2**32)
 
         self.random_generator = random_generator
         self.random_seed = random_seed

@@ -42,8 +42,9 @@ class TestReproducibility:
             assert bor1.execute(x=x, y=y, z=z) == bor2.execute(x=x, y=y, z=z)
 
     def test_random_seeds(self):
+        n_reps = 100
         seeds = []
-        for i in range(10):
+        for i in range(n_reps):
             seed = SimpleEvolution(
                 Subpopulation(RandomIndividualEvaluator()),
             ).random_seed
@@ -52,4 +53,4 @@ class TestReproducibility:
             # test fails when sleeping for 1e-324 seconds
             sleep(1e-323)
 
-        assert len(set(seeds)) == 10
+        assert len(set(seeds)) == n_reps
