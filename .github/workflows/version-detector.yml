@@ -1,39 +1,36 @@
-name: Check version changes
+name: Check __version__ changes
 
 on:
   pull_request:
     branches:
-      - main
-      - "*" # This ensures it runs on PRs to any branch
+      - '*'
 
 jobs:
   check_version_change:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for all branches and tags
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for all branches and tags
 
-      # check that the version is updated on a PR to main
-      # and not updated on a PR to other branches
-      - name: Scan for '__version__' in changed files
-        id: version-detector
-        run: |
-          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
-
-          if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
-            cat detections.txt
-            echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not `main`."
-            exit 1
-          fi
-          
-          if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
-            cat detections.txt
-            echo "ERROR: The __version__ line was not changed in a pull request to main."
-            exit 1
-          fi
-
-          echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
+    - name: Check for __version__ changes
+      run: |
+        TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+        git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
+        
+        # Check if there are changes in __version__ for non-main branches
+        if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
+          cat detections.txt
+          echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not 'main'."
+          exit 1
+        fi
+        
+        # Check if there are no changes in __version__ for main branch
+        if [ "$TARGET_BRANCH" == "main" ] && ! [ -s detections.txt ]; then
+          echo "ERROR: The __version__ line was not changed in a pull request to main."
+          exit 1
+        fi
+        
+        echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
