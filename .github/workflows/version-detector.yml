@@ -22,8 +22,7 @@ jobs:
         id: version-detector
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          cat eckity/__init__.py
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
+          git diff HEAD..origin/"$TARGET_BRANCH" -- "eckity/__init__.py" | grep -i -n "__version__" > detections.txt
           if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
             cat detections.txt
             echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
