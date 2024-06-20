@@ -30,14 +30,10 @@ jobs:
             exit 1
           fi
 
-          echo "after first if"
-
-          if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
+          if [ ! -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
             cat detections.txt
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
           fi
-
-          echo "after second if"
 
           echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
