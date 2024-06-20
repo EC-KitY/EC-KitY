@@ -22,7 +22,7 @@ jobs:
         id: version-detector
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n __version__\s*=\s*("|')\d+.\d+(.\d+)?("|') > detections.txt
+          git diff HEAD..origin/"$TARGET_BRANCH" | egrep -i -n "__version__\s*=" > detections.txt
 
           echo "after git diff"
 
