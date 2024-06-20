@@ -2,8 +2,6 @@
 This module implements the SimpleEvolution class.
 """
 
-from time import time
-
 from overrides import overrides
 
 from eckity.algorithms.algorithm import Algorithm
@@ -88,7 +86,7 @@ class SimpleEvolution(Algorithm):
         executor="thread",
         max_workers=None,
         random_generator: RNG = RNG(),
-        random_seed=round(time()),
+        random_seed=None,
         generation_seed=None,
         best_of_run_=None,
         best_of_gen=None,

@@ -7,13 +7,14 @@ from abc import ABC, abstractmethod
 from concurrent.futures.process import ProcessPoolExecutor
 from concurrent.futures.thread import ThreadPoolExecutor
 from time import time
-from typing import List, Union
-from eckity.random import RNG
+import struct
+from typing import Any, List, Union
 
 from overrides import overrides
 
 from eckity.event_based_operator import Operator
 from eckity.population import Population
+from eckity.random import RNG
 from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
@@ -105,32 +106,20 @@ class Algorithm(Operator, ABC):
         )
         super().__init__(events=events, event_names=ext_event_names)
 
-        self._validate_population(population)
-
-        # Assert valid statistics input
-        if isinstance(statistics, Statistics):
-            self.statistics = [statistics]
-        elif isinstance(statistics, list):
-            for stat in statistics:
-                if not isinstance(stat, Statistics):
-                    raise ValueError(
-                        "Expected a Statistics instance as an element"
-                        " in Statistics list, but received",
-                        type(stat),
-                    )
-            self.statistics = statistics
-        else:
-            raise ValueError(
-                "Parameter statistics must be either a subclass of Statistics"
-                " or a list of subclasses of Statistics.\n"
-                "received statistics with unexpected type of",
-                type(statistics),
-            )
+        self._validate_population_type(population)
+        self._validate_statistics_type(statistics)
 
         self.breeder = breeder
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
         self.max_generation = max_generation
+
+        # set random seed to current time if not provided
+        if random_seed is None:
+            float_time = time()
+            # convert seed to int for np.random compatibility
+            bytes_time = struct.pack("d", float_time)
+            random_seed = int.from_bytes(bytes_time, byteorder="big")
 
         self.random_generator = random_generator
         self.random_seed = random_seed
@@ -217,7 +206,7 @@ class Algorithm(Operator, ABC):
         self.best_of_run_ = self.population_evaluator.act(self.population)
         self.publish("init")
 
-    def _validate_population(self, population):
+    def _validate_population_type(self, population: Any) -> None:
         # Assert valid population input
         if population is None:
             raise ValueError("Population cannot be None")
@@ -242,6 +231,27 @@ class Algorithm(Operator, ABC):
                 "a Subpopulation or a list of Subpopulations. "
                 "Received population with unexpected type of",
                 type(population),
+            )
+
+    def _validate_statistics_type(self, statistics: Any) -> None:
+        # Assert valid statistics input
+        if isinstance(statistics, Statistics):
+            self.statistics = [statistics]
+        elif isinstance(statistics, list):
+            for stat in statistics:
+                if not isinstance(stat, Statistics):
+                    raise ValueError(
+                        "Expected a Statistics instance as an element"
+                        " in Statistics list, but received",
+                        type(stat),
+                    )
+            self.statistics = statistics
+        else:
+            raise ValueError(
+                "Parameter statistics must be either a subclass of Statistics"
+                " or a list of subclasses of Statistics.\n"
+                "received statistics with unexpected type of",
+                type(statistics),
             )
 
     def evolve_main_loop(self):

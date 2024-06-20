@@ -2,6 +2,8 @@ import random
 import numpy as np
 import itertools
 
+from time import sleep
+
 from eckity.algorithms import SimpleEvolution
 from eckity.evaluators import SimpleIndividualEvaluator
 from eckity import Subpopulation
@@ -38,3 +40,16 @@ class TestReproducibility:
 
         for x, y, z in itertools.product(xs, ys, zs):
             assert bor1.execute(x=x, y=y, z=z) == bor2.execute(x=x, y=y, z=z)
+
+    def test_random_seeds(self):
+        seeds = []
+        for i in range(10):
+            seed = SimpleEvolution(
+                Subpopulation(RandomIndividualEvaluator()),
+            ).random_seed
+            seeds.append(seed)
+
+            # test fails when sleeping for 1e-324 seconds
+            sleep(1e-323)
+
+        assert len(set(seeds)) == 10
