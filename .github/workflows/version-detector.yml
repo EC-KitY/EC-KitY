@@ -26,7 +26,7 @@ jobs:
 
           if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
             cat detections.txt
-            echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not `main`."
+            echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
             exit 1
           fi
           
