@@ -3,6 +3,7 @@ name: Check __version__ changes
 on:
   pull_request:
     branches:
+      - main
       - '*'
 
 jobs:
@@ -11,26 +12,32 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Fetch all history for all branches and tags
+        fetch-depth: 0  # Fetch all history for the branch
+        sparse-checkout: |
+          eckity/__init__.py
 
     - name: Check for __version__ changes
       run: |
         TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-        git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__" > detections.txt
-        
+        BASE_COMMIT="${{ github.event.pull_request.base.sha }}"
+        HEAD_COMMIT="${{ github.sha }}"
+
+        # Check for changes in __init__.py for the current pull request
+        git diff $BASE_COMMIT $HEAD_COMMIT -- eckity/__init__.py | grep -i -n "__version__" > detections.txt
+
         # Check if there are changes in __version__ for non-main branches
         if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
           cat detections.txt
           echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not 'main'."
           exit 1
         fi
-        
+
         # Check if there are no changes in __version__ for main branch
         if [ "$TARGET_BRANCH" == "main" ] && ! [ -s detections.txt ]; then
           echo "ERROR: The __version__ line was not changed in a pull request to main."
           exit 1
         fi
-        
+
         echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
