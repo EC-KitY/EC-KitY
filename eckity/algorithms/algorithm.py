@@ -118,8 +118,9 @@ class Algorithm(Operator, ABC):
         if random_seed is None:
             float_time = time()
             # convert seed to int for np.random compatibility
-            bytes_time = struct.pack("d", float_time)
-            random_seed = int.from_bytes(bytes_time, byteorder="big")
+            bytes_time = struct.pack("d", float_time)  # 8 bytes
+            int_time = int.from_bytes(bytes_time, byteorder="big")
+            random_seed = int_time % 2**32
 
         self.random_generator = random_generator
         self.random_seed = random_seed
