@@ -29,11 +29,15 @@ jobs:
             echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
             exit 1
           fi
+
+          echo "There was no case of changing __version__ in a non-main branch."
           
           if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
             cat detections.txt
             echo "ERROR: The __version__ line was not changed in a pull request to main."
             exit 1
           fi
+
+          echo "__version__ was changed in a pull-request to main."
 
           echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
