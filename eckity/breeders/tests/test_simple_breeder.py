@@ -1,8 +1,9 @@
 import pytest
 from overrides import override
 
-from eckity import Individual, Subpopulation
+from eckity import Subpopulation
 from eckity.algorithms import SimpleEvolution
+from eckity.breeders import SimpleBreeder
 from eckity.evaluators import SimpleIndividualEvaluator
 from eckity.genetic_operators import GeneticOperator
 
@@ -25,12 +26,15 @@ class DummyCrossover(GeneticOperator):
 
 
 def test_incompatible_operator_arities():
+    breeder = SimpleBreeder()
+    algo = SimpleEvolution(
+        Subpopulation(
+            DummyIndividualEvaluator(),
+            population_size=10,
+            operators_sequence=[DummyCrossover(arity=3)],
+        ),
+        breeder=breeder,
+    )
     with pytest.raises(ValueError) as err_info:
-        SimpleEvolution(
-            Subpopulation(
-                DummyIndividualEvaluator(),
-                population_size=10,
-                operators_sequence=[DummyCrossover(arity=3)],
-            )
-        )
+        breeder.apply_breed(algo.population)
     assert "arity" in str(err_info)

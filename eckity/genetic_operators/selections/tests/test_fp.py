@@ -10,11 +10,11 @@ def test_selection_higher_is_better(higher_is_better):
     fp_sel = FitnessProportionateSelection(higher_is_better=higher_is_better)
     inds = [
         BitStringVector(
-            SimpleFitness(1 / 1000, higher_is_better=higher_is_better),
+            SimpleFitness(1 / 1e6, higher_is_better=higher_is_better),
             length=4,
         ),
         BitStringVector(
-            SimpleFitness(1000, higher_is_better=higher_is_better), length=4
+            SimpleFitness(1e6, higher_is_better=higher_is_better), length=4
         ),
     ]
     result = fp_sel.select(inds, [])

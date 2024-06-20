@@ -37,12 +37,26 @@ class FitnessProportionateSelection(SelectionMethod):
         fitness_scores = np.array(
             [ind.get_augmented_fitness() for ind in source_inds]
         )
+
+        min_val = np.min(fitness_scores)
+
+        if min_val < 0:
+            raise ValueError(
+                "Fitness scores must be non-negative for FP Selection"
+            )
+
         # convert higher fitness scores to be better
         if not self.higher_is_better:
-            fitness_scores = -fitness_scores
+            # add smoothing (if necessary) to avoid division by zero
+            smoothing = 1 if min_val == 0 else 0
+            fitness_scores = 1 / (fitness_scores + smoothing)
 
-        # generate a distribution of fitness scores using softmax
-        fit_p = softmax(fitness_scores)
+        # generate a distribution of fitness scores
+        fit_p = (
+            softmax(fitness_scores)
+            if np.sum(fitness_scores) != 1
+            else fitness_scores
+        )
 
         # select individuals proportionate to fitness
         selected_inds = np.random.choice(

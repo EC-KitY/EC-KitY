@@ -103,7 +103,9 @@ class Algorithm(Operator, ABC):
 
         ext_event_names = event_names.copy() if event_names is not None else []
 
-        ext_event_names.extend(["init", "evolution_finished", "after_generation"])
+        ext_event_names.extend(
+            ["init", "evolution_finished", "after_generation"]
+        )
         super().__init__(events=events, event_names=ext_event_names)
 
         # Assert valid population input
@@ -151,22 +153,6 @@ class Algorithm(Operator, ABC):
                 "received statistics with unexpected type of",
                 type(statistics),
             )
-        
-        # Assert that operator arities are compatible with pop size
-        for sub_pop in self.population.sub_populations:
-            # tuples of (selection, probability)p
-            selection_methods = sub_pop.get_selection_methods()
-            selection_methods = [t[0] for t in selection_methods]
-
-            operators_sequence = sub_pop.get_operators_sequence()
-            operators = selection_methods + operators_sequence
-
-            for oper in operators:
-                if sub_pop.population_size % oper.arity != 0:
-                    raise ValueError(
-                        f"Operator {oper} arity must be "
-                        f"dividable by population size"
-                    )
 
         self.breeder = breeder
         self.population_evaluator = population_evaluator
@@ -389,7 +375,9 @@ class Algorithm(Operator, ABC):
         if isinstance(self.termination_checker, list):
             return any(
                 [
-                    t.should_terminate(population, best_of_run_, generation_num)
+                    t.should_terminate(
+                        population, best_of_run_, generation_num
+                    )
                     for t in self.termination_checker
                 ]
             )
