@@ -5,25 +5,12 @@ from overrides import overrides
 
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
-<<<<<<< HEAD
 from eckity.evaluators import SimplePopulationEvaluator
 from eckity.multi_objective_evolution.nsga2_front_sorting import (
     NSGA2FrontSorting,
 )
 from eckity.random import RNG
 from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
-=======
-from eckity.evaluators.simple_population_evaluator import (
-    SimplePopulationEvaluator,
-)
-from eckity.multi_objective_evolution.nsga2_front_sorting import (
-    NSGA2FrontSorting,
-)
-
-from eckity.termination_checkers.threshold_from_target_termination_checker import (
-    ThresholdFromTargetTerminationChecker,
-)
->>>>>>> bfd96e7f0c4812f1e7b3933f3aa3f73e9a4b2292
 
 logger = logging.getLogger(__name__)
 
