@@ -22,20 +22,22 @@ jobs:
         id: version-detector
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          VERSION_FILE="eckity/__init__.py"
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > detections.txt
+          echo "__version__ = 0.3.4" | grep -i -n "__version__[[:space:]]*="
+          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > version-changes.txt
+
+          echo "After diff"
 
           if [ "$TARGET_BRANCH" == "main" ]; then
-            if [ ! -s detections.txt ]; then
-              cat $VERSION_FILE
+            if [ ! -s version-changes.txt ]; then
+              cat version-changes.txt
               echo "ERROR: The __version__ line was not changed in a pull request to main."
               exit 1
             else
               echo "INFO: The __version__ line has been correctly updated for the main branch."
             fi
           else
-            if [ -s detections.txt ]; then
-              cat detections.txt
+            if [ -s version-changes.txt ]; then
+              cat version-changes.txt
               echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
               exit 1
             else
