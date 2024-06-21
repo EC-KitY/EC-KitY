@@ -22,7 +22,6 @@ jobs:
         id: version-detector
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          echo "__version__ = 0.3.4" | grep -i -n "__version__[[:space:]]*="
           git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > version-changes.txt
 
           echo "After diff"
