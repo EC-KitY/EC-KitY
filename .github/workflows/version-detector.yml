@@ -21,19 +21,27 @@ jobs:
       - name: Scan for '__version__' in changed files
         id: version-detector
         run: |
-          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > detections.txt
+          TARGET_BRANCH="develop"
+          BASE_SHA=$(git merge-base HEAD origin/$TARGET_BRANCH)
 
-          if [ -s detections.txt ] && [ "$TARGET_BRANCH" != "main" ]; then
-            cat detections.txt
-            echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
-            exit 1
-          fi
-          
-          if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
-            cat detections.txt
-            echo "ERROR: The __version__ line was not changed in a pull request to main."
-            exit 1
+          # Check for version changes
+          git diff $BASE_SHA..HEAD | grep -E -i -n '__version__\s*=\s*["\047][^\047"]+["\047]' > version_changes.txt
+
+          if [ "$TARGET_BRANCH" == "main" ]; then
+              if [ ! -s version_changes.txt ]; then
+                  echo "ERROR: The version field was not changed in a pull request to main."
+                  exit 1
+              else
+                  echo "There was no case in not changing version field in main."
+              fi
+          else
+              if [ -s version_changes.txt ]; then
+                  cat version_changes.txt
+                  echo "ERROR: The version field should not be changed in pull requests to a branch that is not main."
+                  exit 1
+              else
+                  echo "There was no case of changing version field in a non-main branch."
+              fi
           fi
 
           echo "The __version__ line has been correctly handled for the '$TARGET_BRANCH' branch."
