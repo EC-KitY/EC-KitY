@@ -35,6 +35,7 @@ jobs:
               echo "INFO: The __version__ line has been correctly updated for the main branch."
             fi
           else
+            echo "entered else"
             if [ -s version-changes.txt ]; then
               cat version-changes.txt
               echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
