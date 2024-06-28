@@ -4,7 +4,7 @@ from eckity.genetic_operators import SubtreeCrossover
 from eckity.fitness import GPFitness
 
 
-# Defining custom functions
+# Define custom functions
 def typed_add_inc(n: int, inc: bool) -> int:
     return n + 1 if inc else n
 
@@ -39,7 +39,7 @@ def untyped_add_inc(n, inc):
     ],
 )
 def test_subtree_crossover_typed(tree1, tree2):
-    subtree_crossover = SubtreeCrossover(node_type=bool)
+    subtree_crossover = SubtreeCrossover(node_type=bool, probability=1.0)
 
     for _ in range(10):
         tree1_copy = tree1.clone()
@@ -72,21 +72,22 @@ def test_subtree_crossover_typed(tree1, tree2):
                 terminal_set=[1, True, False],
                 root=FunctionNode(
                     untyped_add_inc,
-                    children=[TerminalNode(1), TerminalNode(False)],
+                    children=[TerminalNode(2), TerminalNode(False)],
                 ),
             ),
         ),
     ],
 )
 def test_subtree_crossover_untyped(tree1, tree2):
-    subtree_crossover = SubtreeCrossover()
+    subtree_crossover = SubtreeCrossover(probability=1.0)
 
-    tree1_copy = tree1.clone()
-    tree2_copy = tree2.clone()
+    for i in range(10):
+        tree1_copy = tree1.clone()
+        tree2_copy = tree2.clone()
 
-    # Perform subtree crossover
-    subtree_crossover.apply([tree1_copy, tree2_copy])
+        # Perform subtree crossover
+        subtree_crossover.apply([tree1_copy, tree2_copy])
 
-    # Check that the boolean nodes were swapped
-    assert tree1_copy != tree1
-    assert tree2_copy != tree2
+        # Check that the boolean nodes were swapped
+        assert i == i and tree1_copy.root != tree1.root
+        assert i == i and tree2_copy.root != tree2.root

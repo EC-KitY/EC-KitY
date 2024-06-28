@@ -5,21 +5,21 @@ This module implements the tree class.
 import logging
 import random
 from numbers import Number
-from typing import Any, Callable, Dict, List, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 import numpy as np
 
-from eckity.fitness.fitness import Fitness
-from eckity.genetic_encodings.gp.tree.functions import (
-    f_add,
-    f_div,
-    f_mul,
-    f_sub,
+from eckity.base.untyped_functions import (
+    untyped_add,
+    untyped_div,
+    untyped_mul,
+    untyped_sub,
 )
+from eckity.fitness.fitness import Fitness
 from eckity.genetic_encodings.gp.tree.tree_node import (
-    TreeNode,
     FunctionNode,
     TerminalNode,
+    TreeNode,
 )
 from eckity.genetic_encodings.gp.tree.utils import _generate_args
 from eckity.individual import Individual
@@ -58,7 +58,7 @@ class Tree(Individual):
     ):
         super().__init__(fitness)
         if function_set is None:
-            function_set = [f_add, f_sub, f_mul, f_div]
+            function_set = [untyped_add, untyped_sub, untyped_mul, untyped_div]
 
         if terminal_set is None:
             terminal_set = {
@@ -197,9 +197,10 @@ class Tree(Individual):
             res = np.full_like(X[:, 0], res)
         return res
 
-    def random_subtree(self, node_type=None):
-        relevant_nodes = self.root.filter_by_type(node_type, [])
-        return random.choice(relevant_nodes)
+    def random_subtree(self, node_type=None) -> Optional[TreeNode]:
+        relevant_nodes = []
+        self.root.filter_by_type(node_type, relevant_nodes)
+        return random.choice(relevant_nodes) if relevant_nodes else None
 
     def replace_subtree(self, old_subtree: TreeNode, new_subtree: TreeNode):
         if self.root == old_subtree:

@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, List, Optional, get_type_hints
-from eckity.base.utils import arity
 from numbers import Number
-
+from types import NoneType
+from typing import Any, Callable, Dict, List, Optional, get_type_hints
 
 from overrides import override
+
+from eckity.base.utils import arity
 
 
 class TreeNode(ABC):
@@ -18,7 +19,7 @@ class TreeNode(ABC):
     """
 
     def __init__(
-        self, node_type: Optional[type] = None, parent: "TreeNode" = None
+        self, node_type: Optional[type] = NoneType, parent: "TreeNode" = None
     ) -> None:
         self.node_type = node_type
         self.parent = parent
@@ -53,10 +54,9 @@ class TreeNode(ABC):
     def size(self):
         return 1
 
-    def filter_by_type(self, node_type, nodes):
+    def filter_by_type(self, node_type: type, nodes: List["TreeNode"]) -> None:
         if self.node_type == node_type:
             nodes.append(self)
-        return nodes
 
 
 class FunctionNode(TreeNode):
@@ -68,7 +68,7 @@ class FunctionNode(TreeNode):
     ) -> None:
         # infer the return type of the function
         func_types = FunctionNode.get_func_types(function)
-        return_type = func_types[-1] if func_types else None
+        return_type = func_types[-1] if func_types else NoneType
 
         if 0 < len(func_types) < arity(function) + 1:
             raise ValueError(
@@ -109,14 +109,14 @@ class FunctionNode(TreeNode):
 
         if not func_types:
             # If we don't have type hints, assign None types
-            func_types = [None] * (arity(self.function) + 1)
+            func_types = [NoneType] * (arity(self.function) + 1)
 
         # Check if the child is of the correct type
         expected_type = func_types[child_idx]
-        if child.node_type != expected_type:
+        if not issubclass(child.node_type, expected_type):
             raise TypeError(
                 f"Expected Child {child_idx} of function "
-                f"{self.function.__name__} to be {expected_type}. "
+                f"{self.function.__name__} to be subtype of {expected_type}."
                 f"Got {child.node_type}."
             )
 
@@ -143,11 +143,10 @@ class FunctionNode(TreeNode):
         result.append(prefix + ")")
 
     @override
-    def filter_by_type(self, node_type, nodes):
-        nodes = super().filter_by_type(node_type, nodes)
+    def filter_by_type(self, node_type: type, nodes: List[TreeNode]) -> None:
+        super().filter_by_type(node_type, nodes)
         for child in self.children:
-            nodes = child.filter_by_type(node_type, nodes)
-        return nodes
+            child.filter_by_type(node_type, nodes)
 
     @override
     def replace_child(self, old_child, new_child):
@@ -186,9 +185,14 @@ class FunctionNode(TreeNode):
         params_types: Dict = get_type_hints(f)
         return list(params_types.values())
 
+    def __repr__(self):
+        return (
+            f"{self.function.__name__}({', '.join(map(str, self.children))})"
+        )
+
 
 class TerminalNode(TreeNode):
-    def __init__(self, value: Any, node_type=None, parent=None) -> None:
+    def __init__(self, value: Any, node_type=NoneType, parent=None) -> None:
         super().__init__(node_type, parent)
         self.value = value
 
@@ -199,9 +203,7 @@ class TerminalNode(TreeNode):
 
     @override
     def execute(self, **kwargs):
-        """Recursively execute the tree by traversing it in a depth-first order
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
-        """
+        """Recursively execute the tree by traversing it in a depth-first order"""
 
         if isinstance(self.value, Number):  # terminal is a constant
             return self.value
@@ -220,3 +222,6 @@ class TerminalNode(TreeNode):
             and isinstance(other, TerminalNode)
             and self.value == other.value
         )
+
+    def __repr__(self):
+        return str(self.value)

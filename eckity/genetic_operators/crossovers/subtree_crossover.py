@@ -1,13 +1,15 @@
-from typing import List, Tuple
+from types import NoneType
+from typing import Any, Tuple
 
 from overrides import override
 
-from eckity import Individual
 from eckity.genetic_operators.failable_operator import FailableOperator
 
 
 class SubtreeCrossover(FailableOperator):
-    def __init__(self, node_type=None, probability=1, arity=2, events=None):
+    def __init__(
+        self, node_type=NoneType, probability=1, arity=2, events=None
+    ):
         super().__init__(probability=probability, arity=arity, events=events)
         self.individuals = None
         self.applied_individuals = None
@@ -15,7 +17,9 @@ class SubtreeCrossover(FailableOperator):
 
     # TODO add type hints
     @override
-    def attempt_operator(self, payload, attempt_num):
+    def attempt_operator(
+        self, payload: Any, attempt_num: int
+    ) -> Tuple[bool, Any]:
         """
         Perform subtree crossover between a list of trees in a cyclic manner.
         Meaning, the second individual will have a subtree from the first,
@@ -47,6 +51,10 @@ class SubtreeCrossover(FailableOperator):
         # select a random subtree from each individual's tree
         subtrees = [ind.random_subtree(self.node_type) for ind in individuals]
 
+        if None in subtrees:
+            # failed attempt
+            return False, individuals
+
         # replace subtrees for all individuals in a cyclic manner
         for i in range(len(individuals) - 1):
             individuals[i].replace_subtree(
@@ -56,4 +64,4 @@ class SubtreeCrossover(FailableOperator):
             old_subtree=subtrees[-1], new_subtree=subtrees[0]
         )
 
-        return individuals
+        return True, individuals

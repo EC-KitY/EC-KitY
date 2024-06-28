@@ -1,10 +1,10 @@
 from eckity.creators.creator import Creator
 from eckity.fitness.simple_fitness import SimpleFitness
-from eckity.genetic_encodings.gp.tree.functions import (
-    f_add,
-    f_sub,
-    f_mul,
-    f_div,
+from eckity.base.untyped_functions import (
+    untyped_add,
+    untyped_sub,
+    untyped_mul,
+    untyped_div,
 )
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp.tree.tree_individual import Tree
@@ -30,7 +30,7 @@ class GPTreeCreator(Creator):
             init_depth = (2, 4)
 
         if function_set is None:
-            function_set = [f_add, f_sub, f_mul, f_div]
+            function_set = [untyped_add, untyped_sub, untyped_mul, untyped_div]
 
         if terminal_set is None:
             terminal_set = ["x", "y", "z", 0, 1, -1]
@@ -59,5 +59,5 @@ class GPTreeCreator(Creator):
         return individuals
 
     @abstractmethod
-    def create_tree(self, tree_ind, max_depth):
+    def create_tree(self, tree_ind):
         pass

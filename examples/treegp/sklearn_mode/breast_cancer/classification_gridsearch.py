@@ -5,18 +5,18 @@ from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.sklearn_compatible.sk_classifier import SKClassifier
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import (
-    f_add,
-    f_mul,
-    f_sub,
-    f_div,
-    f_neg,
-    f_sqrt,
-    f_log,
-    f_abs,
-    f_inv,
-    f_max,
-    f_min,
+from eckity.base.untyped_functions import (
+    untyped_add,
+    untyped_mul,
+    untyped_sub,
+    untyped_div,
+    untyped_neg,
+    untyped_sqrt,
+    untyped_log,
+    untyped_abs,
+    untyped_inv,
+    untyped_max,
+    untyped_min,
 )
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
@@ -44,17 +44,17 @@ def main():
 
     # Define function set
     function_set = [
-        f_add,
-        f_mul,
-        f_sub,
-        f_div,
-        f_sqrt,
-        f_log,
-        f_abs,
-        f_neg,
-        f_inv,
-        f_max,
-        f_min,
+        untyped_add,
+        untyped_mul,
+        untyped_sub,
+        untyped_div,
+        untyped_sqrt,
+        untyped_log,
+        untyped_abs,
+        untyped_neg,
+        untyped_inv,
+        untyped_max,
+        untyped_min,
     ]
 
     # Initialize SimpleEvolution instance

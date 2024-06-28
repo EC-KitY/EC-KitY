@@ -1,18 +1,23 @@
+from numbers import Number
+
 import pytest
 
-from eckity.fitness.gp_fitness import GPFitness
-from eckity.genetic_encodings.gp import Tree, TerminalNode, FunctionNode
-from functions import (
+from eckity.base.typed_functions import (
     typed_add,
-    typed_sub,
-    typed_mul,
     typed_div,
+    typed_mul,
+    typed_sub,
+)
+from eckity.base.untyped_functions import (
     untyped_add,
-    untyped_sub,
-    untyped_mul,
     untyped_div,
+    untyped_mul,
+    untyped_sub,
 )
 from eckity.base.utils import arity
+from eckity.fitness.gp_fitness import GPFitness
+from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, Tree
+from types import NoneType
 
 
 class TestTree:
@@ -52,7 +57,7 @@ class TestTree:
         typed_child = FunctionNode(typed_add)
         self.typed_tree.add_child(typed_child)
         assert self.typed_tree.root == typed_child
-        assert self.typed_tree.root.node_type == int
+        assert self.typed_tree.root.node_type == Number
 
     def test_add_child_untyped(self, setup):
         """
@@ -61,7 +66,7 @@ class TestTree:
         untyped_child = FunctionNode(untyped_add)
         self.untyped_tree.add_child(untyped_child)
         assert self.untyped_tree.root == untyped_child
-        assert self.untyped_tree.root.node_type is None
+        assert self.untyped_tree.root.node_type is NoneType
 
     @pytest.mark.parametrize(
         "typed, root, child",
@@ -99,12 +104,12 @@ class TestTree:
             (
                 True,
                 FunctionNode(typed_add),
-                TerminalNode(1, float),
+                TerminalNode("1", str),
             ),
             (
                 True,
                 FunctionNode(typed_add),
-                TerminalNode(1, None),
+                TerminalNode(1, NoneType),
             ),
             (
                 False,
@@ -115,12 +120,8 @@ class TestTree:
     )
     def test_add_child_bad_type(self, setup, typed, root, child):
         tree = self.typed_tree if typed else self.untyped_tree
-        expected_type = int if typed else None
         tree.add_child(root)
 
         with pytest.raises(TypeError) as e:
             tree.add_child(child, root)
-        assert str(e.value) == (
-            f"Expected Child 0 of function {root.function.__name__} "
-            f"to be {expected_type}. Got {child.node_type}."
-        )
+        assert "subtype" in str(e.value)

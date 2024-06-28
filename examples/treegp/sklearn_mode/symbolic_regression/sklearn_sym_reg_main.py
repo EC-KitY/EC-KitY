@@ -13,7 +13,7 @@ from sklearn.metrics import mean_absolute_error
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub
+from eckity.base.untyped_functions import untyped_add, untyped_mul, untyped_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
@@ -29,11 +29,11 @@ from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
 
 
 # Adding your own functions
-def f_add3(x1, x2, x3):
+def untyped_add3(x1, x2, x3):
     return np.add(np.add(x1, x2), x3)
 
 
-def f_mul3(x1, x2, x3):
+def untyped_mul3(x1, x2, x3):
     return np.multiply(np.multiply(x1, x2), x3)
 
 
@@ -42,42 +42,42 @@ def main():
     Solve a regression problem imported from sklearn `make_regression` function, using GP Trees.
     Expected run time: ~25 minutes (on 2 cores, 2.5 GHz CPU)
     Example output (with an error of 0.09 on test set):
-    f_sub
-       f_mul
+    untyped_sub
+       untyped_mul
           x3
           57.9788
-       f_sub
-          f_mul
-             f_add
+       untyped_sub
+          untyped_mul
+             untyped_add
                 x1
                 x0
              -69.8759
-          f_add
-             f_sub
-                f_add
-                   f_add
-                      f_add
-                         f_add
-                            f_add
-                               f_add
+          untyped_add
+             untyped_sub
+                untyped_add
+                   untyped_add
+                      untyped_add
+                         untyped_add
+                            untyped_add
+                               untyped_add
                                   x1
                                   x2
                                x2
-                            f_add
-                               f_add
+                            untyped_add
+                               untyped_add
                                   x2
                                   x2
-                               f_sub
+                               untyped_sub
                                   x1
                                   x0
                          x1
-                      f_add
-                         f_add
-                            f_add
-                               f_sub
-                                  f_sub
+                      untyped_add
+                         untyped_add
+                            untyped_add
+                               untyped_sub
+                                  untyped_sub
                                      x1
-                                     f_mul
+                                     untyped_mul
                                         x1
                                         -1.0477
                                   x1
@@ -85,22 +85,22 @@ def main():
                             x4
                          x1
                    x1
-                f_mul
+                untyped_mul
                    -33.4406
-                   f_add
+                   untyped_add
                       x4
                       x4
-             f_sub
-                f_mul
+             untyped_sub
+                untyped_mul
                    x1
-                   f_sub
+                   untyped_sub
                       x2
                       x2
-                f_mul
-                   f_add
+                untyped_mul
+                   untyped_add
                       x2
                       x0
-                   f_sub
+                   untyped_sub
                       -19.0099
                       -1.0477
     """
@@ -114,7 +114,7 @@ def main():
     terminal_set = create_terminal_set(X)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
-    function_set = [f_add, f_mul, f_sub]
+    function_set = [untyped_add, untyped_mul, untyped_sub]
 
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(
@@ -162,7 +162,7 @@ def main():
 
     # check training set results
     print(
-        f"\nBest pure fitness over training set: {algo.best_of_run_.get_pure_fitness()}"
+        f"\nBest pure fitness over training set: {algo.best_ountyped_run_.get_pure_fitness()}"
     )
 
     # check test set results by computing the MAE between the prediction result and the test set result

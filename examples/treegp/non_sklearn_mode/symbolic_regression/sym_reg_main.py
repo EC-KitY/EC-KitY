@@ -6,18 +6,18 @@ This is a non-sklearn setting so we use `evolve` and `execute`.
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import (
-    f_add,
-    f_mul,
-    f_sub,
-    f_div,
-    f_sqrt,
-    f_log,
-    f_abs,
-    f_max,
-    f_min,
-    f_inv,
-    f_neg,
+from eckity.base.untyped_functions import (
+    untyped_add,
+    untyped_mul,
+    untyped_sub,
+    untyped_div,
+    untyped_sqrt,
+    untyped_log,
+    untyped_abs,
+    untyped_max,
+    untyped_min,
+    untyped_inv,
+    untyped_neg,
 )
 from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
@@ -39,15 +39,15 @@ def main():
 
     Expected runtime: less than a minute (on 2 cores, 2.5 GHz CPU)
     Example of an optimal evolved tree:
-    f_add
-       f_add
-          f_add
-             f_add
+    untyped_add
+       untyped_add
+          untyped_add
+             untyped_add
                 y
                 z
              x
           z
-       f_add
+       untyped_add
           y
           z
     """
@@ -55,17 +55,17 @@ def main():
     # each node of the GP tree is either a terminal or a function
     # function nodes, each has two children (which are its operands)
     function_set = [
-        f_add,
-        f_mul,
-        f_sub,
-        f_div,
-        f_sqrt,
-        f_log,
-        f_abs,
-        f_max,
-        f_min,
-        f_inv,
-        f_neg,
+        untyped_add,
+        untyped_mul,
+        untyped_sub,
+        untyped_div,
+        untyped_sqrt,
+        untyped_log,
+        untyped_abs,
+        untyped_max,
+        untyped_min,
+        untyped_inv,
+        untyped_neg,
     ]
 
     # terminal set, consisted of variables and constants

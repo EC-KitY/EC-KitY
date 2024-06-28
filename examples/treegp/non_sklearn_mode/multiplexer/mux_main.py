@@ -3,7 +3,7 @@ from time import time
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.full import FullCreator
-from eckity.genetic_encodings.gp.tree.functions import (
+from eckity.base.untyped_functions import (
     f_and,
     f_or,
     f_not,

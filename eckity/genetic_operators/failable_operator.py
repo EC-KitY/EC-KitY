@@ -1,5 +1,7 @@
-from eckity.genetic_operators.genetic_operator import GeneticOperator
 from abc import abstractmethod
+from typing import Any, Tuple
+
+from eckity.genetic_operators.genetic_operator import GeneticOperator
 
 
 class FailableOperator(GeneticOperator):
@@ -54,7 +56,9 @@ class FailableOperator(GeneticOperator):
         return self.on_fail(payload)
 
     @abstractmethod
-    def attempt_operator(self, payload, attempt_num):
+    def attempt_operator(
+        self, payload: Any, attempt_num: int
+    ) -> Tuple[bool, Any]:
         """
         A single attempt of the operator
 

@@ -12,23 +12,27 @@ from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.sklearn_compatible.sk_classifier import SKClassifier
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import (
-    f_add,
-    f_mul,
-    f_sub,
-    f_div,
-    f_neg,
-    f_sqrt,
-    f_log,
-    f_abs,
-    f_inv,
-    f_max,
-    f_min,
+from eckity.base.untyped_functions import (
+    untyped_add,
+    untyped_mul,
+    untyped_sub,
+    untyped_div,
+    untyped_neg,
+    untyped_sqrt,
+    untyped_log,
+    untyped_abs,
+    untyped_inv,
+    untyped_max,
+    untyped_min,
 )
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
-from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
+from eckity.genetic_operators.crossovers.subtree_crossover import (
+    SubtreeCrossover,
+)
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
+from eckity.genetic_operators.selections.tournament_selection import (
+    TournamentSelection,
+)
 from eckity.statistics.best_avg_worst_size_tree_statistics import (
     BestAverageWorstSizeTreeStatistics,
 )
@@ -38,7 +42,9 @@ from eckity.termination_checkers.threshold_from_target_termination_checker impor
 )
 
 # Adding your own functions
-from eckity.sklearn_compatible.classification_evaluator import ClassificationEvaluator
+from eckity.sklearn_compatible.classification_evaluator import (
+    ClassificationEvaluator,
+)
 
 
 def main():
@@ -47,51 +53,51 @@ def main():
 
     Expected running time: ~6 minutes (on 2 cores, 2.5 GHz CPU)
     Example output (with over 92% accuracy on test set):
-    f_div
-       f_log
+    untyped_div
+       untyped_log
           x10
-       f_min
-          f_div
-             f_log
-                f_sqrt
-                   f_sqrt
+       untyped_min
+          untyped_div
+             untyped_log
+                untyped_sqrt
+                   untyped_sqrt
                       x7
-             f_max
+             untyped_max
                 x19
                 x23
-          f_div
-             f_log
-                f_mul
-                   f_add
-                      f_abs
-                         f_neg
-                            f_sqrt
+          untyped_div
+             untyped_log
+                untyped_mul
+                   untyped_add
+                      untyped_abs
+                         untyped_neg
+                            untyped_sqrt
                                x19
-                      f_sub
-                         f_inv
+                      untyped_sub
+                         untyped_inv
                             x23
                          x26
-                   f_log
+                   untyped_log
                       x4
-             f_max
-                f_add
-                   f_abs
-                      f_max
-                         f_sub
-                            f_inv
+             untyped_max
+                untyped_add
+                   untyped_abs
+                      untyped_max
+                         untyped_sub
+                            untyped_inv
                                x23
                             x26
                          x23
-                   f_add
+                   untyped_add
                       x12
-                      f_sqrt
-                         f_sqrt
-                            f_log
-                               f_sqrt
-                                  f_sqrt
+                      untyped_sqrt
+                         untyped_sqrt
+                            untyped_log
+                               untyped_sqrt
+                                  untyped_sqrt
                                      x7
-                f_inv
-                   f_mul
+                untyped_inv
+                   untyped_mul
                       x19
                       x25
     """
@@ -106,17 +112,17 @@ def main():
 
     # Define function set
     function_set = [
-        f_add,
-        f_mul,
-        f_sub,
-        f_div,
-        f_sqrt,
-        f_log,
-        f_abs,
-        f_neg,
-        f_inv,
-        f_max,
-        f_min,
+        untyped_add,
+        untyped_mul,
+        untyped_sub,
+        untyped_div,
+        untyped_sqrt,
+        untyped_log,
+        untyped_abs,
+        untyped_neg,
+        untyped_inv,
+        untyped_max,
+        untyped_min,
     ]
 
     # Initialize SimpleEvolution instance
@@ -140,7 +146,12 @@ def main():
             ],
             selection_methods=[
                 # (selection method, selection probability) tuple
-                (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
+                (
+                    TournamentSelection(
+                        tournament_size=4, higher_is_better=True
+                    ),
+                    1,
+                )
             ],
         ),
         breeder=SimpleBreeder(),

@@ -3,7 +3,6 @@ from random import random
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp.tree.utils import arity
 
 
 class GrowCreator(GPTreeCreator):
@@ -94,4 +93,4 @@ class GrowCreator(GPTreeCreator):
         if is_func:
             # recursively add children to the function node
             for i in range(node.n_children):
-                self._create_tree(tree_ind, depth=depth + 1, parent=node)
+                self.create_tree_rec(tree_ind, depth=depth + 1, parent=node)
