@@ -371,7 +371,7 @@ class Algorithm(Operator, ABC):
         int
         random seed number
         """
-        return self.generation_seed + 1
+        return (self.generation_seed + 1) % (2**32)
 
     def should_terminate(self, population, best_of_run_, generation_num):
         if isinstance(self.termination_checker, list):
