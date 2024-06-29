@@ -10,4 +10,4 @@ from .ga_creators.int_vector_creator import GAIntVectorCreator
 from .gp_creators.tree_creator import GPTreeCreator
 from .gp_creators.grow import GrowCreator
 from .gp_creators.full import FullCreator
-from .gp_creators.ramped_hh import RampedHalfAndHalfCreator
+from .gp_creators.half import HalfCreator

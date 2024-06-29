@@ -5,7 +5,7 @@ from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 from eckity.fitness.gp_fitness import GPFitness
 
 
-class RampedHalfAndHalfCreator(GPTreeCreator):
+class HalfCreator(GPTreeCreator):
     def __init__(
         self,
         grow_creator=None,

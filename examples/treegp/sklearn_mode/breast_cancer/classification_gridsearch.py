@@ -4,7 +4,7 @@ from sklearn.model_selection import GridSearchCV
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.sklearn_compatible.sk_classifier import SKClassifier
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
+from eckity.creators.gp_creators.half import HalfCreator
 from eckity.base.untyped_functions import (
     untyped_add,
     untyped_mul,
@@ -19,15 +19,23 @@ from eckity.base.untyped_functions import (
     untyped_min,
 )
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
-from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
+from eckity.genetic_operators.crossovers.subtree_crossover import (
+    SubtreeCrossover,
+)
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
+from eckity.genetic_operators.selections.tournament_selection import (
+    TournamentSelection,
+)
+from eckity.statistics.best_average_worst_statistics import (
+    BestAverageWorstStatistics,
+)
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import (
     ThresholdFromTargetTerminationChecker,
 )
-from eckity.sklearn_compatible.classification_evaluator import ClassificationEvaluator
+from eckity.sklearn_compatible.classification_evaluator import (
+    ClassificationEvaluator,
+)
 
 
 def main():
@@ -60,7 +68,7 @@ def main():
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
         Subpopulation(
-            creators=RampedHalfAndHalfCreator(
+            creators=HalfCreator(
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
@@ -75,7 +83,12 @@ def main():
                 SubtreeMutation(probability=0.2, arity=1),
             ],
             selection_methods=[
-                (TournamentSelection(tournament_size=4, higher_is_better=True), 1)
+                (
+                    TournamentSelection(
+                        tournament_size=4, higher_is_better=True
+                    ),
+                    1,
+                )
             ],
         ),
         breeder=SimpleBreeder(),

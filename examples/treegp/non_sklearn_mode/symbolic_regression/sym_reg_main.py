@@ -5,7 +5,7 @@ This is a non-sklearn setting so we use `evolve` and `execute`.
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
+from eckity.creators.gp_creators.half import HalfCreator
 from eckity.base.untyped_functions import (
     untyped_add,
     untyped_mul,
@@ -19,11 +19,17 @@ from eckity.base.untyped_functions import (
     untyped_inv,
     untyped_neg,
 )
-from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
+from eckity.genetic_operators.crossovers.subtree_crossover import (
+    SubtreeCrossover,
+)
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
+from eckity.genetic_operators.selections.tournament_selection import (
+    TournamentSelection,
+)
+from eckity.statistics.best_average_worst_statistics import (
+    BestAverageWorstStatistics,
+)
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import (
     ThresholdFromTargetTerminationChecker,
@@ -74,7 +80,7 @@ def main():
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
         Subpopulation(
-            creators=RampedHalfAndHalfCreator(
+            creators=HalfCreator(
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
@@ -94,7 +100,12 @@ def main():
             ],
             selection_methods=[
                 # (selection method, selection probability) tuple
-                (TournamentSelection(tournament_size=4, higher_is_better=False), 1)
+                (
+                    TournamentSelection(
+                        tournament_size=4, higher_is_better=False
+                    ),
+                    1,
+                )
             ],
         ),
         breeder=SimpleBreeder(),
