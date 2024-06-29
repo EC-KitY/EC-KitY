@@ -5,7 +5,7 @@ This module implements the tree class.
 import logging
 import random
 from numbers import Number
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union, get_type_hints
 from types import NoneType
 
 import numpy as np
@@ -137,15 +137,32 @@ class Tree(Individual):
             return 0
         return self.root.depth(0)
 
-    def random_function_node(self, parent=None) -> FunctionNode:
+    def random_function_node(
+        self, node_type=NoneType, parent=None
+    ) -> FunctionNode:
         """select a random function"""
-        func = random.choice(self.function_set)
+        functions_types = {
+            func: get_type_hints(func).get("return", NoneType)
+            for func in self.function_set
+        }
+        relevant_functions = [
+            func
+            for func in self.function_set
+            if functions_types[func] == node_type
+        ]
+        func = random.choice(relevant_functions)
         return FunctionNode(func, parent=parent)
 
-    def random_terminal_node(self, parent=None) -> TerminalNode:
+    def random_terminal_node(
+        self, node_type=NoneType, parent=None
+    ) -> TerminalNode:
         """Select a random terminal"""
-        keys = list(self.terminal_set.keys())
-        terminal = random.choice(keys)
+        relevant_terminals = [
+            term
+            for term in self.terminal_set
+            if self.terminal_set[term] == node_type
+        ]
+        terminal = random.choice(relevant_terminals)
         return TerminalNode(
             terminal, node_type=self.terminal_set[terminal], parent=parent
         )
@@ -205,9 +222,43 @@ class Tree(Individual):
             res = np.full_like(X[:, 0], res)
         return res
 
-    def random_subtree(self, node_type=None) -> Optional[TreeNode]:
+    def filter_tree(self, filter_func: Callable) -> None:
+        filtered_nodes = []
+        self.root.filter_nodes(filter_func, filtered_nodes)
+        return filtered_nodes
+
+    def get_random_leaf(self, node_type=NoneType):
+        """
+        Get a random leaf node of the tree.
+
+        Parameters
+        ----------
+        node_type : type, default=None
+            Type of node to return.
+
+        Returns
+        -------
+        TreeNode
+            Random leaf node.
+        """
+        leaf_nodes = []
+        self.root.filter_nodes(
+            lambda node: (
+                node.node_type in [Any, NoneType]
+                or node.node_type == node_type
+            )
+            and isinstance(node, TerminalNode),
+            leaf_nodes,
+        )
+        return random.choice(leaf_nodes) if leaf_nodes else None
+
+    def random_subtree(self, node_type=NoneType) -> Optional[TreeNode]:
         relevant_nodes = []
-        self.root.filter_by_type(node_type, relevant_nodes)
+        self.root.filter_nodes(
+            lambda node: node.node_type in [Any, NoneType]
+            or node.node_type == node_type,
+            relevant_nodes,
+        )
         return random.choice(relevant_nodes) if relevant_nodes else None
 
     def replace_subtree(self, old_subtree: TreeNode, new_subtree: TreeNode):

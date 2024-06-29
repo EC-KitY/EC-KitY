@@ -1,4 +1,5 @@
 from random import random
+from types import NoneType
 from typing import Callable, Optional
 
 from overrides import overrides
@@ -68,6 +69,7 @@ class GrowCreator(GPTreeCreator):
         function_generator: Callable[[Optional[TreeNode]], FunctionNode],
         terminal_generator: Callable[[Optional[TreeNode]], TerminalNode],
         depth: int,
+        node_type: type = NoneType,
         parent: TreeNode = None,
     ) -> TreeNode:
         """
@@ -87,24 +89,26 @@ class GrowCreator(GPTreeCreator):
         min_depth, max_depth = self.init_depth
 
         if depth < min_depth:
-            node = function_generator(parent=parent)
+            node = function_generator(node_type=node_type, parent=parent)
             is_func = True
         elif depth >= max_depth:
-            node = terminal_generator(parent=parent)
+            node = terminal_generator(node_type=node_type, parent=parent)
         else:  # intermediate depth, grow
             if random() > 0.5:
-                node = function_generator(parent=parent)
+                node = function_generator(node_type=node_type, parent=parent)
                 is_func = True
             else:
-                node = terminal_generator(parent=parent)
+                node = terminal_generator(node_type=node_type, parent=parent)
 
         if is_func:
             # recursively add children to the function node
-            for _ in range(node.n_children):
+            func_types = FunctionNode.get_func_types(node.function)
+            for i in range(node.n_children):
                 child_node = self.build_tree(
                     function_generator,
                     terminal_generator,
                     depth=depth + 1,
+                    node_type=func_types[i],
                     parent=node,
                 )
                 node.add_child(child_node)

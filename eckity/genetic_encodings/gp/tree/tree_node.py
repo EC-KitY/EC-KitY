@@ -54,8 +54,10 @@ class TreeNode(ABC):
     def size(self):
         return 1
 
-    def filter_by_type(self, node_type: type, nodes: List["TreeNode"]) -> None:
-        if self.node_type == node_type:
+    def filter_nodes(
+        self, filter_func: Callable, nodes: List["TreeNode"]
+    ) -> None:
+        if filter_func(self):
             nodes.append(self)
 
 
@@ -107,10 +109,6 @@ class FunctionNode(TreeNode):
         # Check if child is of the correct type
         func_types = FunctionNode.get_func_types(self.function)
 
-        if not func_types:
-            # If we don't have type hints, assign None types
-            func_types = [NoneType] * (arity(self.function) + 1)
-
         # Check if the child is of the correct type
         expected_type = func_types[child_idx]
         if not issubclass(child.node_type, expected_type):
@@ -143,10 +141,12 @@ class FunctionNode(TreeNode):
         result.append(prefix + ")")
 
     @override
-    def filter_by_type(self, node_type: type, nodes: List[TreeNode]) -> None:
-        super().filter_by_type(node_type, nodes)
+    def filter_nodes(
+        self, filter_func: Callable, nodes: List[TreeNode]
+    ) -> None:
+        super().filter_nodes(filter_func, nodes)
         for child in self.children:
-            child.filter_by_type(node_type, nodes)
+            child.filter_nodes(filter_func, nodes)
 
     @override
     def replace_child(self, old_child, new_child):
@@ -183,7 +183,11 @@ class FunctionNode(TreeNode):
             with the return type as the last element
         """
         params_types: Dict = get_type_hints(f)
-        return list(params_types.values())
+        type_list = list(params_types.values())
+        if not type_list:
+            # If we don't have type hints, assign None types
+            type_list = [NoneType] * (arity(f) + 1)
+        return type_list
 
     def __repr__(self):
         return (

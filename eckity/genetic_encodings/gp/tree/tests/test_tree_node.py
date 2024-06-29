@@ -1,8 +1,10 @@
-import pytest
 from numbers import Number
+from types import NoneType
+
+import pytest
+
 from eckity.base.typed_functions import typed_add
 from eckity.base.untyped_functions import untyped_add
-
 from eckity.genetic_encodings.gp import FunctionNode, TerminalNode
 
 
@@ -10,7 +12,7 @@ from eckity.genetic_encodings.gp import FunctionNode, TerminalNode
     "function, expected_types",
     [
         (typed_add, [Number, Number, Number]),
-        (untyped_add, []),
+        (untyped_add, [NoneType, NoneType, NoneType]),
     ],
 )
 def test_get_func_types(function, expected_types):

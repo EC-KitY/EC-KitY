@@ -1,8 +1,8 @@
-from random import gauss
 from types import NoneType
 from typing import Any, List, Tuple
 
 from overrides import override
+import random
 
 from eckity.genetic_encodings.gp import Tree
 from eckity.genetic_operators import FailableOperator
@@ -38,19 +38,19 @@ class ERCMutation(FailableOperator):
         None.
         """
         individuals: List[Tree] = payload
-        mu, sigma = self.mu, self.sigma
 
         node_type = float if not self.typed else NoneType
 
-        subtrees = [
-            ind.random_subtree(node_type=node_type) for ind in individuals
+        leaves = [
+            ind.get_random_leaf(node_type=node_type) for ind in individuals
         ]
 
-        if None in subtrees:
+        if None in leaves:
             return False, individuals
 
-        for subtree in subtrees:
-            subtree.value = subtree.value + gauss(mu, sigma)
+        mu, sigma = self.mu, self.sigma
+        for terminal in leaves:
+            terminal.value = terminal.value + random.gauss(mu, sigma)
 
         self.applied_individuals = individuals
         return individuals

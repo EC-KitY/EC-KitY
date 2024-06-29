@@ -2,10 +2,13 @@
 This module implements the fitness evaluation class, which delivers the fitness function.
 You will need to implement such a class to work with your own problem and fitness function.
 """
+
 import numpy as np
 from sklearn.metrics import accuracy_score
 
-from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
+from eckity.evaluators.simple_individual_evaluator import (
+    SimpleIndividualEvaluator,
+)
 
 CLASSIFICATION_THRESHOLD = 0
 
@@ -59,4 +62,9 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
         return self.metric(y_true=self.y, y_pred=y_pred)
 
     def classify_individual(self, individual):
-        return np.where(individual.execute(self.X) > CLASSIFICATION_THRESHOLD, 1, 0)
+        # assumes individual is a GP tree with argmax function in depth 1
+        if "argmax" not in individual.root.function.__name__:
+            raise ValueError(
+                "Individual must have argmax function in depth 1 to classify."
+            )
+        return individual.execute(self.X)

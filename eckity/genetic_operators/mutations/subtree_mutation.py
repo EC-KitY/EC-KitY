@@ -5,7 +5,7 @@ from typing import Any, List, Tuple
 from overrides import override
 
 from eckity.creators.gp_creators.grow import GrowCreator
-from eckity.genetic_encodings.gp import Tree
+from eckity.genetic_encodings.gp import Tree, TreeNode
 from eckity.genetic_operators import FailableOperator
 
 
@@ -37,7 +37,7 @@ class SubtreeMutation(FailableOperator):
             successful and a list of the individuals.
         """
         individuals: List[Tree] = payload
-        old_subtrees = [
+        old_subtrees: List[TreeNode] = [
             ind.random_subtree(node_type=self.node_type) for ind in individuals
         ]
 
@@ -66,9 +66,10 @@ class SubtreeMutation(FailableOperator):
                 terminal_set=ind.terminal_set,
             )
             new_subtree = tree_creator.build_tree(
-                ind.random_function_node,
-                ind.random_terminal_node,
-                0,
+                function_generator=ind.random_function_node,
+                terminal_generator=ind.random_terminal_node,
+                depth=0,
+                node_type=old_subtree.node_type,
                 parent=old_subtree.parent,
             )
             ind.replace_subtree(

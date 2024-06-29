@@ -107,7 +107,7 @@ def main():
     X, y = load_breast_cancer(return_X_y=True)
 
     # Automatically generate a terminal set.
-    # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', ..., 'x9']
+    # Since there are 10 features, set terminal_set to: ['x0', 'x1', ..., 'x9']
     terminal_set = create_terminal_set(X)
 
     # Define function set
