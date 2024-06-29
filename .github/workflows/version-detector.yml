@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - main
-      - "*" # This ensures it runs on PRs to any branch
 
 jobs:
   check_version_change:
@@ -17,30 +16,14 @@ jobs:
           fetch-depth: 0 # Fetch all history for all branches and tags
 
       # check that the version is updated on a PR to main
-      # and not updated on a PR to other branches
       - name: Scan for '__version__' in changed files
         id: version-detector
         run: |
           TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
-          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > version-changes.txt
+          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > detections.txt
 
-          echo "After diff"
-
-          if [ "$TARGET_BRANCH" == "main" ]; then
-            if [ ! -s version-changes.txt ]; then
-              cat version-changes.txt
-              echo "ERROR: The __version__ line was not changed in a pull request to main."
-              exit 1
-            else
-              echo "INFO: The __version__ line has been correctly updated for the main branch."
-            fi
-          else
-            echo "entered else"
-            if [ -s version-changes.txt ]; then
-              cat version-changes.txt
-              echo "ERROR: The __version__ line should not be changed in pull requests to a branch that is not main."
-              exit 1
-            else
-              echo "INFO: The __version__ line has not been changed for the '$TARGET_BRANCH' branch."
-            fi
+          if ! [ -s detections.txt ] && [ "$TARGET_BRANCH" == "main" ]; then
+            cat detections.txt
+            echo "ERROR: The __version__ line was not changed in a pull request to main."
+            exit 1
           fi
