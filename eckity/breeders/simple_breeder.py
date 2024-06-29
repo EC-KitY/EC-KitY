@@ -32,6 +32,12 @@ class SimpleBreeder(Breeder):
         None.
         """
         # only one subpopulation in simple case
+        if len(population.sub_populations) != 1:
+            raise ValueError(
+                f"SimpleBreeder can only handle one subpopulation. \
+                    Got: {len(population.sub_populations)}"
+            )
+
         subpopulation = population.sub_populations[0]
         nextgen_population = []
 

@@ -11,6 +11,7 @@ class SimplePopulationEvaluator(PopulationEvaluator):
     Computes fitness value for the whole population.
     All simple classes assume only one sub-population.
     """
+
     def __init__(self, executor_method="map"):
         super().__init__()
         if executor_method not in ["map", "submit"]:
@@ -35,9 +36,16 @@ class SimplePopulationEvaluator(PopulationEvaluator):
                 the individual with the best fitness of the given individuals
         """
         super()._evaluate(population)
+
+        if len(population.sub_populations) != 1:
+            raise ValueError(
+                f"SimpleBreeder can only handle one subpopulation. \
+                    Got: {len(population.sub_populations)}"
+            )
         sub_population = population.sub_populations[0]
         individuals = sub_population.individuals
         sp_eval: IndividualEvaluator = sub_population.evaluator
+
         if self.executor_method == "submit":
             eval_futures = [
                 self.executor.submit(
