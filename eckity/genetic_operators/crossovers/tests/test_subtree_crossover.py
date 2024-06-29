@@ -20,19 +20,19 @@ def untyped_add_inc(n, inc):
             Tree(
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
-                terminal_set=[1, True, False],
+                terminal_set={8: int, True: bool, False: bool},
                 root=FunctionNode(
                     typed_add_inc,
-                    children=[TerminalNode(1, int), TerminalNode(True, bool)],
+                    children=[TerminalNode(8, int), TerminalNode(True, bool)],
                 ),
             ),
             Tree(
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
-                terminal_set=[1, True, False],
+                terminal_set={8: int, True: bool, False: bool},
                 root=FunctionNode(
                     typed_add_inc,
-                    children=[TerminalNode(1, int), TerminalNode(False, bool)],
+                    children=[TerminalNode(8, int), TerminalNode(False, bool)],
                 ),
             ),
         ),
@@ -68,7 +68,7 @@ def test_subtree_crossover_typed(tree1, tree2):
             ),
             Tree(
                 fitness=GPFitness(),
-                function_set=[typed_add_inc],
+                function_set=[untyped_add_inc],
                 terminal_set=[1, True, False],
                 root=FunctionNode(
                     untyped_add_inc,

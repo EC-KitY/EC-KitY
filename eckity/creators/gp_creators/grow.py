@@ -101,11 +101,12 @@ class GrowCreator(GPTreeCreator):
         if is_func:
             # recursively add children to the function node
             for _ in range(node.n_children):
-                self.build_tree(
+                child_node = self.build_tree(
                     function_generator,
                     terminal_generator,
                     depth=depth + 1,
                     parent=node,
                 )
+                node.add_child(child_node)
 
         return node

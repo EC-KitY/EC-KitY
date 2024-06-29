@@ -26,17 +26,26 @@ class TestTree:
     """
 
     typed_functions = [typed_add, typed_sub, typed_mul, typed_div]
+    typed_terminals = {
+        "x": float,
+        "y": float,
+        0: int,
+        1: int,
+        -1.0: float,
+        2.0: float,
+    }
+
     untyped_functions = [untyped_add, untyped_sub, untyped_mul, untyped_div]
-    terminals = ["x", "y", 0, 1, -1.0, 2.0]
+    untyped_terminals = ["x", "y", 0, 1, -1.0, 2.0]
     typed_tree = Tree(
         fitness=GPFitness(),
         function_set=typed_functions,
-        terminal_set=terminals,
+        terminal_set=typed_terminals,
     )
     untyped_tree = Tree(
         fitness=GPFitness(),
         function_set=untyped_functions,
-        terminal_set=terminals,
+        terminal_set=untyped_terminals,
     )
 
     @pytest.fixture

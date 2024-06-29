@@ -15,7 +15,6 @@ class SubtreeCrossover(FailableOperator):
         self.applied_individuals = None
         self.node_type = node_type
 
-    # TODO add type hints
     @override
     def attempt_operator(
         self, payload: Any, attempt_num: int

@@ -6,6 +6,7 @@ import logging
 import random
 from numbers import Number
 from typing import Any, Callable, Dict, List, Optional, Union
+from types import NoneType
 
 import numpy as np
 
@@ -72,7 +73,14 @@ class Tree(Individual):
 
         # untyped case - convert to dict for consistency
         if isinstance(terminal_set, list):
-            terminal_set = {t: None for t in terminal_set}
+            # check if any function has type hints
+            if any(f.__annotations__ for f in function_set):
+                raise ValueError(
+                    "Detected typed function with untyped terminal set. \
+                        Please provide a dictionary with types for terminals."
+                )
+
+            terminal_set = {t: NoneType for t in terminal_set}
 
         self.function_set = function_set
         self.terminal_set = terminal_set
@@ -139,7 +147,7 @@ class Tree(Individual):
         keys = list(self.terminal_set.keys())
         terminal = random.choice(keys)
         return TerminalNode(
-            terminal, self.terminal_set[terminal], parent=parent
+            terminal, node_type=self.terminal_set[terminal], parent=parent
         )
 
     def execute(self, *args, **kwargs):
