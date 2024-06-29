@@ -1,4 +1,3 @@
-import logging
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_operators.selections.elitism_selection import (
     ElitismSelection,
@@ -16,10 +15,3 @@ def test_selected_by():
     chosen = selected[0]
     assert chosen.selected_by == ["ElitismSelection"]
     assert chosen.cloned_from == [inds[1].id]
-
-
-def test_zero_elites_warnning(caplog):
-    with caplog.at_level(logging.WARNING):
-        ElitismSelection(num_elites=0)
-    assert len(caplog.records) == 1
-    assert "Elitism selection with 0 elites is ineffective." in caplog.text

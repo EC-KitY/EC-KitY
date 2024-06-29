@@ -1,17 +1,11 @@
 from eckity.genetic_operators.selections.selection_method import (
     SelectionMethod,
 )
-import logging
-
-logger = logging.getLogger(__name__)
 
 
 class ElitismSelection(SelectionMethod):
     def __init__(self, num_elites, higher_is_better=False, events=None):
         super().__init__(events=events, higher_is_better=higher_is_better)
-
-        if num_elites == 0:
-            logger.warning("Elitism selection with 0 elites is ineffective.")
 
         self.num_elites = num_elites
         self.higher_is_better = higher_is_better
