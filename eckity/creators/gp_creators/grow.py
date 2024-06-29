@@ -1,8 +1,10 @@
 from random import random
+from typing import Callable, Optional
 
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
+from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, TreeNode
 
 
 class GrowCreator(GPTreeCreator):
@@ -56,9 +58,18 @@ class GrowCreator(GPTreeCreator):
         -------
         None.
         """
-        self.create_tree_rec(tree_ind, 0)
+        root = self.build_tree(
+            tree_ind.random_function_node, tree_ind.random_terminal_node, 0
+        )
+        tree_ind.root = root
 
-    def create_tree_rec(self, tree_ind, depth, parent=None):
+    def build_tree(
+        self,
+        function_generator: Callable[[Optional[TreeNode]], FunctionNode],
+        terminal_generator: Callable[[Optional[TreeNode]], TerminalNode],
+        depth: int,
+        parent: TreeNode = None,
+    ) -> TreeNode:
         """
         Recursively create a random tree using the grow method
 
@@ -76,21 +87,25 @@ class GrowCreator(GPTreeCreator):
         min_depth, max_depth = self.init_depth
 
         if depth < min_depth:
-            node = tree_ind.random_function_node(parent=parent)
+            node = function_generator(parent=parent)
             is_func = True
         elif depth >= max_depth:
-            node = tree_ind.random_terminal_node(parent=parent)
+            node = terminal_generator(parent=parent)
         else:  # intermediate depth, grow
             if random() > 0.5:
-                node = tree_ind.random_function_node(parent=parent)
+                node = function_generator(parent=parent)
                 is_func = True
             else:
-                node = tree_ind.random_terminal_node(parent=parent)
-
-        # add the new node to the tree of the given individual
-        tree_ind.add_child(node, parent=parent)
+                node = terminal_generator(parent=parent)
 
         if is_func:
             # recursively add children to the function node
-            for i in range(node.n_children):
-                self.create_tree_rec(tree_ind, depth=depth + 1, parent=node)
+            for _ in range(node.n_children):
+                self.build_tree(
+                    function_generator,
+                    terminal_generator,
+                    depth=depth + 1,
+                    parent=node,
+                )
+
+        return node

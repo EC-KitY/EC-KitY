@@ -203,7 +203,7 @@ class Tree(Individual):
         return random.choice(relevant_nodes) if relevant_nodes else None
 
     def replace_subtree(self, old_subtree: TreeNode, new_subtree: TreeNode):
-        if self.root == old_subtree:
+        if self.root is old_subtree:
             self.root = new_subtree
         else:
             self.root.replace_child(old_subtree, new_subtree)
