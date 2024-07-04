@@ -134,7 +134,7 @@ class FunctionNode(TreeNode):
         """Recursively produce a simple textual printout of the tree"""
         result.append(f'{prefix}{self.function.__name__}{"("}\n')
         for i, child in enumerate(self.children):
-            child.str_rec(prefix + "   ", result)
+            child.generate_tree_code(prefix + "   ", result)
             result.append(",")
             if i < len(self.children) - 1:
                 result.append("\n")

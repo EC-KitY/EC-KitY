@@ -9,7 +9,7 @@ def typed_add_inc(n: int, inc: bool) -> int:
     return n + 1 if inc else n
 
 
-def untyped_add_inc(n, inc):
+def f_add_inc(n, inc):
     return n + 1 if inc else n
 
 

@@ -1,6 +1,15 @@
+from types import NoneType
+from typing import Callable, Optional
+
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
+from eckity.genetic_encodings.gp import (
+    FunctionNode,
+    TerminalNode,
+    Tree,
+    TreeNode,
+)
 
 
 class FullCreator(GPTreeCreator):
@@ -41,7 +50,7 @@ class FullCreator(GPTreeCreator):
         )
 
     @overrides
-    def create_tree(self, tree_ind, max_depth=5):
+    def create_tree(self, tree_ind):
         """
         Create a random tree using the full method, and assign it to the given individual.
 
@@ -57,35 +66,41 @@ class FullCreator(GPTreeCreator):
         -------
         None.
         """
-        self._create_tree(tree_ind, max_depth, 0)
+        root = self.build_tree(
+            tree_ind.random_function_node, tree_ind.random_terminal_node, 0
+        )
+        tree_ind.root = root
 
-    def _create_tree(self, tree_ind, max_depth=5, depth=0):
+    def build_tree(
+        self,
+        tree_ind: Tree,
+        depth: int,
+        node_type: type = NoneType,
+        parent: TreeNode = None,
+    ) -> TreeNode:
         """
-        Recursively create a random tree using the full method.
+        Recursively create a random tree using the grow method
 
         Parameters
         ----------
-        max_depth : int
-                Maximum depth of tree. The default is 5.
-
-        depth : int, optional
-                Current depth in recursive process. The default is 0.
+        depth: int
+                Current depth in recursive process.
 
         Returns
         -------
         None.
 
         """
-        is_func = False
+        max_depth = self.init_depth[1]
 
         if depth >= max_depth:
-            node = tree_ind.random_terminal()
+            node = tree_ind.random_terminal_node(
+                node_type=node_type, parent=parent
+            )
         else:
-            node = tree_ind.random_function()
-            is_func = True
+            node = tree_ind.random_function_node(
+                node_type=node_type, parent=parent
+            )
+            self._build_children(node, tree_ind, depth)
 
-        tree_ind.add_tree(node)
-
-        if is_func:
-            for i in range(tree_ind.arity[node]):
-                self._create_tree(tree_ind, max_depth, depth=depth + 1)
+        return node

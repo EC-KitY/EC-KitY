@@ -92,7 +92,7 @@ class HalfCreator(GPTreeCreator):
 
         # if pop size is 100 and we want depths 2,3,4,5,6 then group_size is 10:
         # 10 'grow' with depth 2, 10 'full' with depth 2, 10 'grow' with depth 3, 10 'full' with depth 3, etc.
-        group_size = int(n_individuals / (max_depth + 1 - min_depth) / 2)
+        group_size = int(n_individuals / (2 * (max_depth + 1 - min_depth)))
 
         individuals = []
 
@@ -114,7 +114,7 @@ class HalfCreator(GPTreeCreator):
         self.created_individuals = individuals
         return individuals
 
-    def _create_individuals(self, individuals, max_depth, higher_is_better):
+    def _create_individuals(self, individuals, higher_is_better):
         t = Tree(
             init_depth=self.init_depth,
             function_set=self.function_set,
@@ -124,8 +124,8 @@ class HalfCreator(GPTreeCreator):
                 higher_is_better=higher_is_better,
             ),
         )
-        self.create_tree(t, max_depth=max_depth)
+        self.create_tree(t)
         individuals.append(t)
 
-    def create_tree(self, tree_ind, max_depth):
-        self.init_method.create_tree(tree_ind, max_depth)
+    def create_tree(self, tree_ind):
+        self.init_method.create_tree(tree_ind)

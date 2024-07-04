@@ -32,15 +32,3 @@ class BestAverageWorstStatistics(Statistics):
             logger.info(self.format_string.format(best_individual.get_pure_fitness(),
                                             sub_pop.get_worst_individual().get_pure_fitness(),
                                             sub_pop.get_average_fitness()))
-            # best_individual.show()
-
-    # TODO tostring to indiv
-
-    # Necessary for valid pickling, since modules cannot be pickled
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        return state
-
-    # Necessary for valid unpickling, since modules cannot be pickled
-    def __setstate__(self, state):
-        self.__dict__.update(state)

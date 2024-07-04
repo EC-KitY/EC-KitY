@@ -11,10 +11,10 @@ from types import NoneType
 import numpy as np
 
 from eckity.base.untyped_functions import (
-    untyped_add,
-    untyped_div,
-    untyped_mul,
-    untyped_sub,
+    f_add,
+    f_div,
+    f_mul,
+    f_sub,
 )
 from eckity.fitness.fitness import Fitness
 from eckity.genetic_encodings.gp.tree.tree_node import (
@@ -59,7 +59,7 @@ class Tree(Individual):
     ):
         super().__init__(fitness)
         if function_set is None:
-            function_set = [untyped_add, untyped_sub, untyped_mul, untyped_div]
+            function_set = [f_add, f_sub, f_mul, f_div]
 
         if terminal_set is None:
             terminal_set = {
@@ -86,16 +86,9 @@ class Tree(Individual):
         self.terminal_set = terminal_set
 
         self.init_depth = init_depth
+        self.vars = [var for var in terminal_set if isinstance(var, str)]
 
         self.root: TreeNode = root  # actual tree representation
-
-    @property
-    def tree(self) -> TreeNode:
-        logger.warn(
-            "Tree.tree is deprecated in version 0.4 and will be \
-                removed in version 0.5. Please use Tree.root instead."
-        )
-        return self.root
 
     def size(self):
         """
@@ -113,13 +106,6 @@ class Tree(Individual):
             self.root = node
         else:
             parent.add_child(node)
-
-    def add_tree(self, node, parent=None):
-        logger.warn(
-            "Tree.add_tree is deprecated and will be removed in\
-                     version 0.5. Please use Tree.add_child instead."
-        )
-        return self.add_child(node, parent)
 
     def empty_tree(self):
         self.root = None

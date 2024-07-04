@@ -24,5 +24,3 @@ class BestAverageWorstSizeTreeStatistics(Statistics):
                                           sub_pop.get_average_fitness(),
                                           np.average([ind.size() for ind in sub_pop.individuals])),
             )
-
-    # TODO tostring to indiv

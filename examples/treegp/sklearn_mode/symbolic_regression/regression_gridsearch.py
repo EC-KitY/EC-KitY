@@ -7,7 +7,7 @@ from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.sklearn_compatible.sk_regressor import SKRegressor
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
-from eckity.base.untyped_functions import untyped_add, untyped_mul, untyped_sub
+from eckity.base.untyped_functions import f_add, untyped_mul, untyped_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
@@ -48,7 +48,7 @@ def main():
     terminal_set = create_terminal_set(X)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
-    function_set = [untyped_add, untyped_mul, untyped_sub]
+    function_set = [f_add, untyped_mul, untyped_sub]
 
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(

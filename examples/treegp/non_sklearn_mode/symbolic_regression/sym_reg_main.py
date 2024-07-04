@@ -7,7 +7,7 @@ from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
 from eckity.base.untyped_functions import (
-    untyped_add,
+    f_add,
     untyped_mul,
     untyped_sub,
     untyped_div,
@@ -45,15 +45,15 @@ def main():
 
     Expected runtime: less than a minute (on 2 cores, 2.5 GHz CPU)
     Example of an optimal evolved tree:
-    untyped_add
-       untyped_add
-          untyped_add
-             untyped_add
+    f_add
+       f_add
+          f_add
+             f_add
                 y
                 z
              x
           z
-       untyped_add
+       f_add
           y
           z
     """
@@ -61,7 +61,7 @@ def main():
     # each node of the GP tree is either a terminal or a function
     # function nodes, each has two children (which are its operands)
     function_set = [
-        untyped_add,
+        f_add,
         untyped_mul,
         untyped_sub,
         untyped_div,

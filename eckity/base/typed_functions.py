@@ -1,147 +1,145 @@
 """
-This module implements functions used in the function (Numberernal) nodes of a GP tree.
+This module implements functions used in the function nodes of a GP tree.
 Note: all functions work on numpy arrays.
 """
 
-from numbers import Number
 from typing import Any
-
 import numpy as np
 
 
-def typed_add(x: Number, y: Number) -> Number:
+def add2floats(x: float, y: float) -> float:
     """x+y"""
     return np.add(x, y)
 
 
-def typed_sub(x: Number, y: Number) -> Number:
+def sub2floats(x: float, y: float) -> float:
     """x-y"""
     return np.subtract(x, y)
 
 
-def typed_mul(x: Number, y: Number) -> Number:
+def mul2floats(x: float, y: float) -> float:
     """x*y"""
     return np.multiply(x, y)
 
 
-def typed_div(x: Number, y: Number) -> Number:
+def div2floats(x: float, y: float) -> float:
     """protected division: if abs(y) > 0.001 return x/y else return 0"""
     with np.errstate(divide="ignore", invalid="ignore"):
         return np.where(np.abs(y) > 0.001, np.divide(x, y), 0.0)
 
 
-def typed_sqrt(x: Number) -> Number:
+def sqrt_float(x: float) -> float:
     """protected square root: sqrt(abs(x))"""
     return np.sqrt(np.absolute(x))
 
 
-def typed_log(x: Number) -> Number:
+def log_float(x: float) -> float:
     """protected log: if abs(x) > 0.001 return log(abs(x)) else return 0"""
     with np.errstate(divide="ignore", invalid="ignore"):
         return np.where(np.abs(x) > 0.001, np.log(np.abs(x)), 0.0)
 
 
-def typed_abs(x: Number) -> Number:
+def abs_float(x: float) -> float:
     """absolute value of x"""
     return np.absolute(x)
 
 
-def typed_neg(x: Number) -> Number:
+def neg_float(x: float) -> float:
     """negative of x"""
     return np.negative(x)
 
 
-def typed_inv(x: Number) -> Number:
+def inv_float(x: float) -> float:
     """protected inverse: if abs(x) > 0.001 return 1/x else return 0"""
-    return typed_div(1, x)
+    return div2floats(1, x)
 
 
-def typed_max(x: Number, y: Number) -> Number:
+def max2floats(x: float, y: float) -> float:
     """maximum(x,y)"""
     return np.maximum(x, y)
 
 
-def typed_min(x: Number, y: Number) -> Number:
+def min2floats(x: float, y: float) -> float:
     """minimum(x,y)"""
     return np.minimum(x, y)
 
 
-def typed_sin(x: Number) -> Number:
+def sin_float(x: float) -> float:
     """sin(x)"""
     return np.sin(x)
 
 
-def typed_cos(x: Number) -> Number:
+def cos_float(x: float) -> float:
     """cos(x)"""
     return np.cos(x)
 
 
-def typed_tan(x: Number) -> Number:
+def tan_float(x: float) -> float:
     """tan(x)"""
     return np.tan(x)
 
 
-def typed_iflte0(x: Number, y: Number, z: Number) -> Number:
+def iflte0_floats(x: float, y: float, z: float) -> float:
     """if x <= 0 return y else return z"""
     return np.where(x <= 0, y, z)
 
 
-def typed_ifgt0(x: Number, y: Number, z: Number) -> Number:
+def ifgt0_floats(x: float, y: float, z: float) -> float:
     """if x > 0 return y else return z"""
     return np.where(x > 0, y, z)
 
 
-def typed_iflte(x: Number, y: Number, z: Number, w: Number) -> Number:
+def iflte_floats(x: float, y: float, z: float, w: float) -> float:
     """if x <= y return z else return w"""
     return np.where(x <= y, z, w)
 
 
-def typed_ifgt(x: Number, y: Number, z: Number, w: Number) -> Number:
+def ifgt_floats(x: float, y: float, z: float, w: float) -> float:
     """if x > y return z else return w"""
     return np.where(x > y, z, w)
 
 
-def typed_and(x: Number, y: Number) -> Number:
+def and2floats(x: float, y: float) -> float:
     """x and y"""
     return np.bitwise_and(x, y)
 
 
-def typed_or(x: Number, y: Number) -> Number:
+def or2floats(x: float, y: float) -> float:
     """x or y"""
     return np.bitwise_or(x, y)
 
 
-def typed_not(x: Number) -> Number:
+def not2floats(x: float) -> float:
     """not x"""
-    return np.logical_not(x).astype(int)
+    return np.logical_not(x).astype(float)
 
 
-def typed_if_then_else(test: bool, dit: Any, dif: Any) -> Number:
+def if_then_else(test: bool, dit: Any, dif: Any) -> float:
     """if test return dit else return dif"""
     return np.where(test, dit, dif)
 
 
 full_function_set = [
-    typed_add,
-    typed_sub,
-    typed_mul,
-    typed_div,
-    typed_sqrt,
-    typed_log,
-    typed_abs,
-    typed_neg,
-    typed_inv,
-    typed_max,
-    typed_min,
-    typed_sin,
-    typed_cos,
-    typed_tan,
-    typed_iflte0,
-    typed_ifgt0,
-    typed_iflte,
-    typed_ifgt,
-    typed_and,
-    typed_or,
-    typed_not,
-    typed_if_then_else,
+    add2floats,
+    sub2floats,
+    mul2floats,
+    div2floats,
+    sqrt_float,
+    log_float,
+    abs_float,
+    neg_float,
+    inv_float,
+    max2floats,
+    min2floats,
+    sin_float,
+    cos_float,
+    tan_float,
+    iflte0_floats,
+    ifgt0_floats,
+    iflte_floats,
+    ifgt_floats,
+    and2floats,
+    or2floats,
+    not2floats,
+    if_then_else,
 ]

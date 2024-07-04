@@ -1,11 +1,15 @@
 from random import random
 from types import NoneType
-from typing import Callable, Optional
 
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, TreeNode
+from eckity.genetic_encodings.gp import (
+    FunctionNode,
+    TerminalNode,
+    Tree,
+    TreeNode,
+)
 
 
 class GrowCreator(GPTreeCreator):
@@ -59,15 +63,12 @@ class GrowCreator(GPTreeCreator):
         -------
         None.
         """
-        root = self.build_tree(
-            tree_ind.random_function_node, tree_ind.random_terminal_node, 0
-        )
+        root = self.build_tree(tree_ind, depth=0)
         tree_ind.root = root
 
     def build_tree(
         self,
-        function_generator: Callable[[Optional[TreeNode]], FunctionNode],
-        terminal_generator: Callable[[Optional[TreeNode]], TerminalNode],
+        tree_ind: Tree,
         depth: int,
         node_type: type = NoneType,
         parent: TreeNode = None,
@@ -89,24 +90,31 @@ class GrowCreator(GPTreeCreator):
         min_depth, max_depth = self.init_depth
 
         if depth < min_depth:
-            node = function_generator(node_type=node_type, parent=parent)
+            node = tree_ind.random_function_node(
+                node_type=node_type, parent=parent
+            )
             is_func = True
         elif depth >= max_depth:
-            node = terminal_generator(node_type=node_type, parent=parent)
+            node = tree_ind.random_terminal_node(
+                node_type=node_type, parent=parent
+            )
         else:  # intermediate depth, grow
             if random() > 0.5:
-                node = function_generator(node_type=node_type, parent=parent)
+                node = tree_ind.random_function_node(
+                    node_type=node_type, parent=parent
+                )
                 is_func = True
             else:
-                node = terminal_generator(node_type=node_type, parent=parent)
+                node = tree_ind.random_terminal_node(
+                    node_type=node_type, parent=parent
+                )
 
         if is_func:
             # recursively add children to the function node
             func_types = FunctionNode.get_func_types(node.function)
             for i in range(node.n_children):
                 child_node = self.build_tree(
-                    function_generator,
-                    terminal_generator,
+                    tree_ind,
                     depth=depth + 1,
                     node_type=func_types[i],
                     parent=node,

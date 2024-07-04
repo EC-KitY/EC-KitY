@@ -3,14 +3,11 @@ This module implements the fitness evaluation class, which delivers the fitness 
 You will need to implement such a class to work with your own problem and fitness function.
 """
 
-import numpy as np
 from sklearn.metrics import accuracy_score
 
 from eckity.evaluators.simple_individual_evaluator import (
     SimpleIndividualEvaluator,
 )
-
-CLASSIFICATION_THRESHOLD = 0
 
 
 class ClassificationEvaluator(SimpleIndividualEvaluator):

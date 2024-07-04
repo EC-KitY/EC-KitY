@@ -9,10 +9,10 @@ from eckity.base.typed_functions import (
     typed_sub,
 )
 from eckity.base.untyped_functions import (
-    untyped_add,
-    untyped_div,
-    untyped_mul,
-    untyped_sub,
+    f_add,
+    f_div,
+    f_mul,
+    f_sub,
 )
 from eckity.base.utils import arity
 from eckity.fitness.gp_fitness import GPFitness
@@ -35,7 +35,7 @@ class TestTree:
         2.0: float,
     }
 
-    untyped_functions = [untyped_add, untyped_sub, untyped_mul, untyped_div]
+    untyped_functions = [f_add, f_sub, f_mul, f_div]
     untyped_terminals = ["x", "y", 0, 1, -1.0, 2.0]
     typed_tree = Tree(
         fitness=GPFitness(),
@@ -72,7 +72,7 @@ class TestTree:
         """
         Test that add_child method adds child to the tree
         """
-        untyped_child = FunctionNode(untyped_add)
+        untyped_child = FunctionNode(f_add)
         self.untyped_tree.add_child(untyped_child)
         assert self.untyped_tree.root == untyped_child
         assert self.untyped_tree.root.node_type is NoneType
@@ -87,7 +87,7 @@ class TestTree:
             ),
             (
                 False,
-                FunctionNode(untyped_add),
+                FunctionNode(f_add),
                 TerminalNode(1),
             ),
         ],
@@ -122,7 +122,7 @@ class TestTree:
             ),
             (
                 False,
-                FunctionNode(untyped_add),
+                FunctionNode(f_add),
                 TerminalNode(1, int),
             ),
         ],

@@ -4,7 +4,7 @@ from types import NoneType
 import pytest
 
 from eckity.base.typed_functions import typed_add
-from eckity.base.untyped_functions import untyped_add
+from eckity.base.untyped_functions import f_add
 from eckity.genetic_encodings.gp import FunctionNode, TerminalNode
 
 
@@ -12,7 +12,7 @@ from eckity.genetic_encodings.gp import FunctionNode, TerminalNode
     "function, expected_types",
     [
         (typed_add, [Number, Number, Number]),
-        (untyped_add, [NoneType, NoneType, NoneType]),
+        (f_add, [NoneType, NoneType, NoneType]),
     ],
 )
 def test_get_func_types(function, expected_types):
@@ -37,7 +37,7 @@ def test_get_func_types(function, expected_types):
         ),
         (
             FunctionNode(
-                untyped_add,
+                f_add,
                 children=[TerminalNode(1), TerminalNode(1)],
             ),
             2,
@@ -62,7 +62,7 @@ def test_depth(node, expected):
         ),
         (
             FunctionNode(
-                untyped_add,
+                f_add,
                 children=[TerminalNode("x"), TerminalNode(1)],
             ),
             2,
