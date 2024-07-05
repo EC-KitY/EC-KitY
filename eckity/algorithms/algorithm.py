@@ -2,13 +2,13 @@
 This module implements the Algorithm class.
 """
 
-from abc import abstractmethod, ABC
-
-import random
-from concurrent.futures.thread import ThreadPoolExecutor
-from concurrent.futures.process import ProcessPoolExecutor
-from time import time
 import logging
+import random
+import sys
+from abc import ABC, abstractmethod
+from concurrent.futures.process import ProcessPoolExecutor
+from concurrent.futures.thread import ThreadPoolExecutor
+from time import time
 
 from overrides import overrides
 
@@ -21,6 +21,7 @@ SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 1000000
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 
 class Algorithm(Operator, ABC):
@@ -103,7 +104,9 @@ class Algorithm(Operator, ABC):
 
         ext_event_names = event_names.copy() if event_names is not None else []
 
-        ext_event_names.extend(["init", "evolution_finished", "after_generation"])
+        ext_event_names.extend(
+            ["init", "evolution_finished", "after_generation"]
+        )
         super().__init__(events=events, event_names=ext_event_names)
 
         # Assert valid population input
@@ -232,7 +235,7 @@ class Algorithm(Operator, ABC):
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
-        logger.info("random seed =", self.random_seed)
+        logger.info("random seed = %f", self.random_seed)
         self.population_evaluator.set_executor(self.executor)
 
         for field in self.__dict__.values():
@@ -373,7 +376,9 @@ class Algorithm(Operator, ABC):
         if isinstance(self.termination_checker, list):
             return any(
                 [
-                    t.should_terminate(population, best_of_run_, generation_num)
+                    t.should_terminate(
+                        population, best_of_run_, generation_num
+                    )
                     for t in self.termination_checker
                 ]
             )
