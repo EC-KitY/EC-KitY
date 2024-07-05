@@ -13,7 +13,7 @@ class HalfCreator(GPTreeCreator):
         init_depth=None,
         function_set=None,
         terminal_set=None,
-        bloat_weight=0.1,
+        bloat_weight=0.0,
         events=None,
     ):
         """
@@ -94,11 +94,18 @@ class HalfCreator(GPTreeCreator):
         # 10 'grow' with depth 2, 10 'full' with depth 2, 10 'grow' with depth 3, 10 'full' with depth 3, etc.
         group_size = int(n_individuals / (2 * (max_depth + 1 - min_depth)))
 
+        if group_size == 0:
+            raise ValueError(
+                "Incompatible population size and init_depth. "
+                "Population size must be "
+                f"at least {2 * (max_depth + 1 - min_depth)}."
+            )
+
         individuals = []
 
         for depth in range(min_depth, max_depth + 1):
-            for i in range(group_size):
-                # as explained above, first create (group_size) individuals using grow method
+            for _ in range(group_size):
+                # first create (group_size) individuals using grow method
                 self.init_method = self.grow_creator
                 self._create_individuals(individuals, depth, higher_is_better)
 
@@ -108,15 +115,15 @@ class HalfCreator(GPTreeCreator):
 
         # might need to add a few because 'group_size' may have been a float that was truncated
         self.init_method = self.full_creator
-        for i in range(n_individuals - len(individuals)):
-            self._create_individuals(individuals, max_depth, higher_is_better)
+        for _ in range(n_individuals - len(individuals)):
+            self._create_individuals(individuals, higher_is_better, max_depth)
 
         self.created_individuals = individuals
         return individuals
 
-    def _create_individuals(self, individuals, higher_is_better):
+    def _create_individuals(self, individuals, max_depth, higher_is_better):
         t = Tree(
-            init_depth=self.init_depth,
+            init_depth=(self.init_depth[0], max_depth),
             function_set=self.function_set,
             terminal_set=self.terminal_set,
             fitness=GPFitness(

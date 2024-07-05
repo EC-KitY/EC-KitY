@@ -213,7 +213,8 @@ class Tree(Individual):
         self.root.filter_nodes(filter_func, filtered_nodes)
         return filtered_nodes
 
-    def get_random_leaf(self, node_type=NoneType):
+    # TODO should it be here or in ERC mutation?
+    def get_random_erc_node(self) -> Optional[TerminalNode]:
         """
         Get a random leaf node of the tree.
 
@@ -227,16 +228,13 @@ class Tree(Individual):
         TreeNode
             Random leaf node.
         """
-        leaf_nodes = []
+        erc_nodes = []
         self.root.filter_nodes(
-            lambda node: (
-                node.node_type in [Any, NoneType]
-                or node.node_type == node_type
-            )
-            and isinstance(node, TerminalNode),
-            leaf_nodes,
+            lambda node: isinstance(node, TerminalNode)
+            and isinstance(node.value, Number),
+            erc_nodes,
         )
-        return random.choice(leaf_nodes) if leaf_nodes else None
+        return random.choice(erc_nodes) if erc_nodes else None
 
     def random_subtree(self, node_type=NoneType) -> Optional[TreeNode]:
         relevant_nodes = []
@@ -269,6 +267,9 @@ class Tree(Individual):
         None.
         """
         logger.info("\n" + str(self))
+
+    def __repr__(self):
+        return self.root.__repr__
 
 
 # end class tree

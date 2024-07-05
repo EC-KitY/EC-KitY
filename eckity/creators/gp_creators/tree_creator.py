@@ -19,7 +19,7 @@ class GPTreeCreator(Creator):
         function_set=None,
         terminal_set=None,
         fitness_type=SimpleFitness,
-        bloat_weight=0.1,
+        bloat_weight=0.0,
         events=None,
     ):
         if events is None:

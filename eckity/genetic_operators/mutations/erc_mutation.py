@@ -1,4 +1,3 @@
-from types import NoneType
 from typing import Any, List, Tuple
 
 from overrides import override
@@ -16,14 +15,12 @@ class ERCMutation(FailableOperator):
         erc_range=(-5, 5),
         mu=0,
         sigma=1,
-        typed=False,
         events=None,
     ):
         super().__init__(probability=probability, arity=arity, events=events)
         self.erc_range = erc_range
         self.mu = mu
         self.sigma = sigma
-        self.typed = typed
 
     @override
     def attempt_operator(
@@ -39,11 +36,7 @@ class ERCMutation(FailableOperator):
         """
         individuals: List[Tree] = payload
 
-        node_type = float if not self.typed else NoneType
-
-        leaves = [
-            ind.get_random_leaf(node_type=node_type) for ind in individuals
-        ]
+        leaves = [ind.get_random_erc_node() for ind in individuals]
 
         if None in leaves:
             return False, individuals
@@ -53,4 +46,4 @@ class ERCMutation(FailableOperator):
             terminal.value = terminal.value + random.gauss(mu, sigma)
 
         self.applied_individuals = individuals
-        return individuals
+        return True, individuals

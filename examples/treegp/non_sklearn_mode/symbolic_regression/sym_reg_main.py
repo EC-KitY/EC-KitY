@@ -86,7 +86,7 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.0001,
             ),
-            population_size=200,
+            population_size=4,
             # user-defined fitness evaluation method
             evaluator=SymbolicRegressionEvaluator(),
             # minimization problem (fitness is MAE), so higher fitness is worse

@@ -18,7 +18,7 @@ class FullCreator(GPTreeCreator):
         init_depth=None,
         function_set=None,
         terminal_set=None,
-        bloat_weight=0.1,
+        bloat_weight=0.0,
         events=None,
     ):
         """
@@ -66,9 +66,7 @@ class FullCreator(GPTreeCreator):
         -------
         None.
         """
-        root = self.build_tree(
-            tree_ind.random_function_node, tree_ind.random_terminal_node, 0
-        )
+        root = self.build_tree(tree_ind, depth=0)
         tree_ind.root = root
 
     def build_tree(

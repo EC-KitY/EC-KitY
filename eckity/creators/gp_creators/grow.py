@@ -18,7 +18,7 @@ class GrowCreator(GPTreeCreator):
         init_depth=None,
         function_set=None,
         terminal_set=None,
-        bloat_weight=0.1,
+        bloat_weight=0.0,
         events=None,
     ):
         """

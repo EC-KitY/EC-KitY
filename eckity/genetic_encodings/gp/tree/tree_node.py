@@ -151,7 +151,7 @@ class FunctionNode(TreeNode):
     @override
     def replace_child(self, old_child, new_child):
         for i, child in enumerate(self.children):
-            if child == old_child:
+            if child is old_child:
                 self.children[i] = new_child
                 return
             child.replace_child(old_child, new_child)

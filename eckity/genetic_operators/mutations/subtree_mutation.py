@@ -66,8 +66,7 @@ class SubtreeMutation(FailableOperator):
                 terminal_set=ind.terminal_set,
             )
             new_subtree = tree_creator.build_tree(
-                function_generator=ind.random_function_node,
-                terminal_generator=ind.random_terminal_node,
+                ind,
                 depth=0,
                 node_type=old_subtree.node_type,
                 parent=old_subtree.parent,
