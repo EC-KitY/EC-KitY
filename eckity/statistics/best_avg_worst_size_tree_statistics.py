@@ -22,5 +22,5 @@ class BestAverageWorstSizeTreeStatistics(Statistics):
                 self.format_string.format(best_individual.get_pure_fitness(),
                                           sub_pop.get_worst_individual().get_pure_fitness(),
                                           sub_pop.get_average_fitness(),
-                                          np.average([ind.size() for ind in sub_pop.individuals])),
+                                          np.average([ind.tree_size() for ind in sub_pop.individuals])),
             )

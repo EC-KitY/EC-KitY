@@ -8,16 +8,16 @@ from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
 from eckity.base.untyped_functions import (
     f_add,
-    untyped_mul,
-    untyped_sub,
-    untyped_div,
-    untyped_sqrt,
-    untyped_log,
-    untyped_abs,
-    untyped_max,
-    untyped_min,
-    untyped_inv,
-    untyped_neg,
+    f_mul,
+    f_sub,
+    f_div,
+    f_sqrt,
+    f_log,
+    f_abs,
+    f_max,
+    f_min,
+    f_inv,
+    f_neg,
 )
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
@@ -62,16 +62,16 @@ def main():
     # function nodes, each has two children (which are its operands)
     function_set = [
         f_add,
-        untyped_mul,
-        untyped_sub,
-        untyped_div,
-        untyped_sqrt,
-        untyped_log,
-        untyped_abs,
-        untyped_max,
-        untyped_min,
-        untyped_inv,
-        untyped_neg,
+        f_mul,
+        f_sub,
+        f_div,
+        f_sqrt,
+        f_log,
+        f_abs,
+        f_max,
+        f_min,
+        f_inv,
+        f_neg,
     ]
 
     # terminal set, consisted of variables and constants
@@ -86,7 +86,7 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.0001,
             ),
-            population_size=4,
+            population_size=200,
             # user-defined fitness evaluation method
             evaluator=SymbolicRegressionEvaluator(),
             # minimization problem (fitness is MAE), so higher fitness is worse

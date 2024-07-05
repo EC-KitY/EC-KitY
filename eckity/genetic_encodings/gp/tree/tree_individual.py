@@ -89,8 +89,9 @@ class Tree(Individual):
         self.vars = [var for var in terminal_set if isinstance(var, str)]
 
         self.root: TreeNode = root  # actual tree representation
+        self.size = 0 if root is None else root.size()
 
-    def size(self):
+    def tree_size(self):
         """
         Compute size of tree.
 
@@ -99,16 +100,18 @@ class Tree(Individual):
         int
             tree size (= number of nodes).
         """
-        return 0 if self.root is None else self.root.size()
+        return self.size
 
     def add_child(self, node, parent=None):
         if self.root is None:
             self.root = node
         else:
             parent.add_child(node)
+        self.size += 1
 
     def empty_tree(self):
         self.root = None
+        self.size = 0
 
     def depth(self):
         """
@@ -248,12 +251,15 @@ class Tree(Individual):
     def replace_subtree(self, old_subtree: TreeNode, new_subtree: TreeNode):
         if self.root is old_subtree:
             self.root = new_subtree
+            self.size = new_subtree.size()
         else:
             self.root.replace_child(old_subtree, new_subtree)
+            self.size += new_subtree.size() - old_subtree.size()
 
     def __str__(self):
         result = [
-            f"def func_{self.id}({', '.join(self.terminal_set)}):\n   return "
+            f"def func_{self.id}("
+            f"{', '.join([str(t) for t in self.terminal_set])}):\n   return "
         ]
         self.root.generate_tree_code("   ", result)
         return "".join(result)
