@@ -1,5 +1,5 @@
 from types import NoneType
-from typing import Callable, Optional
+from typing import Any, Callable, Dict, List, Tuple, Union
 
 from overrides import overrides
 
@@ -15,11 +15,11 @@ from eckity.genetic_encodings.gp import (
 class FullCreator(GPTreeCreator):
     def __init__(
         self,
-        init_depth=None,
-        function_set=None,
-        terminal_set=None,
-        bloat_weight=0.0,
-        events=None,
+        init_depth: Tuple[int, int] = None,
+        function_set: List[Callable] = None,
+        terminal_set: Union[Dict[Any, type], List[Any]] = None,
+        bloat_weight: float = 0.0,
+        events: List[str] = None,
     ):
         """
         Tree creator using the full method
@@ -50,7 +50,7 @@ class FullCreator(GPTreeCreator):
         )
 
     @overrides
-    def create_tree(self, tree_ind):
+    def create_tree(self, tree_ind: Tree) -> None:
         """
         Create a random tree using the full method, and assign it to the given individual.
 

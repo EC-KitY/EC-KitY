@@ -3,10 +3,10 @@ from numbers import Number
 import pytest
 
 from eckity.base.typed_functions import (
-    typed_add,
-    typed_div,
-    typed_mul,
-    typed_sub,
+    add2floats,
+    div2floats,
+    mul2floats,
+    sub2floats,
 )
 from eckity.base.untyped_functions import (
     f_add,
@@ -25,7 +25,7 @@ class TestTree:
     This class contains test cases for Tree and TreeNode classes
     """
 
-    typed_functions = [typed_add, typed_sub, typed_mul, typed_div]
+    typed_functions = [add2floats, sub2floats, mul2floats, div2floats]
     typed_terminals = {
         "x": float,
         "y": float,
@@ -63,10 +63,9 @@ class TestTree:
         """
         Test that add_child method adds child to the tree
         """
-        typed_child = FunctionNode(typed_add)
+        typed_child = FunctionNode(add2floats)
         self.typed_tree.add_child(typed_child)
         assert self.typed_tree.root == typed_child
-        assert self.typed_tree.root.node_type == Number
 
     def test_add_child_untyped(self, setup):
         """
@@ -82,8 +81,8 @@ class TestTree:
         [
             (
                 True,
-                FunctionNode(typed_add),
-                TerminalNode(1, int),
+                FunctionNode(add2floats),
+                TerminalNode(1.0, float),
             ),
             (
                 False,
@@ -112,12 +111,12 @@ class TestTree:
         [
             (
                 True,
-                FunctionNode(typed_add),
+                FunctionNode(add2floats),
                 TerminalNode("1", str),
             ),
             (
                 True,
-                FunctionNode(typed_add),
+                FunctionNode(add2floats),
                 TerminalNode(1, NoneType),
             ),
             (

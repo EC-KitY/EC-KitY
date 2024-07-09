@@ -1,20 +1,24 @@
+from typing import Any, Callable, Dict, List, Tuple, Union
+
+from overrides import override
+
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.creators.gp_creators.grow import GrowCreator
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 from eckity.fitness.gp_fitness import GPFitness
+from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 
 
 class HalfCreator(GPTreeCreator):
     def __init__(
         self,
-        grow_creator=None,
-        full_creator=None,
-        init_depth=None,
-        function_set=None,
-        terminal_set=None,
-        bloat_weight=0.0,
-        events=None,
+        grow_creator: GrowCreator = None,
+        full_creator: FullCreator = None,
+        init_depth: Tuple[int, int] = None,
+        function_set: List[Callable] = None,
+        terminal_set: Union[Dict[Any, type], List[Any]] = None,
+        bloat_weight: float = 0.0,
+        events: List[str] = None,
     ):
         """
         Tree creator that creates trees using the Ramped Half and Half method
@@ -33,7 +37,7 @@ class HalfCreator(GPTreeCreator):
         function_set : list
                 List of functions used as internal nodes in the GP tree. The default is None.
 
-        terminal_set : list
+        terminal_set : list or dict
                 List of terminals used in the GP-tree leaves. The default is None.
 
         bloat_weight : float
@@ -69,9 +73,10 @@ class HalfCreator(GPTreeCreator):
         self.grow_creator = grow_creator
         self.full_creator = full_creator
 
-        self.init_method = None  # current creator in use (either grow or full)
-
-    def create_individuals(self, n_individuals, higher_is_better):
+    @override
+    def create_individuals(
+        self, n_individuals: int, higher_is_better: bool
+    ) -> List[Tree]:
         """
         Initialize the subpopulation individuals using ramped half-and-half method.
 
@@ -87,7 +92,6 @@ class HalfCreator(GPTreeCreator):
         -------
 
         """
-
         min_depth, max_depth = self.init_depth
 
         # if pop size is 100 and we want depths 2,3,4,5,6 then group_size is 10:
@@ -103,36 +107,26 @@ class HalfCreator(GPTreeCreator):
 
         individuals = []
 
-        for depth in range(min_depth, max_depth + 1):
-            for _ in range(group_size):
-                # first create (group_size) individuals using grow method
-                self.init_method = self.grow_creator
-                self._create_individual(individuals, depth, higher_is_better)
+        for _ in range(min_depth, max_depth + 1):
+            # first create `group_size` individuals using grow method
+            grown_inds = self.grow_creator.create_individuals(
+                group_size, higher_is_better
+            )
 
-                # then create (group_size) individuals using full method
-                self.init_method = self.full_creator
-                self._create_individual(individuals, depth, higher_is_better)
+            # then create `group_size` individuals using full method
+            full_inds = self.full_creator.create_individuals(
+                group_size, higher_is_better
+            )
+
+            individuals.extend(grown_inds + full_inds)
 
         # might need to add a few because 'group_size' may have been a float that was truncated
-        self.init_method = self.full_creator
-        for _ in range(n_individuals - len(individuals)):
-            self._create_individual(individuals, max_depth, higher_is_better)
+        n_missing = n_individuals - len(individuals)
+        if n_missing > 0:
+            missing_inds = self.full_creator.create_individuals(
+                n_missing, higher_is_better
+            )
+            individuals.extend(missing_inds)
 
         self.created_individuals = individuals
         return individuals
-
-    def _create_individual(self, individuals, max_depth, higher_is_better):
-        t = Tree(
-            init_depth=(self.init_depth[0], max_depth),
-            function_set=self.function_set,
-            terminal_set=self.terminal_set,
-            fitness=GPFitness(
-                bloat_weight=self.bloat_weight,
-                higher_is_better=higher_is_better,
-            ),
-        )
-        self.create_tree(t)
-        individuals.append(t)
-
-    def create_tree(self, tree_ind):
-        self.init_method.create_tree(tree_ind)

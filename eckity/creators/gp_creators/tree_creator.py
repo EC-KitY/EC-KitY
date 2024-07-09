@@ -1,26 +1,23 @@
-from eckity.creators.creator import Creator
-from eckity.fitness.simple_fitness import SimpleFitness
-from eckity.base.untyped_functions import (
-    f_add,
-    f_sub,
-    f_mul,
-    f_div,
-)
-from eckity.fitness.gp_fitness import GPFitness
-from eckity.genetic_encodings.gp.tree.tree_individual import Tree, FunctionNode
+from typing import Any, Callable, Dict, List, Tuple, Union
 
-from abc import abstractmethod
+from overrides import override
+
+from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
+from eckity.creators.creator import Creator
+from eckity.fitness.gp_fitness import GPFitness
+from eckity.fitness.simple_fitness import SimpleFitness
+from eckity.genetic_encodings.gp.tree.tree_individual import FunctionNode, Tree
 
 
 class GPTreeCreator(Creator):
     def __init__(
         self,
-        init_depth=None,
-        function_set=None,
-        terminal_set=None,
-        fitness_type=SimpleFitness,
-        bloat_weight=0.0,
-        events=None,
+        init_depth: Tuple[int, int] = None,
+        function_set: List[Callable] = None,
+        terminal_set: Union[Dict[Any, type], List[Any]] = None,
+        fitness_type: type = SimpleFitness,
+        bloat_weight: float = 0.0,
+        events: List[str] = None,
     ):
         if events is None:
             events = ["after_creation"]
@@ -40,7 +37,10 @@ class GPTreeCreator(Creator):
         self.terminal_set = terminal_set
         self.bloat_weight = bloat_weight
 
-    def create_individuals(self, n_individuals, higher_is_better):
+    @override
+    def create_individuals(
+        self, n_individuals: int, higher_is_better: bool
+    ) -> List[Tree]:
         individuals = [
             Tree(
                 function_set=self.function_set,
@@ -58,11 +58,20 @@ class GPTreeCreator(Creator):
         self.created_individuals = individuals
         return individuals
 
-    @abstractmethod
-    def create_tree(self, tree_ind):
+    def create_tree(self, tree_ind: Tree) -> None:
+        """
+        Create the actual tree representation of an existing Tree individual
+
+        Parameters
+        ----------
+        tree_ind : Tree
+            Individual to create the tree representation for
+        """
         pass
 
-    def _build_children(self, node: FunctionNode, tree_ind: Tree, depth: int):
+    def _build_children(
+        self, node: FunctionNode, tree_ind: Tree, depth: int
+    ) -> None:
         # recursively add children to the function node
         func_types = FunctionNode.get_func_types(node.function)
         for i in range(node.n_children):

@@ -45,8 +45,8 @@ class Tree(Individual):
     function_set: list, default=None
         List of functions used as internal nodes in the GP tree.
 
-    terminal_set: list, default=None
-        List of terminals used in the GP-tree leaves.
+    terminal_set: list or dict, default=None
+        List of terminals (optionally dict with types as values) used in the GP-tree leaves.
     """
 
     def __init__(
