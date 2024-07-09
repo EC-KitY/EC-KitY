@@ -2,8 +2,10 @@
 This module implements some utility functions. 
 """
 
+from typing import Dict, List, Union
 
-def create_terminal_set(X):
+
+def create_terminal_set(X, typed=False) -> Union[List[str], Dict[str, type]]:
     """
     Create a terminal set from a 2D-shaped numpy array.
 
@@ -26,7 +28,10 @@ def create_terminal_set(X):
 
     """
 
-    return [f"x{i}" for i in range(X.shape[1])]
+    features = [f"x{i}" for i in range(X.shape[1])]
+    if not typed:
+        return features
+    return {x: X.dtype for x in features}
 
 
 def _generate_args(X):

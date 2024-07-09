@@ -60,8 +60,7 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 30 features, set terminal_set to: ['x0', 'x1', ..., 'x29']
-    terminal_set = create_terminal_set(X)
-    terminal_set = {x: float for x in terminal_set}
+    terminal_set = create_terminal_set(X, typed=True)
 
     # Define function set
     function_set = [argmax2, add2floats, sub2floats, mul2floats, div2floats]

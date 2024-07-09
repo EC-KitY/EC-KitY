@@ -14,7 +14,9 @@ from eckity.subpopulation import Subpopulation
 
 class TestSklearnCompatibility:
     def test_predict_without_fit(self):
-        algo = SimpleEvolution(Subpopulation(evaluator=ClassificationEvaluator()))
+        algo = SimpleEvolution(
+            Subpopulation(evaluator=ClassificationEvaluator())
+        )
         clf = SKClassifier(algo)
         X = [1, 2, 3]
         with pytest.raises(NotFittedError):

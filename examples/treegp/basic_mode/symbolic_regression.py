@@ -168,7 +168,6 @@ def main():
         breeder=SimpleBreeder(),
         max_workers=4,
         max_generation=500,
-        # random_seed=0,
         termination_checker=ThresholdFromTargetTerminationChecker(
             optimal=0, threshold=0.001
         ),

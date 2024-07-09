@@ -1,4 +1,4 @@
-from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import make_classification
 from sklearn.model_selection import GridSearchCV
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
@@ -37,18 +37,26 @@ from eckity.sklearn_compatible.classification_evaluator import (
     ClassificationEvaluator,
 )
 
+# Adding your own types and functions
+
+t_argmax = type("argmax", (int,), {})
+
+
+def argmax3(x0: float, x1: float, x2: float) -> t_argmax:
+    return np.argmax([x0, x1, x2])
+
 
 def main():
     """
-    Demonstrate sklearn compatibility through use of grid search, solving the breast cancer problem.
+    Demonstrate sklearn compatibility through use of grid search, solving a classification problem.
     """
 
     # load the brest cancer dataset from sklearn
-    X, y = load_breast_cancer(return_X_y=True)
+    X, y = make_classification(n_samples=100, n_features=20, n_classes=3)
 
     # Automatically generate a terminal set.
     # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', ..., 'x9']
-    terminal_set = create_terminal_set(X)
+    terminal_set = create_terminal_set(X, typed=True)
 
     # Define function set
     function_set = [
