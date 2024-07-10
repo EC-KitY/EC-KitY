@@ -34,7 +34,7 @@ class TreeNode(ABC):
         pass
 
     @abstractmethod
-    def depth(self, d=0):
+    def depth(self):
         """Recursively compute depth"""
         pass
 
@@ -81,8 +81,12 @@ class FunctionNode(TreeNode):
         super().__init__(return_type, parent)
 
         self.function = function
-        self.children: List[TreeNode] = children if children else []
         self.n_children = arity(function)
+
+        self.children = []
+        if children is not None:
+            for child in children:
+                self.add_child(child)
 
     @override
     def execute(self, **kwargs):
@@ -121,9 +125,9 @@ class FunctionNode(TreeNode):
         self.children.append(child)
 
     @override
-    def depth(self, d=0):
+    def depth(self):
         """Recursively compute depth"""
-        return 1 + max([child.depth(d) for child in self.children], default=0)
+        return 1 + max([child.depth() for child in self.children], default=0)
 
     @override
     def size(self):
@@ -201,9 +205,8 @@ class TerminalNode(TreeNode):
         self.value = value
 
     @override
-    def depth(self, d=0):
-        """Recursively compute depth"""
-        return 1
+    def depth(self):
+        return 0
 
     @override
     def execute(self, **kwargs):
@@ -211,8 +214,15 @@ class TerminalNode(TreeNode):
 
         if isinstance(self.value, Number):  # terminal is a constant
             return self.value
-        else:  # terminal is a variable, return its value
-            return kwargs[self.value]
+        # terminal is a variable, return its value if type matches
+        kwarg_val = kwargs[self.value]
+        kwarg_type = type(kwarg_val)
+        if self.node_type is not NoneType and self.node_type != kwarg_type:
+            raise TypeError(
+                f"Expected {self.value} to be of type {self.node_type},"
+                f"got {kwarg_type}."
+            )
+        return kwarg_val
 
     @override
     def generate_tree_code(self, prefix, result):

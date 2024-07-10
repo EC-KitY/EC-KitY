@@ -117,7 +117,7 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', 'x3', 'x4']
-    terminal_set = create_terminal_set(X)
+    terminal_set = create_terminal_set(X, typed=False)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
     function_set = [f_add, f_mul, f_sub]

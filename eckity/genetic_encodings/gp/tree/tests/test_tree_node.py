@@ -25,19 +25,48 @@ def test_get_func_types(function, expected_types):
 @pytest.mark.parametrize(
     "node, expected",
     [
-        (TerminalNode(1, int), 1),
-        (TerminalNode(1), 1),
+        (TerminalNode(1, int), 0),
+        (TerminalNode(1), 0),
         (
             FunctionNode(
                 add2floats,
-                children=[TerminalNode(1.0, float), TerminalNode(1.0, float)],
+                children=[TerminalNode(1.0, float), TerminalNode(2.0, float)],
+            ),
+            1,
+        ),
+        (
+            FunctionNode(
+                f_add,
+                children=[TerminalNode(1), TerminalNode(2)],
+            ),
+            1,
+        ),
+        (
+            FunctionNode(
+                add2floats,
+                children=[
+                    FunctionNode(
+                        add2floats,
+                        children=[
+                            TerminalNode(1.0, float),
+                            TerminalNode(2.0, float),
+                        ],
+                    ),
+                    TerminalNode(2.0, float),
+                ],
             ),
             2,
         ),
         (
             FunctionNode(
                 f_add,
-                children=[TerminalNode(1), TerminalNode(1)],
+                children=[
+                    FunctionNode(
+                        f_add,
+                        children=[TerminalNode(1), TerminalNode(2)],
+                    ),
+                    TerminalNode(2),
+                ],
             ),
             2,
         ),
@@ -57,7 +86,7 @@ def test_depth(node, expected):
                 add2floats,
                 children=[TerminalNode("x", float), TerminalNode(1.0, float)],
             ),
-            2,
+            2.0,
         ),
         (
             FunctionNode(
@@ -69,7 +98,17 @@ def test_depth(node, expected):
     ],
 )
 def test_execute(node, expected):
-    assert node.execute(x=1) == expected
+    assert node.execute(x=1.0) == expected
+
+
+def test_execute_bad_type():
+    """
+    Test that execute raises a TypeError if the input type is incorrect
+    """
+    node = TerminalNode("x", int)
+    with pytest.raises(TypeError) as excinfo:
+        node.execute(x=1.0)
+    assert f"type {node.node_type}" in str(excinfo)
 
 
 def test_missing_type_hints():

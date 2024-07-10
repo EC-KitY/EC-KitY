@@ -52,10 +52,10 @@ def main():
     """
 
     # load the brest cancer dataset from sklearn
-    X, y = make_classification(n_samples=100, n_features=20, n_classes=3)
+    X, y = make_classification(n_samples=100, n_features=10, n_classes=3)
 
     # Automatically generate a terminal set.
-    # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', ..., 'x9']
+    # Since there are 10 features, set terminal_set to: ['x0', 'x1', ..., 'x9']
     terminal_set = create_terminal_set(X, typed=True)
 
     # Define function set
