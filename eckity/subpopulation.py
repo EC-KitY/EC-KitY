@@ -1,18 +1,13 @@
+import logging
 import random
+
 import numpy as np
 
 from eckity.creators.creator import Creator
 from eckity.creators.gp_creators.full import FullCreator
-
-from eckity.genetic_operators.crossovers.subtree_crossover import (
-    SubtreeCrossover,
-)
+from eckity.genetic_operators import SubtreeCrossover, TournamentSelection
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import (
-    TournamentSelection,
-)
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +16,8 @@ class Subpopulation:
     """
     Subgroup of the experiment population.
 
-    Contains a specific encoding, fitness evaluation method, creator list, operator sequence and selection methods.
+    Contains a specific encoding, fitness evaluation method, creator list,
+    operator sequence and selection methods.
 
     Parameters
     ----------
@@ -37,16 +33,17 @@ class Subpopulation:
         Length must match the length of creators parameter.
 
     operators_sequence: list of Crossovers and Mutations, default=None
-        Possible crossover and mutation actions that can change the individuals' representations.
-        The operators will be done sequentially in each generation, by their order in the list.
-        See eckity.genetic_operators for more details on crossover and mutation operators
+        Crossovers and mutations that changes the individuals' representations.
+        The operators are done by their order in the list in each generation.
+        See eckity.genetic_operators for more information.
 
     selection_methods: list of SelectionMethods
         Methods for selecting individuals in each generation.
         See eckity.genetic_operators for more details on selection methods
 
     elitism_rate: float, default=0.0
-        What percentage of the sub-population's individuals should be kept as elites for the next generation
+        What percentage of the sub-population individuals
+        should be kept as-is for the next generation
 
     population_size: int, default=200
         The number of individuals in this sub-population.
@@ -55,14 +52,16 @@ class Subpopulation:
         The individuals list of this sub-population.
 
     higher_is_better: bool, default=False
-        Determines if the fitness value of this sub-population's individuals should be maximized or minimized.
+        Determines if the fitness values of this sub-population's
+        individuals should be maximized or minimized.
 
     Attributes
     ----------
     n_elite: int
         Number of the sub-population's elite individuals.
-        In every generation, there will be n_elites slots for the elite individuals
-        that will be copied as-is to the next generation.
+        In every generation, there will be n_elites slots
+        for the elite individuals that will be copied as
+        they are to the next generation.
     """
 
     def __init__(
@@ -90,13 +89,12 @@ class Subpopulation:
             for creator in creators:
                 if not isinstance(creator, Creator):
                     raise ValueError(
-                        "Detected a non-creator instance as an element in creators list"
+                        "Detected non-creator instance in creators list"
                     )
         else:
             raise ValueError(
-                "Parameter creators must be either a Creator or a list of Creators\n "
-                "received creators with unexpected type of",
-                type(creators),
+                "Creators must be either a Creator or a list of Creators\n "
+                f"Received creators with unexpected type of {type(creators)}",
             )
 
         if pcr is None:
@@ -105,7 +103,7 @@ class Subpopulation:
         if len(creators) != len(pcr):
             raise ValueError(
                 f"Number of creators ({len(creators)}) \
-                                    must match number of creation probabilities {(len(pcr))}!"
+                must match number of creation probabilities {(len(pcr))}!"
             )
         if sum(pcr) != 1:
             raise ValueError(
@@ -149,12 +147,13 @@ class Subpopulation:
 
     def create_subpopulation_individuals(self):
         if self.individuals is None:
-            # Select one creator to generate individuals, with respect to the creators' probabilities
+            # Select one creator to generate individuals,
+            # with respect to the creators' probabilities
+
+            # choices returns [selected_creator]
             selected_creator = random.choices(
                 self.creators, weights=self._pcr
-            )[
-                0
-            ]  # random.choices returns [selected_creator]
+            )[0]
             self.individuals = selected_creator.create_individuals(
                 self.population_size, self.higher_is_better
             )

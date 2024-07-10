@@ -1,19 +1,16 @@
 import logging
 from time import time
+
 from overrides import overrides
 
 from eckity.algorithms.algorithm import Algorithm
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.evaluators.simple_population_evaluator import (
-    SimplePopulationEvaluator,
-)
+from eckity.evaluators import SimplePopulationEvaluator
 from eckity.multi_objective_evolution.nsga2_front_sorting import (
     NSGA2FrontSorting,
 )
-
-from eckity.termination_checkers.threshold_from_target_termination_checker import (
-    ThresholdFromTargetTerminationChecker,
-)
+from eckity.random import RNG
+from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +29,8 @@ class NSGA2Evolution(Algorithm):
         termination_checker=ThresholdFromTargetTerminationChecker(threshold=0),
         executor="thread",
         max_workers=None,
-        random_generator=None,
-        random_seed=time(),
+        random_generator=RNG(),
+        random_seed=None,
         generation_seed=None,
         best_of_run_=None,
         best_of_run_evaluator=None,
