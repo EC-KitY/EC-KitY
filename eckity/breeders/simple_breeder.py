@@ -7,7 +7,7 @@ from eckity.genetic_operators.selections.elitism_selection import (
 class SimpleBreeder(Breeder):
     """
     A Simple version of Breeder class.
-    All simple classes assume that there is only one sub-population in the population.
+    All simple classes assume there is only one sub-population in population.
     """
 
     def __init__(self, events=None):
@@ -19,49 +19,58 @@ class SimpleBreeder(Breeder):
 
     def apply_breed(self, population):
         """
-        Apply elitism, selection method and the sub-population's operator sequence on each sub-population.
-        In simple case, the operator sequence is applied on the one and only sub-population.
+        Apply elitism, selection and operator sequence on the sub-populations.
+        In simple case, the operator sequence is applied on one sub-population.
 
         Parameters
         ----------
         population:
-                Population of sub-populations of individuals. The operators will be applied on those individuals.
+                Population of sub-populations of individuals.
+                The operators will be applied on those individuals.
 
         Returns
         -------
         None.
         """
-        # only one subpopulation in simple case
-        if len(population.sub_populations) != 1:
-            raise ValueError(
-                f"SimpleBreeder can only handle one subpopulation. \
-                    Got: {len(population.sub_populations)}"
+        for subpopulation in population.sub_populations:
+            # Assert that operator arities are compatible with pop size
+            # tuples of (selection, probability)
+            selection_methods = subpopulation.get_selection_methods()
+            selection_methods = [t[0] for t in selection_methods]
+
+            operators_sequence = subpopulation.get_operators_sequence()
+            operators = selection_methods + operators_sequence
+
+            for oper in operators:
+                if subpopulation.population_size % oper.arity != 0:
+                    raise ValueError(
+                        f"Operator {oper} arity must be "
+                        f"dividable by population size"
+                    )
+
+            nextgen_population = []
+
+            num_elites = subpopulation.n_elite
+            if num_elites > 0:
+                elitism_sel = ElitismSelection(
+                    num_elites=num_elites,
+                    higher_is_better=subpopulation.higher_is_better,
+                )
+                elitism_sel.apply_operator(
+                    (subpopulation.individuals, nextgen_population)
+                )
+
+            self.selected_individuals = subpopulation.get_selection_methods()[
+                0
+            ][0].select(subpopulation.individuals, nextgen_population)
+
+            # then runs all operators on next_gen
+            nextgen_population = self._apply_operators(
+                subpopulation.get_operators_sequence(),
+                self.selected_individuals,
             )
 
-        subpopulation = population.sub_populations[0]
-        nextgen_population = []
-
-        num_elites = subpopulation.n_elite
-        if num_elites > 0:
-            elitism_sel = ElitismSelection(
-                num_elites=num_elites,
-                higher_is_better=subpopulation.higher_is_better,
-            )
-            elitism_sel.apply_operator(
-                (subpopulation.individuals, nextgen_population)
-            )
-
-        self.selected_individuals = subpopulation.get_selection_methods()[0][
-            0
-        ].select(subpopulation.individuals, nextgen_population)
-
-        # then runs all operators on next_gen
-        nextgen_population = self._apply_operators(
-            subpopulation.get_operators_sequence(), self.selected_individuals
-        )
-        # TODO assert simple operators the has %0 with pop size
-
-        subpopulation.individuals = nextgen_population
+            subpopulation.individuals = nextgen_population
 
     def _apply_operators(self, operator_seq, individuals_to_apply_on):
         """
@@ -71,7 +80,7 @@ class SimpleBreeder(Breeder):
         Parameters
         ----------
         operator_seq: list of operators
-                Operator sequence. The operators will be applied sequentially on the given individuals.
+                Operator sequence. Applied sequentially on the individuals.
         individuals_to_apply_on: list of individuals
                 The individuals to apply the operator sequence on.
 
@@ -84,9 +93,9 @@ class SimpleBreeder(Breeder):
             operator_arity = operator.get_operator_arity()
             for i in range(0, len(individuals_to_apply_on), operator_arity):
                 op_res = operator.apply_operator(
-                    individuals_to_apply_on[i : i + operator_arity]
+                    individuals_to_apply_on[i: i + operator_arity]
                 )
-                individuals_to_apply_on[i : i + operator_arity] = op_res
+                individuals_to_apply_on[i: i + operator_arity] = op_res
         return individuals_to_apply_on
 
     def event_name_to_data(self, event_name):

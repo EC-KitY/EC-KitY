@@ -4,8 +4,9 @@ from .failable_operator import FailableOperator
 
 # selections
 from .selections.selection_method import SelectionMethod
-from .selections.elitism_selection import ElitismSelection
 from .selections.tournament_selection import TournamentSelection
+from .selections.fp_selection import FitnessProportionateSelection
+from .selections.elitism_selection import ElitismSelection
 
 # crossovers
 from .crossovers.subtree_crossover import SubtreeCrossover
