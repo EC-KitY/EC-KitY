@@ -5,6 +5,7 @@ from eckity.statistics.statistics import Statistics
 
 logger = logging.getLogger(__name__)
 
+
 class BestAverageWorstStatistics(Statistics):
     """
     Concrete Statistics class.
@@ -19,28 +20,25 @@ class BestAverageWorstStatistics(Statistics):
         For more information, check out the concrete classes who extend this class.
 
     """
+
     def __init__(self, format_string=None):
         if format_string is None:
-            format_string = 'best fitness {}\nworst fitness {}\naverage fitness {}\n'
+            format_string = (
+                "best fitness {}\nworst fitness {}\naverage fitness {}\n"
+            )
         super().__init__(format_string)
 
     def write_statistics(self, sender, data_dict):
         logger.info(f'generation #{data_dict["generation_num"]}')
-        for index, sub_pop in enumerate(data_dict["population"].sub_populations):
-            logger.info(f'subpopulation #{index}')
+        for index, sub_pop in enumerate(
+            data_dict["population"].sub_populations
+        ):
+            logger.info(f"subpopulation #{index}")
             best_individual = sub_pop.get_best_individual()
-            logger.info(self.format_string.format(best_individual.get_pure_fitness(),
-                                            sub_pop.get_worst_individual().get_pure_fitness(),
-                                            sub_pop.get_average_fitness()))
-            # best_individual.show()
-
-    # TODO tostring to indiv
-
-    # Necessary for valid pickling, since modules cannot be pickled
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        return state
-
-    # Necessary for valid unpickling, since modules cannot be pickled
-    def __setstate__(self, state):
-        self.__dict__.update(state)
+            logger.info(
+                self.format_string.format(
+                    best_individual.get_pure_fitness(),
+                    sub_pop.get_worst_individual().get_pure_fitness(),
+                    sub_pop.get_average_fitness(),
+                )
+            )

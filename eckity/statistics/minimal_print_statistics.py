@@ -4,6 +4,7 @@ from eckity.statistics.statistics import Statistics
 
 logger = logging.getLogger(__name__)
 
+
 class MinimalPrintStatistics(Statistics):
     """
     Concrete Statistics class.
@@ -17,9 +18,12 @@ class MinimalPrintStatistics(Statistics):
         Value depends on the information the statistics provides.
         For more information, check out the concrete classes who extend this class.
     """
+
     def __init__(self, format_string=None):
         if format_string is None:
-            format_string = 'best fitness {}\nworst fitness {}\naverage fitness {}\n'
+            format_string = (
+                "best fitness {}\nworst fitness {}\naverage fitness {}\n"
+            )
         super().__init__(format_string)
 
     def write_statistics(self, sender, data_dict):
