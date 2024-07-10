@@ -1,6 +1,5 @@
-from random import random
-
 from overrides import overrides
+import random
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 
@@ -82,7 +81,7 @@ class GrowCreator(GPTreeCreator):
 		elif depth >= max_depth:
 			node = tree_ind.random_terminal()
 		else:  # intermediate depth, grow
-			if random() > 0.5:
+			if random.random() > 0.5:
 				node = tree_ind.random_function()
 				is_func = True
 			else:

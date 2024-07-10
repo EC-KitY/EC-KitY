@@ -8,6 +8,7 @@ class SimpleFitness(Fitness):
     This class is responsible for handling the fitness score of some Individual
     (checking if fitness is evaluated, comparing fitness scores with other individuals etc.)
 
+    All simple classes assume only one sub-population.
     In the simple case, each individual holds a float fitness score
 
     fitness: float

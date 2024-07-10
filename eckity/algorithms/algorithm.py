@@ -2,77 +2,80 @@
 This module implements the Algorithm class.
 """
 
-from abc import abstractmethod, ABC
-
-import random
-from concurrent.futures.thread import ThreadPoolExecutor
-from concurrent.futures.process import ProcessPoolExecutor
-from time import time
 import logging
+import sys
+from abc import ABC, abstractmethod
+from concurrent.futures.process import ProcessPoolExecutor
+from concurrent.futures.thread import ThreadPoolExecutor
+from time import time
+from typing import Any, List, Union
 
 from overrides import overrides
 
 from eckity.event_based_operator import Operator
 from eckity.population import Population
+from eckity.random import RNG
 from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
-SEED_MIN_VALUE = 0
-SEED_MAX_VALUE = 1000000
-
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 
 class Algorithm(Operator, ABC):
     """
         Evolutionary algorithm to be executed.
 
-        Abstract Algorithm that can be extended to concrete algorithms such as SimpleAlgorithm.
+        Abstract Algorithm that can be extended to concrete algorithms,
+        such as SimpleEvolution, Coevolution etc.
 
         Parameters
         ----------
         population: Population
-                The population to be evolved. Consists of a list of individuals.
+                The population to be evolved.
 
         statistics: Statistics or list of Statistics, default=None
-                Provide multiple statistics on the population during the evolutionary run.
+                Provide statistics on the population during the evolution.
 
     breeder: Breeder, default=SimpleBreeder()
-        Responsible for applying the selection method and operator sequence on the individuals
+        Responsible for applying selection and operator sequence on individuals
         in each generation. Applies on one sub-population in simple case.
 
-    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
-        Responsible for evaluating each individual's fitness concurrently and returns the best
-         individual of each subpopulation (returns a single individual in simple case).
+    population_evaluator: PopulationEvaluator,
+                          default=SimplePopulationEvaluator()
+        Evaluates individual fitness scores concurrently and returns the best
+         individual of each subpopulation (one individual in simple case).
 
         max_generation: int, default=1000
                 Maximal number of generations to run the evolutionary process.
                 Note the evolution could end before reaching max_generation,
                 depends on the termination checker.
-                Note that there are max_generation + 1 (at max) fitness calculations,
-                but only max_generation (at max) of selection
+                Note there are up to `max_generation + 1` fitness calculations,
+                but only up to `max_generation` selections
 
         events: dict(str, dict(object, function)), default=None
-                Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
+                dict of events, each event holds a dict (subscriber, callback).
 
         event_names: list of strings, default=None
                 Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker or a list of TerminationCheckers, default=ThresholdFromTargetTerminationChecker()
-        Responsible for checking if the algorithm should finish before reaching max_generation.
+    termination_checker: TerminationChecker or a list of TerminationCheckers,
+                          default=ThresholdFromTargetTerminationChecker()
+        Checks if the algorithm should terminate early.
 
         max_workers: int, default=None
                 Maximal number of worker nodes for the Executor object
                 that evaluates the fitness of the individuals.
 
-        random_generator: module, default=random
-                Random generator module.
+        random_generator: RNG, default=RNG()
+                Random Number Generator.
 
-        random_seed: float or int, default=current system time
+        random_seed: int, default=current system time
                 Random seed for deterministic experiment.
 
         generation_seed: int, default=None
-                Current generation seed. Useful for resuming a previously paused experiment.
+                Current generation seed.
+                Useful for resuming a previously paused experiment.
 
         generation_num: int, default=0
                 Current generation number
@@ -85,16 +88,16 @@ class Algorithm(Operator, ABC):
 
     def __init__(
         self,
-        population,
-        statistics=None,
+        population: Union[Population, Subpopulation, List[Subpopulation]],
+        statistics: Union[Statistics, List[Statistics]] = None,
         breeder=None,
         population_evaluator=None,
         termination_checker=None,
         max_generation=None,
         events=None,
         event_names=None,
-        random_generator=None,
-        random_seed=time(),
+        random_generator: RNG = RNG(),
+        random_seed=None,
         generation_seed=None,
         executor="thread",
         max_workers=None,
@@ -108,63 +111,27 @@ class Algorithm(Operator, ABC):
         )
         super().__init__(events=events, event_names=ext_event_names)
 
-        # Assert valid population input
-        if population is None:
-            raise ValueError("Population cannot be None")
-
-        if isinstance(population, Population):
-            self.population = population
-        elif isinstance(population, Subpopulation):
-            self.population = Population([population])
-        elif isinstance(population, list):
-            if len(population) == 0:
-                raise ValueError("Population cannot be empty")
-            for sub_pop in population:
-                if not isinstance(sub_pop, Subpopulation):
-                    raise ValueError(
-                        "Detected a non-Subpopulation "
-                        "instance as an element in Population"
-                    )
-            self.population = Population(population)
-        else:
-            raise ValueError(
-                "Parameter population must be either a Population, "
-                "a Subpopulation or a list of Subpopulations\n "
-                "received population with unexpected type of",
-                type(population),
-            )
-
-        # Assert valid statistics input
-        if isinstance(statistics, Statistics):
-            self.statistics = [statistics]
-        elif isinstance(statistics, list):
-            for stat in statistics:
-                if not isinstance(stat, Statistics):
-                    raise ValueError(
-                        "Expected a Statistics instance as an element"
-                        " in Statistics list, but received",
-                        type(stat),
-                    )
-            self.statistics = statistics
-        else:
-            raise ValueError(
-                "Parameter statistics must be either a subclass of Statistics"
-                " or a list of subclasses of Statistics.\n"
-                "received statistics with unexpected type of",
-                type(statistics),
-            )
+        self._validate_population_type(population)
+        self._validate_statistics_type(statistics)
 
         self.breeder = breeder
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
         self.max_generation = max_generation
 
-        if random_generator is None:
-            random_generator = random
+        # set random seed to current time if not provided
+        if random_seed is None:
+            t = time()
+            # convert seed to int for np.random compatibility
+            pre_dec_pnt, post_dec_pnt = str(t).split(".")
+            int_seed = int(pre_dec_pnt + post_dec_pnt)
+            random_seed = int_seed % (2**32)
 
         self.random_generator = random_generator
         self.random_seed = random_seed
-        self.generation_seed = generation_seed
+        self.generation_seed = (
+            generation_seed if generation_seed is not None else random_seed
+        )
 
         self.best_of_run_ = None
         self.worst_of_gen = None
@@ -191,8 +158,9 @@ class Algorithm(Operator, ABC):
 
     def evolve(self):
         """
-        Performs the evolutionary run by initializing the random seed, creating the population,
-        performing the evolutionary loop and finally finishing the evolution process
+        Performs the evolutionary run by initializing the random seed,
+        creating the population, performing the evolutionary loop
+        and finally finishing the evolution process
         """
         self.initialize()
 
@@ -215,7 +183,8 @@ class Algorithm(Operator, ABC):
         Parameters
         ----------
         kwargs : keyword arguments (relevant in GP representation)
-                Input to program, including every variable in the terminal set as a keyword argument.
+                Input to program, including every variable
+                in the terminal set as a keyword argument.
                 For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]`
                 then call `execute(x=..., y=..., z=...)`.
 
@@ -234,7 +203,7 @@ class Algorithm(Operator, ABC):
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
-        logger.info("random seed =", self.random_seed)
+        logger.info("random seed = %f", self.random_seed)
         self.population_evaluator.set_executor(self.executor)
 
         for field in self.__dict__.values():
@@ -245,12 +214,60 @@ class Algorithm(Operator, ABC):
         self.best_of_run_ = self.population_evaluator.act(self.population)
         self.publish("init")
 
+    def _validate_population_type(self, population: Any) -> None:
+        # Assert valid population input
+        if population is None:
+            raise ValueError("Population cannot be None")
+
+        if isinstance(population, Population):
+            self.population = population
+        elif isinstance(population, Subpopulation):
+            self.population = Population([population])
+        elif isinstance(population, list):
+            if len(population) == 0:
+                raise ValueError("Population cannot be empty")
+            for sub_pop in population:
+                if not isinstance(sub_pop, Subpopulation):
+                    raise ValueError(
+                        "Detected a non-Subpopulation "
+                        "instance as an element in Population"
+                    )
+            self.population = Population(population)
+        else:
+            raise ValueError(
+                "Parameter population must be either a Population, "
+                "a Subpopulation or a list of Subpopulations. "
+                "Received population with unexpected type of",
+                type(population),
+            )
+
+    def _validate_statistics_type(self, statistics: Any) -> None:
+        # Assert valid statistics input
+        if isinstance(statistics, Statistics):
+            self.statistics = [statistics]
+        elif isinstance(statistics, list):
+            for stat in statistics:
+                if not isinstance(stat, Statistics):
+                    raise ValueError(
+                        "Expected a Statistics instance as an element"
+                        " in Statistics list, but received",
+                        type(stat),
+                    )
+            self.statistics = statistics
+        else:
+            raise ValueError(
+                "Parameter statistics must be either a subclass of Statistics"
+                " or a list of subclasses of Statistics.\n"
+                "received statistics with unexpected type of",
+                type(statistics),
+            )
+
     def evolve_main_loop(self):
         """
         Performs the evolutionary main loop
         """
         # there was already "preprocessing" generation created - gen #0
-        # now create another self.max_generation generations (at maximum), starting for gen #1
+        # now create another self.max_generation generations, starting gen #1
         for gen in range(1, self.max_generation + 1):
             self.generation_num = gen
             self.update_gen(self.population, gen)
@@ -293,18 +310,6 @@ class Algorithm(Operator, ABC):
         """
         self.executor.shutdown()
 
-    def set_generation_seed(self, seed):
-        """
-        Set the seed for current generation
-
-        Parameters
-        ----------
-        seed: int
-                current generation seed
-        """
-        self.random_generator.seed(seed)
-        self.generation_seed = seed
-
     def create_population(self):
         """
         Create the population for the evolutionary run
@@ -313,7 +318,7 @@ class Algorithm(Operator, ABC):
 
     def event_name_to_data(self, event_name):
         """
-        Convert a given event name to relevant data of the Algorithm for the event
+        Convert event name to relevant data of the Algorithm for the event
 
         Parameters
         ----------
@@ -337,28 +342,31 @@ class Algorithm(Operator, ABC):
             }
         return {}
 
-    def set_random_generator(self, rng):
-        """
-        Set random generator object
-
-        Parameters
-        ----------
-        rng: object
-                random number generator
-        """
-        self.random_generator = rng
-
     def set_random_seed(self, seed=None):
         """
-        Set random seed
+        Set the initial seed for the random generator
+        This method is called once at the beginning of the run.
 
         Parameters
         ----------
         seed: int
                 random seed number
         """
-        self.random_generator.seed(seed)
+        self.random_generator.set_seed(seed)
         self.random_seed = seed
+
+    def set_generation_seed(self, seed):
+        """
+        Set the seed for current generation.
+        This method is called once every generation.
+
+        Parameters
+        ----------
+        seed: int
+                current generation seed
+        """
+        self.random_generator.set_seed(seed)
+        self.generation_seed = seed
 
     def next_seed(self):
         """
@@ -367,9 +375,9 @@ class Algorithm(Operator, ABC):
         Returns
         ----------
         int
-                random seed number
+        random seed number
         """
-        return self.random_generator.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
+        return (self.generation_seed + 1) % (2**32)
 
     def should_terminate(self, population, best_of_run_, generation_num):
         if isinstance(self.termination_checker, list):
@@ -386,20 +394,16 @@ class Algorithm(Operator, ABC):
                 population, best_of_run_, generation_num
             )
 
-            # Necessary for valid pickling, since SimpleQueue object cannot be pickled
-
+    # Necessary for pickling, since executor objects cannot be pickled
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["executor"]
-        del state["random_generator"]
-
         return state
 
-    # Necessary for valid unpickling, since SimpleQueue object cannot be pickled
+    # Necessary for unpickling, since executor objects cannot be pickled
     def __setstate__(self, state):
         self.__dict__.update(state)
         if self._executor_type == "thread":
             self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
         else:
             self.executor = ProcessPoolExecutor(max_workers=self.max_workers)
-        self.random_generator = random

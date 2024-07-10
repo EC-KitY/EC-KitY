@@ -14,6 +14,7 @@ class Statistics(ABC):
         For more information, check out the concrete classes who extend this class.
 
     """
+
     def __init__(self, format_string):
         self.format_string = format_string
 
@@ -39,4 +40,3 @@ class Statistics(ABC):
         None.
         """
         pass
-

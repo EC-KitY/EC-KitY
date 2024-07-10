@@ -1,13 +1,9 @@
-from eckity.genetic_operators.selections.selection_method import (
-    SelectionMethod,
-)
+from eckity.genetic_operators import SelectionMethod
 
 
 class ElitismSelection(SelectionMethod):
     def __init__(self, num_elites, higher_is_better=False, events=None):
-        super().__init__(
-            events=events, higher_is_better=higher_is_better
-        )
+        super().__init__(events=events, higher_is_better=higher_is_better)
         self.num_elites = num_elites
         self.higher_is_better = higher_is_better
 

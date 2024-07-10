@@ -5,6 +5,11 @@ from eckity.genetic_operators.selections.elitism_selection import (
 
 
 class SimpleBreeder(Breeder):
+    """
+    A Simple version of Breeder class.
+    All simple classes assume there is only one sub-population in population.
+    """
+
     def __init__(self, events=None):
         super().__init__(events=events)
         self.selected_individuals = (
@@ -14,13 +19,14 @@ class SimpleBreeder(Breeder):
 
     def apply_breed(self, population):
         """
-        Apply elitism, selection method and the sub-population's operator sequence on each sub-population.
-        In simple case, the operator sequence is applied on the one and only sub-population.
+        Apply elitism, selection and operator sequence on the sub-populations.
+        In simple case, the operator sequence is applied on one sub-population.
 
         Parameters
         ----------
         population:
-                Population of sub-populations of individuals. The operators will be applied on those individuals.
+                Population of sub-populations of individuals.
+                The operators will be applied on those individuals.
 
         Returns
         -------
@@ -74,7 +80,7 @@ class SimpleBreeder(Breeder):
         Parameters
         ----------
         operator_seq: list of operators
-                Operator sequence. The operators will be applied sequentially on the given individuals.
+                Operator sequence. Applied sequentially on the individuals.
         individuals_to_apply_on: list of individuals
                 The individuals to apply the operator sequence on.
 
@@ -87,9 +93,9 @@ class SimpleBreeder(Breeder):
             operator_arity = operator.get_operator_arity()
             for i in range(0, len(individuals_to_apply_on), operator_arity):
                 op_res = operator.apply_operator(
-                    individuals_to_apply_on[i : i + operator_arity]
+                    individuals_to_apply_on[i: i + operator_arity]
                 )
-                individuals_to_apply_on[i : i + operator_arity] = op_res
+                individuals_to_apply_on[i: i + operator_arity] = op_res
         return individuals_to_apply_on
 
     def event_name_to_data(self, event_name):
