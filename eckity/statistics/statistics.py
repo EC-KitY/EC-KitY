@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 
-class Statistics:
+class Statistics(ABC):
     """
     Abstract Statistics class.
     Provides statistics about the current evolution state.
@@ -14,6 +14,7 @@ class Statistics:
         For more information, check out the concrete classes who extend this class.
 
     """
+
     def __init__(self, format_string):
         self.format_string = format_string
 
@@ -39,4 +40,3 @@ class Statistics:
         None.
         """
         pass
-

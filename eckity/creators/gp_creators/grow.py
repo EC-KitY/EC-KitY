@@ -5,11 +5,7 @@ from typing import Any, Callable, Dict, List, Tuple, Union
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import (
-    FunctionNode,
-    Tree,
-    TreeNode,
-)
+from eckity.genetic_encodings.gp import FunctionNode, Tree, TreeNode
 
 
 class GrowCreator(GPTreeCreator):
@@ -29,14 +25,14 @@ class GrowCreator(GPTreeCreator):
         init_depth : (int, int)
         Min and max depths of initial random trees. The default is None.
 
-        function_set : list
-                List of functions used as internal nodes in the GP-tree. The default is None.
+        function_set : list, default=None
+                List of functions used as internal nodes in the GP-tree.
 
-        terminal_set : list
-                List of terminals used in the GP-tree leaves. The default is None.
+        terminal_set : list, default=None.
+                List of terminals used in the GP-tree leaves.
 
-        bloat_weight : float
-                Bloat control weight to punish large trees. Bigger values make a bigger punish.
+        bloat_weight : float, default=0.0
+                Bloat control weight to punish large trees.
 
         events : list
                 List of events related to this class
@@ -52,12 +48,13 @@ class GrowCreator(GPTreeCreator):
     @overrides
     def create_tree(self, tree_ind: Tree) -> None:
         """
-        Create a random tree using the grow method, and assign it to the given individual.
+        Create a random tree using the grow method,
+        and assign it to the given individual.
 
         Parameters
         ----------
         tree_ind: Tree
-                An individual of GP Tree representation with an initially empty tree
+                GP Tree Individual with an initially empty tree
 
         Returns
         -------

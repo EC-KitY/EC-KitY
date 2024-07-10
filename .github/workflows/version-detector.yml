@@ -1,0 +1,29 @@
+name: Check version changes
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_version_change:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      # check that the version is updated on a PR to main
+      - name: Scan for '__version__' in changed files
+        id: version-detector
+        run: |
+          TARGET_BRANCH="${{ github.event.pull_request.base.ref }}"
+          git diff HEAD..origin/"$TARGET_BRANCH" | grep -i -n "__version__[[:space:]]*=" > detections.txt
+
+          if ! [ -s detections.txt ]; then
+            cat detections.txt
+            echo "ERROR: The __version__ line was not changed in a pull request to main."
+            exit 1
+          fi

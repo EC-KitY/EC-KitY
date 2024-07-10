@@ -13,6 +13,7 @@ from eckity.evaluators.simple_individual_evaluator import (
 class ClassificationEvaluator(SimpleIndividualEvaluator):
     """
     Class to compute the fitness of an individual in classification problems.
+    All simple classes assume only one sub-population.
     """
 
     def __init__(self, X=None, y=None, metric=accuracy_score):
