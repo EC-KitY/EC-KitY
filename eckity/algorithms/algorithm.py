@@ -2,9 +2,8 @@
 This module implements the Algorithm class.
 """
 
-import hashlib
 import logging
-import struct
+import sys
 from abc import ABC, abstractmethod
 from concurrent.futures.process import ProcessPoolExecutor
 from concurrent.futures.thread import ThreadPoolExecutor
@@ -20,45 +19,49 @@ from eckity.statistics.statistics import Statistics
 from eckity.subpopulation import Subpopulation
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 
 class Algorithm(Operator, ABC):
     """
         Evolutionary algorithm to be executed.
 
-        Abstract Algorithm that can be extended to concrete algorithms such as SimpleAlgorithm.
+        Abstract Algorithm that can be extended to concrete algorithms,
+        such as SimpleEvolution, Coevolution etc.
 
         Parameters
         ----------
         population: Population
-                The population to be evolved. Consists of a list of individuals.
+                The population to be evolved.
 
         statistics: Statistics or list of Statistics, default=None
-                Provide multiple statistics on the population during the evolutionary run.
+                Provide statistics on the population during the evolution.
 
     breeder: Breeder, default=SimpleBreeder()
-        Responsible for applying the selection method and operator sequence on the individuals
+        Responsible for applying selection and operator sequence on individuals
         in each generation. Applies on one sub-population in simple case.
 
-    population_evaluator: PopulationEvaluator, default=SimplePopulationEvaluator()
-        Responsible for evaluating each individual's fitness concurrently and returns the best
-         individual of each subpopulation (returns a single individual in simple case).
+    population_evaluator: PopulationEvaluator,
+                          default=SimplePopulationEvaluator()
+        Evaluates individual fitness scores concurrently and returns the best
+         individual of each subpopulation (one individual in simple case).
 
         max_generation: int, default=1000
                 Maximal number of generations to run the evolutionary process.
                 Note the evolution could end before reaching max_generation,
                 depends on the termination checker.
-                Note that there are max_generation + 1 (at max) fitness calculations,
-                but only max_generation (at max) of selection
+                Note there are up to `max_generation + 1` fitness calculations,
+                but only up to `max_generation` selections
 
         events: dict(str, dict(object, function)), default=None
-                Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
+                dict of events, each event holds a dict (subscriber, callback).
 
         event_names: list of strings, default=None
                 Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker or a list of TerminationCheckers, default=ThresholdFromTargetTerminationChecker()
-        Responsible for checking if the algorithm should finish before reaching max_generation.
+    termination_checker: TerminationChecker or a list of TerminationCheckers,
+                          default=ThresholdFromTargetTerminationChecker()
+        Checks if the algorithm should terminate early.
 
         max_workers: int, default=None
                 Maximal number of worker nodes for the Executor object
@@ -71,7 +74,8 @@ class Algorithm(Operator, ABC):
                 Random seed for deterministic experiment.
 
         generation_seed: int, default=None
-                Current generation seed. Useful for resuming a previously paused experiment.
+                Current generation seed.
+                Useful for resuming a previously paused experiment.
 
         generation_num: int, default=0
                 Current generation number
@@ -154,8 +158,9 @@ class Algorithm(Operator, ABC):
 
     def evolve(self):
         """
-        Performs the evolutionary run by initializing the random seed, creating the population,
-        performing the evolutionary loop and finally finishing the evolution process
+        Performs the evolutionary run by initializing the random seed,
+        creating the population, performing the evolutionary loop
+        and finally finishing the evolution process
         """
         self.initialize()
 
@@ -178,7 +183,8 @@ class Algorithm(Operator, ABC):
         Parameters
         ----------
         kwargs : keyword arguments (relevant in GP representation)
-                Input to program, including every variable in the terminal set as a keyword argument.
+                Input to program, including every variable
+                in the terminal set as a keyword argument.
                 For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]`
                 then call `execute(x=..., y=..., z=...)`.
 
@@ -197,7 +203,7 @@ class Algorithm(Operator, ABC):
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
-        logger.info("random seed =", self.random_seed)
+        logger.info("random seed = %f", self.random_seed)
         self.population_evaluator.set_executor(self.executor)
 
         for field in self.__dict__.values():
@@ -261,7 +267,7 @@ class Algorithm(Operator, ABC):
         Performs the evolutionary main loop
         """
         # there was already "preprocessing" generation created - gen #0
-        # now create another self.max_generation generations, starting for gen #1
+        # now create another self.max_generation generations, starting gen #1
         for gen in range(1, self.max_generation + 1):
             self.generation_num = gen
             self.update_gen(self.population, gen)
@@ -312,7 +318,7 @@ class Algorithm(Operator, ABC):
 
     def event_name_to_data(self, event_name):
         """
-        Convert a given event name to relevant data of the Algorithm for the event
+        Convert event name to relevant data of the Algorithm for the event
 
         Parameters
         ----------

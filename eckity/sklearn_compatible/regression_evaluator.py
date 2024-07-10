@@ -12,6 +12,7 @@ from eckity.evaluators import SimpleIndividualEvaluator
 class RegressionEvaluator(SimpleIndividualEvaluator):
     """
     Computes the fitness of an individual in regression problems.
+    All simple classes assume only one sub-population.
 
     Parameters
     ----------

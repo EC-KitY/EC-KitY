@@ -21,35 +21,42 @@ class SimpleEvolution(Algorithm):
     Parameters
     ----------
     population: Population
-            The population to be evolved. Contains only one subpopulation in simple case.
-            Consists of a list of individuals.
+            The population to be evolved.
+            Contains only one subpopulation in simple case.
+
 
     statistics: Statistics or list of Statistics, default=None
-            Provide multiple statistics on the population during the evolutionary run.
+            Provide multiple statistics on the population during the evolution.
 
     breeder: SimpleBreeder, default=SimpleBreeder instance
-            Responsible for applying the selection method and operator sequence on the individuals
+            Responsible for applying selection and operators on individuals
             in each generation. Applies on one subpopulation in simple case.
 
-    population_evaluator: SimplePopulationEvaluator, default=SimplePopulationEvaluator instance
-            Responsible for evaluating each individual's fitness concurrently and returns the best individual
-            of each subpopulation (returns a single individual in simple case).
+    population_evaluator: SimplePopulationEvaluator,
+                          default=SimplePopulationEvaluator instance
+            Responsible for evaluating each individual's fitness concurrently
+            and returns the best individual of each subpopulation
+            (returns a single individual in simple case).
 
     max_generation: int, default=1000
             Maximal number of generations to run the evolutionary process.
-            Note the evolution could end before reaching max_generation, depending on the termination checker.
+            Note the evolution could end before reaching max_generation,
+            depending on the termination checker.
 
     events: dict(str, dict(object, function)), default=None
-            Dictionary of events, where each event holds a dictionary of (subscriber, callback method).
+            Dictionary of events, where each event holds
+            a dictionary of (subscriber, callback method).
 
     event_names: list of strings, default=None
             Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker, default=ThresholdFromTargetTerminationChecker()
-            Responsible for checking if the algorithm should finish before reaching max_generation.
+    termination_checker: TerminationChecker,
+                         default=ThresholdFromTargetTerminationChecker()
+            Checks if the evolution should perform early termination.
 
     max_workers: int, default=None
-            Maximal number of worker nodes for the Executor object that evaluates the fitness of the individuals.
+            Maximal number of worker nodes for the Executor object that
+            evaluates the fitness of the individuals.
 
     rng: RNG
             Random number generator
@@ -58,16 +65,17 @@ class SimpleEvolution(Algorithm):
             Initial random seed for deterministic experiment.
 
     generation_seed: int, default=None
-            Current generation seed. Useful for resuming a previously paused experiment.
+            Current generation seed.
+            Useful for resuming a previously paused experiment.
 
     best_of_run_: Individual, default=None
-            The individual that has the best fitness in the entire evolutionary run.
+            The individual with the best fitness in the entire evolution.
 
     best_of_gen: Individual, default=None
             The individual that has the best fitness in the current generation.
 
     worst_of_gen: Individual, default=None
-            The individual that has the worst fitness in the current generation.
+            The individual that has the worst fitness in current generation.
 
     generation_num: int, default=0
             Current generation number
@@ -144,7 +152,8 @@ class SimpleEvolution(Algorithm):
     @overrides
     def generation_iteration(self, gen):
         """
-        Performs one iteration of the evolutionary run, for the current generation
+        Performs one iteration of the evolutionary run,
+        for the current generation
 
         Parameters
         ----------
@@ -174,7 +183,8 @@ class SimpleEvolution(Algorithm):
         Compute output using best evolved individual.
         Use `execute` in a non-sklearn setting.
         Input keyword arguments that set variable values.
-        For example if `terminal_set=['x', 'y', 1, -1]` then call `execute(x=..., y=...)`.
+        For example if `terminal_set=['x', 'y', 1, -1]`
+        then call `execute(x=..., y=...)`.
 
         Parameters
         ----------
@@ -184,14 +194,15 @@ class SimpleEvolution(Algorithm):
         Returns
         -------
         object
-                Output as computed by the best individual of the evolutionary run.
+                Output as computed by the best individual of the evolution.
 
         """
         return self.best_of_run_.execute(**kwargs)
 
     def finish(self):
         """
-        Finish the evolutionary run by showing the best individual and printing the best fitness
+        Finish the evolutionary run by showing the best individual
+        and printing the best fitness
         """
         super().finish()
         self.best_of_run_.show()
@@ -201,7 +212,7 @@ class SimpleEvolution(Algorithm):
 
     def get_average_fitness(
         self,
-    ):  # TODO check if it should be here or register statistic to breeder or sub pop
+    ):  # TODO move this function to statistics
         return self.population.get_average_fitness()
 
     def event_name_to_data(self, event_name):
