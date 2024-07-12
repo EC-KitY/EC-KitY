@@ -22,7 +22,7 @@ from eckity.genetic_encodings.gp.tree.tree_node import (
     TerminalNode,
     TreeNode,
 )
-from eckity.genetic_encodings.gp.tree.utils import _generate_args
+from .utils import generate_args
 from eckity.individual import Individual
 
 logger = logging.getLogger(__name__)
@@ -184,7 +184,7 @@ class Tree(Individual):
         if args != ():  # numpy array -- convert to kwargs
             try:
                 X = args[0]
-                kwargs = _generate_args(X)
+                kwargs = generate_args(X)
                 reshape = True
             except Exception:
                 raise ValueError(

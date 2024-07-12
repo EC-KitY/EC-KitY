@@ -5,7 +5,6 @@ from eckity.sklearn_compatible.sklearn_wrapper import SklearnWrapper
 from eckity.sklearn_compatible.classification_evaluator import (
     ClassificationEvaluator,
 )
-from eckity.genetic_encodings.gp import Tree
 
 
 class SKClassifier(SklearnWrapper, ClassifierMixin):

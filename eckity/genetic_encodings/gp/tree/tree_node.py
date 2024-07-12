@@ -1,3 +1,4 @@
+import numpy as np
 from abc import ABC, abstractmethod
 from numbers import Number
 from types import NoneType
@@ -30,7 +31,6 @@ class TreeNode(ABC):
         Returns the value of this node
         Return type must match the type of this node
         """
-        # TODO: Add type checking
         pass
 
     @abstractmethod
@@ -216,7 +216,14 @@ class TerminalNode(TreeNode):
             return self.value
         # terminal is a variable, return its value if type matches
         kwarg_val = kwargs[self.value]
-        kwarg_type = type(kwarg_val)
+
+        # kwarg might be a numpy array
+        kwarg_type = (
+            type(kwarg_val.item(0))
+            if isinstance(kwarg_val, np.ndarray)
+            else type(kwarg_val)
+        )
+
         if self.node_type is not NoneType and self.node_type != kwarg_type:
             raise TypeError(
                 f"Expected {self.value} to be of type {self.node_type},"

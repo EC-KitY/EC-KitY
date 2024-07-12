@@ -63,6 +63,6 @@ class ClassificationEvaluator(SimpleIndividualEvaluator):
         # assumes individual is a GP tree with argmax function in depth 1
         if "argmax" not in individual.root.function.__name__:
             raise ValueError(
-                "Individual must have argmax function in depth 1 to classify."
+                "Individual must have argmax function in depth 0 to classify."
             )
         return individual.execute(self.X)

@@ -5,47 +5,30 @@ This is an sklearn setting so we use `fit` and `predict`.
 
 from time import time
 
-import numpy as np
+from root_function_creator import RootFunctionCreator
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from eckity.algorithms.simple_evolution import SimpleEvolution
+from eckity import Subpopulation
+from eckity.algorithms import SimpleEvolution
 from eckity.base.typed_functions import (
     add2floats,
     div2floats,
     mul2floats,
     sub2floats,
+    argmax2,
 )
-from eckity.breeders.simple_breeder import SimpleBreeder
-from examples.treegp.sklearn_mode.root_function_creator import (
-    RootFunctionCreator,
-)
+from eckity.breeders import SimpleBreeder
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
-from eckity.genetic_operators.crossovers.subtree_crossover import (
+from eckity.genetic_operators import (
     SubtreeCrossover,
-)
-from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import (
+    SubtreeMutation,
     TournamentSelection,
 )
-from eckity.sklearn_compatible.classification_evaluator import (
-    ClassificationEvaluator,
-)
-from eckity.sklearn_compatible.sk_classifier import SKClassifier
-from eckity.statistics.best_avg_worst_size_tree_statistics import (
-    BestAverageWorstSizeTreeStatistics,
-)
-from eckity.subpopulation import Subpopulation
+from eckity.sklearn_compatible import ClassificationEvaluator, SKClassifier
+from eckity.statistics import BestAverageWorstSizeTreeStatistics
 from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
-
-# Adding your own types and functions
-
-t_argmax = type("argmax", (int,), {})
-
-
-def argmax2(x0: float, x1: float) -> t_argmax:
-    return np.argmax([x0, x1])
 
 
 def main():

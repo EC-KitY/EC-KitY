@@ -1,11 +1,15 @@
 """
-This module implements some utility functions. 
+This module implements some utility functions.
 """
 
 from typing import Dict, List, Union
 
+import numpy as np
 
-def create_terminal_set(X, typed=False) -> Union[List[str], Dict[str, type]]:
+
+def create_terminal_set(
+    X: np.ndarray, typed=False
+) -> Union[List[str], Dict[str, type]]:
     """
     Create a terminal set from a 2D-shaped numpy array.
 
@@ -31,10 +35,11 @@ def create_terminal_set(X, typed=False) -> Union[List[str], Dict[str, type]]:
     features = [f"x{i}" for i in range(X.shape[1])]
     if not typed:
         return features
-    return {x: X.dtype for x in features}
+    # convert numpy dtypes to python types
+    return {x: type(X[i, 0].item()) for i, x in enumerate(features)}
 
 
-def _generate_args(X):
+def generate_args(X: np.ndarray) -> Dict[str, np.ndarray]:
     """
     Generate keyword arguments from a 2d array for passing to GPTree.execute.
 
@@ -56,7 +61,4 @@ def _generate_args(X):
 
     """
 
-    kwargs = dict()
-    for i in range(X.shape[1]):
-        kwargs[f"x{i}"] = X[:, i]
-    return kwargs
+    return {f"x{i}": X[:, i] for i in range(X.shape[1])}

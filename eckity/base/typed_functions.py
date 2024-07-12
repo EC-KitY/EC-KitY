@@ -5,6 +5,7 @@ Note: all functions work on numpy arrays.
 
 from typing import Any
 import numpy as np
+from .types import t_argmax
 
 
 def add2floats(x: float, y: float) -> float:
@@ -119,27 +120,32 @@ def if_then_else(test: bool, dit: Any, dif: Any) -> float:
     return np.where(test, dit, dif)
 
 
-full_function_set = [
-    add2floats,
-    sub2floats,
-    mul2floats,
-    div2floats,
-    sqrt_float,
-    log_float,
-    abs_float,
-    neg_float,
-    inv_float,
-    max2floats,
-    min2floats,
-    sin_float,
-    cos_float,
-    tan_float,
-    iflte0_floats,
-    ifgt0_floats,
-    iflte_floats,
-    ifgt_floats,
-    and2floats,
-    or2floats,
-    not2floats,
-    if_then_else,
+def argmax2(x0: float, x1: float) -> t_argmax:
+    return np.argmax([x0, x1])
+
+
+__all__ = [
+    "add2floats",
+    "sub2floats",
+    "mul2floats",
+    "div2floats",
+    "sqrt_float",
+    "log_float",
+    "abs_float",
+    "neg_float",
+    "inv_float",
+    "max2floats",
+    "min2floats",
+    "sin_float",
+    "cos_float",
+    "tan_float",
+    "iflte0_floats",
+    "ifgt0_floats",
+    "iflte_floats",
+    "ifgt_floats",
+    "and2floats",
+    "or2floats",
+    "not2floats",
+    "if_then_else",
+    "argmax2",
 ]
