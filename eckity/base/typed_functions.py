@@ -121,7 +121,7 @@ def if_then_else(test: bool, dit: Any, dif: Any) -> float:
 
 
 def argmax2(x0: float, x1: float) -> t_argmax:
-    return np.argmax([x0, x1])
+    return np.argmax([x0, x1], axis=0)
 
 
 __all__ = [
