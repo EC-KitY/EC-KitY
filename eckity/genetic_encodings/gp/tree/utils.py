@@ -36,7 +36,7 @@ def create_terminal_set(
     if not typed:
         return features
     # convert numpy dtypes to python types
-    return {x: type(X[i, 0].item()) for i, x in enumerate(features)}
+    return {x: type(X[0, i].item()) for i, x in enumerate(features)}
 
 
 def generate_args(X: np.ndarray) -> Dict[str, np.ndarray]:

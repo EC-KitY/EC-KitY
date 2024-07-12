@@ -59,21 +59,52 @@ class TestTree:
         self.typed_tree.empty_tree()
         self.untyped_tree.empty_tree()
 
-    def test_add_child_typed(self, setup):
+    def test_add_child_root_typed(self, setup):
         """
         Test that add_child method adds child to the tree
         """
-        typed_child = FunctionNode(add2floats)
+        typed_child = TerminalNode(1.0, float)
         self.typed_tree.add_child(typed_child)
+        assert self.typed_tree.size == 1
         assert self.typed_tree.root == typed_child
+        assert self.typed_tree.root.node_type is float
 
-    def test_add_child_untyped(self, setup):
+    def test_add_child_root_untyped(self, setup):
         """
         Test that add_child method adds child to the tree
         """
-        untyped_child = FunctionNode(f_add)
+        untyped_child = TerminalNode(1)
         self.untyped_tree.add_child(untyped_child)
         assert self.untyped_tree.root == untyped_child
+        assert self.untyped_tree.size == 1
+        assert self.untyped_tree.root.node_type is NoneType
+
+    def test_add_child_inner_typed(self, setup):
+        """
+        Test that add_child method adds child to the tree
+        """
+        typed_parent = FunctionNode(add2floats)
+        children = [TerminalNode(float(i), float) for i in range(2)]
+
+        self.typed_tree.add_child(typed_parent)
+        assert self.typed_tree.size == 1
+        assert self.typed_tree.root == typed_parent
+        assert self.typed_tree.root.node_type is float
+
+        for i, child in enumerate(children):
+            self.typed_tree.add_child(child, typed_parent)
+            assert self.typed_tree.size == i + 2
+            assert self.typed_tree.root.children[i] == child
+            assert self.typed_tree.root.children[i].node_type is float
+
+    def test_add_child_inner_untyped(self, setup):
+        """
+        Test that add_child method adds child to the tree
+        """
+        untyped_child = TerminalNode(1)
+        self.untyped_tree.add_child(untyped_child)
+        assert self.untyped_tree.root == untyped_child
+        assert self.untyped_tree.size == 1
         assert self.untyped_tree.root.node_type is NoneType
 
     @pytest.mark.parametrize(
@@ -133,3 +164,26 @@ class TestTree:
         with pytest.raises(TypeError) as e:
             tree.add_child(child, root)
         assert "subtype" in str(e.value)
+
+    def test_replace_subtree(self, setup):
+        """
+        Test that replace_subtree replaces subtree with another subtree
+        """
+
+        self.typed_tree.set_root(
+            FunctionNode(
+                add2floats,
+                children=[TerminalNode(1.0, float), TerminalNode(2.0, float)],
+            )
+        )
+
+        new_subtree = FunctionNode(
+            sub2floats,
+            children=[TerminalNode(3.0, float), TerminalNode(4.0, float)],
+        )
+
+        old_subtree = self.typed_tree.root.children[0]
+
+        self.typed_tree.replace_subtree(old_subtree, new_subtree)
+        assert self.typed_tree.root.children[0] == new_subtree
+        assert self.typed_tree.size == 5

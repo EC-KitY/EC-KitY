@@ -107,7 +107,11 @@ class Tree(Individual):
             self.root = node
         else:
             parent.add_child(node)
-        self.size += 1
+        self.size += node.size()
+
+    def set_root(self, node: TreeNode):
+        self.root = node
+        self.size = node.size()
 
     def empty_tree(self):
         self.root = None

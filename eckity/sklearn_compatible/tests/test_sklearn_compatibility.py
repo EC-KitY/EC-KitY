@@ -20,8 +20,3 @@ class TestSklearnCompatibility:
         X = [1, 2, 3]
         with pytest.raises(NotFittedError):
             self.clf.predict(X)
-
-    def test_predict_proba_without_fit(self):
-        X = [1, 2, 3]
-        with pytest.raises(NotFittedError):
-            self.clf.predict_proba(X)

@@ -227,6 +227,8 @@ def main():
     print("execute(s0=1, s1=1, s2=1, d3=1): expected = 1, actual =", exec3)
     print("execute(s0=1, s1=1, s2=1, d7=1): expected = 1, actual =", exec7)
 
+    print("best pure fitness:", algo.best_of_run_.get_pure_fitness())
+
     print("total time:", time() - start_time)
 
 
