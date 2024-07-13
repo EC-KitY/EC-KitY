@@ -33,7 +33,8 @@ class Individual:
     """
     id = 1
 
-    def __init__(self, fitness: Fitness):
+    def __init__(self, fitness: Fitness,
+                 update_parents: bool = False):
         self.update_id()
         self.gen = 0
         self.fitness = fitness
@@ -43,6 +44,9 @@ class Individual:
         self.selected_by = []  # last gen
         self.applied_operators = []  # last gen
 
+        self.update_parents = update_parents
+        if update_parents:
+            self.parents = []   # last gen
 
     def update_id(self):
         self.id = Individual.id
@@ -54,6 +58,8 @@ class Individual:
     def clone(self):
         result = deepcopy(self)
         result.cloned_from.append(self.id)
+        if result.update_parents:
+            result.parents = []
         result.update_id()
         return result
 

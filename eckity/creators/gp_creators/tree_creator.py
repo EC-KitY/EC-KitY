@@ -17,6 +17,7 @@ class GPTreeCreator(Creator):
         fitness_type=SimpleFitness,
         bloat_weight=0.1,
         events=None,
+        update_parents=False,
     ):
         if events is None:
             events = ["after_creation"]
@@ -36,6 +37,7 @@ class GPTreeCreator(Creator):
         self.terminal_set = terminal_set
         self.erc_range = erc_range
         self.bloat_weight = bloat_weight
+        self.update_parents = update_parents
 
     def create_individuals(self, n_individuals, higher_is_better):
         individuals = [
@@ -44,9 +46,11 @@ class GPTreeCreator(Creator):
                 terminal_set=self.terminal_set,
                 erc_range=self.erc_range,
                 fitness=GPFitness(
-                    bloat_weight=self.bloat_weight, higher_is_better=higher_is_better
+                    bloat_weight=self.bloat_weight,
+                    higher_is_better=higher_is_better
                 ),
                 init_depth=self.init_depth,
+                update_parents=self.update_parents,
             )
             for _ in range(n_individuals)
         ]

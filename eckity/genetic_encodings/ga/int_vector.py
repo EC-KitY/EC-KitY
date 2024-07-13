@@ -6,8 +6,8 @@ from random import randint
 
 from eckity.genetic_encodings.ga.vector_individual import Vector
 
-MIN_BOUND = 2 ** 31 - 1
-MAX_BOUND = -2 ** 31
+MIN_BOUND = 2**31 - 1
+MAX_BOUND = -(2**31)
 
 
 class IntVector(Vector):
@@ -26,12 +26,22 @@ class IntVector(Vector):
     bounds : tuple or list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
-    def __init__(self,
-                 fitness,
-                 length,
-                 bounds=(MIN_BOUND, MAX_BOUND),
-                 vector=None):
-        super().__init__(fitness, length=length, bounds=bounds, vector=vector)
+
+    def __init__(
+        self,
+        fitness,
+        length,
+        bounds=(MIN_BOUND, MAX_BOUND),
+        vector=None,
+        update_parents=False,
+    ):
+        super().__init__(
+            fitness,
+            length=length,
+            bounds=bounds,
+            vector=vector,
+            update_parents=update_parents,
+        )
 
     def get_random_number_in_bounds(self, index):
         """
@@ -50,5 +60,6 @@ class IntVector(Vector):
         if type(self.bounds) == tuple:
             return randint(self.bounds[0], self.bounds[1])
         return randint(self.bounds[index][0], self.bounds[index][1])
+
 
 # end class int vector
