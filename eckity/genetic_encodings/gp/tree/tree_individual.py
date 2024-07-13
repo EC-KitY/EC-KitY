@@ -16,7 +16,7 @@ from eckity.base.untyped_functions import (
     f_mul,
     f_sub,
 )
-from eckity.fitness.fitness import Fitness
+from eckity.fitness import Fitness, GPFitness
 from eckity.genetic_encodings.gp.tree.tree_node import (
     FunctionNode,
     TerminalNode,
@@ -51,7 +51,7 @@ class Tree(Individual):
 
     def __init__(
         self,
-        fitness: Fitness,
+        fitness: Fitness = GPFitness(),
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         init_depth=(1, 2),

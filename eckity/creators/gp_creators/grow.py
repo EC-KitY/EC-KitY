@@ -15,6 +15,7 @@ class GrowCreator(GPTreeCreator):
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         bloat_weight: float = 0.0,
+        p_prune: float = 0.5,
         events: List[str] = None,
     ):
         """
@@ -34,6 +35,9 @@ class GrowCreator(GPTreeCreator):
         bloat_weight : float, default=0.0
                 Bloat control weight to punish large trees.
 
+        p_prune : float, default=0.5
+                Probability of pruning the tree at each level.
+
         events : list
                 List of events related to this class
         """
@@ -44,6 +48,7 @@ class GrowCreator(GPTreeCreator):
             bloat_weight=bloat_weight,
             events=events,
         )
+        self.p_prune = p_prune
 
     @overrides
     def create_tree(self, tree_ind: Tree) -> None:
@@ -83,39 +88,40 @@ class GrowCreator(GPTreeCreator):
         None.
 
         """
-        is_func = False
         min_depth, max_depth = self.init_depth
 
         if depth < min_depth:
             node = tree_ind.random_function_node(
                 node_type=node_type, parent=parent
             )
-            is_func = True
+            self._add_children(node, tree_ind, depth)
         elif depth >= max_depth:
             node = tree_ind.random_terminal_node(
                 node_type=node_type, parent=parent
             )
         else:  # intermediate depth, grow
-            if random() > 0.5:
-                node = tree_ind.random_function_node(
-                    node_type=node_type, parent=parent
-                )
-                is_func = True
-            else:
+            if random() < self.p_prune:
                 node = tree_ind.random_terminal_node(
                     node_type=node_type, parent=parent
                 )
-
-        if is_func:
-            # recursively add children to the function node
-            func_types = FunctionNode.get_func_types(node.function)
-            for i in range(node.n_children):
-                child_node = self.build_tree(
-                    tree_ind,
-                    depth=depth + 1,
-                    node_type=func_types[i],
-                    parent=node,
+            else:
+                node = tree_ind.random_function_node(
+                    node_type=node_type, parent=parent
                 )
-                node.add_child(child_node)
+                self._add_children(node, tree_ind, depth)
 
         return node
+
+    def _add_children(
+        self, node: TreeNode, tree_ind: Tree, depth: int
+    ) -> None:
+        # recursively add children to the function node
+        func_types = FunctionNode.get_func_types(node.function)
+        for i in range(node.n_children):
+            child_node = self.build_tree(
+                tree_ind,
+                depth=depth + 1,
+                node_type=func_types[i],
+                parent=node,
+            )
+            node.add_child(child_node)

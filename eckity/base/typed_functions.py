@@ -120,7 +120,7 @@ def if_then_else(test: bool, dit: Any, dif: Any) -> float:
     return np.where(test, dit, dif)
 
 
-def argmax2(x0: float, x1: float) -> t_argmax:
+def argmax2floats(x0: float, x1: float) -> t_argmax:
     return np.argmax([x0, x1], axis=0)
 
 
@@ -147,5 +147,5 @@ __all__ = [
     "or2floats",
     "not2floats",
     "if_then_else",
-    "argmax2",
+    "argmax2floats",
 ]

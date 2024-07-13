@@ -5,9 +5,6 @@ This is an sklearn setting so we use `fit` and `predict`.
 
 from time import time
 
-from examples.treegp.sklearn_mode.root_function_creator import (
-    RootFunctionCreator,
-)
 from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -16,10 +13,10 @@ from eckity import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.base.typed_functions import (
     add2floats,
+    argmax2floats,
     div2floats,
     mul2floats,
     sub2floats,
-    argmax2,
 )
 from eckity.breeders import SimpleBreeder
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
@@ -31,6 +28,8 @@ from eckity.genetic_operators import (
 from eckity.sklearn_compatible import ClassificationEvaluator, SKClassifier
 from eckity.statistics import BestAverageWorstSizeTreeStatistics
 from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
+
+from root_function_creator import RootFunctionCreator
 
 
 def main():
@@ -48,13 +47,19 @@ def main():
     terminal_set = create_terminal_set(X, typed=True)
 
     # Define function set
-    function_set = [argmax2, add2floats, sub2floats, mul2floats, div2floats]
+    function_set = [
+        argmax2floats,
+        add2floats,
+        sub2floats,
+        mul2floats,
+        div2floats,
+    ]
 
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
         Subpopulation(
             creators=RootFunctionCreator(
-                root_function=argmax2,
+                root_function=argmax2floats,
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
