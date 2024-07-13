@@ -5,7 +5,6 @@ from overrides import override
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.creators.gp_creators.grow import GrowCreator
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp.tree.tree_individual import Tree
 
 
@@ -107,13 +106,15 @@ class HalfCreator(GPTreeCreator):
 
         individuals = []
 
-        for _ in range(min_depth, max_depth + 1):
+        for depth in range(min_depth, max_depth + 1):
             # first create `group_size` individuals using grow method
+            self.grow_creator.init_depth = (min_depth, depth)
             grown_inds = self.grow_creator.create_individuals(
                 group_size, higher_is_better
             )
 
             # then create `group_size` individuals using full method
+            self.full_creator.init_depth = (min_depth, depth)
             full_inds = self.full_creator.create_individuals(
                 group_size, higher_is_better
             )

@@ -15,7 +15,7 @@ class SubtreeMutation(FailableOperator):
         node_type=NoneType,
         probability=1,
         arity=1,
-        init_depth=None,
+        init_depth=(2, 4),
         events=None,
     ):
         super().__init__(probability=probability, arity=arity, events=events)
@@ -45,26 +45,13 @@ class SubtreeMutation(FailableOperator):
         if None in old_subtrees:
             return False, individuals
 
-        init_depths = [
-            (
-                (
-                    ind.init_depth[0],
-                    randint(ind.init_depth[0], ind.init_depth[1]),
-                )
-                if self.init_depth is None
-                else self.init_depth
-            )
-            for ind in individuals
-        ]
+        tree_creator = GrowCreator(
+            init_depth=self.init_depth,
+            function_set=individuals[0].function_set,
+            terminal_set=individuals[0].terminal_set,
+        )
 
-        for ind, init_depth, old_subtree in zip(
-            individuals, init_depths, old_subtrees
-        ):
-            tree_creator = GrowCreator(
-                init_depth=init_depth,
-                function_set=ind.function_set,
-                terminal_set=ind.terminal_set,
-            )
+        for ind, old_subtree in zip(individuals, old_subtrees):
             new_subtree = tree_creator.build_tree(
                 ind,
                 depth=0,

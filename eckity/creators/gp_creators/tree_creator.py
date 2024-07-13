@@ -49,12 +49,12 @@ class GPTreeCreator(Creator):
                     bloat_weight=self.bloat_weight,
                     higher_is_better=higher_is_better,
                 ),
-                init_depth=self.init_depth,
             )
             for _ in range(n_individuals)
         ]
         for ind in individuals:
             self.create_tree(ind)
+            ind.size = ind.get_size()
         self.created_individuals = individuals
         return individuals
 

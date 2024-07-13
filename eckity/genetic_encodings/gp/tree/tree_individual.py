@@ -39,9 +39,6 @@ class Tree(Individual):
 
     Parameters
     ----------
-    init_depth: (int, int), default=None
-        Min and max depths of initial random trees.
-
     function_set: list, default=None
         List of functions used as internal nodes in the GP tree.
 
@@ -54,7 +51,6 @@ class Tree(Individual):
         fitness: Fitness = GPFitness(),
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
-        init_depth=(1, 2),
         root: TreeNode = None,
     ):
         super().__init__(fitness)
@@ -85,13 +81,12 @@ class Tree(Individual):
         self.function_set = function_set
         self.terminal_set = terminal_set
 
-        self.init_depth = init_depth
         self.vars = [var for var in terminal_set if isinstance(var, str)]
 
         self.root: TreeNode = root  # actual tree representation
         self.size = 0 if root is None else root.size()
 
-    def tree_size(self):
+    def get_size(self):
         """
         Compute size of tree.
 
@@ -100,7 +95,7 @@ class Tree(Individual):
         int
             tree size (= number of nodes).
         """
-        return self.size
+        return self.root.size()
 
     def add_child(self, node, parent=None):
         if self.root is None:
@@ -127,8 +122,8 @@ class Tree(Individual):
             tree depth.
         """
         if self.root is None:
-            return 0
-        return self.root.depth(0)
+            return -1
+        return self.root.depth()
 
     def random_function_node(
         self, node_type=NoneType, parent=None
@@ -279,7 +274,7 @@ class Tree(Individual):
         logger.info("\n" + str(self))
 
     def __repr__(self):
-        return self.root.__repr__
+        return self.root.__repr__()
 
 
 # end class tree
