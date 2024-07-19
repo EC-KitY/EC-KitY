@@ -304,6 +304,7 @@ class BitStringVectorNFlipMutation(VectorNPointMutation):
         arity=1,
         events=None,
         probability_for_each=0.2,
+        n=1,
     ):
         self.probability_for_each = probability_for_each
         super().__init__(
@@ -315,4 +316,5 @@ class BitStringVectorNFlipMutation(VectorNPointMutation):
                 else individual.cell_value(index)
             ),
             events=events,
+            n=n
         )
