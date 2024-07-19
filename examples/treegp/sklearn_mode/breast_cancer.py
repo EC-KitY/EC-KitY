@@ -11,12 +11,11 @@ from sklearn.model_selection import train_test_split
 
 from eckity import Subpopulation
 from eckity.algorithms import SimpleEvolution
-from eckity.base.typed_functions import (
-    add2floats,
-    argmax2floats,
-    div2floats,
-    mul2floats,
-    sub2floats,
+from eckity.base.untyped_functions import (
+    f_add,
+    f_div,
+    f_mul,
+    f_sub,
 )
 from eckity.breeders import SimpleBreeder
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
@@ -28,8 +27,7 @@ from eckity.genetic_operators import (
 from eckity.sklearn_compatible import ClassificationEvaluator, SKClassifier
 from eckity.statistics import BestAverageWorstSizeTreeStatistics
 from eckity.termination_checkers import ThresholdFromTargetTerminationChecker
-
-from root_function_creator import RootFunctionCreator
+from eckity.creators import HalfCreator
 
 
 def main():
@@ -44,22 +42,20 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 30 features, set terminal_set to: ['x0', 'x1', ..., 'x29']
-    terminal_set = create_terminal_set(X, typed=True)
+    terminal_set = create_terminal_set(X, typed=False)
 
     # Define function set
     function_set = [
-        argmax2floats,
-        add2floats,
-        sub2floats,
-        mul2floats,
-        div2floats,
+        f_add,
+        f_sub,
+        f_mul,
+        f_div,
     ]
 
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
         Subpopulation(
-            creators=RootFunctionCreator(
-                root_function=argmax2floats,
+            creators=HalfCreator(
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
