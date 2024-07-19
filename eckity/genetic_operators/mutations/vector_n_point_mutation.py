@@ -95,12 +95,13 @@ class VectorNPointMutation(FailableOperator):
 
         Returns
         ----------
-        tuple of (bool, list of vectors)
+        Tuple[bool, List[Vector]]
             first return value determines if the the attempt succeeded
             second return value is the operator result
         """
         succeeded = True
         for individual in individuals:
+            # clone the individual to revert in case of failure
             old_individual = individual.clone()
 
             # randomly select n points of the vector (without repetitions)
