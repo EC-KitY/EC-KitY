@@ -177,7 +177,7 @@ def main():
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
-                bloat_weight=0.00001,
+                bloat_weight=0.002,
             ),
             population_size=40,
             # user-defined fitness evaluation method

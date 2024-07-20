@@ -1,4 +1,3 @@
-from random import randint
 from types import NoneType
 from typing import Any, List, Tuple
 
@@ -52,14 +51,14 @@ class SubtreeMutation(FailableOperator):
         )
 
         for ind, old_subtree in zip(individuals, old_subtrees):
-            new_subtree = tree_creator.build_tree(
+            new_subtree = tree_creator.create_tree(
                 ind,
                 depth=0,
                 node_type=old_subtree.node_type,
                 parent=old_subtree.parent,
             )
             ind.replace_subtree(
-                old_subtree=old_subtree, new_subtree=new_subtree
+                old_subtree_root=old_subtree, new_subtree=new_subtree
             )
 
         self.applied_individuals = individuals

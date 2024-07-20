@@ -21,7 +21,7 @@ def test_create_individuals():
 
     # assert at least 25% of the individuals are full trees of size 2^4
     # and another 25% are full trees of size 2^5 - 1
-    sizes = [ind.size for ind in inds]
+    sizes = [ind.size() for ind in inds]
     max_depth = half_creator.init_depth[1]
     assert sum(size == 2**max_depth - 1 for size in sizes) >= len(inds) / 4
     assert (

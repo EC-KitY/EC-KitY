@@ -72,7 +72,7 @@ class GPFitness(SimpleFitness):
         # subtract bloat value from the fitness score if it should be maximized,
         # otherwise add bloat value to fitness score
         return (
-            score - self.bloat_weight * individual.tree_size()
+            score - self.bloat_weight * individual.size()
             if self.higher_is_better
-            else score + self.bloat_weight * individual.tree_size()
+            else score + self.bloat_weight * individual.size()
         )

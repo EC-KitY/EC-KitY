@@ -25,80 +25,24 @@ def test_get_func_types(function, expected_types):
 @pytest.mark.parametrize(
     "node, expected",
     [
-        (TerminalNode(1, int), 0),
-        (TerminalNode(1), 0),
-        (
-            FunctionNode(
-                add2floats,
-                children=[TerminalNode(1.0, float), TerminalNode(2.0, float)],
-            ),
-            1,
-        ),
-        (
-            FunctionNode(
-                f_add,
-                children=[TerminalNode(1), TerminalNode(2)],
-            ),
-            1,
-        ),
-        (
-            FunctionNode(
-                add2floats,
-                children=[
-                    FunctionNode(
-                        add2floats,
-                        children=[
-                            TerminalNode(1.0, float),
-                            TerminalNode(2.0, float),
-                        ],
-                    ),
-                    TerminalNode(2.0, float),
-                ],
-            ),
-            2,
-        ),
-        (
-            FunctionNode(
-                f_add,
-                children=[
-                    FunctionNode(
-                        f_add,
-                        children=[TerminalNode(1), TerminalNode(2)],
-                    ),
-                    TerminalNode(2),
-                ],
-            ),
-            2,
-        ),
-    ],
-)
-def test_depth(node, expected):
-    assert node.depth() == expected
-
-
-@pytest.mark.parametrize(
-    "node, expected",
-    [
         (TerminalNode(1, int), 1),
         (TerminalNode(1), 1),
         (
             FunctionNode(
-                add2floats,
-                children=[TerminalNode("x", float), TerminalNode(1.0, float)],
+                add2floats
             ),
             2.0,
         ),
         (
             FunctionNode(
                 f_add,
-                children=[TerminalNode("x"), TerminalNode(1)],
             ),
             2,
         ),
     ],
 )
 def test_execute(node, expected):
-    assert node.execute(x=1.0) == expected
+    assert node.execute(x=1.0, y=1.0) == expected
 
 
 def test_execute_bad_type():

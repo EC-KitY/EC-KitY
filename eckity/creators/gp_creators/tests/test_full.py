@@ -17,10 +17,8 @@ def test_create_tree():
     )
     creator.create_tree(tree_ind)
 
-    assert tree_ind.root == FunctionNode(
-        function_set[0],
-        children=[
-            TerminalNode(terminal_set[0]),
-            TerminalNode(terminal_set[0]),
-        ],
-    )
+    assert tree_ind.tree == [
+        FunctionNode(function_set[0]),
+        TerminalNode(terminal_set[0]),
+        TerminalNode(terminal_set[0]),
+    ]

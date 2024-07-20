@@ -1,11 +1,11 @@
-from random import random
+import random
 from types import NoneType
 from typing import Any, Callable, Dict, List, Tuple, Union
 
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import FunctionNode, Tree, TreeNode
+from eckity.genetic_encodings.gp import Tree
 
 
 class GrowCreator(GPTreeCreator):
@@ -51,77 +51,38 @@ class GrowCreator(GPTreeCreator):
         self.p_prune = p_prune
 
     @overrides
-    def create_tree(self, tree_ind: Tree) -> None:
+    def create_tree(
+        self, tree_ind: Tree, depth: int = 0, node_type: type = NoneType
+    ) -> None:
         """
-        Create a random tree using the grow method,
-        and assign it to the given individual.
+        Recursively create a random tree using the grow method.
 
         Parameters
         ----------
-        tree_ind: Tree
-                GP Tree Individual with an initially empty tree
-
-        Returns
-        -------
-        None.
-        """
-        root = self.build_tree(tree_ind, depth=0)
-        tree_ind.root = root
-
-    def build_tree(
-        self,
-        tree_ind: Tree,
-        depth: int,
-        node_type: type = NoneType,
-        parent: TreeNode = None,
-    ) -> TreeNode:
-        """
-        Recursively create a random tree using the grow method
-
-        Parameters
-        ----------
-        depth: int
-                Current depth in recursive process.
-
-        Returns
-        -------
-        None.
-
+        tree_ind : Tree
+            Tree Individual that will receive the generated tree.
+        depth : int
+            Current depth in recursive process.
+        node_type : type, optional
+            Type of the node to create. The default is NoneType.
         """
         min_depth, max_depth = self.init_depth
 
+        is_func = False
         if depth < min_depth:
-            node = tree_ind.random_function_node(
-                node_type=node_type, parent=parent
-            )
-            self._add_children(node, tree_ind, depth)
+            node = tree_ind.random_function(node_type=node_type)
+            is_func = True
         elif depth >= max_depth:
-            node = tree_ind.random_terminal_node(
-                node_type=node_type, parent=parent
-            )
+            node = tree_ind.random_terminal(node_type=node_type)
         else:  # intermediate depth, grow
-            if random() < self.p_prune:
-                node = tree_ind.random_terminal_node(
-                    node_type=node_type, parent=parent
-                )
+            if random.random() < self.p_prune:
+                node = tree_ind.random_terminal(node_type=node_type)
             else:
-                node = tree_ind.random_function_node(
-                    node_type=node_type, parent=parent
-                )
-                self._add_children(node, tree_ind, depth)
+                node = tree_ind.random_function(node_type=node_type)
+                is_func = True
 
-        return node
+        # add the new node to the tree of the given individual
+        tree_ind.add_tree(node)
 
-    def _add_children(
-        self, node: TreeNode, tree_ind: Tree, depth: int
-    ) -> None:
-        # recursively add children to the function node
-        func_types = FunctionNode.get_func_types(node.function)
-        for i in range(node.n_children):
-            child_node = self.build_tree(
-                tree_ind,
-                depth=depth + 1,
-                node_type=func_types[i],
-                parent=node,
-            )
-            node.add_child(child_node)
+        if is_func:
+            self._add_children(node, tree_ind, depth)

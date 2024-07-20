@@ -21,19 +21,21 @@ def untyped_add_inc(n, inc):
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
                 terminal_set={8: int, True: bool, False: bool},
-                root=FunctionNode(
-                    typed_add_inc,
-                    children=[TerminalNode(8, int), TerminalNode(True, bool)],
-                ),
+                tree=[
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(8, int),
+                    TerminalNode(True, bool),
+                ],
             ),
             Tree(
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
                 terminal_set={8: int, True: bool, False: bool},
-                root=FunctionNode(
-                    typed_add_inc,
-                    children=[TerminalNode(8, int), TerminalNode(False, bool)],
-                ),
+                tree=[
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(8, int),
+                    TerminalNode(False, bool),
+                ],
             ),
         ),
     ],
@@ -49,8 +51,8 @@ def test_subtree_crossover_typed(tree1, tree2):
         subtree_crossover.apply([tree1_copy, tree2_copy])
 
         # Check that the boolean nodes were swapped
-        assert tree1_copy.root.children[1].value is False
-        assert tree2_copy.root.children[1].value is True
+        assert tree1_copy.tree[2].value is False
+        assert tree2_copy.tree[2].value is True
 
 
 @pytest.mark.parametrize(
@@ -61,19 +63,21 @@ def test_subtree_crossover_typed(tree1, tree2):
                 fitness=GPFitness(),
                 function_set=[untyped_add_inc],
                 terminal_set=[1, True, False],
-                root=FunctionNode(
-                    untyped_add_inc,
-                    children=[TerminalNode(1), TerminalNode(True)],
-                ),
+                tree=[
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(1),
+                    TerminalNode(True),
+                ],
             ),
             Tree(
                 fitness=GPFitness(),
                 function_set=[untyped_add_inc],
                 terminal_set=[1, True, False],
-                root=FunctionNode(
-                    untyped_add_inc,
-                    children=[TerminalNode(2), TerminalNode(False)],
-                ),
+                tree=[
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(2),
+                    TerminalNode(False),
+                ],
             ),
         ),
     ],
@@ -89,5 +93,5 @@ def test_subtree_crossover_untyped(tree1, tree2):
         subtree_crossover.apply([tree1_copy, tree2_copy])
 
         # Check that the boolean nodes were swapped
-        assert i == i and tree1_copy.root != tree1.root
-        assert i == i and tree2_copy.root != tree2.root
+        assert i == i and tree1_copy.tree != tree1.tree
+        assert i == i and tree2_copy.tree != tree2.tree

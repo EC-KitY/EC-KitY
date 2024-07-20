@@ -170,16 +170,20 @@ class TestTree:
         Test that replace_subtree replaces subtree with another subtree
         """
 
-        self.typed_tree.set_root(
-            FunctionNode(
-                add2floats,
-                children=[TerminalNode(1.0, float), TerminalNode(2.0, float)],
-            )
+        self.typed_tree.tree = (
+            [
+                FunctionNode(add2floats),
+                TerminalNode(1.0, float),
+                TerminalNode(2.0, float),
+            ],
         )
 
-        new_subtree = FunctionNode(
-            sub2floats,
-            children=[TerminalNode(3.0, float), TerminalNode(4.0, float)],
+        new_subtree = (
+            [
+                FunctionNode(sub2floats),
+                TerminalNode(3.0, float),
+                TerminalNode(4.0, float),
+            ],
         )
 
         old_subtree = self.typed_tree.root.children[0]
@@ -187,3 +191,115 @@ class TestTree:
         self.typed_tree.replace_subtree(old_subtree, new_subtree)
         assert self.typed_tree.root.children[0] == new_subtree
         assert self.typed_tree.size == 5
+
+    @pytest.mark.parametrize(
+        "typed, node, expected",
+        [
+            (True, [TerminalNode(1, int)], 0),
+            (False, TerminalNode(1), 0),
+            (
+                True,
+                [
+                    FunctionNode(add2floats),
+                    TerminalNode(1.0, float),
+                    TerminalNode(2.0, float),
+                ],
+                1,
+            ),
+            (
+                False,
+                [
+                    FunctionNode(f_add),
+                    TerminalNode(1),
+                    TerminalNode(2),
+                ],
+                1,
+            ),
+            (
+                True,
+                [
+                    FunctionNode(add2floats),
+                    FunctionNode(add2floats),
+                    TerminalNode(1.0, float),
+                    TerminalNode(2.0, float),
+                    TerminalNode(2.0, float),
+                ],
+                2,
+            ),
+            (
+                False,
+                [
+                    FunctionNode(f_add),
+                    FunctionNode(f_add),
+                    TerminalNode(1),
+                    TerminalNode(2),
+                    TerminalNode(2),
+                ],
+                2,
+            ),
+        ],
+    )
+    def test_depth_typed(self, setup, typed, node, expected):
+        tree = self.typed_tree if typed else self.untyped_tree
+        tree.tree = node
+        assert tree.depth() == expected
+
+    @pytest.mark.parametrize(
+        "typed, node, expected",
+        [
+            (
+                True,
+                [TerminalNode(1, int)],
+                """
+                def func_0(x: float, y: float) -> int:
+                    return 1
+                """,
+            ),
+            (
+                False,
+                TerminalNode(1),
+                """
+                def func_1(x, y, z):
+                    return f_add(1.0, 2.0)
+                """,
+            ),
+            (
+                True,
+                [
+                    FunctionNode(add2floats),
+                    TerminalNode(1.0, float),
+                    TerminalNode(2.0, float),
+                ],
+                """
+                def func_0(x: float, y: float, z: float) -> float:
+                    return f_add(1.0, 2.0)
+                """,
+            ),
+            (
+                False,
+                [
+                    FunctionNode(f_add),
+                    TerminalNode(1),
+                    TerminalNode(2),
+                ],
+                """
+                def func_1(x, y):
+                    return f_add(1, 2)
+                """,
+            ),
+        ],
+    )
+    def test_str(self, setup, typed, node, expected):
+        """
+        Test that str method returns a string representation of the tree
+        """
+        tree = self.typed_tree if typed else self.untyped_tree
+        tree.tree = (
+            [
+                FunctionNode(add2floats),
+                TerminalNode(1.0, float),
+                TerminalNode(2.0, float),
+            ],
+        )
+
+        assert str(self.typed_tree) == expected

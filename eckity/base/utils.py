@@ -3,9 +3,10 @@ This module implements some utility functions.
 """
 
 from inspect import getfullargspec
+from typing import Callable
 
 
-def arity(func):
+def arity(func: Callable) -> int:
     """
     Parameters
     ----------

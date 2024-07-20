@@ -12,13 +12,11 @@ class ERCMutation(FailableOperator):
         self,
         probability=1.0,
         arity=1,
-        erc_range=(-5, 5),
         mu=0,
         sigma=1,
         events=None,
     ):
         super().__init__(probability=probability, arity=arity, events=events)
-        self.erc_range = erc_range
         self.mu = mu
         self.sigma = sigma
 
@@ -36,7 +34,7 @@ class ERCMutation(FailableOperator):
         """
         individuals: List[Tree] = payload
 
-        leaves = [ind.get_random_erc_node() for ind in individuals]
+        leaves = [ind.get_random_numeric_node() for ind in individuals]
 
         if None in leaves:
             return False, individuals

@@ -1,8 +1,10 @@
+from types import NoneType
 from typing import Any, Callable, Dict, List, Tuple, Union
 
 from overrides import override
 
 from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
+from eckity.base.utils import arity
 from eckity.creators.creator import Creator
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.fitness.simple_fitness import SimpleFitness
@@ -30,7 +32,7 @@ class GPTreeCreator(Creator):
             function_set = [f_add, f_sub, f_mul, f_div]
 
         if terminal_set is None:
-            terminal_set = ["x", "y", "z", 0, 1, -1]
+            terminal_set = ["x", "y", "z"]
 
         self.init_depth = init_depth
         self.function_set = function_set
@@ -54,11 +56,12 @@ class GPTreeCreator(Creator):
         ]
         for ind in individuals:
             self.create_tree(ind)
-            ind.size = ind.get_size()
         self.created_individuals = individuals
         return individuals
 
-    def create_tree(self, tree_ind: Tree) -> None:
+    def create_tree(
+        self, tree_ind: Tree, depth: int = 0, node_type: type = NoneType
+    ) -> None:
         """
         Create the actual tree representation of an existing Tree individual
 
@@ -69,16 +72,14 @@ class GPTreeCreator(Creator):
         """
         pass
 
-    def _build_children(
+    def _add_children(
         self, node: FunctionNode, tree_ind: Tree, depth: int
     ) -> None:
         # recursively add children to the function node
         func_types = FunctionNode.get_func_types(node.function)
-        for i in range(node.n_children):
-            child_node = self.build_tree(
+        for i in range(arity(node.function)):
+            self.create_tree(
                 tree_ind,
                 depth=depth + 1,
                 node_type=func_types[i],
-                parent=node,
             )
-            node.add_child(child_node)
