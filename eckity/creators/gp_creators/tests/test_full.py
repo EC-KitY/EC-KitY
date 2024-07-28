@@ -14,6 +14,7 @@ def test_create_tree():
         SimpleFitness(),
         function_set=function_set,
         terminal_set=terminal_set,
+        erc_range=None
     )
     creator.create_tree(tree_ind)
 

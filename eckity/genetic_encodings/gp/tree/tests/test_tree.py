@@ -1,5 +1,3 @@
-from numbers import Number
-
 import pytest
 
 from eckity.base.typed_functions import (
@@ -59,111 +57,78 @@ class TestTree:
         self.typed_tree.empty_tree()
         self.untyped_tree.empty_tree()
 
-    def test_add_child_root_typed(self, setup):
+    def test_add_tree_root_typed(self, setup):
         """
         Test that add_child method adds child to the tree
         """
         typed_child = TerminalNode(1.0, float)
-        self.typed_tree.add_child(typed_child)
-        assert self.typed_tree.size == 1
+        self.typed_tree.add_tree(typed_child)
+        assert self.typed_tree.size() == 1
         assert self.typed_tree.root == typed_child
         assert self.typed_tree.root.node_type is float
 
-    def test_add_child_root_untyped(self, setup):
+    def test_add_tree_root_untyped(self, setup):
         """
         Test that add_child method adds child to the tree
         """
         untyped_child = TerminalNode(1)
-        self.untyped_tree.add_child(untyped_child)
+        self.untyped_tree.add_tree(untyped_child)
         assert self.untyped_tree.root == untyped_child
-        assert self.untyped_tree.size == 1
+        assert self.untyped_tree.size() == 1
         assert self.untyped_tree.root.node_type is NoneType
 
-    def test_add_child_inner_typed(self, setup):
+    def test_add_tree_inner_typed(self, setup):
         """
         Test that add_child method adds child to the tree
         """
         typed_parent = FunctionNode(add2floats)
         children = [TerminalNode(float(i), float) for i in range(2)]
 
-        self.typed_tree.add_child(typed_parent)
-        assert self.typed_tree.size == 1
+        self.typed_tree.add_tree(typed_parent)
+        assert self.typed_tree.size() == 1
         assert self.typed_tree.root == typed_parent
         assert self.typed_tree.root.node_type is float
 
         for i, child in enumerate(children):
-            self.typed_tree.add_child(child, typed_parent)
-            assert self.typed_tree.size == i + 2
-            assert self.typed_tree.root.children[i] == child
-            assert self.typed_tree.root.children[i].node_type is float
+            self.typed_tree.add_tree(child)
+            assert self.typed_tree.size() == i + 2
+            assert self.typed_tree.tree[i+1] == child
+            assert self.typed_tree.tree[i+1].node_type is float
 
-    def test_add_child_inner_untyped(self, setup):
+    def test_add_tree_inner_untyped(self, setup):
         """
-        Test that add_child method adds child to the tree
+        Test that add_tree method adds child to the tree
         """
         untyped_child = TerminalNode(1)
-        self.untyped_tree.add_child(untyped_child)
+        self.untyped_tree.add_tree(untyped_child)
         assert self.untyped_tree.root == untyped_child
-        assert self.untyped_tree.size == 1
+        assert self.untyped_tree.size() == 1
         assert self.untyped_tree.root.node_type is NoneType
 
     @pytest.mark.parametrize(
-        "typed, root, child",
+        "root, child",
         [
             (
-                True,
-                FunctionNode(add2floats),
-                TerminalNode(1.0, float),
-            ),
-            (
-                False,
-                FunctionNode(f_add),
-                TerminalNode(1),
-            ),
-        ],
-    )
-    def test_add_child_too_many_children(self, setup, typed, root, child):
-        """
-        Test that add_child raises ValueError when too many children are added
-        """
-        tree = self.typed_tree if typed else self.untyped_tree
-        tree.add_child(root)
-
-        # add all children
-        for _ in range(arity(root.function)):
-            tree.add_child(child, root)
-
-        # add one more child
-        with pytest.raises(ValueError):
-            tree.add_child(child, root)
-
-    @pytest.mark.parametrize(
-        "typed, root, child",
-        [
-            (
-                True,
                 FunctionNode(add2floats),
                 TerminalNode("1", str),
             ),
             (
-                True,
                 FunctionNode(add2floats),
                 TerminalNode(1, NoneType),
             ),
             (
-                False,
                 FunctionNode(f_add),
                 TerminalNode(1, int),
             ),
         ],
     )
-    def test_add_child_bad_type(self, setup, typed, root, child):
-        tree = self.typed_tree if typed else self.untyped_tree
-        tree.add_child(root)
+    def test_add_tree_bad_type(self, root, child):
+        tree = Tree(erc_range=None)
+        tree.add_tree(root)
 
-        with pytest.raises(TypeError) as e:
-            tree.add_child(child, root)
-        assert "subtype" in str(e.value)
+        with pytest.raises(ValueError) as e:
+            tree.add_tree(child)
+        assert "Could not add node" in str(e.value)
 
     def test_replace_subtree(self, setup):
         """
@@ -190,7 +155,7 @@ class TestTree:
 
         self.typed_tree.replace_subtree(old_subtree, new_subtree)
         assert self.typed_tree.root.children[0] == new_subtree
-        assert self.typed_tree.size == 5
+        assert self.typed_tree.size() == 5
 
     @pytest.mark.parametrize(
         "typed, node, expected",

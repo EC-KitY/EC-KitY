@@ -60,7 +60,7 @@ def test_typed_root_changed(tree):
         subtree_mutation.apply([tree_copy])
 
         # Check that the root function was changed
-        assert tree_copy.tree[0] is not tree.tree[0]
+        assert tree_copy.root is not tree.root
 
 
 @pytest.mark.parametrize(
@@ -94,7 +94,7 @@ def test_untyped_root_changed(tree):
         subtree_mutation.apply([tree_copy])
 
         # Check that the root function was changed
-        assert tree_copy.tree[0] is not tree.tree[0]
+        assert tree_copy.root is not tree.root
 
 
 @pytest.mark.parametrize(

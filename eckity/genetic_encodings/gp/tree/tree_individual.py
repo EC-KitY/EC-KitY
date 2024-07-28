@@ -113,6 +113,10 @@ class Tree(Individual):
             tree = []
         self.tree = tree  # actual tree representation
 
+    @property
+    def root(self) -> TreeNode:
+        return self.tree[0]
+
     def size(self) -> int:
         """
         Compute size of tree.
@@ -125,12 +129,40 @@ class Tree(Individual):
         return len(self.tree)
 
     def add_tree(self, node: TreeNode) -> None:
-        self.tree.append(node)
+        """Add a node to the tree following the defined type constrains"""
+        if self.size() == 0 or self._should_add([0], node):
+            self.tree.append(node)
+        else:
+            raise ValueError(f"Could not add node {node} to tree {self.tree}")
+
+    def _should_add(self, pos: int, new_node: TreeNode) -> bool:
+        """
+        Recursively find the parent function of the new node and check it
+        matches by type to the expected parameter. (pos is a size-1 list
+        so as to pass "by reference" on successive recursive calls).
+        """
+        if (
+            pos[0] == self.size()
+        ):  # reached the place the new node should be placed
+            return True
+
+        node = self.tree[pos[0]]
+        res = None
+        if isinstance(node, FunctionNode):
+            func_types = FunctionNode.get_func_types(node.function)
+            for i in range(node.n_args):
+                pos[0] += 1
+                res = self._should_add(pos, node)
+                if res:
+                    return func_types[i] == new_node.node_type
+                elif res is not None:
+                    return res
+        return res
 
     def empty_tree(self) -> None:
         self.tree = []
 
-    def depth(self):
+    def depth(self) -> int:
         """
         Compute depth of tree (maximal path length to a leaf).
 
@@ -141,7 +173,7 @@ class Tree(Individual):
         """
         return self._depth([0], d=0)
 
-    def _depth(self, pos, d):
+    def _depth(self, pos, d) -> int:
         """Recursively compute depth
         (pos is a size-1 list so as to pass "by reference"
         on successive recursive calls).
@@ -201,7 +233,7 @@ class Tree(Individual):
 
         # get the type of the terminal (erc terminal will be a float or int)
         node_type = self.terminal_set.get(terminal, type(terminal))
-        
+
         return TerminalNode(terminal, node_type=node_type)
 
     def execute(self, *args, **kwargs) -> object:
