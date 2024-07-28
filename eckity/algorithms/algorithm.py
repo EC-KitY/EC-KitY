@@ -8,15 +8,17 @@ from abc import ABC, abstractmethod
 from concurrent.futures.process import ProcessPoolExecutor
 from concurrent.futures.thread import ThreadPoolExecutor
 from time import time
-from typing import Any, List, Union
+from typing import Any, Callable, Dict, List, Union
 
 from overrides import overrides
 
+from eckity import Population, Subpopulation
+from eckity.breeders import Breeder
+from eckity.evaluators import PopulationEvaluator
 from eckity.event_based_operator import Operator
-from eckity.population import Population
 from eckity.random import RNG
 from eckity.statistics.statistics import Statistics
-from eckity.subpopulation import Subpopulation
+from eckity.termination_checkers import TerminationChecker
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
@@ -24,84 +26,93 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
 class Algorithm(Operator, ABC):
     """
-        Evolutionary algorithm to be executed.
+    Evolutionary algorithm to be executed.
 
-        Abstract Algorithm that can be extended to concrete algorithms,
-        such as SimpleEvolution, Coevolution etc.
+    Abstract Algorithm that can be extended to concrete algorithms,
+    such as SimpleEvolution, Coevolution etc.
 
-        Parameters
-        ----------
-        population: Population
-                The population to be evolved.
+    Parameters
+    ----------
+    population: Population
+        The population to be evolved.
+        Consists of several sub-populations.
+        ref: https://api.eckity.org/eckity/population.html
 
-        statistics: Statistics or list of Statistics, default=None
-                Provide statistics on the population during the evolution.
+    statistics: Statistics or list of Statistics, default=None
+        Provide statistics on the population during the evolution.
+        ref: https://api.eckity.org/eckity/statistics.html
 
     breeder: Breeder, default=SimpleBreeder()
         Responsible for applying selection and operator sequence on individuals
         in each generation. Applies on one sub-population in simple case.
+        ref: https://api.eckity.org/eckity/breeders.html
 
     population_evaluator: PopulationEvaluator,
                           default=SimplePopulationEvaluator()
         Evaluates individual fitness scores concurrently and returns the best
-         individual of each subpopulation (one individual in simple case).
+        individual of each subpopulation (one individual in simple case).
+        ref: https://api.eckity.org/eckity/evaluators.html
 
-        max_generation: int, default=1000
-                Maximal number of generations to run the evolutionary process.
-                Note the evolution could end before reaching max_generation,
-                depends on the termination checker.
-                Note there are up to `max_generation + 1` fitness calculations,
-                but only up to `max_generation` selections
+    max_generation: int, default=100
+        Maximal number of generations to run the evolutionary process.
+        Note the evolution could end before reaching max_generation,
+        depends on the termination checker.
+        Note there are up to `max_generation + 1` fitness calculations,
+        but only up to `max_generation` selections
 
-        events: dict(str, dict(object, function)), default=None
-                dict of events, each event holds a dict (subscriber, callback).
+    events: dict(str, dict(object, function)), default=None
+        dict of events, each event holds a dict (subscriber, callback).
 
-        event_names: list of strings, default=None
-                Names of events to publish during the evolution.
+    event_names: list of strings, default=None
+        Names of events to publish during the evolution.
 
     termination_checker: TerminationChecker or a list of TerminationCheckers,
                           default=ThresholdFromTargetTerminationChecker()
         Checks if the algorithm should terminate early.
+        ref: https://api.eckity.org/eckity/termination_checkers.html
 
-        max_workers: int, default=None
-                Maximal number of worker nodes for the Executor object
-                that evaluates the fitness of the individuals.
+    max_workers: int, default=None
+        Maximal number of worker nodes for the Executor object
+        that evaluates the fitness of the individuals.
+        ref: https://docs.python.org/3/library/concurrent.futures.html
 
-        random_generator: RNG, default=RNG()
-                Random Number Generator.
+    random_generator: RNG, default=RNG()
+        Random Number Generator.
 
-        random_seed: int, default=current system time
-                Random seed for deterministic experiment.
+    random_seed: int, default=current system time
+        Random seed for deterministic experiment.
 
-        generation_seed: int, default=None
-                Current generation seed.
-                Useful for resuming a previously paused experiment.
+    generation_seed: int, default=None
+        Current generation seed.
+        Useful for resuming a previously paused experiment.
 
-        generation_num: int, default=0
-                Current generation number
+    generation_num: int, default=0
+        Current generation number
 
-        Attributes
-        ----------
-        final_generation_: int
-                The generation in which the evolution ended.
+    Attributes
+    ----------
+    final_generation_: int
+        The generation in which the evolution ended.
     """
 
     def __init__(
         self,
         population: Union[Population, Subpopulation, List[Subpopulation]],
         statistics: Union[Statistics, List[Statistics]] = None,
-        breeder=None,
-        population_evaluator=None,
-        termination_checker=None,
-        max_generation=None,
-        events=None,
-        event_names=None,
+        breeder: Breeder = None,
+        population_evaluator: PopulationEvaluator = None,
+        termination_checker: Union[
+            TerminationChecker, List[TerminationChecker]
+        ] = None,
+        max_generation: int = 100,
+        events: List[str, Dict[object, Callable]] = None,
+        event_names: List[str] = None,
         random_generator: RNG = RNG(),
-        random_seed=None,
-        generation_seed=None,
-        executor="thread",
-        max_workers=None,
-        generation_num=0,
+        random_seed: int = None,
+        generation_seed: int = None,
+        executor: str = "process",
+        max_workers: int = None,
+        generation_num: int = 0,
     ):
 
         ext_event_names = event_names.copy() if event_names is not None else []
@@ -156,7 +167,7 @@ class Algorithm(Operator, ABC):
         """
         self.evolve()
 
-    def evolve(self):
+    def evolve(self) -> None:
         """
         Performs the evolutionary run by initializing the random seed,
         creating the population, performing the evolutionary loop
@@ -176,7 +187,7 @@ class Algorithm(Operator, ABC):
         self.finish()
 
     @abstractmethod
-    def execute(self, **kwargs):
+    def execute(self, **kwargs) -> object:
         """
         Execute the algorithm result after evolution ended.
 
@@ -196,10 +207,8 @@ class Algorithm(Operator, ABC):
         """
         raise ValueError("execute is an abstract method in class Algorithm")
 
-    def initialize(self):
+    def initialize(self) -> None:
         """
-                Initialize the algorithm before beginning the evolution process
-
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
@@ -262,7 +271,7 @@ class Algorithm(Operator, ABC):
                 type(statistics),
             )
 
-    def evolve_main_loop(self):
+    def evolve_main_loop(self) -> None:
         """
         Performs the evolutionary main loop
         """
@@ -270,7 +279,7 @@ class Algorithm(Operator, ABC):
         # now create another self.max_generation generations, starting gen #1
         for gen in range(1, self.max_generation + 1):
             self.generation_num = gen
-            self.update_gen(self.population, gen)
+            self.update_gen(gen)
 
             self.set_generation_seed(self.next_seed())
             self.generation_iteration(gen)
@@ -280,55 +289,63 @@ class Algorithm(Operator, ABC):
                 break
             self.publish("after_generation")
 
-    def update_gen(self, population, gen):
-        for subpopulation in population.sub_populations:
+    def update_gen(self, gen: int) -> None:
+        """
+        Update `gen` field for all individuals
+
+        Parameters
+        ----------
+        gen : int
+            Current generation number
+        """
+        for subpopulation in self.population.sub_populations:
             for ind in subpopulation.individuals:
                 ind.gen = gen
 
     @abstractmethod
-    def generation_iteration(self, gen):
+    def generation_iteration(self, gen) -> bool:
         """
         Performs an iteration of the evolutionary main loop
 
         Parameters
         ----------
         gen: int
-                current generation number
+            current generation number
 
         Returns
         -------
         bool
-                True if the main loop should terminate, False otherwise
+            True if the main loop should terminate, False otherwise
         """
         raise ValueError(
             "generation_iteration is an abstract method in class Algorithm"
         )
 
-    def finish(self):
+    def finish(self) -> None:
         """
         Finish the evolutionary run
         """
         self.executor.shutdown()
 
-    def create_population(self):
+    def create_population(self) -> None:
         """
         Create the population for the evolutionary run
         """
         self.population.create_population_individuals()
 
-    def event_name_to_data(self, event_name):
+    def event_name_to_data(self, event_name) -> Dict[str, object]:
         """
         Convert event name to relevant data of the Algorithm for the event
 
         Parameters
         ----------
         event_name: string
-                name of the event that is happening
+            name of the event that is happening
 
         Returns
         ----------
-        dict
-                Algorithm data regarding the given event
+        Dict[str, object]
+            Algorithm data regarding the given event
         """
         if event_name == "init":
             return {
@@ -342,7 +359,7 @@ class Algorithm(Operator, ABC):
             }
         return {}
 
-    def set_random_seed(self, seed=None):
+    def set_random_seed(self, seed: int = None) -> None:
         """
         Set the initial seed for the random generator
         This method is called once at the beginning of the run.
@@ -355,7 +372,7 @@ class Algorithm(Operator, ABC):
         self.random_generator.set_seed(seed)
         self.random_seed = seed
 
-    def set_generation_seed(self, seed):
+    def set_generation_seed(self, seed: int) -> None:
         """
         Set the seed for current generation.
         This method is called once every generation.
@@ -368,9 +385,9 @@ class Algorithm(Operator, ABC):
         self.random_generator.set_seed(seed)
         self.generation_seed = seed
 
-    def next_seed(self):
+    def next_seed(self) -> int:
         """
-        Generate a random seed
+        Increase the random seed for the next generation.
 
         Returns
         ----------
@@ -394,14 +411,32 @@ class Algorithm(Operator, ABC):
                 population, best_of_run_, generation_num
             )
 
-    # Necessary for pickling, since executor objects cannot be pickled
-    def __getstate__(self):
+    def __getstate__(self) -> Dict[str, object]:
+        """
+        Return a dictionary of the Algorithm's fields and values.
+        It is mainly used for serialization.
+        We remove executor field since it cannot be pickled.
+
+        Returns
+        -------
+        Dict[str, object]
+            Dictionary of {field name: field value} for the Algorithm object.
+        """
         state = self.__dict__.copy()
         del state["executor"]
         return state
 
-    # Necessary for unpickling, since executor objects cannot be pickled
-    def __setstate__(self, state):
+    def __setstate__(self, state: Dict[str, object]) -> None:
+        """
+        Set the __dict__ of the algorithm upon deserialization.
+        We update executor field according to the _executor_type field,
+        since the executor was removed in the serialization process.
+
+        Parameters
+        ----------
+        state : Dict[str, object]
+            Dictionary of {field name: field value} for the Algorithm object.
+        """
         self.__dict__.update(state)
         if self._executor_type == "thread":
             self.executor = ThreadPoolExecutor(max_workers=self.max_workers)
