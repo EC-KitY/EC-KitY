@@ -43,7 +43,6 @@ class Individual:
         self.selected_by = []  # last gen
         self.applied_operators = []  # last gen
 
-
     def update_id(self):
         self.id = Individual.id
         Individual.id += 1

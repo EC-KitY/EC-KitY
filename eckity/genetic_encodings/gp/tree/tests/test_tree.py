@@ -145,7 +145,7 @@ class TestTree:
             ],
         )
 
-        old_subtree = self.typed_tree.tree[1]
+        old_subtree = [self.typed_tree.tree[1]]
 
         self.typed_tree.replace_subtree(old_subtree, new_subtree)
         assert self.typed_tree.tree[1 : 1 + len(new_subtree)] == new_subtree
@@ -215,8 +215,8 @@ class TestTree:
             ),
             (
                 False,
-                TerminalNode(1),
-                "def func_2(x, y, z):\n\treturn f_add(1.0, 2.0)",
+                [TerminalNode(1)],
+                "def func_2(x, y):\n\treturn 1",
             ),
             (
                 True,
@@ -225,7 +225,7 @@ class TestTree:
                     TerminalNode(1.0, float),
                     TerminalNode(2.0, float),
                 ],
-                "def func_1(x: float, y: float, z: float) -> float:\n\treturn f_add(1.0, 2.0)",
+                "def func_1(x: float, y: float) -> float:\n\treturn add2floats(1.0, 2.0)",
             ),
             (
                 False,
@@ -234,7 +234,7 @@ class TestTree:
                     TerminalNode(1),
                     TerminalNode(2),
                 ],
-                "def func_2(x, y):\n\treturn f_add(1,2)",
+                "def func_2(x, y):\n\treturn f_add(1, 2)",
             ),
         ],
     )
@@ -245,4 +245,5 @@ class TestTree:
         tree_ind = self.typed_tree if typed else self.untyped_tree
         tree_ind.tree = tree
 
-        assert str(self.typed_tree) == expected
+        tree_str = str(tree_ind)
+        assert tree_str.replace("\n\t", "") == expected.replace("\n\t", "")

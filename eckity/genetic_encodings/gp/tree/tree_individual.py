@@ -319,15 +319,21 @@ class Tree(Individual):
         )
         return random.choice(erc_nodes) if erc_nodes else None
 
-    def random_subtree(self, node_type=NoneType) -> Optional[TreeNode]:
+    def random_subtree(self, node_type=NoneType) -> Optional[List[TreeNode]]:
         relevant_nodes = self.filter_tree(
             lambda node: node.node_type in [Any, NoneType]
             or node.node_type == node_type
         )
-        return random.choice(relevant_nodes) if relevant_nodes else None
+        if not relevant_nodes:
+            return None
+        subtree_root = random.choice(relevant_nodes)
+
+        start_i = self.tree.index(subtree_root)
+        end_i = self._find_subtree_end([start_i])
+        return self.tree[start_i:end_i]
 
     def replace_subtree(
-        self, old_subtree_root: TreeNode, new_subtree: List[TreeNode]
+        self, old_subtree: List[TreeNode], new_subtree: List[TreeNode]
     ) -> None:
         """
         Replace the subtree starting at `index` with `subtree`
@@ -340,10 +346,10 @@ class Tree(Individual):
         -------
         None
         """
-        index = self.tree.index(old_subtree_root)
-        end_i = self._find_subtree_end([index])
-        left_part = self.tree[:index]
-        right_part = self.tree[(end_i + 1) :]
+        start_i = self.tree.index(old_subtree[0])
+        end_i = start_i + len(old_subtree)
+        left_part = self.tree[:start_i]
+        right_part = self.tree[end_i + 1 :]
         self.tree = left_part + new_subtree + right_part
 
     def _find_subtree_end(self, pos):
@@ -371,8 +377,8 @@ class Tree(Individual):
             for i in range(node.n_args):
                 pos[0] += 1
                 self._str_rec(prefix + "\t", pos, result)
-                result.append(",")
                 if i < node.n_args - 1:
+                    result.append(", ")
                     result.append("\n")
             result.append(prefix + ")")
         else:  # terminal
