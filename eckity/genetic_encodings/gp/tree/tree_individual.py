@@ -349,7 +349,7 @@ class Tree(Individual):
         start_i = self.tree.index(old_subtree[0])
         end_i = start_i + len(old_subtree)
         left_part = self.tree[:start_i]
-        right_part = self.tree[end_i + 1 :]
+        right_part = self.tree[end_i:]
         self.tree = left_part + new_subtree + right_part
 
     def _find_subtree_end(self, pos):
