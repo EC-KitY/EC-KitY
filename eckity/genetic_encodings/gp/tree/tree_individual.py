@@ -41,15 +41,6 @@ class Tree(Individual):
 
     (tree is not meant as a stand-alone,
     parameters are supplied through the call from the Tree Creators)
-
-    Parameters
-    ----------
-    function_set: list, default=None
-        List of functions used as internal nodes in the GP tree.
-
-    terminal_set: Dict[Any, type], default=None
-        Mapping of terminal nodes and their types.
-        In the untyped case, all types are NoneType.
     """
 
     def __init__(
@@ -58,10 +49,9 @@ class Tree(Individual):
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         tree: List[TreeNode] = None,
-        erc_range: Optional[Union[Tuple[float, float], Tuple[int, int]]] = (
-            -1.0,
-            1.0,
-        ),
+        erc_range: Optional[
+            Union[Tuple[float, float], Tuple[int, int]]
+        ] = None,
     ):
         """
         GP Tree Individual.
@@ -87,22 +77,10 @@ class Tree(Individual):
             If typed function is used with untyped terminals.
         """
         super().__init__(fitness)
-        if function_set is None:
-            function_set = [f_add, f_sub, f_mul, f_div]
 
-        if terminal_set is None:
-            terminal_set = {"x": float, "y": float, "z": float}
-
-        # untyped case - convert to dictionary of NoneTypes.
-        if isinstance(terminal_set, list):
-            # check if any function has type hints
-            if any(f.__annotations__ for f in function_set):
-                raise ValueError(
-                    "Detected typed function with untyped terminal set. \
-                        Please provide a dictionary with types for terminals."
-                )
-
-            terminal_set = {t: NoneType for t in terminal_set}
+        function_set, terminal_set = Tree._handle_function_and_terminal_set(
+            function_set, terminal_set
+        )
 
         self.function_set = function_set
         self.terminal_set = terminal_set
@@ -231,8 +209,10 @@ class Tree(Individual):
 
         terminal = random.choice(relevant_terminals)
 
-        # get the type of the terminal (erc terminal will be a float or int)
-        node_type = self.terminal_set.get(terminal, type(terminal))
+        # erc terminal will be typeless in untyped case,
+        # and int/float in typed case
+        default_type = NoneType if node_type is NoneType else type(terminal)
+        node_type = self.terminal_set.get(terminal, default_type)
 
         return TerminalNode(terminal, node_type=node_type)
 
@@ -398,6 +378,52 @@ class Tree(Individual):
         else:  # terminal
             result.append(f"{prefix}{str(node)}")
 
+    @staticmethod
+    def _handle_function_and_terminal_set(
+        function_set: Optional[List[Callable]],
+        terminal_set: Optional[Union[Dict[Any, type], List[str]]],
+    ):
+        if function_set is None:
+            function_set = [f_add, f_sub, f_mul, f_div]
+
+        if terminal_set is None:
+            terminal_set = {"x": float, "y": float, "z": float}
+
+        for t in function_set:
+            if not isinstance(t, Callable):
+                raise ValueError(
+                    f"Functions must be Callble, but {t} is of type {type(t)}"
+                )
+
+        # TODO remove this method when we include automatic type checking
+        if not isinstance(terminal_set, (list, dict)):
+            raise ValueError(
+                "Terminal set must be a list or a dictionary, "
+                f"got {type(terminal_set)}."
+            )
+
+        # untyped case - convert to dictionary of NoneTypes.
+        if isinstance(terminal_set, list):
+            # check if any function has type hints
+            if any(f.__annotations__ for f in function_set):
+                raise ValueError(
+                    "Detected typed function with untyped terminal set. \
+                    Please provide a dictionary with types for terminals."
+                )
+
+            terminal_set = {t: NoneType for t in terminal_set}
+            return function_set, terminal_set
+
+        # typed case - check every value is a type
+        for v in terminal_set.values():
+            if not isinstance(v, type):
+                raise ValueError(
+                    "Values in terminal set dictionary must be types, "
+                    f"but {v} is of type {type(v)}."
+                )
+
+        return function_set, terminal_set
+
     def __str__(self):
         """
         Return a simple textual representation of the tree.
@@ -429,10 +455,17 @@ class Tree(Individual):
         args = (
             list(self.terminal_set.keys())
             if NoneType in self.terminal_set.values()
-            else [f"{k}: {v}" for k, v in self.terminal_set.items()]
+            else [f"{k}: {v.__name__}" for k, v in self.terminal_set.items()]
         )
-        result = [f"def func_{self.id}({', '.join(args)}):\n\treturn "]
-        self._str_rec("\t", [0], result)
+        ret_type_str = (
+            ""
+            if NoneType in self.terminal_set.values()
+            else f" -> {self.root.node_type.__name__}"
+        )
+        result = [
+            f"def func_{self.id}({', '.join(args)}){ret_type_str}:\n\treturn "
+        ]
+        self._str_rec("", [0], result)
         return "".join(result)
 
     def show(self):

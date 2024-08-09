@@ -24,7 +24,6 @@ class SimpleEvolution(Algorithm):
             The population to be evolved.
             Contains only one subpopulation in simple case.
 
-
     statistics: Statistics or list of Statistics, default=None
             Provide multiple statistics on the population during the evolution.
 

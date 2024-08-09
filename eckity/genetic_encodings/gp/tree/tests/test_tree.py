@@ -1,4 +1,5 @@
 import pytest
+from typing import List
 
 from eckity.base.typed_functions import (
     add2floats,
@@ -24,17 +25,10 @@ class TestTree:
     """
 
     typed_functions = [add2floats, sub2floats, mul2floats, div2floats]
-    typed_terminals = {
-        "x": float,
-        "y": float,
-        0: int,
-        1: int,
-        -1.0: float,
-        2.0: float,
-    }
+    typed_terminals = {"x": float, "y": float}
 
     untyped_functions = [f_add, f_sub, f_mul, f_div]
-    untyped_terminals = ["x", "y", 0, 1, -1.0, 2.0]
+    untyped_terminals = ["x", "y"]
     typed_tree = Tree(
         fitness=GPFitness(),
         function_set=typed_functions,
@@ -92,8 +86,8 @@ class TestTree:
         for i, child in enumerate(children):
             self.typed_tree.add_tree(child)
             assert self.typed_tree.size() == i + 2
-            assert self.typed_tree.tree[i+1] == child
-            assert self.typed_tree.tree[i+1].node_type is float
+            assert self.typed_tree.tree[i + 1] == child
+            assert self.typed_tree.tree[i + 1].node_type is float
 
     def test_add_tree_inner_untyped(self, setup):
         """
@@ -135,7 +129,7 @@ class TestTree:
         Test that replace_subtree replaces subtree with another subtree
         """
 
-        self.typed_tree.tree = (
+        self.typed_tree.tree = list(
             [
                 FunctionNode(add2floats),
                 TerminalNode(1.0, float),
@@ -143,7 +137,7 @@ class TestTree:
             ],
         )
 
-        new_subtree = (
+        new_subtree = list(
             [
                 FunctionNode(sub2floats),
                 TerminalNode(3.0, float),
@@ -151,17 +145,17 @@ class TestTree:
             ],
         )
 
-        old_subtree = self.typed_tree.root.children[0]
+        old_subtree = self.typed_tree.tree[1]
 
         self.typed_tree.replace_subtree(old_subtree, new_subtree)
-        assert self.typed_tree.root.children[0] == new_subtree
+        assert self.typed_tree.tree[1 : 1 + len(new_subtree)] == new_subtree
         assert self.typed_tree.size() == 5
 
     @pytest.mark.parametrize(
-        "typed, node, expected",
+        "typed, tree, expected",
         [
             (True, [TerminalNode(1, int)], 0),
-            (False, TerminalNode(1), 0),
+            (False, [TerminalNode(1)], 0),
             (
                 True,
                 [
@@ -204,29 +198,25 @@ class TestTree:
             ),
         ],
     )
-    def test_depth_typed(self, setup, typed, node, expected):
-        tree = self.typed_tree if typed else self.untyped_tree
-        tree.tree = node
-        assert tree.depth() == expected
+    def test_depth_typed(
+        self, setup, typed: bool, tree: List[TerminalNode], expected: bool
+    ):
+        tree_ind = self.typed_tree if typed else self.untyped_tree
+        tree_ind.tree = tree
+        assert tree_ind.depth() == expected
 
     @pytest.mark.parametrize(
-        "typed, node, expected",
+        "typed, tree, expected",
         [
             (
                 True,
                 [TerminalNode(1, int)],
-                """
-                def func_0(x: float, y: float) -> int:
-                    return 1
-                """,
+                "def func_1(x: float, y: float) -> int:\n\treturn 1",
             ),
             (
                 False,
                 TerminalNode(1),
-                """
-                def func_1(x, y, z):
-                    return f_add(1.0, 2.0)
-                """,
+                "def func_2(x, y, z):\n\treturn f_add(1.0, 2.0)",
             ),
             (
                 True,
@@ -235,10 +225,7 @@ class TestTree:
                     TerminalNode(1.0, float),
                     TerminalNode(2.0, float),
                 ],
-                """
-                def func_0(x: float, y: float, z: float) -> float:
-                    return f_add(1.0, 2.0)
-                """,
+                "def func_1(x: float, y: float, z: float) -> float:\n\treturn f_add(1.0, 2.0)",
             ),
             (
                 False,
@@ -247,24 +234,15 @@ class TestTree:
                     TerminalNode(1),
                     TerminalNode(2),
                 ],
-                """
-                def func_1(x, y):
-                    return f_add(1, 2)
-                """,
+                "def func_2(x, y):\n\treturn f_add(1,2)",
             ),
         ],
     )
-    def test_str(self, setup, typed, node, expected):
+    def test_str(self, setup, typed, tree, expected):
         """
         Test that str method returns a string representation of the tree
         """
-        tree = self.typed_tree if typed else self.untyped_tree
-        tree.tree = (
-            [
-                FunctionNode(add2floats),
-                TerminalNode(1.0, float),
-                TerminalNode(2.0, float),
-            ],
-        )
+        tree_ind = self.typed_tree if typed else self.untyped_tree
+        tree_ind.tree = tree
 
         assert str(self.typed_tree) == expected

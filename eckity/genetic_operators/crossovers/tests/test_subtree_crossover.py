@@ -20,20 +20,22 @@ def untyped_add_inc(n, inc):
             Tree(
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
-                terminal_set={8: int, True: bool, False: bool},
+                terminal_set={True: bool, False: bool},
+                erc_range=(1, 3),
                 tree=[
                     FunctionNode(typed_add_inc),
-                    TerminalNode(8, int),
+                    TerminalNode(1, int),
                     TerminalNode(True, bool),
                 ],
             ),
             Tree(
                 fitness=GPFitness(),
                 function_set=[typed_add_inc],
-                terminal_set={8: int, True: bool, False: bool},
+                terminal_set={True: bool, False: bool},
+                erc_range=(1, 3),
                 tree=[
                     FunctionNode(typed_add_inc),
-                    TerminalNode(8, int),
+                    TerminalNode(1, int),
                     TerminalNode(False, bool),
                 ],
             ),
