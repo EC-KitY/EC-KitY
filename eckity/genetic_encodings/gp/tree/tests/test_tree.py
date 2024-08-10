@@ -15,7 +15,12 @@ from eckity.base.untyped_functions import (
 )
 from eckity.base.utils import arity
 from eckity.fitness.gp_fitness import GPFitness
-from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, Tree
+from eckity.genetic_encodings.gp import (
+    FunctionNode,
+    TerminalNode,
+    TreeNode,
+    Tree,
+)
 from types import NoneType
 
 
@@ -247,3 +252,79 @@ class TestTree:
 
         tree_str = str(tree_ind)
         assert tree_str.replace("\n\t", "") == expected.replace("\n\t", "")
+
+    @pytest.mark.parametrize(
+        "typed, tree, root_indices, expected_results",
+        [
+            (
+                True,
+                [
+                    FunctionNode(add2floats),
+                    TerminalNode(1.0, float),
+                    FunctionNode(sub2floats),
+                    TerminalNode(2.0, float),
+                    TerminalNode(3.0, float),
+                ],
+                [0, 1, 2, 3, 4],
+                [
+                    [
+                        FunctionNode(add2floats),
+                        TerminalNode(1.0, float),
+                        FunctionNode(sub2floats),
+                        TerminalNode(2.0, float),
+                        TerminalNode(3.0, float),
+                    ],
+                    [TerminalNode(1.0, float)],
+                    [
+                        FunctionNode(sub2floats),
+                        TerminalNode(2.0, float),
+                        TerminalNode(3.0, float),
+                    ],
+                    [TerminalNode(2.0, float)],
+                    [TerminalNode(3.0, float)],
+                ],
+            ),
+            (
+                False,
+                [
+                    FunctionNode(f_add),
+                    TerminalNode(1),
+                    FunctionNode(f_sub),
+                    TerminalNode(2),
+                    TerminalNode(3),
+                ],
+                [0, 1, 2, 3, 4],
+                [
+                    [
+                        FunctionNode(f_add),
+                        TerminalNode(1),
+                        FunctionNode(f_sub),
+                        TerminalNode(2),
+                        TerminalNode(3),
+                    ],
+                    [TerminalNode(1)],
+                    [
+                        FunctionNode(f_sub),
+                        TerminalNode(2),
+                        TerminalNode(3),
+                    ],
+                    [TerminalNode(2)],
+                    [TerminalNode(3)],
+                ],
+            ),
+        ],
+    )
+    def test_get_subtree_by_root(
+        self,
+        setup,
+        typed,
+        tree,
+        root_indices: List[int],
+        expected_results: List[List[TreeNode]],
+    ):
+        tree_ind = self.typed_tree if typed else self.untyped_tree
+        tree_ind.tree = tree
+
+        for root_idx, expected in zip(root_indices, expected_results):
+            subtree_root = tree[root_idx]
+            assert tree_ind._get_subtree_by_root(subtree_root) == expected

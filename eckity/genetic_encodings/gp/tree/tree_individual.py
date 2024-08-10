@@ -328,9 +328,16 @@ class Tree(Individual):
             return None
         subtree_root = random.choice(relevant_nodes)
 
+        return self._get_subtree_by_root(subtree_root)
+
+    def _get_subtree_by_root(self, subtree_root: TreeNode) -> List[TreeNode]:
         start_i = self.tree.index(subtree_root)
+
+        if start_i == 0:
+            return self.tree
+
         end_i = self._find_subtree_end([start_i])
-        return self.tree[start_i:end_i]
+        return self.tree[start_i : end_i + 1]
 
     def replace_subtree(
         self, old_subtree: List[TreeNode], new_subtree: List[TreeNode]
@@ -359,8 +366,11 @@ class Tree(Individual):
 
         node = self.tree[pos[0]]
 
-        if node in self.function_set:
-            for _ in range(self.arity[node]):
+        if (
+            isinstance(node, FunctionNode)
+            and node.function in self.function_set
+        ):
+            for _ in range(node.n_args):
                 pos[0] += 1
                 self._find_subtree_end(pos)
 

@@ -54,11 +54,10 @@ class SubtreeMutation(FailableOperator):
             new_subtree = tree_creator.create_tree(
                 ind,
                 depth=0,
-                node_type=old_subtree.node_type,
-                parent=old_subtree.parent,
+                node_type=old_subtree[0].node_type
             )
             ind.replace_subtree(
-                old_subtree_root=old_subtree, new_subtree=new_subtree
+                old_subtree=old_subtree, new_subtree=new_subtree
             )
 
         self.applied_individuals = individuals
