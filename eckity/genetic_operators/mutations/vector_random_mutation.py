@@ -214,8 +214,8 @@ class IntVectorOnePointMutation(VectorNPointMutation):
         super().__init__(
             probability=probability,
             arity=arity,
-            mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(
-                index
+            mut_val_getter=lambda ind, idx: ind.get_random_number_in_bounds(
+                idx
             ),
             events=events,
             n=1,
@@ -239,12 +239,20 @@ class IntVectorNPointMutation(VectorNPointMutation):
         custom events to be published by the mutation, by default None
     """
 
-    def __init__(self, probability=1.0, arity=1, events=None, n=1):
+    def __init__(self,
+                 probability=1.0,
+                 arity=1,
+                 events=None,
+                 probability_for_each=0.2,
+                 n=1):
+        self.probability_for_each = probability_for_each
         super().__init__(
             probability=probability,
             arity=arity,
-            mut_val_getter=lambda individual, index: individual.get_random_number_in_bounds(
-                index
+            mut_val_getter=lambda individual, index: (
+                individual.get_random_number_in_bounds(index)
+                if random() <= self.probability_for_each
+                else individual.cell_value(index)
             ),
             events=events,
             n=n,

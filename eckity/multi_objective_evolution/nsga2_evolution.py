@@ -80,7 +80,7 @@ class NSGA2Evolution(Algorithm):
 
     #
     @overrides
-    def generation_iteration(self, gen):
+    def generation_iteration(self, gen: int) -> bool:
         """
         Performs one iteration of the evolutionary run, for the current generation
 

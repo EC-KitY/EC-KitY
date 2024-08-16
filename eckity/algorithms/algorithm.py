@@ -105,7 +105,7 @@ class Algorithm(Operator, ABC):
             TerminationChecker, List[TerminationChecker]
         ] = None,
         max_generation: int = 100,
-        events: List[str, Dict[object, Callable]] = None,
+        events: Dict[str, Dict[object, Callable]] = None,
         event_names: List[str] = None,
         random_generator: RNG = RNG(),
         random_seed: int = None,
@@ -303,7 +303,7 @@ class Algorithm(Operator, ABC):
                 ind.gen = gen
 
     @abstractmethod
-    def generation_iteration(self, gen) -> bool:
+    def generation_iteration(self, gen: int) -> bool:
         """
         Performs an iteration of the evolutionary main loop
 
