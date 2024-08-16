@@ -12,6 +12,7 @@ class GAVectorCreator(Creator):
         vector_type=BitStringVector,
         fitness_type=SimpleFitness,
         events=None,
+        update_parents=False,
     ):
         if events is None:
             events = ["after_creation"]
@@ -24,6 +25,7 @@ class GAVectorCreator(Creator):
         self.type = vector_type
         self.length = length
         self.bounds = bounds
+        self.update_parents = update_parents
 
     def create_individuals(self, n_individuals, higher_is_better):
         individuals = [
@@ -31,6 +33,7 @@ class GAVectorCreator(Creator):
                 length=self.length,
                 bounds=self.bounds,
                 fitness=self.fitness_type(higher_is_better=higher_is_better),
+                update_parents=self.update_parents,
             )
             for _ in range(n_individuals)
         ]

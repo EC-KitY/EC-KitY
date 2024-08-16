@@ -23,12 +23,22 @@ class FloatVector(Vector):
     bounds : tuple or list of tuples
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
-    def __init__(self,
-                 fitness,
-                 length,
-                 bounds=(0.0, 1.0),
-                 vector=None):
-        super().__init__(fitness=fitness, length=length, bounds=bounds, vector=vector)
+
+    def __init__(
+        self,
+        fitness,
+        length,
+        bounds=(0.0, 1.0),
+        vector=None,
+        update_parents=False,
+    ):
+        super().__init__(
+            fitness=fitness,
+            length=length,
+            bounds=bounds,
+            vector=vector,
+            update_parents=update_parents,
+        )
 
     def get_random_number_in_bounds(self, index):
         """
@@ -67,5 +77,6 @@ class FloatVector(Vector):
             random value according to bounds field and gauss parameters
         """
         return self.cell_value(index) + gauss(mu, sigma)
+
 
 # end class float vector

@@ -51,6 +51,10 @@ class GeneticOperator(Operator, ABC):
             # Add the operator to the applied operators list
             for ind in op_res:
                 ind.applied_operators.append(type(self).__name__)
+                
+                if ind.update_parents:
+                    parents = [p.id for p in individuals]
+                    ind.parents.extend(parents)
             return op_res
         return individuals
 

@@ -5,7 +5,7 @@ from eckity.genetic_operators.crossovers.vector_k_point_crossover import (
 from eckity.fitness.simple_fitness import SimpleFitness
 
 
-class TestVectorNPointCrossover:
+class TestVectorKPointCrossover:
     def test_one_point_crossover(self):
         v1 = [1, 2, 3, 4]
         v2 = [5, 6, 7, 8]

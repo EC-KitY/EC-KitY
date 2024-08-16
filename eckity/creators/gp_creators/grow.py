@@ -11,7 +11,8 @@ class GrowCreator(GPTreeCreator):
 				 terminal_set=None,
 				 erc_range=None,
 				 bloat_weight=0.1,
-				 events=None):
+				 events=None,
+				 update_parents=False):
 		"""
 		Tree creator using the grow method
 
@@ -35,8 +36,15 @@ class GrowCreator(GPTreeCreator):
 		events : list
 			List of events related to this class
 		"""
-		super().__init__(init_depth=init_depth, function_set=function_set, terminal_set=terminal_set,
-						 erc_range=erc_range, bloat_weight=bloat_weight, events=events)
+		super().__init__(
+			init_depth=init_depth,
+			function_set=function_set,
+			terminal_set=terminal_set,
+			erc_range=erc_range,
+			bloat_weight=bloat_weight,
+			events=events,
+			update_parents=update_parents
+		)
 
 	@overrides
 	def create_tree(self, tree_ind, max_depth=5):

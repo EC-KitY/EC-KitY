@@ -14,7 +14,8 @@ class RampedHalfAndHalfCreator(GPTreeCreator):
 				 terminal_set=None,
 				 erc_range=None,
 				 bloat_weight=0.1,
-				 events=None):
+				 events=None,
+				 update_parents=False):
 		"""
 		Tree creator that creates trees using the Ramped Half and Half method
 
@@ -49,7 +50,8 @@ class RampedHalfAndHalfCreator(GPTreeCreator):
 						 terminal_set=terminal_set,
 						 erc_range=erc_range,
 						 bloat_weight=bloat_weight,
-						 events=events)
+						 events=events,
+						 update_parents=update_parents)
 
 		# assign default creators
 		if grow_creator is None:
