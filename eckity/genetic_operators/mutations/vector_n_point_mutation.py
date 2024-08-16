@@ -35,16 +35,24 @@ class VectorNPointMutation(FailableOperator):
     events: list of strings
         Events to publish before/after the mutation operator
     """
-    def __init__(self,
-                 n=1,
-                 probability=1.0,
-                 arity=1,
-                 cell_selector=None,
-                 mut_val_getter=None,
-                 success_checker=None,
-                 events=None,
-                 attempts=5):
-        super().__init__(probability=probability, arity=arity, events=events, attempts=attempts)
+
+    def __init__(
+        self,
+        n=1,
+        probability=1.0,
+        arity=1,
+        cell_selector=None,
+        mut_val_getter=None,
+        success_checker=None,
+        events=None,
+        attempts=5,
+    ):
+        super().__init__(
+            probability=probability,
+            arity=arity,
+            events=events,
+            attempts=attempts,
+        )
         self.n = n
 
         if cell_selector is None:
@@ -66,12 +74,14 @@ class VectorNPointMutation(FailableOperator):
     @staticmethod
     def default_success_checker(old_vec: Vector, new_vec: Vector) -> bool:
         return new_vec.check_if_in_bounds()
-    
+
     def default_cell_selector(self, vec: Vector) -> List[int]:
         vector_indices = range(vec.size())
         return random.sample(vector_indices, k=self.n)
 
-    def attempt_operator(self, individuals: List[Vector], attempt_num) -> Tuple[bool, List[Vector]]:
+    def attempt_operator(
+        self, individuals: List[Vector], attempt_num
+    ) -> Tuple[bool, List[Vector]]:
         """
         Attempt to perform the mutation operator
 
@@ -85,18 +95,22 @@ class VectorNPointMutation(FailableOperator):
 
         Returns
         ----------
-        tuple of (bool, list of vectors)
+        Tuple[bool, List[Vector]]
             first return value determines if the the attempt succeeded
             second return value is the operator result
         """
         succeeded = True
         for individual in individuals:
+            # clone the individual to revert in case of failure
             old_individual = individual.clone()
 
             # randomly select n points of the vector (without repetitions)
             m_points = self.cell_selector(individual)
             # obtain the mutated values
-            mut_vals = [self.mut_val_getter(individual, m_point) for m_point in m_points]
+            mut_vals = [
+                self.mut_val_getter(individual, m_point)
+                for m_point in m_points
+            ]
 
             # update the mutated value in-place
             for m_point, mut_val in zip(m_points, mut_vals):
