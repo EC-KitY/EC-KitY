@@ -3,8 +3,8 @@ from typing import Any, Callable, Dict, List, Union
 
 import pytest
 
-from eckity.base.typed_functions import add2floats, sqrt_float
-from eckity.base.untyped_functions import f_log, f_add
+from eckity.base.typed_functions import sqrt_float
+from eckity.base.untyped_functions import f_log
 from eckity.creators import GrowCreator
 from eckity.genetic_encodings.gp import (
     FunctionNode,

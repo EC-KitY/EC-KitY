@@ -43,9 +43,9 @@ def untyped_add_inc(n, inc):
     ],
 )
 def test_subtree_crossover_typed(tree1, tree2):
-    subtree_crossover = SubtreeCrossover(node_type=bool, probability=1.0)
+    subtree_crossover = SubtreeCrossover(probability=1.0)
 
-    for _ in range(10):
+    def run_test():
         tree1_copy = tree1.clone()
         tree2_copy = tree2.clone()
 
@@ -53,8 +53,12 @@ def test_subtree_crossover_typed(tree1, tree2):
         subtree_crossover.apply([tree1_copy, tree2_copy])
 
         # Check that the boolean nodes were swapped
-        assert tree1_copy.tree[2].value is False
-        assert tree2_copy.tree[2].value is True
+        return (
+            tree1_copy.tree[2].value is False
+            and tree2_copy.tree[2].value is True
+        )
+
+    assert any(run_test() for _ in range(30))
 
 
 @pytest.mark.parametrize(

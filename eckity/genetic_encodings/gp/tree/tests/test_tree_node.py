@@ -5,6 +5,7 @@ import pytest
 from eckity.base.typed_functions import add2floats
 from eckity.base.untyped_functions import f_add
 from eckity.genetic_encodings.gp import FunctionNode, TerminalNode
+from eckity.genetic_encodings.gp.tree.utils import get_func_types
 
 
 @pytest.mark.parametrize(
@@ -18,7 +19,7 @@ def test_get_func_types(function, expected_types):
     """
     Test that get_func_types returns the correct function types
     """
-    func_types = FunctionNode.get_func_types(function)
+    func_types = get_func_types(function)
     assert func_types == expected_types
 
 

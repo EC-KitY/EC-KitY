@@ -2,7 +2,8 @@
 This module implements the Operator class
 """
 
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
+from typing import Any
 
 from eckity.before_after_publisher import BeforeAfterPublisher
 
@@ -34,7 +35,24 @@ class Operator(BeforeAfterPublisher, ABC):
         -------
         the return value of the operator implemented in the sub-class
         """
-        return self.act_and_publish_before_after(lambda: self.apply_operator(payload))
+        self._assert_arity(payload)
+        return self.act_and_publish_before_after(
+            lambda: self.apply_operator(payload)
+        )
+
+    def _assert_arity(self, payload: Any) -> None:
+        if not isinstance(payload, list):
+            if self.arity != 1:
+                raise ValueError(
+                    f"Received payload of type {type(payload)}, "
+                    f"expected arity of 1 but got {self.arity}."
+                )
+
+        elif (n_individuals := len(payload)) != self.arity:
+            raise ValueError(
+                f"Expected {self.arity} individuals,"
+                f"but received {n_individuals}."
+            )
 
     def get_operator_arity(self):
         """

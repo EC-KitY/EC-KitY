@@ -8,7 +8,7 @@ class GeneticOperator(Operator):
     def __init__(
         self, probability=0.05, arity=0, events=None
     ):
-        super().__init__(events=events, arity=arity)
+        super().__init__(arity=arity, events=events)
         self.probability = probability
 
     def apply_operator(self, individuals):

@@ -4,7 +4,8 @@ from typing import Any, Callable, Dict, List, Tuple, Union
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import FunctionNode, Tree
+from eckity.genetic_encodings.gp import Tree
+from eckity.genetic_encodings.gp.tree.utils import get_func_types
 
 
 class FullCreator(GPTreeCreator):
@@ -78,7 +79,7 @@ class FullCreator(GPTreeCreator):
             tree_ind.add_tree(node)
 
             # recursively add argument nodes to the tree
-            func_types = FunctionNode.get_func_types(node.function)[:-1]
+            func_types = get_func_types(node.function)[:-1]
             for t in func_types:
                 self.create_tree(
                     tree_ind,

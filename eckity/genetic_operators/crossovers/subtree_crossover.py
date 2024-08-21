@@ -7,13 +7,10 @@ from eckity.genetic_operators.failable_operator import FailableOperator
 
 
 class SubtreeCrossover(FailableOperator):
-    def __init__(
-        self, node_type=NoneType, probability=1, arity=2, events=None
-    ):
+    def __init__(self, probability=1.0, arity=2, events=None):
         super().__init__(probability=probability, arity=arity, events=events)
         self.individuals = None
         self.applied_individuals = None
-        self.node_type = node_type
 
     @override
     def attempt_operator(
@@ -47,20 +44,30 @@ class SubtreeCrossover(FailableOperator):
 
         self.individuals = individuals
 
+        # all individuals should have the same terminal_set
+        # so it doesn't matter which individual is invoked here
+        m_type = individuals[0].random_type()
+
         # select a random subtree from each individual's tree
-        subtrees = [ind.random_subtree(self.node_type) for ind in individuals]
+        subtrees = [
+            ind.random_subtree(m_type)
+            for ind in individuals
+        ]
 
         if None in subtrees:
             # failed attempt
             return False, individuals
 
-        # replace subtrees for all individuals in a cyclic manner
-        for i in range(len(individuals) - 1):
+        # Replace subtrees for all individuals in a cyclic manner
+        # For n subtrees (st_1, st_2, ..., st_n):
+        # st_n receives the subtree of st_n-1
+        # st_n-1 receives the subtree of st_n-2
+        # ...
+        # st_1 receives the subtree of st_0
+        # st_0 receives the subtree of st_n
+        for i in range(len(individuals) - 1, -1, -1):
             individuals[i].replace_subtree(
-                old_subtree=subtrees[i], new_subtree=subtrees[i + 1]
+                old_subtree=subtrees[i], new_subtree=subtrees[i - 1]
             )
-        individuals[-1].replace_subtree(
-            old_subtree=subtrees[-1], new_subtree=subtrees[0]
-        )
 
         return True, individuals

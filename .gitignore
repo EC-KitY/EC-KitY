@@ -292,11 +292,7 @@ dmypy.json
 cython_debug/
 
 ### VisualStudioCode ###
-<<<<<<< HEAD
-.vscode
-=======
 .vscode/
->>>>>>> 5ab23d14f35a832d31a3fdf831a665a51bd94946
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

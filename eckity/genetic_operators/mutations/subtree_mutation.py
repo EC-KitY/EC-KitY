@@ -11,15 +11,14 @@ from eckity.genetic_operators import FailableOperator
 class SubtreeMutation(FailableOperator):
     def __init__(
         self,
-        node_type=NoneType,
-        probability=1,
         arity=1,
-        init_depth=(2, 4),
+        probability: float = 1.0,
+        init_depth: Tuple[int, int] = (2, 4),
         events=None,
     ):
-        super().__init__(probability=probability, arity=arity, events=events)
-        self.node_type = node_type
+        super().__init__(probability=probability, arity=1, events=events)
         self.init_depth = init_depth
+        self.tree_creator = None
 
     @override
     def attempt_operator(
@@ -36,26 +35,37 @@ class SubtreeMutation(FailableOperator):
             successful and a list of the individuals.
         """
         individuals: List[Tree] = payload
+
+        # all individuals should have the same terminal_set
+        # so it doesn't matter which individual is invoked here
+        m_type = individuals[0].random_type()
+
         old_subtrees: List[TreeNode] = [
-            ind.random_subtree(node_type=self.node_type) for ind in individuals
+            ind.random_subtree(node_type=m_type)
+            for ind in individuals
         ]
 
         # Failed attempt
         if None in old_subtrees:
             return False, individuals
 
-        tree_creator = GrowCreator(
-            init_depth=self.init_depth,
-            function_set=individuals[0].function_set,
-            terminal_set=individuals[0].terminal_set,
-        )
+        if self.tree_creator is None:
+            self.tree_creator = GrowCreator(
+                init_depth=self.init_depth,
+                function_set=individuals[0].function_set,
+                terminal_set=individuals[0].terminal_set,
+            )
 
         for ind, old_subtree in zip(individuals, old_subtrees):
-            new_subtree = tree_creator.create_tree(
+            # generate a random tree with the same root type
+            # of the old subtree to not cause type errors
+            new_subtree = self.tree_creator.create_tree(
                 ind,
                 depth=0,
                 node_type=old_subtree[0].node_type
             )
+
+            # replace the old subtree with the newly generated one
             ind.replace_subtree(
                 old_subtree=old_subtree, new_subtree=new_subtree
             )

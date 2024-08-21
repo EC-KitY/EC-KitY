@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from numbers import Number
 from types import NoneType
-from typing import Any, Callable, Dict, List, get_type_hints
+from typing import Any, Callable, Dict, get_type_hints
 
 import numpy as np
 from overrides import override
 
 from eckity.base.utils import arity
+
+from .utils import get_func_types
 
 
 class TreeNode(ABC):
@@ -49,7 +51,7 @@ class FunctionNode(TreeNode):
         function: Callable,
     ) -> None:
         # infer the return type of the function
-        func_types = FunctionNode.get_func_types(function)
+        func_types = get_func_types(function)
         return_type = func_types[-1] if func_types else NoneType
         self.n_args = arity(function)
 
@@ -106,43 +108,6 @@ class FunctionNode(TreeNode):
     @override
     def __str__(self) -> str:
         return self.function.__name__
-
-    @staticmethod
-    def get_func_types(f: Callable) -> List[type]:
-        """
-        Return list of function types in the following format:
-        [type_arg_1, type_arg_2, ..., type_arg_n, return_type]
-
-        Parameters
-        ----------
-        f : Callable
-            function (builtin or user-defined)
-
-        Returns
-        -------
-        List[type]
-            List of function types, sorted by argument order
-            with the return type as the last element.
-            For untyped functions, NoneType is used.
-
-        Examples
-        --------
-        >>> def f(x: int, y: float) -> float:
-        ...     return x + y
-        >>> FunctionNode.get_func_types(f)
-        [int, float, float]
-
-        >>> def f(x, y):
-        ...     return x + y
-        >>> FunctionNode.get_func_types(f)
-        [NoneType, NoneType, NoneType]
-        """
-        params_types: Dict = get_type_hints(f)
-        type_list = list(params_types.values())
-        if not type_list:
-            # If we don't have type hints, assign None types
-            type_list = [NoneType] * (arity(f) + 1)
-        return type_list
 
 
 class TerminalNode(TreeNode):

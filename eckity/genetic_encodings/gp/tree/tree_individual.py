@@ -6,29 +6,17 @@ import logging
 import random
 from numbers import Number
 from types import NoneType
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    List,
-    Optional,
-    Tuple,
-    Union,
-    get_type_hints,
-)
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
 from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.fitness import Fitness, GPFitness
-from eckity.genetic_encodings.gp.tree.tree_node import (
-    FunctionNode,
-    TerminalNode,
-    TreeNode,
-)
+from eckity.genetic_encodings.gp.tree.tree_node import (FunctionNode,
+                                                        TerminalNode, TreeNode)
 from eckity.individual import Individual
 
-from .utils import generate_args
+from .utils import generate_args, get_func_types, get_return_type
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +40,7 @@ class Tree(Individual):
         erc_range: Optional[
             Union[Tuple[float, float], Tuple[int, int]]
         ] = None,
+        root_type: type = object,
     ):
         """
         GP Tree Individual.
@@ -69,7 +58,7 @@ class Tree(Individual):
         tree : List[TreeNode], optional
             Actual tree representation, by default None
         erc_range : tuple of float or int, optional
-            Range of Ephemeral random constant values, by default (-1.0, 1.0)
+            Range of Ephemeral random constant values, by default None
 
         Raises
         ------
@@ -90,6 +79,7 @@ class Tree(Individual):
         if tree is None:
             tree = []
         self.tree = tree  # actual tree representation
+        self.root_type = root_type
 
     @property
     def root(self) -> TreeNode:
@@ -108,7 +98,9 @@ class Tree(Individual):
 
     def add_tree(self, node: TreeNode) -> None:
         """Add a node to the tree following the defined type constrains"""
-        if self.size() == 0 or self._should_add([0], node):
+        if (
+            self.size() == 0 and node.node_type == self.root_type
+        ) or self._should_add([0], node):
             self.tree.append(node)
         else:
             raise ValueError(f"Could not add node {node} to tree {self.tree}")
@@ -127,7 +119,7 @@ class Tree(Individual):
         node = self.tree[pos[0]]
         res = None
         if isinstance(node, FunctionNode):
-            func_types = FunctionNode.get_func_types(node.function)
+            func_types = get_func_types(node.function)
             for i in range(node.n_args):
                 pos[0] += 1
                 res = self._should_add(pos, node)
@@ -170,7 +162,7 @@ class Tree(Individual):
 
     def random_function(self, node_type=NoneType) -> Optional[FunctionNode]:
         functions_types = {
-            func: get_type_hints(func).get("return", NoneType)
+            func: get_return_type(func)
             for func in self.function_set
         }
         relevant_functions = [
@@ -215,6 +207,9 @@ class Tree(Individual):
         node_type = self.terminal_set.get(terminal, default_type)
 
         return TerminalNode(terminal, node_type=node_type)
+
+    def random_type(self) -> type:
+        return random.choice(list(self.terminal_set.values()))
 
     def execute(self, *args, **kwargs) -> object:
         """

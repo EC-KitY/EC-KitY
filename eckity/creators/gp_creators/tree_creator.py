@@ -9,6 +9,7 @@ from eckity.creators.creator import Creator
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.fitness.simple_fitness import SimpleFitness
 from eckity.genetic_encodings.gp.tree.tree_individual import FunctionNode, Tree
+from eckity.genetic_encodings.gp.tree.utils import get_func_types
 
 
 class GPTreeCreator(Creator):
@@ -20,6 +21,7 @@ class GPTreeCreator(Creator):
         fitness_type: type = SimpleFitness,
         bloat_weight: float = 0.0,
         events: List[str] = None,
+        root_type: type = NoneType,
     ):
         if events is None:
             events = ["after_creation"]
@@ -38,6 +40,7 @@ class GPTreeCreator(Creator):
         self.function_set = function_set
         self.terminal_set = terminal_set
         self.bloat_weight = bloat_weight
+        self.root_type = root_type
 
     @override
     def create_individuals(
@@ -55,7 +58,7 @@ class GPTreeCreator(Creator):
             for _ in range(n_individuals)
         ]
         for ind in individuals:
-            self.create_tree(ind)
+            self.create_tree(ind, node_type=self.root_type)
         self.created_individuals = individuals
         return individuals
 
@@ -76,7 +79,7 @@ class GPTreeCreator(Creator):
         self, node: FunctionNode, tree_ind: Tree, depth: int
     ) -> None:
         # recursively add children to the function node
-        func_types = FunctionNode.get_func_types(node.function)
+        func_types = get_func_types(node.function)
         for i in range(arity(node.function)):
             self.create_tree(
                 tree_ind,

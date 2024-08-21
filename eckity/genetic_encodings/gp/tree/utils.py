@@ -2,9 +2,12 @@
 This module implements some utility functions.
 """
 
-from typing import Dict, List, Union
+from types import NoneType
+from typing import Callable, Dict, List, Union, get_type_hints
 
 import numpy as np
+
+from eckity.base.utils import arity
 
 
 def create_terminal_set(
@@ -62,3 +65,44 @@ def generate_args(X: np.ndarray) -> Dict[str, np.ndarray]:
     """
 
     return {f"x{i}": X[:, i] for i in range(X.shape[1])}
+
+
+def get_func_types(f: Callable) -> List[type]:
+    """
+    Return list of function types in the following format:
+    [type_arg_1, type_arg_2, ..., type_arg_n, return_type]
+
+    Parameters
+    ----------
+    f : Callable
+        function (builtin or user-defined)
+
+    Returns
+    -------
+    List[type]
+        List of function types, sorted by argument order
+        with the return type as the last element.
+        For untyped functions, NoneType is used.
+
+    Examples
+    --------
+    >>> def f(x: int, y: float) -> float:
+    ...     return x + y
+    >>> get_func_types(f)
+    [int, float, float]
+
+    >>> def f(x, y):
+    ...     return x + y
+    >>> get_func_types(f)
+    [NoneType, NoneType, NoneType]
+    """
+    params_types: Dict = get_type_hints(f)
+    type_list = list(params_types.values())
+    if not type_list:
+        # If we don't have type hints, assign None types
+        type_list = [NoneType] * (arity(f) + 1)
+    return type_list
+
+
+def get_return_type(func: Callable) -> type:
+    return get_type_hints(func).get("return", NoneType)

@@ -13,7 +13,6 @@ from eckity.base.untyped_functions import (
     f_mul,
     f_sub,
 )
-from eckity.base.utils import arity
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp import (
     FunctionNode,
