@@ -40,30 +40,6 @@ def untyped_add_inc(n, inc):
                 ],
             ),
         ),
-    ],
-)
-def test_subtree_crossover_typed(tree1, tree2):
-    subtree_crossover = SubtreeCrossover(probability=1.0)
-
-    def run_test():
-        tree1_copy = tree1.clone()
-        tree2_copy = tree2.clone()
-
-        # Perform subtree crossover
-        subtree_crossover.apply([tree1_copy, tree2_copy])
-
-        # Check that the boolean nodes were swapped
-        return (
-            tree1_copy.tree[2].value is False
-            and tree2_copy.tree[2].value is True
-        )
-
-    assert any(run_test() for _ in range(30))
-
-
-@pytest.mark.parametrize(
-    "tree1, tree2",
-    [
         (
             Tree(
                 fitness=GPFitness(),
@@ -88,10 +64,11 @@ def test_subtree_crossover_typed(tree1, tree2):
         ),
     ],
 )
-def test_subtree_crossover_untyped(tree1, tree2):
+def test_subtree_crossover(tree1, tree2):
     subtree_crossover = SubtreeCrossover(probability=1.0)
+    flag = False
 
-    for i in range(10):
+    for _ in range(30):
         tree1_copy = tree1.clone()
         tree2_copy = tree2.clone()
 
@@ -99,5 +76,13 @@ def test_subtree_crossover_untyped(tree1, tree2):
         subtree_crossover.apply([tree1_copy, tree2_copy])
 
         # Check that the boolean nodes were swapped
-        assert i == i and tree1_copy.tree != tree1.tree
-        assert i == i and tree2_copy.tree != tree2.tree
+        if (
+            len(tree1_copy.tree) >= 3
+            and len(tree2_copy.tree) >= 3
+            and tree1_copy.tree[2].value is False
+            and tree2_copy.tree[2].value is True
+        ):
+            flag = True
+            break
+
+    assert flag

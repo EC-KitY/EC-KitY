@@ -485,8 +485,9 @@ class Tree(Individual):
             if NoneType in self.terminal_set.values()
             else f" -> {self.root.node_type.__name__}"
         )
+
         result = [
-            f"def func_{self.id}({', '.join(args)}){ret_type_str}:\n\treturn "
+            f"def func_{str(self.id)}({', '.join(args)}){ret_type_str}:\n\treturn "
         ]
         self._str_rec("", [0], result)
         return "".join(result)
