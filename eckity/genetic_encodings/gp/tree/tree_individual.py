@@ -40,7 +40,7 @@ class Tree(Individual):
         erc_range: Optional[
             Union[Tuple[float, float], Tuple[int, int]]
         ] = None,
-        root_type: type = object,
+        root_type: type = None,
     ):
         """
         GP Tree Individual.
@@ -84,6 +84,10 @@ class Tree(Individual):
     @property
     def root(self) -> TreeNode:
         return self.tree[0]
+
+    @property
+    def erc_type(self) -> Optional[Union[int, float]]:
+        return type(self.erc_range[0]) if self.erc_range else None
 
     def size(self) -> int:
         """
@@ -208,8 +212,16 @@ class Tree(Individual):
 
         return TerminalNode(terminal, node_type=node_type)
 
-    def random_type(self) -> type:
-        return random.choice(list(self.terminal_set.values()))
+    def random_inner_type(self) -> type:
+        type_set = set(self.terminal_set.values())
+
+        erc_type = self.erc_type
+        type_set.add(erc_type)
+
+        if self.root_type in type_set:
+            type_set.remove(self.root_type)
+
+        return random.choice(list(type_set))
 
     def execute(self, *args, **kwargs) -> object:
         """

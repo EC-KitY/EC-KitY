@@ -46,7 +46,7 @@ class SubtreeCrossover(FailableOperator):
 
         # all individuals should have the same terminal_set
         # so it doesn't matter which individual is invoked here
-        m_type = individuals[0].random_type()
+        m_type = individuals[0].random_inner_type()
 
         # select a random subtree from each individual's tree
         subtrees = [

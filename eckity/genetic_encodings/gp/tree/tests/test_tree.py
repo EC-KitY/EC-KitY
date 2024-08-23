@@ -250,7 +250,7 @@ class TestTree:
         tree_ind.tree = tree
 
         tree_str = str(tree_ind)
-        assert tree_str.replace("\n\t", "") == expected.replace("\n\t", "")
+        assert tree_str == expected
 
     @pytest.mark.parametrize(
         "typed, tree, root_indices, expected_results",
