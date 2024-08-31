@@ -78,3 +78,18 @@ def test_missing_type_hints():
         with pytest.raises(ValueError) as excinfo:
             FunctionNode(func)
         assert "missing type hints" in str(excinfo)
+
+@pytest.mark.parametrize(
+    "node1, node2, expected",
+    [
+        (TerminalNode(1, int), TerminalNode(1, int), True),
+        (TerminalNode(1, int), TerminalNode(True, bool), False),
+        (TerminalNode(0, int), TerminalNode(False, bool), False),
+        (TerminalNode(1, int), TerminalNode(2, int), False),
+        (TerminalNode(1), TerminalNode(1), True),
+        (TerminalNode(1), TerminalNode(True), False),
+    ],
+)
+def test_eq(node1, node2, expected):
+    assert (node1 == node2) == expected
+    assert (node2 == node1) == expected

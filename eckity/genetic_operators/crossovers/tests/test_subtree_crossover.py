@@ -1,7 +1,10 @@
+from typing import List
+
 import pytest
-from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, Tree
-from eckity.genetic_operators import SubtreeCrossover
+
 from eckity.fitness import GPFitness
+from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, Tree, TreeNode
+from eckity.genetic_operators import SubtreeCrossover
 
 
 # Define custom functions
@@ -14,75 +17,209 @@ def untyped_add_inc(n, inc):
 
 
 @pytest.mark.parametrize(
-    "tree1, tree2",
+    "individuals, subtrees, expected",
     [
         (
-            Tree(
-                fitness=GPFitness(),
-                function_set=[typed_add_inc],
-                terminal_set={True: bool, False: bool},
-                erc_range=(1, 3),
-                tree=[
+            [
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[typed_add_inc],
+                    terminal_set={True: bool, False: bool},
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(typed_add_inc),
+                        TerminalNode(1, int),
+                        TerminalNode(True, bool),
+                    ],
+                ),
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[typed_add_inc],
+                    terminal_set={True: bool, False: bool},
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(typed_add_inc),
+                        TerminalNode(1, int),
+                        TerminalNode(False, bool),
+                    ],
+                ),
+            ],
+            [
+                [
                     FunctionNode(typed_add_inc),
                     TerminalNode(1, int),
                     TerminalNode(True, bool),
                 ],
-            ),
-            Tree(
-                fitness=GPFitness(),
-                function_set=[typed_add_inc],
-                terminal_set={True: bool, False: bool},
-                erc_range=(1, 3),
-                tree=[
+                [
                     FunctionNode(typed_add_inc),
                     TerminalNode(1, int),
                     TerminalNode(False, bool),
                 ],
-            ),
+            ],
+            [
+                [
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(1, int),
+                    TerminalNode(False, bool),
+                ],
+                [
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(1, int),
+                    TerminalNode(True, bool),
+                ],
+            ]
         ),
         (
-            Tree(
-                fitness=GPFitness(),
-                function_set=[untyped_add_inc],
-                terminal_set=[1, True, False],
-                tree=[
+            [
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[typed_add_inc],
+                    terminal_set={True: bool, False: bool},
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(typed_add_inc),
+                        TerminalNode(1, int),
+                        TerminalNode(True, bool),
+                    ],
+                ),
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[typed_add_inc],
+                    terminal_set={True: bool, False: bool},
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(typed_add_inc),
+                        TerminalNode(1, int),
+                        TerminalNode(False, bool),
+                    ],
+                ),
+            ],
+            [
+                [
+                    TerminalNode(True, bool),
+                ],
+                [
+                    TerminalNode(False, bool),
+                ],
+            ],
+            [
+                [
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(1, int),
+                    TerminalNode(False, bool),
+                ],
+                [
+                    FunctionNode(typed_add_inc),
+                    TerminalNode(1, int),
+                    TerminalNode(True, bool),
+                ],
+            ]
+        ),
+        ######################################################################
+        # Untyped case
+        ######################################################################
+        (
+            [
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[untyped_add_inc],
+                    terminal_set=[True, False],
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(untyped_add_inc),
+                        TerminalNode(1),
+                        TerminalNode(True),
+                    ],
+                ),
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[untyped_add_inc],
+                    terminal_set=[True, False],
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(untyped_add_inc),
+                        TerminalNode(1),
+                        TerminalNode(False),
+                    ],
+                ),
+            ],
+            [
+                [
                     FunctionNode(untyped_add_inc),
                     TerminalNode(1),
                     TerminalNode(True),
                 ],
-            ),
-            Tree(
-                fitness=GPFitness(),
-                function_set=[untyped_add_inc],
-                terminal_set=[1, True, False],
-                tree=[
+                [
                     FunctionNode(untyped_add_inc),
-                    TerminalNode(2),
+                    TerminalNode(1),
                     TerminalNode(False),
                 ],
-            ),
+            ],
+            [
+                [
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(1),
+                    TerminalNode(False),
+                ],
+                [
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(1),
+                    TerminalNode(True),
+                ],
+            ]
+        ),
+        (
+            [
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[untyped_add_inc],
+                    terminal_set=[True, False],
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(untyped_add_inc),
+                        TerminalNode(1),
+                        TerminalNode(True),
+                    ],
+                ),
+                Tree(
+                    fitness=GPFitness(),
+                    function_set=[untyped_add_inc],
+                    terminal_set=[True, False],
+                    erc_range=(1, 3),
+                    tree=[
+                        FunctionNode(untyped_add_inc),
+                        TerminalNode(1),
+                        TerminalNode(False),
+                    ],
+                ),
+            ],
+            [
+                [
+                    TerminalNode(True),
+                ],
+                [
+                    TerminalNode(False),
+                ],
+            ],
+            [
+                [
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(1),
+                    TerminalNode(False),
+                ],
+                [
+                    FunctionNode(untyped_add_inc),
+                    TerminalNode(1),
+                    TerminalNode(True),
+                ],
+            ]
         ),
     ],
 )
-def test_subtree_crossover(tree1, tree2):
-    subtree_crossover = SubtreeCrossover(probability=1.0)
-    flag = False
-
-    for _ in range(30):
-        tree1_copy = tree1.clone()
-        tree2_copy = tree2.clone()
-
-        # Perform subtree crossover
-        subtree_crossover.apply([tree1_copy, tree2_copy])
-
-        # Check that the boolean nodes were swapped
-        if (
-            len(tree1_copy.tree) >= 3
-            and len(tree2_copy.tree) >= 3
-            and tree1_copy.tree[2].value is False
-            and tree2_copy.tree[2].value is True
-        ):
-            flag = True
-            break
-
-    assert flag
+def test_swap_subtrees(
+    individuals: List[Tree],
+    subtrees: List[List[TreeNode]],
+    expected: List[Tree],
+):
+    SubtreeCrossover._swap_subtrees(individuals, subtrees)
+    assert [ind.tree for ind in individuals] == expected

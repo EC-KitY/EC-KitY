@@ -1,8 +1,9 @@
 from types import NoneType
-from typing import Any, Tuple
+from typing import Any, List, Tuple, Optional
 
 from overrides import override
 
+from eckity.genetic_encodings.gp import Tree, TreeNode
 from eckity.genetic_operators.failable_operator import FailableOperator
 
 
@@ -44,30 +45,56 @@ class SubtreeCrossover(FailableOperator):
 
         self.individuals = individuals
 
-        # all individuals should have the same terminal_set
-        # so it doesn't matter which individual is invoked here
-        m_type = individuals[0].random_inner_type()
+        subtrees: Optional[List[List[TreeNode]]] = self._pick_subtrees(
+            individuals
+        )
 
-        # select a random subtree from each individual's tree
-        subtrees = [
-            ind.random_subtree(m_type)
-            for ind in individuals
-        ]
-
-        if None in subtrees:
-            # failed attempt
+        if subtrees is None:
             return False, individuals
 
-        # Replace subtrees for all individuals in a cyclic manner
-        # For n subtrees (st_1, st_2, ..., st_n):
-        # st_n receives the subtree of st_n-1
-        # st_n-1 receives the subtree of st_n-2
-        # ...
-        # st_1 receives the subtree of st_0
-        # st_0 receives the subtree of st_n
+        self._swap_subtrees(individuals, subtrees)
+        self.applied_individuals = individuals
+
+        return True, individuals
+
+    @staticmethod
+    def _pick_subtrees(
+        individuals: List[Tree],
+    ) -> Optional[List[List[TreeNode]]]:
+        # select a random subtree from first individual tree
+        first_subtree: List[TreeNode] = individuals[0].random_subtree()
+
+        if first_subtree is None:
+            # failed attempt
+            return None
+
+        m_type: type = first_subtree[0].node_type
+
+        # now select a random subtree from the rest of the individuals
+        # with regards to the type of the first subtree
+        rest_subtrees = [ind.random_subtree(m_type) for ind in individuals]
+
+        # fails if any subtree doesn't contain a node with of type `m_type`
+        if None in rest_subtrees:
+            return None
+
+        subtrees = [first_subtree] + rest_subtrees
+        return subtrees
+
+    @staticmethod
+    def _swap_subtrees(
+        individuals: List[TreeNode], subtrees: List[List[TreeNode]]
+    ) -> None:
+        """
+        Replace subtrees for all individuals in a cyclic manner
+        For n subtrees (st_1, st_2, ..., st_n):
+        st_n receives the subtree of st_n-1
+        st_n-1 receives the subtree of st_n-2
+        ...
+        st_2 receives the subtree of st_1
+        st_1 receives the subtree of st_n
+        """
         for i in range(len(individuals) - 1, -1, -1):
             individuals[i].replace_subtree(
                 old_subtree=subtrees[i], new_subtree=subtrees[i - 1]
             )
-
-        return True, individuals

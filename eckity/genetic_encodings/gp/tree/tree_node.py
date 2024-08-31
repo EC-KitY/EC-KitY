@@ -38,7 +38,7 @@ class TreeNode(ABC):
 
     def __eq__(self, other):
         return (
-            isinstance(other, TreeNode) and self.node_type == other.node_type
+            isinstance(other, TreeNode) and self.node_type is other.node_type
         )
 
     def __repr__(self):
@@ -144,7 +144,7 @@ class TerminalNode(TreeNode):
         return (
             super().__eq__(other)
             and isinstance(other, TerminalNode)
-            and self.value == other.value
+            and self.value is other.value
         )
 
     def __str__(self):

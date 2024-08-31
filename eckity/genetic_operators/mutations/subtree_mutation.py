@@ -36,12 +36,8 @@ class SubtreeMutation(FailableOperator):
         """
         individuals: List[Tree] = payload
 
-        # all individuals should have the same terminal_set
-        # so it doesn't matter which individual is invoked here
-        m_type = individuals[0].random_inner_type()
-
         old_subtrees: List[TreeNode] = [
-            ind.random_subtree(node_type=m_type)
+            ind.random_subtree()
             for ind in individuals
         ]
 

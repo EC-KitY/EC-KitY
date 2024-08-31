@@ -328,7 +328,7 @@ class Tree(Individual):
 
     def random_subtree(self, node_type=NoneType) -> Optional[List[TreeNode]]:
         relevant_nodes = self.filter_tree(
-            lambda node: node.node_type in [Any, NoneType]
+            lambda node: node.node_type is NoneType
             or node.node_type == node_type
         )
         if not relevant_nodes:
@@ -365,7 +365,7 @@ class Tree(Individual):
         left_part = self.tree[:start_i]
         right_part = self.tree[end_i:]
         self.tree = left_part + new_subtree + right_part
-
+    
     def _find_subtree_end(self, pos):
         """find index of final node of subtree that starts at `pos`
         (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
