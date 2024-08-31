@@ -1,5 +1,5 @@
 from types import NoneType
-from typing import Any, List, Tuple
+from typing import Any, List, Optional, Tuple
 
 from overrides import override
 
@@ -19,6 +19,7 @@ class SubtreeMutation(FailableOperator):
         super().__init__(probability=probability, arity=1, events=events)
         self.init_depth = init_depth
         self.tree_creator = None
+        self.temp_ind = None
 
     @override
     def attempt_operator(
@@ -36,14 +37,29 @@ class SubtreeMutation(FailableOperator):
         """
         individuals: List[Tree] = payload
 
+        old_subtrees: Optional[List[List[TreeNode]]] = self._pick_subtrees(
+            individuals
+        )
+
+        if old_subtrees is None:
+            return False, individuals
+
+        self._swap_subtrees(individuals, old_subtrees)
+
+        self.applied_individuals = individuals
+        return True, individuals
+
+    @staticmethod
+    def _pick_subtrees(individuals: List[Tree]) -> List[List[TreeNode]]:
         old_subtrees: List[TreeNode] = [
-            ind.random_subtree()
-            for ind in individuals
+            ind.random_subtree() for ind in individuals
         ]
 
-        # Failed attempt
-        if None in old_subtrees:
-            return False, individuals
+        return None if None in old_subtrees else old_subtrees
+
+    def _swap_subtrees(
+        self, individuals: List[Tree], old_subtrees: List[List[TreeNode]]
+    ) -> None:
 
         if self.tree_creator is None:
             self.tree_creator = GrowCreator(
@@ -52,19 +68,22 @@ class SubtreeMutation(FailableOperator):
                 terminal_set=individuals[0].terminal_set,
             )
 
+        if self.temp_ind is None:
+            self.temp_ind = self.tree_creator.create_individuals(
+                n_individuals=1,
+                higher_is_better=individuals[0].fitness.higher_is_better,
+            )[0]
+
         for ind, old_subtree in zip(individuals, old_subtrees):
             # generate a random tree with the same root type
             # of the old subtree to not cause type errors
-            new_subtree = self.tree_creator.create_tree(
-                ind,
-                depth=0,
-                node_type=old_subtree[0].node_type
+            self.tree_creator.root_type = old_subtree[0].node_type
+            self.temp_ind.empty_tree()
+            self.tree_creator.create_tree(
+                self.temp_ind, depth=0, node_type=old_subtree[0].node_type
             )
 
             # replace the old subtree with the newly generated one
             ind.replace_subtree(
-                old_subtree=old_subtree, new_subtree=new_subtree
+                old_subtree=old_subtree, new_subtree=self.temp_ind.tree
             )
-
-        self.applied_individuals = individuals
-        return True, individuals

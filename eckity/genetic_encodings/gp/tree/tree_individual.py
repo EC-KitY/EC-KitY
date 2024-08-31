@@ -12,8 +12,11 @@ import numpy as np
 
 from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.fitness import Fitness, GPFitness
-from eckity.genetic_encodings.gp.tree.tree_node import (FunctionNode,
-                                                        TerminalNode, TreeNode)
+from eckity.genetic_encodings.gp.tree.tree_node import (
+    FunctionNode,
+    TerminalNode,
+    TreeNode,
+)
 from eckity.individual import Individual
 
 from .utils import generate_args, get_func_types, get_return_type
@@ -166,8 +169,7 @@ class Tree(Individual):
 
     def random_function(self, node_type=NoneType) -> Optional[FunctionNode]:
         functions_types = {
-            func: get_return_type(func)
-            for func in self.function_set
+            func: get_return_type(func) for func in self.function_set
         }
         relevant_functions = [
             func
@@ -328,8 +330,9 @@ class Tree(Individual):
 
     def random_subtree(self, node_type=NoneType) -> Optional[List[TreeNode]]:
         relevant_nodes = self.filter_tree(
-            lambda node: node.node_type is NoneType
-            or node.node_type == node_type
+            lambda node: node.node_type is NoneType  # untyped case
+            or (node_type is NoneType and node != self.root)    # typed case with first invokation
+            or (node.node_type == node_type and node != self.root)  # typed case with subsequent invokations
         )
         if not relevant_nodes:
             return None
@@ -365,7 +368,7 @@ class Tree(Individual):
         left_part = self.tree[:start_i]
         right_part = self.tree[end_i:]
         self.tree = left_part + new_subtree + right_part
-    
+
     def _find_subtree_end(self, pos):
         """find index of final node of subtree that starts at `pos`
         (pos is a size-1 list so as to pass "by reference" on successive recursive calls).

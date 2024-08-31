@@ -1,4 +1,5 @@
 from typing import Any, Callable, Dict, List, Tuple, Union
+from types import NoneType
 
 from overrides import override
 
@@ -18,6 +19,7 @@ class HalfCreator(GPTreeCreator):
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         bloat_weight: float = 0.0,
         events: List[str] = None,
+        root_type: type = NoneType,
     ):
         """
         Tree creator that creates trees using the Ramped Half and Half method
@@ -51,6 +53,7 @@ class HalfCreator(GPTreeCreator):
             terminal_set=terminal_set,
             bloat_weight=bloat_weight,
             events=events,
+            root_type=root_type,
         )
 
         # assign default creators
@@ -60,6 +63,7 @@ class HalfCreator(GPTreeCreator):
                 function_set=self.function_set,
                 terminal_set=self.terminal_set,
                 events=self.events,
+                root_type=root_type,
             )
         if full_creator is None:
             full_creator = FullCreator(
@@ -67,6 +71,7 @@ class HalfCreator(GPTreeCreator):
                 function_set=self.function_set,
                 terminal_set=self.terminal_set,
                 events=self.events,
+                root_type=root_type,
             )
 
         self.grow_creator = grow_creator

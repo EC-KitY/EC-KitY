@@ -16,6 +16,7 @@ class FullCreator(GPTreeCreator):
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         bloat_weight: float = 0.0,
         events: List[str] = None,
+        root_type: type = NoneType,
     ):
         """
         Tree creator using the full method
@@ -43,6 +44,7 @@ class FullCreator(GPTreeCreator):
             terminal_set=terminal_set,
             bloat_weight=bloat_weight,
             events=events,
+            root_type=root_type,
         )
 
     @overrides
