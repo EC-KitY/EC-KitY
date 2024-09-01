@@ -19,7 +19,6 @@ class SubtreeMutation(FailableOperator):
         super().__init__(probability=probability, arity=1, events=events)
         self.init_depth = init_depth
         self.tree_creator = None
-        self.temp_ind = None
 
     @override
     def attempt_operator(
@@ -68,22 +67,21 @@ class SubtreeMutation(FailableOperator):
                 terminal_set=individuals[0].terminal_set,
             )
 
-        if self.temp_ind is None:
-            self.temp_ind = self.tree_creator.create_individuals(
-                n_individuals=1,
-                higher_is_better=individuals[0].fitness.higher_is_better,
-            )[0]
-
         for ind, old_subtree in zip(individuals, old_subtrees):
             # generate a random tree with the same root type
             # of the old subtree to not cause type errors
-            self.tree_creator.root_type = old_subtree[0].node_type
-            self.temp_ind.empty_tree()
+
+            new_subtree = []
             self.tree_creator.create_tree(
-                self.temp_ind, depth=0, node_type=old_subtree[0].node_type
+                new_subtree,
+                ind.random_function,
+                ind.random_terminal,
+                depth=0,
+                node_type=old_subtree[0].node_type,
             )
 
             # replace the old subtree with the newly generated one
             ind.replace_subtree(
-                old_subtree=old_subtree, new_subtree=self.temp_ind.tree
+                old_subtree=old_subtree, new_subtree=new_subtree
             )
+

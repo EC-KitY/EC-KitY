@@ -10,7 +10,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
-from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.fitness import Fitness, GPFitness
 from eckity.genetic_encodings.gp.tree.tree_node import (
     FunctionNode,
@@ -70,18 +69,21 @@ class Tree(Individual):
         """
         super().__init__(fitness)
 
-        function_set, terminal_set = Tree._handle_function_and_terminal_set(
+        self.erc_range = erc_range
+
+        function_set, terminal_set = self._handle_function_and_terminal_set(
             function_set, terminal_set
         )
 
         self.function_set = function_set
         self.terminal_set = terminal_set
 
-        self.erc_range = erc_range
-
+        # actual tree representation
         if tree is None:
             tree = []
-        self.tree = tree  # actual tree representation
+        self.tree = tree
+
+        # this is the type of the execution result of the program (tree)
         self.root_type = root_type
 
     @property
@@ -320,19 +322,21 @@ class Tree(Individual):
         TreeNode
             Random leaf node.
         """
-        erc_nodes = []
-        self.filter_nodes(
+        erc_nodes = self.filter_tree(
             lambda node: isinstance(node, TerminalNode)
-            and isinstance(node.value, Number),
-            erc_nodes,
+            and isinstance(node.value, Number)
         )
         return random.choice(erc_nodes) if erc_nodes else None
 
     def random_subtree(self, node_type=NoneType) -> Optional[List[TreeNode]]:
         relevant_nodes = self.filter_tree(
             lambda node: node.node_type is NoneType  # untyped case
-            or (node_type is NoneType and node != self.root)    # typed case with first invokation
-            or (node.node_type == node_type and node != self.root)  # typed case with subsequent invokations
+            or (
+                node_type is NoneType and node != self.root
+            )  # typed case with first invokation
+            or (
+                node.node_type == node_type and node != self.root
+            )  # typed case with subsequent invokations
         )
         if not relevant_nodes:
             return None
@@ -404,16 +408,16 @@ class Tree(Individual):
         else:  # terminal
             result.append(f"{prefix}{str(node)}")
 
-    @staticmethod
     def _handle_function_and_terminal_set(
+        self,
         function_set: Optional[List[Callable]],
         terminal_set: Optional[Union[Dict[Any, type], List[str]]],
     ):
         if function_set is None:
-            function_set = [f_add, f_sub, f_mul, f_div]
+            raise ValueError("Function set must be provided.")
 
         if terminal_set is None:
-            terminal_set = {"x": float, "y": float, "z": float}
+            raise ValueError("Terminal set must be provided.")
 
         for t in function_set:
             if not isinstance(t, Callable):
@@ -447,6 +451,20 @@ class Tree(Individual):
                     "Values in terminal set dictionary must be types, "
                     f"but {v} is of type {type(v)}."
                 )
+
+        # check terminals and functions type intersection
+        function_arg_types = {
+            t for func in function_set for t in get_func_types(func)[:-1]
+        }
+        terminal_types = set(terminal_set.values())
+
+        if self.erc_type:
+            terminal_types.add(self.erc_type)
+
+        if not function_arg_types.issubset(terminal_types):
+            raise ValueError(
+                "Function argument types must be subset of terminal types."
+            )
 
         return function_set, terminal_set
 

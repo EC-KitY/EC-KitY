@@ -43,11 +43,23 @@ You can run an EA with just 3 lines of code. The problem being solved herein is 
 
 Additional information on this problem can be found in the [Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Tutorial:-Symbolic-Regression).
 ```python
-from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.subpopulation import Subpopulation
-from examples.treegp.non_sklearn_mode.symbolic_regression.sym_reg_evaluator import SymbolicRegressionEvaluator
+from eckity import Subpopulation
+from eckity.algorithms import SimpleEvolution
+from eckity.base.untyped_functions import f_add, f_sub, f_mul, f_div
+from eckity.creators import FullCreator
+from eckity.genetic_operators import SubtreeCrossover, SubtreeMutation
+from examples.treegp.basic_mode.symbolic_regression import SymbolicRegressionEvaluator
 
-algo = SimpleEvolution(Subpopulation(SymbolicRegressionEvaluator()))
+algo = SimpleEvolution(
+    Subpopulation(
+        SymbolicRegressionEvaluator(),
+        creator=FullCreator(
+            terminal_set=['x', 'y', 'z'],
+            function_set=[f_add, f_sub, f_mul, f_div]
+        ),
+        operators_sequence=[SubtreeCrossover(), SubtreeMutation()]
+    )
+)
 algo.evolve()
 print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
 ```

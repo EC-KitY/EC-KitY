@@ -4,7 +4,12 @@ from typing import Any, Callable, Dict, List, Tuple, Union
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import Tree
+from eckity.genetic_encodings.gp import (
+    Tree,
+    TreeNode,
+    TerminalNode,
+    FunctionNode,
+)
 from eckity.genetic_encodings.gp.tree.utils import get_func_types
 
 
@@ -50,7 +55,9 @@ class FullCreator(GPTreeCreator):
     @overrides
     def create_tree(
         self,
-        tree_ind: Tree,
+        tree,
+        random_function: Callable[type, FunctionNode],
+        random_terminal: Callable[type, TerminalNode],
         depth: int = 0,
         node_type: type = NoneType,
     ) -> None:
@@ -70,21 +77,23 @@ class FullCreator(GPTreeCreator):
         max_depth = self.init_depth[1]
 
         if depth >= max_depth:
-            node = tree_ind.random_terminal(node_type=node_type)
+            node = random_terminal(node_type)
 
             # add the new node to the tree of the given individual
-            tree_ind.add_tree(node)
+            tree.append(node)
         else:
-            node = tree_ind.random_function(node_type=node_type)
+            node = random_function(node_type)
 
             # add the new node to the tree of the given individual
-            tree_ind.add_tree(node)
+            tree.append(node)
 
             # recursively add argument nodes to the tree
             func_types = get_func_types(node.function)[:-1]
             for t in func_types:
                 self.create_tree(
-                    tree_ind,
+                    tree,
+                    random_function,
+                    random_terminal,
                     depth=depth + 1,
                     node_type=t,
                 )

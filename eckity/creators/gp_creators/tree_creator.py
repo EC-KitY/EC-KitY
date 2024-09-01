@@ -3,12 +3,16 @@ from typing import Any, Callable, Dict, List, Tuple, Union
 
 from overrides import override
 
-from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.base.utils import arity
 from eckity.creators.creator import Creator
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.fitness.simple_fitness import SimpleFitness
-from eckity.genetic_encodings.gp.tree.tree_individual import FunctionNode, Tree
+from eckity.genetic_encodings.gp import (
+    FunctionNode,
+    TerminalNode,
+    Tree,
+    TreeNode,
+)
 from eckity.genetic_encodings.gp.tree.utils import get_func_types
 
 
@@ -31,10 +35,10 @@ class GPTreeCreator(Creator):
             init_depth = (2, 4)
 
         if function_set is None:
-            function_set = [f_add, f_sub, f_mul, f_div]
+            raise ValueError("function_set must be provided")
 
         if terminal_set is None:
-            terminal_set = ["x", "y", "z"]
+            raise ValueError("terminal_set must be provided")
 
         self.init_depth = init_depth
         self.function_set = function_set
@@ -54,16 +58,27 @@ class GPTreeCreator(Creator):
                     bloat_weight=self.bloat_weight,
                     higher_is_better=higher_is_better,
                 ),
+                root_type=self.root_type,
             )
             for _ in range(n_individuals)
         ]
         for ind in individuals:
-            self.create_tree(ind, node_type=self.root_type)
+            self.create_tree(
+                ind.tree,
+                ind.random_function,
+                ind.random_terminal,
+                node_type=self.root_type,
+            )
         self.created_individuals = individuals
         return individuals
 
     def create_tree(
-        self, tree_ind: Tree, depth: int = 0, node_type: type = NoneType
+        self,
+        tree: List[TreeNode],
+        random_function: Callable[type, FunctionNode],
+        random_terminal: Callable[type, TerminalNode],
+        depth: int = 0,
+        node_type: type = NoneType,
     ) -> None:
         """
         Create the actual tree representation of an existing Tree individual
@@ -76,13 +91,20 @@ class GPTreeCreator(Creator):
         pass
 
     def _add_children(
-        self, node: FunctionNode, tree_ind: Tree, depth: int
+        self,
+        tree: List[TreeNode],
+        fn_node: FunctionNode,
+        random_function: Callable[type, FunctionNode],
+        random_terminal: Callable[type, TerminalNode],
+        depth: int,
     ) -> None:
         # recursively add children to the function node
-        func_types = get_func_types(node.function)
-        for i in range(arity(node.function)):
+        func_types = get_func_types(fn_node.function)
+        for i in range(arity(fn_node.function)):
             self.create_tree(
-                tree_ind,
+                tree,
+                random_function,
+                random_terminal,
                 depth=depth + 1,
                 node_type=func_types[i],
             )

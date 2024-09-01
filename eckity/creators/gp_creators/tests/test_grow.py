@@ -14,38 +14,45 @@ from eckity.genetic_encodings.gp import (
 )
 
 
-class TestGrowCreator:
-    grow_creator = GrowCreator(init_depth=(1, 1))
-
-    @pytest.mark.parametrize(
-        "function_set, terminal_set, expected",
-        [
-            (
-                [sqrt_float],
-                {1.0: float},
-                [FunctionNode(sqrt_float), TerminalNode(1.0, float)],
-            ),
-            (
-                [f_log],
-                [1.0],
-                [FunctionNode(f_log), TerminalNode(1.0)],
-            ),
-        ],
+@pytest.mark.parametrize(
+    "function_set, terminal_set, expected",
+    [
+        (
+            [sqrt_float],
+            {1.0: float},
+            [FunctionNode(sqrt_float), TerminalNode(1.0, float)],
+        ),
+        (
+            [f_log],
+            [1.0],
+            [FunctionNode(f_log), TerminalNode(1.0)],
+        ),
+    ],
+)
+def test_add_children(
+    function_set: List[Callable],
+    terminal_set: Union[Dict[Any, type], List[Any]],
+    expected: List[TreeNode],
+):
+    grow_creator = GrowCreator(
+        init_depth=(1, 1),
+        function_set=function_set,
+        terminal_set=terminal_set,
     )
-    def test_add_children(
-        self,
-        function_set: List[Callable],
-        terminal_set: Union[Dict[Any, type], List[Any]],
-        expected: List[TreeNode],
-    ):
-        tree_ind = Tree(
-            function_set=function_set,
-            terminal_set=terminal_set,
-            erc_range=None,
-        )
-        node_type = float if isinstance(terminal_set, dict) else NoneType
-        node = tree_ind.random_function(node_type=node_type)
-        tree_ind.add_tree(node)
+    tree_ind = Tree(
+        function_set=function_set,
+        terminal_set=terminal_set,
+        erc_range=None,
+    )
+    node_type = float if isinstance(terminal_set, dict) else NoneType
+    node = tree_ind.random_function(node_type=node_type)
+    tree_ind.add_tree(node)
 
-        self.grow_creator._add_children(node, tree_ind, depth=0)
-        assert tree_ind.tree == expected
+    grow_creator._add_children(
+        tree_ind.tree,
+        node,
+        tree_ind.random_function,
+        tree_ind.random_terminal,
+        depth=0,
+    )
+    assert tree_ind.tree == expected

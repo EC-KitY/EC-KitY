@@ -5,7 +5,12 @@ from typing import Any, Callable, Dict, List, Tuple, Union
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
-from eckity.genetic_encodings.gp import Tree
+from eckity.genetic_encodings.gp import (
+    FunctionNode,
+    TerminalNode,
+    Tree,
+    TreeNode,
+)
 
 
 class GrowCreator(GPTreeCreator):
@@ -54,7 +59,12 @@ class GrowCreator(GPTreeCreator):
 
     @overrides
     def create_tree(
-        self, tree_ind: Tree, depth: int = 0, node_type: type = NoneType
+        self,
+        tree: List[TreeNode],
+        random_function: Callable[type, FunctionNode],
+        random_terminal: Callable[type, TerminalNode],
+        depth: int = 0,
+        node_type: type = NoneType,
     ) -> None:
         """
         Recursively create a random tree using the grow method.
@@ -68,23 +78,32 @@ class GrowCreator(GPTreeCreator):
         node_type : type, optional
             Type of the node to create. The default is NoneType.
         """
+        if tree is None:
+            tree = []
+
         min_depth, max_depth = self.init_depth
 
         is_func = False
         if depth < min_depth:
-            node = tree_ind.random_function(node_type=node_type)
+            node = random_function(node_type)
             is_func = True
         elif depth >= max_depth:
-            node = tree_ind.random_terminal(node_type=node_type)
+            node = random_terminal(node_type)
         else:  # intermediate depth, grow
             if random.random() < self.p_prune:
-                node = tree_ind.random_terminal(node_type=node_type)
+                node = random_terminal(node_type)
             else:
-                node = tree_ind.random_function(node_type=node_type)
+                node = random_function(node_type)
                 is_func = True
 
         # add the new node to the tree of the given individual
-        tree_ind.add_tree(node)
+        tree.append(node)
 
         if is_func:
-            self._add_children(node, tree_ind, depth)
+            self._add_children(
+                tree=tree,
+                fn_node=node,
+                random_function=random_function,
+                random_terminal=random_terminal,
+                depth=depth,
+            )

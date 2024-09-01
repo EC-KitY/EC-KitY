@@ -1,7 +1,7 @@
-from ....fitness import SimpleFitness
-from ....genetic_encodings.gp import Tree, TerminalNode, FunctionNode
-from ..full import FullCreator
 from ....base.untyped_functions import f_add
+from ....fitness import SimpleFitness
+from ....genetic_encodings.gp import FunctionNode, TerminalNode, Tree
+from ..full import FullCreator
 
 
 def test_create_tree():
@@ -14,9 +14,11 @@ def test_create_tree():
         SimpleFitness(),
         function_set=function_set,
         terminal_set=terminal_set,
-        erc_range=None
+        erc_range=None,
     )
-    creator.create_tree(tree_ind)
+    creator.create_tree(
+        tree_ind.tree, tree_ind.random_function, tree_ind.random_terminal
+    )
 
     assert tree_ind.tree == [
         FunctionNode(function_set[0]),
