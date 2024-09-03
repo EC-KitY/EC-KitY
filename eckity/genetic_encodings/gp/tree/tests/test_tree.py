@@ -1,5 +1,7 @@
-import pytest
+from types import NoneType
 from typing import List
+
+import pytest
 
 from eckity.base.typed_functions import (
     add2floats,
@@ -7,20 +9,14 @@ from eckity.base.typed_functions import (
     mul2floats,
     sub2floats,
 )
-from eckity.base.untyped_functions import (
-    f_add,
-    f_div,
-    f_mul,
-    f_sub,
-)
+from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.fitness.gp_fitness import GPFitness
 from eckity.genetic_encodings.gp import (
     FunctionNode,
     TerminalNode,
-    TreeNode,
     Tree,
+    TreeNode,
 )
-from types import NoneType
 
 
 class TestTree:
@@ -121,7 +117,11 @@ class TestTree:
         ],
     )
     def test_add_tree_bad_type(self, root, child):
-        tree = Tree(erc_range=None)
+        tree = Tree(
+            erc_range=None,
+            function_set=[add2floats],
+            terminal_set={"x": float},
+        )
         tree.add_tree(root)
 
         with pytest.raises(ValueError) as e:

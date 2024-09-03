@@ -9,7 +9,7 @@ def test_create_tree():
     function_set = [f_add]
     terminal_set = ["x"]
 
-    creator = FullCreator(init_depth)
+    creator = FullCreator(init_depth, function_set, terminal_set)
     tree_ind = Tree(
         SimpleFitness(),
         function_set=function_set,

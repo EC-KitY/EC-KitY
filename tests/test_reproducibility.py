@@ -1,12 +1,15 @@
-import random
-import numpy as np
 import itertools
-
+import random
 from time import sleep
 
-from eckity.algorithms import SimpleEvolution
-from eckity.evaluators import SimpleIndividualEvaluator
+import numpy as np
+
 from eckity import Subpopulation
+from eckity.algorithms import SimpleEvolution
+from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
+from eckity.creators import FullCreator
+from eckity.evaluators import SimpleIndividualEvaluator
+from eckity.genetic_operators import SubtreeCrossover, SubtreeMutation
 
 
 class RandomIndividualEvaluator(SimpleIndividualEvaluator):
@@ -16,9 +19,17 @@ class RandomIndividualEvaluator(SimpleIndividualEvaluator):
 
 class TestReproducibility:
     def test_reproducibility(self):
-        # creates a Tree-GP experiment by default
+        # creates a Tree-GP algorithm
         algo1 = SimpleEvolution(
-            Subpopulation(RandomIndividualEvaluator(), population_size=10),
+            Subpopulation(
+                RandomIndividualEvaluator(),
+                population_size=10,
+                creators=FullCreator(
+                    function_set=[f_add, f_sub, f_mul, f_div],
+                    terminal_set=["x", "y", "z"],
+                ),
+                operators_sequence=[SubtreeCrossover(), SubtreeMutation()],
+            ),
             random_seed=42,
             max_generation=10,
         )
@@ -27,7 +38,15 @@ class TestReproducibility:
 
         # creates a Tree-GP experiment by default
         algo2 = SimpleEvolution(
-            Subpopulation(RandomIndividualEvaluator(), population_size=10),
+            Subpopulation(
+                RandomIndividualEvaluator(),
+                population_size=10,
+                creators=FullCreator(
+                    function_set=[f_add, f_sub, f_mul, f_div],
+                    terminal_set=["x", "y", "z"],
+                ),
+                operators_sequence=[SubtreeCrossover(), SubtreeMutation()],
+            ),
             random_seed=42,
             max_generation=10,
         )
@@ -46,7 +65,14 @@ class TestReproducibility:
         seeds = []
         for i in range(n_reps):
             seed = SimpleEvolution(
-                Subpopulation(RandomIndividualEvaluator()),
+                Subpopulation(
+                    RandomIndividualEvaluator(),
+                    creators=FullCreator(
+                        function_set=[f_add, f_sub, f_mul, f_div],
+                        terminal_set=["x", "y", "z"],
+                    ),
+                    operators_sequence=[SubtreeCrossover()],
+                ),
             ).random_seed
             seeds.append(seed)
 

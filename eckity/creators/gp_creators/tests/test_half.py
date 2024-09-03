@@ -1,9 +1,13 @@
 import pytest
+
+from eckity.base.untyped_functions import f_add
 from eckity.creators import HalfCreator
 
 
 def test_zero_group_size():
-    half_creator = HalfCreator(init_depth=(2, 4))
+    half_creator = HalfCreator(
+        init_depth=(2, 4), function_set=[f_add], terminal_set=["x"]
+    )
     with pytest.raises(ValueError) as exc_info:
         half_creator.create_individuals(4, True)
 
@@ -12,7 +16,9 @@ def test_zero_group_size():
 
 
 def test_create_individuals():
-    half_creator = HalfCreator(init_depth=(3, 4))
+    half_creator = HalfCreator(
+        init_depth=(3, 4), function_set=[f_add], terminal_set=["x"]
+    )
     inds = half_creator.create_individuals(20, True)
     assert len(inds) == 20
 
