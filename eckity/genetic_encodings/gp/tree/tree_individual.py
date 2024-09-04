@@ -238,8 +238,9 @@ class Tree(Individual):
             A numpy array.
 
         kwargs : keyword arguments
-            Input to program, including every variable in the terminal set as a keyword argument.
-            For example, if `terminal_set=['x', 'y', 'z', 0, 1, -1]`
+            Input to program, including every variable
+            in the terminal set as a keyword argument.
+            For example, if `terminal_set=['x', 'y', 'z']`
             then call `execute(x=..., y=..., z=...)`.
 
         Returns
@@ -259,7 +260,8 @@ class Tree(Individual):
                 reshape = True
             except Exception:
                 raise ValueError(
-                    f"Bad argument to tree.execute, must be numpy array or kwargs: {args}"
+                    f"Bad argument to tree.execute, "
+                    f"must be np array or kwargs: {args}"
                 )
 
         kw = list(kwargs.keys())
@@ -526,6 +528,3 @@ class Tree(Individual):
 
     def __repr__(self):
         return str(self)
-
-
-# end class tree

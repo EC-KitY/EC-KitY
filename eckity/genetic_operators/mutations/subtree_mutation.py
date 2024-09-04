@@ -1,4 +1,3 @@
-from types import NoneType
 from typing import Any, List, Optional, Tuple
 
 from overrides import override
@@ -15,8 +14,11 @@ class SubtreeMutation(FailableOperator):
         probability: float = 1.0,
         init_depth: Tuple[int, int] = (2, 4),
         events=None,
+        attempts=1,
     ):
-        super().__init__(probability=probability, arity=1, events=events)
+        super().__init__(
+            probability=probability, arity=1, events=events, attempts=attempts
+        )
         self.init_depth = init_depth
         self.tree_creator = None
 
@@ -84,4 +86,3 @@ class SubtreeMutation(FailableOperator):
             ind.replace_subtree(
                 old_subtree=old_subtree, new_subtree=new_subtree
             )
-

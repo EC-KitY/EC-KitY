@@ -9,6 +9,10 @@ def equal2ints(a: int, b: int) -> bool:
     return a == b
 
 
+def inc_int(x: int) -> int:
+    return x + 1
+
+
 def f_equal(a, b):
     return a == b
 
@@ -18,7 +22,7 @@ def f_equal(a, b):
     [
         Tree(
             fitness=GPFitness(),
-            function_set=[equal2ints],
+            function_set=[equal2ints, inc_int],
             terminal_set={"x": int, "y": int},
             tree=[
                 FunctionNode(function=equal2ints),
@@ -38,7 +42,7 @@ def f_equal(a, b):
         ),
     ],
 )
-def test_subtree_mutation(tree):
+def test_subtree_mutation_success(tree):
     subtree_mutation = SubtreeMutation(probability=1.0)
 
     tree_copy = tree.clone()

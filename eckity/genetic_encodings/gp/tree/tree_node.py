@@ -25,14 +25,6 @@ class TreeNode(ABC):
         self.node_type = node_type
 
     @abstractmethod
-    def execute(self, **kwargs):
-        """
-        Returns the value of this node
-        Return type must match the type of this node
-        """
-        pass
-
-    @abstractmethod
     def __str__(self) -> str:
         pass
 
@@ -66,24 +58,6 @@ class FunctionNode(TreeNode):
         self.function = function
 
     @override
-    def execute(self, **kwargs):
-        """
-        Recursively execute the tree by traversing it in a depth-first order
-        """
-        kw_types: Dict[str, type] = get_type_hints(self.function)
-
-        # assert that the types of the arguments match the expected types
-        if kw_types:
-            for k, v in kwargs.items():
-                if kw_types[k] is not NoneType and kw_types[k] is not type(v):
-                    raise TypeError(
-                        f"Expected {k} to be of type {kw_types[k]}, "
-                        f"got {type(v)}."
-                    )
-
-        return self.function(**kwargs)
-
-    @override
     def __eq__(self, other: object) -> bool:
         """
         Compare two FunctionNodes for equality.
@@ -114,30 +88,6 @@ class TerminalNode(TreeNode):
     def __init__(self, value: Any, node_type=NoneType, parent=None) -> None:
         super().__init__(node_type)
         self.value = value
-
-    @override
-    def execute(self, **kwargs):
-        """Recursively execute the tree by traversing it in a depth-first order"""
-
-        if isinstance(self.value, Number):  # terminal is a constant
-            return self.value
-
-        # terminal is a variable, return its value if type matches
-        kwarg_val = kwargs[self.value]
-
-        # kwarg might be a numpy array
-        kwarg_type = (
-            type(kwarg_val.item(0))
-            if isinstance(kwarg_val, np.ndarray)
-            else type(kwarg_val)
-        )
-
-        if self.node_type is not NoneType and self.node_type != kwarg_type:
-            raise TypeError(
-                f"Expected {self.value} to be of type {self.node_type},"
-                f"got {kwarg_type}."
-            )
-        return kwarg_val
 
     @override
     def __eq__(self, other):

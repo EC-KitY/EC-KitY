@@ -8,8 +8,13 @@ from eckity.genetic_operators.failable_operator import FailableOperator
 
 
 class SubtreeCrossover(FailableOperator):
-    def __init__(self, probability=1.0, arity=2, events=None):
-        super().__init__(probability=probability, arity=arity, events=events)
+    def __init__(self, probability=1.0, arity=2, events=None, attempts=1):
+        super().__init__(
+            probability=probability,
+            arity=arity,
+            events=events,
+            attempts=attempts,
+        )
         self.individuals = None
         self.applied_individuals = None
 

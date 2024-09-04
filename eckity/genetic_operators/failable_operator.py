@@ -33,7 +33,7 @@ class FailableOperator(GeneticOperator):
         self.attempts = attempts
 
     # TODO add event of on fail or on fail all retries
-    def apply(self, payload):
+    def apply(self, payload: Any) -> Any:
         """
         Apply the operator, with a chance of failing.
 
@@ -42,8 +42,13 @@ class FailableOperator(GeneticOperator):
 
         Parameters
         -------
-        payload: object
+        payload: Any
             relevant data for the applied operator (usually a list of individuals)
+
+        Returns
+        -------
+        Any
+            mutation result
         """
         for i in range(self.attempts):
             # attempt to execute the operator
@@ -55,7 +60,6 @@ class FailableOperator(GeneticOperator):
         # after all attempts failed, execute the `on_fail` mechanism
         return self.on_fail(payload)
 
-    @abstractmethod
     def attempt_operator(
         self, payload: Any, attempt_num: int
     ) -> Tuple[bool, Any]:
@@ -77,7 +81,7 @@ class FailableOperator(GeneticOperator):
         """
         pass
 
-    def on_fail(self, payload):
+    def on_fail(self, payload: Any) -> Any:
         """
         What to do when all operator attempts failed
         This method is called once all operator attempts have failed
@@ -85,12 +89,12 @@ class FailableOperator(GeneticOperator):
 
         Parameters
         -------
-        payload: object
+        payload: Any
             relevant data for the failure handling mechanism (usually a list of individuals)
 
         Returns
         -------
-        object
-            result value
+        Any
+            failure handling mechanism, does nothing by default
         """
         return payload

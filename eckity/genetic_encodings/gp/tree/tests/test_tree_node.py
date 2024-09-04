@@ -23,39 +23,6 @@ def test_get_func_types(function, expected_types):
     assert func_types == expected_types
 
 
-@pytest.mark.parametrize(
-    "node, expected",
-    [
-        (TerminalNode(1, int), 1),
-        (TerminalNode(1), 1),
-        (
-            FunctionNode(
-                add2floats
-            ),
-            2.0,
-        ),
-        (
-            FunctionNode(
-                f_add,
-            ),
-            2,
-        ),
-    ],
-)
-def test_execute(node, expected):
-    assert node.execute(x=1.0, y=1.0) == expected
-
-
-def test_execute_bad_type():
-    """
-    Test that execute raises a TypeError if the input type is incorrect
-    """
-    node = TerminalNode("x", int)
-    with pytest.raises(TypeError) as excinfo:
-        node.execute(x=1.0)
-    assert f"type {node.node_type}" in str(excinfo)
-
-
 def test_missing_type_hints():
     """
     define some bad functions
@@ -78,6 +45,7 @@ def test_missing_type_hints():
         with pytest.raises(ValueError) as excinfo:
             FunctionNode(func)
         assert "missing type hints" in str(excinfo)
+
 
 @pytest.mark.parametrize(
     "node1, node2, expected",
