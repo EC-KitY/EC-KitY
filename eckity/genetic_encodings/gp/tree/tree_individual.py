@@ -298,12 +298,13 @@ class Tree(Individual):
                 pos[0] += 1
                 res = self._execute(pos, **kwargs)
                 arglist.append(res)
-            return node(*arglist)
+            return node.function(*arglist)
         else:  # terminal
-            if isinstance(node, Number):  # terminal is a constant
-                return node
-            else:  # terminal is a variable, return its value
-                return kwargs[node]
+            if node.value in kwargs:
+                # terminal is a variable, return its value
+                return kwargs[node.value]
+            else:  # terminal is a constant
+                return node.value
 
     def filter_tree(self, filter_func: Callable) -> None:
         return [node for node in self.tree if filter_func(node)]
