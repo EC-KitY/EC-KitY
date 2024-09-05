@@ -393,24 +393,6 @@ class Tree(Individual):
 
         return pos[0]
 
-    def _str_rec(self, prefix, pos, result):
-        """Recursively produce a simple textual printout of the tree
-        (pos is a size-1 list so as to pass "by reference" on successive recursive calls).
-        """
-
-        node = self.tree[pos[0]]
-        if isinstance(node, FunctionNode):
-            result.append(f"{prefix}{str(node)}(\n")
-            for i in range(node.n_args):
-                pos[0] += 1
-                self._str_rec(prefix + "\t", pos, result)
-                if i < node.n_args - 1:
-                    result.append(", ")
-                    result.append("\n")
-            result.append(prefix + ")")
-        else:  # terminal
-            result.append(f"{prefix}{str(node)}")
-
     def _handle_function_and_terminal_set(
         self,
         function_set: Optional[List[Callable]],
@@ -471,7 +453,8 @@ class Tree(Individual):
 
         return function_set, terminal_set
 
-    def __str__(self):
+
+    def __str__(self) -> str:
         """
         Return a simple textual representation of the tree.
 
@@ -485,7 +468,7 @@ class Tree(Individual):
         untyped case:
         >>> ut = Tree(terminal_set=[x, y, z], function_set=[f_add])
         >>> ut.tree = [FunctionNode(f_add), TerminalNode(1), TerminalNode(2)]
-        >>> print(tree)
+        >>> tree.show()
         def func_0(x, y, z):
             return f_add(x, y)
 
@@ -495,7 +478,7 @@ class Tree(Individual):
         >>> tt.tree = [FunctionNode(typed_add),
         ...            TerminalNode(1.0, float),
         ...            TerminalNode(2.0, float)]
-        >>> print(tree)
+        >>> str(tree)
         def func_0(x: float, y: float) -> float:
             return typed_add(1.0, 2.0)
         """
@@ -513,8 +496,27 @@ class Tree(Individual):
         result = [
             f"def func_{str(self.id)}({', '.join(args)}){ret_type_str}:\n\treturn "
         ]
-        self._str_rec("", [0], result)
+        self._str_rec("\t", [0], result)
         return "".join(result)
+
+    def _str_rec(self, prefix, pos, result):
+        """Recursively produce a simple textual printout of the tree
+        (pos is a size-1 list so as to pass "by reference" on successive
+         recursive calls).
+        """
+
+        node = self.tree[pos[0]]
+        if isinstance(node, FunctionNode):
+            result.append(f"{prefix}{str(node)}(\n")
+            for i in range(node.n_args):
+                pos[0] += 1
+                self._str_rec(prefix + "\t", pos, result)
+                if i < node.n_args - 1:
+                    result.append(',')
+                    result.append("\n")
+            result.append(prefix + ")")
+        else:  # terminal
+            result.append(f"{prefix}{str(node)}")
 
     def show(self):
         """

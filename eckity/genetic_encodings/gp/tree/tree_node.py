@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from numbers import Number
 from types import NoneType
 from typing import Any, Callable, Dict, get_type_hints
 

@@ -215,12 +215,12 @@ class TestTree:
             (
                 True,
                 [TerminalNode(1, int)],
-                "def func_1(x: float, y: float) -> int:\n\treturn 1",
+                f"def func_{typed_tree.id}(x: float, y: float) -> int:\n\treturn 1",
             ),
             (
                 False,
                 [TerminalNode(1)],
-                "def func_2(x, y):\n\treturn 1",
+                f"def func_{untyped_tree.id}(x, y):\n\treturn 1",
             ),
             (
                 True,
@@ -229,7 +229,7 @@ class TestTree:
                     TerminalNode(1.0, float),
                     TerminalNode(2.0, float),
                 ],
-                "def func_1(x: float, y: float) -> float:\n\treturn add2floats(1.0, 2.0)",
+                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n\treturn add2floats(\n\t\t1.0,\n\t\t2.0\n\t)"
             ),
             (
                 False,
@@ -238,7 +238,7 @@ class TestTree:
                     TerminalNode(1),
                     TerminalNode(2),
                 ],
-                "def func_2(x, y):\n\treturn f_add(1, 2)",
+                f"def func_{untyped_tree.id}(x, y):\n\treturn f_add(\n\t\t1,\n\t\t2\n\t)"
             ),
         ],
     )
@@ -327,3 +327,12 @@ class TestTree:
         for root_idx, expected in zip(root_indices, expected_results):
             subtree_root = tree[root_idx]
             assert tree_ind._get_subtree_by_root(subtree_root) == expected
+
+def func_1(x: float, y: float) -> float:
+    return add2floats(
+        1.0,
+        sub2floats(
+            2.0,
+            3.0
+        )
+    )
