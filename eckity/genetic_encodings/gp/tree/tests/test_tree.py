@@ -240,6 +240,28 @@ class TestTree:
                 ],
                 f"def func_{untyped_tree.id}(x, y):\n\treturn f_add(\n\t\t1,\n\t\t2\n\t)"
             ),
+            (
+                True,
+                [
+                    FunctionNode(add2floats),
+                    TerminalNode(1.0, float),
+                    FunctionNode(sub2floats),
+                    TerminalNode(2.0, float),
+                    TerminalNode(3.0, float),
+                ],
+                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n\treturn add2floats(\n\t\t1.0,\n\t\tsub2floats(\n\t\t\t2.0,\n\t\t\t3.0\n\t\t)\n\t)"
+            ),
+            (
+                False,
+                [
+                    FunctionNode(f_add),
+                    TerminalNode(1),
+                    FunctionNode(f_sub),
+                    TerminalNode(2),
+                    TerminalNode(3),
+                ],
+                f"def func_{untyped_tree.id}(x, y):\n\treturn f_add(\n\t\t1,\n\t\tf_sub(\n\t\t\t2,\n\t\t\t3\n\t\t)\n\t)"
+            ),
         ],
     )
     def test_str(self, setup, typed, tree, expected):
@@ -327,12 +349,3 @@ class TestTree:
         for root_idx, expected in zip(root_indices, expected_results):
             subtree_root = tree[root_idx]
             assert tree_ind._get_subtree_by_root(subtree_root) == expected
-
-def func_1(x: float, y: float) -> float:
-    return add2floats(
-        1.0,
-        sub2floats(
-            2.0,
-            3.0
-        )
-    )

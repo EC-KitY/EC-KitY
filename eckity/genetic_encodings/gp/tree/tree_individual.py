@@ -453,7 +453,6 @@ class Tree(Individual):
 
         return function_set, terminal_set
 
-
     def __str__(self) -> str:
         """
         Return a simple textual representation of the tree.
@@ -496,10 +495,10 @@ class Tree(Individual):
         result = [
             f"def func_{str(self.id)}({', '.join(args)}){ret_type_str}:\n\treturn "
         ]
-        self._str_rec("\t", [0], result)
+        self._str_rec("", [0], result)
         return "".join(result)
 
-    def _str_rec(self, prefix, pos, result):
+    def _str_rec(self, prefix: str, pos: List[int], result: str) -> str:
         """Recursively produce a simple textual printout of the tree
         (pos is a size-1 list so as to pass "by reference" on successive
          recursive calls).
@@ -508,11 +507,13 @@ class Tree(Individual):
         node = self.tree[pos[0]]
         if isinstance(node, FunctionNode):
             result.append(f"{prefix}{str(node)}(\n")
+            prefix = prefix + "\t" if pos[0] == 0 else prefix
             for i in range(node.n_args):
                 pos[0] += 1
                 self._str_rec(prefix + "\t", pos, result)
                 if i < node.n_args - 1:
-                    result.append(',')
+                    result.append(",\n")
+                elif 0 < i < node.n_args:
                     result.append("\n")
             result.append(prefix + ")")
         else:  # terminal
