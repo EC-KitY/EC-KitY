@@ -26,6 +26,7 @@ class GPTreeCreator(Creator):
         bloat_weight: float = 0.0,
         events: List[str] = None,
         root_type: type = NoneType,
+        update_parents: bool = False
     ):
         if events is None:
             events = ["after_creation"]
@@ -45,6 +46,7 @@ class GPTreeCreator(Creator):
         self.terminal_set = terminal_set
         self.bloat_weight = bloat_weight
         self.root_type = root_type
+        self.update_parents = update_parents
 
     @override
     def create_individuals(
@@ -59,6 +61,7 @@ class GPTreeCreator(Creator):
                     higher_is_better=higher_is_better,
                 ),
                 root_type=self.root_type,
+                update_parents=self.update_parents,
             )
             for _ in range(n_individuals)
         ]

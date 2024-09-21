@@ -22,6 +22,7 @@ class FullCreator(GPTreeCreator):
         bloat_weight: float = 0.0,
         events: List[str] = None,
         root_type: type = NoneType,
+        update_parents: bool = False,
     ):
         """
         Tree creator using the full method
@@ -50,6 +51,7 @@ class FullCreator(GPTreeCreator):
             bloat_weight=bloat_weight,
             events=events,
             root_type=root_type,
+            update_parents=update_parents,
         )
 
     @overrides

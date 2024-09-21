@@ -17,19 +17,21 @@ class SimpleEvolution(Algorithm):
 
     Basic evolutionary algorithm that contains one subpopulation.
     Does not include and is not meant for multi-objective, co-evolution etc.
+    Such algorithms should be implemented in a new Algorithm subclass.
 
     Parameters
     ----------
     population: Population
-            The population to be evolved.
-            Contains only one subpopulation in simple case.
+        The population to be evolved.
+        Contains only one subpopulation in simple case.
 
-    statistics: Statistics or list of Statistics, default=None
-            Provide multiple statistics on the population during the evolution.
 
-    breeder: SimpleBreeder, default=SimpleBreeder instance
-            Responsible for applying selection and operators on individuals
-            in each generation. Applies on one subpopulation in simple case.
+    statistics: Union[Statistics, List[Statistics]], default=None
+        Provide multiple statistics on the population during the evolution.
+
+    breeder: SimpleBreeder
+        Responsible for applying selection and operators on individuals
+        in each generation. Applies on one subpopulation in simple case.
 
     population_evaluator: SimplePopulationEvaluator,
                           default=SimplePopulationEvaluator instance
@@ -84,12 +86,12 @@ class SimpleEvolution(Algorithm):
         self,
         population,
         statistics=None,
-        breeder=SimpleBreeder(),
-        population_evaluator=SimplePopulationEvaluator(),
+        breeder: SimpleBreeder = None,
+        population_evaluator: SimplePopulationEvaluator = None,
         max_generation=500,
         events=None,
         event_names=None,
-        termination_checker=ThresholdFromTargetTerminationChecker(threshold=0),
+        termination_checker=None,
         executor="thread",
         max_workers=None,
         random_generator: RNG = RNG(),
@@ -113,6 +115,28 @@ class SimpleEvolution(Algorithm):
 
         if statistics is None:
             statistics = []
+
+        if breeder is None:
+            breeder = SimpleBreeder()
+
+        if termination_checker is None:
+            termination_checker = ThresholdFromTargetTerminationChecker(
+                threshold=0
+            )
+        
+        if population_evaluator is None:
+            population_evaluator = SimplePopulationEvaluator()
+
+        if not isinstance(breeder, SimpleBreeder):
+            raise ValueError(
+                f"Expected SimpleBreeder, got {type(breeder)}."
+            )
+        
+        if not isinstance(population_evaluator, SimplePopulationEvaluator):
+            raise ValueError(
+                "Expected SimplePopulationEvaluator, "
+                f"got {type(population_evaluator)}."
+            )
 
         super().__init__(
             population,
@@ -149,7 +173,7 @@ class SimpleEvolution(Algorithm):
             self.register("after_generation", stat.write_statistics)
 
     @overrides
-    def generation_iteration(self, gen):
+    def generation_iteration(self, gen: int) -> bool:
         """
         Performs one iteration of the evolutionary run,
         for the current generation

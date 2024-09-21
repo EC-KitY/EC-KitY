@@ -43,6 +43,7 @@ class Tree(Individual):
             Union[Tuple[float, float], Tuple[int, int]]
         ] = None,
         root_type: type = None,
+        update_parents: bool = False
     ):
         """
         GP Tree Individual.
@@ -67,7 +68,7 @@ class Tree(Individual):
         ValueError
             If typed function is used with untyped terminals.
         """
-        super().__init__(fitness)
+        super().__init__(fitness, update_parents=update_parents)
 
         self.erc_range = erc_range
 

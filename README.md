@@ -15,6 +15,7 @@ Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Prog
 
 ### Dependencies
 The minimal Python Version for EC-KitY is Python 3.8
+
 The dependencies of our package are described in `requirements.txt` 
 
 For sklearn mode, EC-KitY additionally requires:

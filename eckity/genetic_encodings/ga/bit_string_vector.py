@@ -30,11 +30,13 @@ class BitStringVector(Vector):
                  fitness,
                  length,
                  bounds=(0, 1),
-                 vector=None):
+                 vector=None,
+                 update_parents=False):
         super().__init__(fitness=fitness,
                          length=length,
                          bounds=bounds,
-                         vector=vector)
+                         vector=vector,
+                         update_parents=update_parents)
 
     def get_random_number_in_bounds(self, index):
         """

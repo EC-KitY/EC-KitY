@@ -23,6 +23,7 @@ class GrowCreator(GPTreeCreator):
         p_prune: float = 0.5,
         events: List[str] = None,
         root_type: type = NoneType,
+        update_parents: bool = False
     ):
         """
         Tree creator using the grow method
@@ -54,6 +55,7 @@ class GrowCreator(GPTreeCreator):
             bloat_weight=bloat_weight,
             events=events,
             root_type=root_type,
+            update_parents=update_parents,
         )
         self.p_prune = p_prune
 

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Tuple
+from typing import Any, List, Tuple
 
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
@@ -8,7 +8,8 @@ class FailableOperator(GeneticOperator):
     """
     Genetic operator that has a chance of failing.
 
-    For example, adding a gaussian noise to a FloatVector cell might exceed the legal bounds of the vector.
+    For example, adding a gaussian noise to a FloatVector cell
+    might exceed the legal bounds of the vector.
     In that case, the Gauss Mutation fails.
 
     Parameters
@@ -26,29 +27,36 @@ class FailableOperator(GeneticOperator):
         number of attempts to be made during the operator execution
     """
 
-    def __init__(self, probability=0.05, arity=0, events=None, attempts=1):
+    def __init__(
+        self,
+        probability: float = 0.05,
+        arity: int = 0,
+        events: List[str] = None,
+        attempts: int = 1,
+    ):
         super().__init__(probability, arity, events)
         if attempts < 1:
             raise ValueError("Number of attempts must be at least 1")
         self.attempts = attempts
 
     # TODO add event of on fail or on fail all retries
-    def apply(self, payload: Any) -> Any:
+    def apply(self, payload: object) -> object:
         """
         Apply the operator, with a chance of failing.
 
-        Attempt to apply the operator `attempts` times, finish by succeeding in one of the attempts or by failing
+        Attempt to apply the operator `attempts` times,
+        finish by succeeding in one of the attempts or by failing
         all attempts and executing `on_fail` method.
 
         Parameters
         -------
-        payload: Any
-            relevant data for the applied operator (usually a list of individuals)
+        payload: object
+            relevant data for the operator (usually a list of individuals)
 
         Returns
         -------
-        Any
-            mutation result
+        object
+            result value
         """
         for i in range(self.attempts):
             # attempt to execute the operator
@@ -60,6 +68,7 @@ class FailableOperator(GeneticOperator):
         # after all attempts failed, execute the `on_fail` mechanism
         return self.on_fail(payload)
 
+    @abstractmethod
     def attempt_operator(
         self, payload: Any, attempt_num: int
     ) -> Tuple[bool, Any]:
@@ -69,7 +78,7 @@ class FailableOperator(GeneticOperator):
         Parameters
         -------
         payload: object
-            relevant data for the applied operator (usually a list of individuals)
+            relevant data for the operator (usually a list of individuals)
 
         attempt_num: int
             current attempt number
@@ -89,8 +98,9 @@ class FailableOperator(GeneticOperator):
 
         Parameters
         -------
-        payload: Any
-            relevant data for the failure handling mechanism (usually a list of individuals)
+        payload: object
+            relevant data for the failure handling mechanism
+            (usually a list of individuals)
 
         Returns
         -------
