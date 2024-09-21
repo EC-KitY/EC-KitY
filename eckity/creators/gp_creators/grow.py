@@ -20,6 +20,7 @@ class GrowCreator(GPTreeCreator):
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         bloat_weight: float = 0.0,
+        erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         p_prune: float = 0.5,
         events: List[str] = None,
         root_type: type = NoneType,
@@ -56,6 +57,7 @@ class GrowCreator(GPTreeCreator):
             events=events,
             root_type=root_type,
             update_parents=update_parents,
+            erc_range=erc_range,
         )
         self.p_prune = p_prune
 

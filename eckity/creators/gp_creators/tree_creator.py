@@ -22,6 +22,7 @@ class GPTreeCreator(Creator):
         init_depth: Tuple[int, int] = None,
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
+        erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         fitness_type: type = SimpleFitness,
         bloat_weight: float = 0.0,
         events: List[str] = None,
@@ -47,6 +48,7 @@ class GPTreeCreator(Creator):
         self.bloat_weight = bloat_weight
         self.root_type = root_type
         self.update_parents = update_parents
+        self.erc_range = erc_range
 
     @override
     def create_individuals(
@@ -62,6 +64,7 @@ class GPTreeCreator(Creator):
                 ),
                 root_type=self.root_type,
                 update_parents=self.update_parents,
+                erc_range=self.erc_range,
             )
             for _ in range(n_individuals)
         ]

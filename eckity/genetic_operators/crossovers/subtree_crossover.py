@@ -77,7 +77,7 @@ class SubtreeCrossover(FailableOperator):
 
         # now select a random subtree from the rest of the individuals
         # with regards to the type of the first subtree
-        rest_subtrees = [ind.random_subtree(m_type) for ind in individuals]
+        rest_subtrees = [ind.random_subtree(m_type) for ind in individuals[1:]]
 
         # fails if any subtree doesn't contain a node with of type `m_type`
         if None in rest_subtrees:

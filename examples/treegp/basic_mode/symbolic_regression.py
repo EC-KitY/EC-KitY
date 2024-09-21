@@ -132,7 +132,7 @@ def main():
     ]
 
     # terminal set, consisted of variables and constants
-    terminal_set = ["x", "y", "z", 0, 1, -1]
+    terminal_set = ["x", "y", "z"]
 
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
@@ -141,6 +141,7 @@ def main():
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
+                erc_range=(-1, 1),
                 bloat_weight=0.0001,
             ),
             population_size=200,

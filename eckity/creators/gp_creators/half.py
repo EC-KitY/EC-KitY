@@ -1,5 +1,5 @@
-from typing import Any, Callable, Dict, List, Tuple, Union
 from types import NoneType
+from typing import Any, Callable, Dict, List, Tuple, Union
 
 from overrides import override
 
@@ -18,6 +18,7 @@ class HalfCreator(GPTreeCreator):
         function_set: List[Callable] = None,
         terminal_set: Union[Dict[Any, type], List[Any]] = None,
         bloat_weight: float = 0.0,
+        erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         events: List[str] = None,
         root_type: type = NoneType,
     ):
@@ -52,6 +53,7 @@ class HalfCreator(GPTreeCreator):
             function_set=function_set,
             terminal_set=terminal_set,
             bloat_weight=bloat_weight,
+            erc_range=erc_range,
             events=events,
             root_type=root_type,
         )
@@ -64,6 +66,7 @@ class HalfCreator(GPTreeCreator):
                 terminal_set=self.terminal_set,
                 events=self.events,
                 root_type=root_type,
+                erc_range=self.erc_range,
             )
         if full_creator is None:
             full_creator = FullCreator(
@@ -72,6 +75,7 @@ class HalfCreator(GPTreeCreator):
                 terminal_set=self.terminal_set,
                 events=self.events,
                 root_type=root_type,
+                erc_range=self.erc_range,
             )
 
         self.grow_creator = grow_creator
