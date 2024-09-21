@@ -16,6 +16,7 @@ from eckity import Population, Subpopulation
 from eckity.breeders import Breeder
 from eckity.evaluators import PopulationEvaluator
 from eckity.event_based_operator import Operator
+from eckity.individual import Individual
 from eckity.random import RNG
 from eckity.statistics.statistics import Statistics
 from eckity.termination_checkers import TerminationChecker
@@ -396,7 +397,12 @@ class Algorithm(Operator, ABC):
         """
         return (self.generation_seed + 1) % (2**32)
 
-    def should_terminate(self, population, best_of_run_, generation_num):
+    def should_terminate(
+        self,
+        population: Population,
+        best_of_run_: Individual,
+        generation_num: int,
+    ) -> bool:
         if self.termination_checker is None:
             return False
         elif isinstance(self.termination_checker, list):
