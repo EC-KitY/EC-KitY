@@ -1,23 +1,23 @@
+import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.model_selection import GridSearchCV
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.sklearn_compatible.sk_classifier import SKClassifier
+from eckity.base.typed_functions import (
+    abs_float,
+    add2floats,
+    div2floats,
+    inv_float,
+    log_float,
+    max2floats,
+    min2floats,
+    mul2floats,
+    neg_float,
+    sqrt_float,
+    sub2floats,
+)
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
-from eckity.base.untyped_functions import (
-    f_add,
-    f_mul,
-    f_sub,
-    f_div,
-    f_neg,
-    f_sqrt,
-    f_log,
-    f_abs,
-    f_inv,
-    f_max,
-    f_min,
-)
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
@@ -26,15 +26,16 @@ from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
 from eckity.genetic_operators.selections.tournament_selection import (
     TournamentSelection,
 )
+from eckity.sklearn_compatible.classification_evaluator import (
+    ClassificationEvaluator,
+)
+from eckity.sklearn_compatible.sk_classifier import SKClassifier
 from eckity.statistics.best_average_worst_statistics import (
     BestAverageWorstStatistics,
 )
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import (
     ThresholdFromTargetTerminationChecker,
-)
-from eckity.sklearn_compatible.classification_evaluator import (
-    ClassificationEvaluator,
 )
 
 # Adding your own types and functions
@@ -52,7 +53,9 @@ def main():
     """
 
     # load the brest cancer dataset from sklearn
-    X, y = make_classification(n_samples=100, n_features=10, n_classes=3)
+    X, y = make_classification(
+        n_samples=100, n_features=10, n_classes=3, n_informative=5
+    )
 
     # Automatically generate a terminal set.
     # Since there are 10 features, set terminal_set to: ['x0', 'x1', ..., 'x9']
@@ -60,17 +63,17 @@ def main():
 
     # Define function set
     function_set = [
-        f_add,
-        f_mul,
-        f_sub,
-        f_div,
-        f_sqrt,
-        f_log,
-        f_abs,
-        f_neg,
-        f_inv,
-        f_max,
-        f_min,
+        abs_float,
+        add2floats,
+        div2floats,
+        inv_float,
+        log_float,
+        max2floats,
+        min2floats,
+        mul2floats,
+        neg_float,
+        sqrt_float,
+        sub2floats,
     ]
 
     # Initialize SimpleEvolution instance
@@ -81,8 +84,9 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.0001,
+                root_type=float,
             ),
-            population_size=1000,
+            population_size=10,
             evaluator=ClassificationEvaluator(),
             higher_is_better=True,
             elitism_rate=0.05,
@@ -101,7 +105,7 @@ def main():
         ),
         breeder=SimpleBreeder(),
         max_workers=4,
-        max_generation=1000,
+        max_generation=10,
         termination_checker=ThresholdFromTargetTerminationChecker(
             optimal=1, threshold=0.03
         ),

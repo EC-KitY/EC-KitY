@@ -114,3 +114,24 @@ class GPTreeCreator(Creator):
                 depth=depth + 1,
                 node_type=func_types[i],
             )
+
+    def _check_generated_node(self, node, node_type=NoneType):
+        if node is None:
+            # optionally add type info for typed case
+            type_info = (
+                f"with type {node_type}" if node_type is not NoneType else ""
+            )
+
+            # optionally add erc_range info if it was defined
+            erc_info = (
+                f"erc range ({self.erc_range}) ,"
+                if self.erc_range is not None
+                else ""
+            )
+
+            raise ValueError(
+                f"Could not generate node {type_info} "
+                f"due to a mismatch in terminals ({self.terminal_set}), "
+                f"functions ({self.function_set}), {erc_info} "
+                f"or init_depth ({self.init_depth}) configuration."
+            )

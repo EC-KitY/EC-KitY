@@ -72,8 +72,9 @@ class Tree(Individual):
 
         self.erc_range = erc_range
 
-        function_set, terminal_set = self._handle_function_and_terminal_set(
-            function_set, terminal_set
+
+        function_set, terminal_set = self._handle_input_types(
+            function_set, terminal_set, root_type
         )
 
         self.function_set = function_set
@@ -383,10 +384,11 @@ class Tree(Individual):
 
         return pos[0]
 
-    def _handle_function_and_terminal_set(
+    def _handle_input_types(
         self,
         function_set: Optional[List[Callable]],
         terminal_set: Optional[Union[Dict[Any, type], List[str]]],
+        root_type: type
     ):
         if function_set is None:
             raise ValueError("Function set must be provided.")
@@ -400,7 +402,6 @@ class Tree(Individual):
                     f"Functions must be Callble, but {t} is of type {type(t)}"
                 )
 
-        # TODO remove this method when we include automatic type checking
         if not isinstance(terminal_set, (list, dict)):
             raise ValueError(
                 "Terminal set must be a list or a dictionary, "
@@ -438,7 +439,18 @@ class Tree(Individual):
 
         if not function_arg_types.issubset(terminal_types):
             raise ValueError(
-                "Function argument types must be subset of terminal types."
+                f"Function args type hints ({function_arg_types}) "
+                f"must match terminal types ({terminal_types})."
+            )
+
+        function_return_types = {
+            get_return_type(f) for f in function_set
+        }
+        if root_type not in function_return_types:
+            raise ValueError(
+                f"Detected a mismatch between root_type ({root_type}) "
+                f"and function set ({function_set}).\n"
+                f"Root type must be the return type of at least one function."
             )
 
         return function_set, terminal_set

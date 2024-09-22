@@ -1,6 +1,6 @@
 import random
 from types import NoneType
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable, Dict, List, Tuple, Union, Optional
 
 from overrides import overrides
 
@@ -65,8 +65,8 @@ class GrowCreator(GPTreeCreator):
     def create_tree(
         self,
         tree: List[TreeNode],
-        random_function: Callable[type, FunctionNode],
-        random_terminal: Callable[type, TerminalNode],
+        random_function: Callable[type, Optional[FunctionNode]],
+        random_terminal: Callable[type, Optional[TerminalNode]],
         depth: int = 0,
         node_type: type = NoneType,
     ) -> None:
@@ -90,6 +90,7 @@ class GrowCreator(GPTreeCreator):
         is_func = False
         if depth < min_depth:
             node = random_function(node_type)
+
             is_func = True
         elif depth >= max_depth:
             node = random_terminal(node_type)
@@ -102,6 +103,8 @@ class GrowCreator(GPTreeCreator):
 
         # add the new node to the tree of the given individual
         tree.append(node)
+
+        self._check_generated_node(node)
 
         if is_func:
             self._add_children(

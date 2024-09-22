@@ -82,11 +82,13 @@ class FullCreator(GPTreeCreator):
 
         if depth >= max_depth:
             node = random_terminal(node_type)
+            self._check_generated_node(node)
 
             # add the new node to the tree of the given individual
             tree.append(node)
         else:
             node = random_function(node_type)
+            self._check_generated_node(node)
 
             # add the new node to the tree of the given individual
             tree.append(node)
