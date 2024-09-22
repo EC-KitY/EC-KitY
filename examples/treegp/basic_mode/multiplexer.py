@@ -165,7 +165,7 @@ def main():
     # 3 select lines (s0-s2 in a 8-3 mux gate) and the constants 0 and 1
     select_terminals = [f"s{i}" for i in range(NUM_SELECT_ENTRIES)]
     input_terminals = [f"d{i}" for i in range(NUM_INPUT_ENTRIES)]
-    terminal_set = select_terminals + input_terminals + [0, 1]
+    terminal_set = select_terminals + input_terminals
 
     # Logical functions: and, or, not and if-then-else
     function_set = [f_and, f_or, f_not, f_if_then_else]
@@ -178,6 +178,7 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.002,
+                erc_range=(0, 1)
             ),
             population_size=40,
             # user-defined fitness evaluation method

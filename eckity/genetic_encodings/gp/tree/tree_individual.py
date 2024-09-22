@@ -217,17 +217,6 @@ class Tree(Individual):
 
         return TerminalNode(terminal, node_type=node_type)
 
-    def random_inner_type(self) -> type:
-        type_set = set(self.terminal_set.values())
-
-        erc_type = self.erc_type
-        type_set.add(erc_type)
-
-        if self.root_type in type_set:
-            type_set.remove(self.root_type)
-
-        return random.choice(list(type_set))
-
     def execute(self, *args, **kwargs) -> object:
         """
         Execute the program (tree).
@@ -494,7 +483,7 @@ class Tree(Individual):
         )
 
         result = [
-            f"def func_{str(self.id)}({', '.join(args)}){ret_type_str}:\n\treturn "
+            f"def func_{str(self.id)}({', '.join(args)}){ret_type_str}:\n  return "
         ]
         self._str_rec("", [0], result)
         return "".join(result)
@@ -508,10 +497,10 @@ class Tree(Individual):
         node = self.tree[pos[0]]
         if isinstance(node, FunctionNode):
             result.append(f"{prefix}{str(node)}(\n")
-            prefix = prefix + "\t" if pos[0] == 0 else prefix
+            prefix = prefix + "  " if pos[0] == 0 else prefix
             for i in range(node.n_args):
                 pos[0] += 1
-                self._str_rec(prefix + "\t", pos, result)
+                self._str_rec(prefix + "  ", pos, result)
                 if i < node.n_args - 1:
                     result.append(",\n")
                 elif 0 < i < node.n_args:

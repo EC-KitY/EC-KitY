@@ -131,7 +131,7 @@ def main():
         f_neg,
     ]
 
-    # terminal set, consisted of variables and constants
+    # terminal set, consisted of variables
     terminal_set = ["x", "y", "z"]
 
     # Initialize the evolutionary algorithm
