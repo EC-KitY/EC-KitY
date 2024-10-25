@@ -47,68 +47,6 @@ def main():
     """
     Solve a regression problem imported from sklearn `make_regression` function, using GP Trees.
     Expected run time: ~25 minutes (on 2 cores, 2.5 GHz CPU)
-    Example output (with an error of 0.09 on test set):
-    f_sub
-       f_mul
-          x3
-          57.9788
-       f_sub
-          f_mul
-             f_add
-                x1
-                x0
-             -69.8759
-          f_add
-             f_sub
-                f_add
-                   f_add
-                      f_add
-                         f_add
-                            f_add
-                               f_add
-                                  x1
-                                  x2
-                               x2
-                            f_add
-                               f_add
-                                  x2
-                                  x2
-                               f_sub
-                                  x1
-                                  x0
-                         x1
-                      f_add
-                         f_add
-                            f_add
-                               f_sub
-                                  f_sub
-                                     x1
-                                     f_mul
-                                        x1
-                                        -1.0477
-                                  x1
-                               x2
-                            x4
-                         x1
-                   x1
-                f_mul
-                   -33.4406
-                   f_add
-                      x4
-                      x4
-             f_sub
-                f_mul
-                   x1
-                   f_sub
-                      x2
-                      x2
-                f_mul
-                   f_add
-                      x2
-                      x0
-                   f_sub
-                      -19.0099
-                      -1.0477
     """
     start_time = time()
 
