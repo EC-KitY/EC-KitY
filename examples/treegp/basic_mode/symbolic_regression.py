@@ -32,7 +32,7 @@ from eckity.termination_checkers.threshold_from_target_termination_checker impor
     ThresholdFromTargetTerminationChecker,
 )
 
-# Change this variable to True for a typed version
+# False for non-typed mode, True for strongly-typed mode
 TYPED = True
 
 
