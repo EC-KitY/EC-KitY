@@ -1,6 +1,10 @@
 from time import time
 
+from types import NoneType
+
+
 from eckity.algorithms.simple_evolution import SimpleEvolution
+from eckity.base.typed_functions import and2ints, or2ints, not2ints, if_then_else2ints
 from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.base.untyped_functions import (
@@ -35,9 +39,12 @@ from eckity.evaluators.simple_individual_evaluator import (
 )
 
 NUM_SELECT_ENTRIES = 3
-NUM_INPUT_ENTRIES = 2**NUM_SELECT_ENTRIES
+NUM_INPUT_ENTRIES = 2 ** NUM_SELECT_ENTRIES
 NUM_COLUMNS = NUM_SELECT_ENTRIES + NUM_INPUT_ENTRIES
-NUM_ROWS = 2**NUM_COLUMNS
+NUM_ROWS = 2 ** NUM_COLUMNS
+
+# False for non-typed mode, True for strongly-typed mode
+TYPED = True
 
 
 def _target_func(s0, s1, s2, d0, d1, d2, d3, d4, d5, d6, d7):
@@ -66,14 +73,14 @@ def _target_func(s0, s1, s2, d0, d1, d2, d3, d4, d5, d6, d7):
     _target_func(s0=0, s1=0, s2=1, d0=1, d1=0, ...) = 0 (value of input d1)
     """
     return (
-        ((not s0) and (not s1) and (not s2) and d0)
-        or ((not s0) and (not s1) and s2 and d1)
-        or ((not s0) and s1 and (not s2) and d2)
-        or ((not s0) and s1 and s2 and d3)
-        or (s0 and (not s1) and (not s2) and d4)
-        or (s0 and (not s1) and s2 and d5)
-        or (s0 and s1 and (not s2) and d6)
-        or (s0 and s1 and s2 and d7)
+            ((not s0) and (not s1) and (not s2) and d0)
+            or ((not s0) and (not s1) and s2 and d1)
+            or ((not s0) and s1 and (not s2) and d2)
+            or ((not s0) and s1 and s2 and d3)
+            or (s0 and (not s1) and (not s2) and d4)
+            or (s0 and (not s1) and s2 and d5)
+            or (s0 and s1 and (not s2) and d6)
+            or (s0 and s1 and s2 and d7)
     )
 
 
@@ -159,16 +166,27 @@ def main():
     ----------
     DEAP Multiplexer Example: https://deap.readthedocs.io/en/master/examples/gp_multiplexer.html
     """
+
     start_time = time()
 
     # The terminal set of the tree will contain the mux inputs (d0-d7 in a 8-3 mux gate),
     # 3 select lines (s0-s2 in a 8-3 mux gate) and the constants 0 and 1
-    select_terminals = [f"s{i}" for i in range(NUM_SELECT_ENTRIES)]
-    input_terminals = [f"d{i}" for i in range(NUM_INPUT_ENTRIES)]
-    terminal_set = select_terminals + input_terminals
+    untyped_select_terminals = [f"s{i}" for i in range(NUM_SELECT_ENTRIES)]
+    untyped_input_terminals = [f"d{i}" for i in range(NUM_INPUT_ENTRIES)]
+    untyped_terminal_set = untyped_select_terminals + untyped_input_terminals
+
+    typed_select_terminals = {f"s{i}": int for i in range(NUM_SELECT_ENTRIES)}
+    typed_input_terminals = {f"d{i}": int for i in range(NUM_INPUT_ENTRIES)}
+    typed_terminal_set = {**typed_select_terminals, **typed_input_terminals}
+
+    terminal_set = typed_terminal_set if TYPED else untyped_terminal_set
 
     # Logical functions: and, or, not and if-then-else
-    function_set = [f_and, f_or, f_not, f_if_then_else]
+    untyped_function_set = [f_and, f_or, f_not, f_if_then_else]
+    typed_function_set = [and2ints, or2ints, not2ints, if_then_else2ints]
+    function_set = typed_function_set if TYPED else untyped_function_set
+
+    root_type = int if TYPED else NoneType
 
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
@@ -177,7 +195,8 @@ def main():
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
-                bloat_weight=0.002,
+                bloat_weight=0.00001,
+                root_type=root_type,
                 erc_range=(0, 1)
             ),
             population_size=40,

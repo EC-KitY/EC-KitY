@@ -124,6 +124,26 @@ def argmax2floats(x0: float, x1: float) -> t_argmax:
     return np.argmax([x0, x1], axis=0)
 
 
+def and2ints(x: int, y: int) -> int:
+    """x and y"""
+    return np.bitwise_and(x, y)
+
+
+def or2ints(x: int, y: int) -> int:
+    """x or y"""
+    return np.bitwise_or(x, y)
+
+
+def not2ints(x: int) -> int:
+    """not x"""
+    return np.logical_not(x).astype(int)
+
+
+def if_then_else2ints(test: int, dit: int, dif: int) -> int:
+    """if test return dit else return dif"""
+    return np.where(test, dit, dif)
+
+
 __all__ = [
     "add2floats",
     "sub2floats",
@@ -148,4 +168,8 @@ __all__ = [
     "not2floats",
     "if_then_else",
     "argmax2floats",
+    "and2ints",
+    "or2ints",
+    "not2ints",
+    "if_then_else2ints",
 ]
