@@ -5,17 +5,19 @@ format: jb-book
 root: intro
 chapters:
 - file: installation 
-- file: architecture/architecture
+- file: architecture
   sections:
-    - file: architecture/algorithm
-    - file: architecture/population
-    - file: architecture/individual
-    - file: architecture/creator
-    - file: architecture/evaluator
-    - file: architecture/breeder
-    - file: architecture/termination-checker
-    - file: architecture/statistics
+    - file: algorithm
+    - file: population
+    - file: individual
+    - file: creator
+    - file: evaluator
+    - file: breeder
+    - file: termination-checker
+    - file: statistics
 - file: examples
+- file: custom
+- file: contribution
 
 # - section: 
 #     title: "Examples"
