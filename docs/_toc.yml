@@ -4,11 +4,37 @@
 format: jb-book
 root: intro
 chapters:
-- file: algorithm
-- file: population
-- file: individual
-- file: creator
-- file: evaluator
-- file: breeder
-- file: termination-checker
-- file: statistics
+- file: installation 
+- file: architecture
+  sections:
+    - file: algorithm
+    - file: population
+    - file: individual
+    - file: creator
+    - file: evaluator
+    - file: breeder
+    - file: termination-checker
+    - file: statistics
+- file: examples
+
+# - section: 
+#     title: "Examples"
+#     chapters:
+#       - section: 
+#           title: "Basic Mode"
+#           chapters:
+#             - section:
+#                 title: "GA Examples"
+#                 chapters:
+#                   - file: one-max
+#                   - file: knapsack
+#                 title: "GA Examples"
+#                 chapters:
+#                   - file: basic-symbolic-regression
+#                   - file: multiplexer
+#       - section: 
+#           title: "Sklearn Mode"
+#           chapters:
+#             - file: sklearn-symbolic-regression
+#             - file: breast-cancer
+

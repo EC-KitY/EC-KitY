@@ -1,8 +1,6 @@
-# Welcome to your Jupyter Book
+# EC-KitY Documentation
 
 EC-KitY is a Python tool kit for doing evolutionary computation, and it is scikit-learn compatible.
-
-Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
 EC-KitY is:
 
