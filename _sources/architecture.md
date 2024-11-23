@@ -1,4 +1,4 @@
 # Architecture
 
-The architecture of EC-KitY is displayed in the 
-![figure below](docs/architecture.png), which also appears in our paper (`` {cite}`eckity2023` ``).
+The architecture of EC-KitY is displayed in the figure below, taken from [our paper](https://www.sciencedirect.com/science/article/pii/S2352711023000778).
+![](architecture.png)
