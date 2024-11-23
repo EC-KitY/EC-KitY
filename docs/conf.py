@@ -1,4 +1,4 @@
-from eckity import version
+from eckity import __version__
 
 # Configuration file for the Sphinx documentation builder.
 
@@ -8,7 +8,7 @@ project = 'EC-KitY'
 copyright = '2023, Sipper'
 author = 'Moshe Sipper'
 
-release = "0.3.4"
+release = __version__
 
 # -- General configuration
 
@@ -18,6 +18,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    "sphinx.ext.napoleon",
 ]
 
 intersphinx_mapping = {
