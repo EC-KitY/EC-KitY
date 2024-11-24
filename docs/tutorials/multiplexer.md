@@ -1,3 +1,5 @@
+# Multiplexer
+
 ## Preview
 In this example we solve the Multiplexer problem with GP, using EC-KitY.
 

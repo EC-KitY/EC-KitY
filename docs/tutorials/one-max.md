@@ -1,4 +1,4 @@
-# Tutorial: One-Max
+# One-Max
 
 ## Preview
 In this example we solve the one max problem with GA, using EC-KitY.

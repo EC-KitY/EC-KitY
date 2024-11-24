@@ -1,4 +1,4 @@
-# Tutorial: Knapsack
+# Knapsack
 
 ## Preview
 In this example we solve the 0-1 Knapsack problem with GA, using EC-KitY.

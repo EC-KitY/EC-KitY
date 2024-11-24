@@ -1,3 +1,5 @@
+# Symbolic Regression (basic mode)
+
 ## Preview
 In this example we will solve the Symbolic regression problem using our library.
 
@@ -183,7 +185,7 @@ print(f'algo.execute(x=2,y=3,z=4): {algo.execute(x=2, y=3, z=4)}')
 This is where the magic happens, the Evaluator is the object that evaluates the individual fitness,
 so here we will choose the direction towards which evolution will progress.
 
-### Target function
+## Target function
 In our example we would like our individual to be as close as possible to a function, here 
 defined as:
 
@@ -198,7 +200,7 @@ def _target_func(x, y, z):
     return x + 2 * y + 3 * z
 ```
 
-### The Evaluator
+## The Evaluator
 We extend the SimpleIndividualEvaluator, which means we will have to implement the evaluate_individual.
 We further create a DataFrame with 200 rows for the x, y, z parameters and the target function value:
 
@@ -218,7 +220,7 @@ class SymbolicRegressionEvaluator(SimpleIndividualEvaluator):
         self.df['target'] = _target_func(self.df['x'], self.df['y'], self.df['z'])
 ```
 
-### Evaluating Individuals
+## Evaluating Individuals
 When defining an Evaluator for a certain problem, we must implement the `evaluate_individual` method, which evaluates a fitness score for an individual.
 
 We measure how close an individual is to the target function by calculating the mean absolute error between

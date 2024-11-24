@@ -1,4 +1,4 @@
-# Tutorial: Sklearn Compatible Breast Cancer
+# Breast Cancer (sklearn mode)
 
 ## Preview
 In this example, we will solve the Breast Cancer classification problem using our library and Sci-kit Learn.

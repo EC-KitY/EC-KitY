@@ -1,3 +1,5 @@
+# NSGA2
+
 ## Preview
 
 In this example we will solve a MOE problem using our library.

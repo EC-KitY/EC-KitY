@@ -1,4 +1,4 @@
-# Tutorial: Sklearn Compatible Symbolic Regression
+# Symbolic Regression (sklearn mode)
 
 ## Preview
 In this example we will solve the Symbolic Regression problem using Sklearn and EC-KitY.
