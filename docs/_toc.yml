@@ -7,16 +7,23 @@ chapters:
 - file: installation 
 - file: architecture
   sections:
-    - file: algorithm
-    - file: population
-    - file: individual
-    - file: creator
-    - file: evaluator
-    - file: breeder
-    - file: termination-checker
-    - file: statistics
-- file: examples
+    - file: architecture/algorithm
+    - file: architecture/population
+    - file: architecture/individual
+    - file: architecture/creator
+    - file: architecture/evaluator
+    - file: architecture/breeder
+    - file: architecture/termination-checker
+    - file: architecture/statistics
+- file: tutorials
+  sections:
+    - file: tutorials/one-max
+    - file: tutorials/knapsack
+    - file: tutorials/basic-symbolic-regression
+    - file: tutorials/multiplexer
+    - file: tutorials/nsga2
 - file: custom
+- file: concurrency
 - file: contribution
 
 # - section: 
