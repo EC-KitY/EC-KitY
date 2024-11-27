@@ -67,6 +67,7 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.0001,
+                erc_range=(-100.0, 100.0),
                 root_type=root_type,
             ),
             population_size=1000,
