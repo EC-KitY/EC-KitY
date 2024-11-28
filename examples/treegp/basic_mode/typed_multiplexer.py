@@ -1,14 +1,7 @@
 from time import time
-from types import NoneType
-
 from eckity.algorithms.simple_evolution import SimpleEvolution
+from eckity.base.typed_functions import and2ints, or2ints, not2ints, if_then_else2ints
 from eckity.creators.gp_creators.full import FullCreator
-from eckity.base.untyped_functions import (
-    f_and,
-    f_or,
-    f_not,
-    f_if_then_else,
-)
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
 )
@@ -164,12 +157,13 @@ def main():
 
     # The terminal set of the tree will contain the mux inputs (d0-d7 in a 8-3 mux gate),
     # 3 select lines (s0-s2 in a 8-3 mux gate) and the constants 0 and 1
-    untyped_select_terminals = [f"s{i}" for i in range(NUM_SELECT_ENTRIES)]
-    untyped_input_terminals = [f"d{i}" for i in range(NUM_INPUT_ENTRIES)]
-    terminal_set = untyped_select_terminals + untyped_input_terminals
+    typed_select_terminals = {f"s{i}": int for i in range(NUM_SELECT_ENTRIES)}
+    typed_input_terminals = {f"d{i}": int for i in range(NUM_INPUT_ENTRIES)}
+    terminal_set = {**typed_select_terminals, **typed_input_terminals}
 
     # Logical functions: and, or, not and if-then-else
-    function_set = [f_and, f_or, f_not, f_if_then_else]
+    function_set = [and2ints, or2ints, not2ints, if_then_else2ints]
+
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
         Subpopulation(
@@ -178,6 +172,7 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.00001,
+                root_type=int,
                 erc_range=(0, 1)
             ),
             population_size=40,
@@ -185,7 +180,6 @@ def main():
             evaluator=MuxEvaluator(),
             # this is a maximization problem (fitness is accuracy), so higher fitness is better
             higher_is_better=True,
-            elitism_rate=0.0,
             # genetic operators sequence to be applied in each generation
             operators_sequence=[
                 SubtreeCrossover(probability=0.8, arity=2),

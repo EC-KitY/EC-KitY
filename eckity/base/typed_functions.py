@@ -144,6 +144,26 @@ def if_then_else2ints(test: int, dit: int, dif: int) -> int:
     return np.where(test, dit, dif)
 
 
+def and2bools(x: bool, y: bool) -> bool:
+    """x and y"""
+    return x and y
+
+
+def or2bools(x: bool, y: bool) -> bool:
+    """x or y"""
+    return x or y
+
+
+def not2bools(x: bool) -> bool:
+    """not x"""
+    return not x
+
+
+def if_then_else2bools(test: bool, dit: bool, dif: bool) -> bool:
+    """if test return dit else return dif"""
+    return dit if test else dif
+
+
 __all__ = [
     "add2floats",
     "sub2floats",
@@ -172,4 +192,8 @@ __all__ = [
     "or2ints",
     "not2ints",
     "if_then_else2ints",
+    "and2bools",
+    "or2bools",
+    "not2bools",
+    "if_then_else2bools",
 ]

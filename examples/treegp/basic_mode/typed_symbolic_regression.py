@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.base.untyped_functions import *
+from eckity.base.typed_functions import *
 from eckity.creators.gp_creators.half import HalfCreator
 from eckity.evaluators.simple_individual_evaluator import (
     SimpleIndividualEvaluator,
@@ -103,21 +103,21 @@ def main():
     # each node of the GP tree is either a terminal or a function
     # function nodes, each has two children (which are its operands)
     function_set = [
-        f_add,
-        f_mul,
-        f_sub,
-        f_div,
-        f_sqrt,
-        f_log,
-        f_abs,
-        f_max,
-        f_min,
-        f_inv,
-        f_neg,
+        add2floats,
+        mul2floats,
+        sub2floats,
+        div2floats,
+        sqrt_float,
+        log_float,
+        abs_float,
+        max2floats,
+        min2floats,
+        inv_float,
+        neg_float,
     ]
 
     # terminal set, consisted of variables
-    terminal_set = ["x", "y", "z"]
+    terminal_set = {"x": float, "y": float, "z": float}
 
     # Initialize the evolutionary algorithm
     algo = SimpleEvolution(
@@ -128,6 +128,7 @@ def main():
                 function_set=function_set,
                 erc_range=(-1.0, 1.0),
                 bloat_weight=0.0001,
+                root_type=float,
             ),
             population_size=200,
             # user-defined fitness evaluation method

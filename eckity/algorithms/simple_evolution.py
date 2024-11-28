@@ -86,7 +86,7 @@ class SimpleEvolution(Algorithm):
         self,
         population,
         statistics=None,
-        breeder: SimpleBreeder = None,
+        breeder: SimpleBreeder = SimpleBreeder(),
         population_evaluator: SimplePopulationEvaluator = None,
         max_generation=500,
         events=None,
