@@ -80,8 +80,8 @@ class GPTreeCreator(Creator):
     def create_tree(
         self,
         tree: List[TreeNode],
-        random_function: Callable[type, FunctionNode],
-        random_terminal: Callable[type, TerminalNode],
+        random_function: Callable[[type], Optional[FunctionNode]],
+        random_terminal: Callable[[type], Optional[TerminalNode]],
         depth: int = 0,
         node_type: Optional[type] = None,
     ) -> None:
@@ -99,8 +99,8 @@ class GPTreeCreator(Creator):
         self,
         tree: List[TreeNode],
         fn_node: FunctionNode,
-        random_function: Callable[type, FunctionNode],
-        random_terminal: Callable[type, TerminalNode],
+        random_function: Callable[[type], Optional[FunctionNode]],
+        random_terminal: Callable[[type], Optional[TerminalNode]],
         depth: int,
     ) -> None:
         # recursively add children to the function node

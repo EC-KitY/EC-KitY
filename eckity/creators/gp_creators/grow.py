@@ -63,8 +63,8 @@ class GrowCreator(GPTreeCreator):
     def create_tree(
         self,
         tree: List[TreeNode],
-        random_function: Callable[type, Optional[FunctionNode]],
-        random_terminal: Callable[type, Optional[TerminalNode]],
+        random_function: Callable[[type], Optional[FunctionNode]],
+        random_terminal: Callable[[type], Optional[TerminalNode]],
         depth: int = 0,
         node_type: Optional[type] = None,
     ) -> None:

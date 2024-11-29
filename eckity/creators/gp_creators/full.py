@@ -57,8 +57,8 @@ class FullCreator(GPTreeCreator):
     def create_tree(
         self,
         tree,
-        random_function: Callable[type, FunctionNode],
-        random_terminal: Callable[type, TerminalNode],
+        random_function: Callable[[type], Optional[FunctionNode]],
+        random_terminal: Callable[[type], Optional[TerminalNode]],
         depth: int = 0,
         node_type: Optional[type] = None,
     ) -> None:
