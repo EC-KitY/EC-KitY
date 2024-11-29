@@ -3,20 +3,19 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import GridSearchCV
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.base.untyped_functions import (
-    f_abs,
-    f_add,
-    f_div,
-    f_inv,
-    f_log,
-    f_max,
-    f_min,
-    f_mul,
-    f_neg,
-    f_sqrt,
-    f_sub,
+from eckity.base.typed_functions import (
+    abs_float,
+    add2floats,
+    div2floats,
+    inv_float,
+    log_float,
+    max2floats,
+    min2floats,
+    mul2floats,
+    neg_float,
+    sqrt_float,
+    sub2floats,
 )
-from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators.crossovers.subtree_crossover import (
@@ -59,21 +58,21 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 10 features, set terminal_set to: ['x0', 'x1', ..., 'x9']
-    terminal_set = create_terminal_set(X, typed=False)
+    terminal_set = create_terminal_set(X, typed=True)
 
     # Define function set
     function_set = [
-        f_abs,
-        f_add,
-        f_div,
-        f_inv,
-        f_log,
-        f_max,
-        f_min,
-        f_mul,
-        f_neg,
-        f_sqrt,
-        f_sub,
+        abs_float,
+        add2floats,
+        div2floats,
+        inv_float,
+        log_float,
+        max2floats,
+        min2floats,
+        mul2floats,
+        neg_float,
+        sqrt_float,
+        sub2floats,
     ]
 
     # Initialize SimpleEvolution instance
@@ -84,6 +83,7 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.0001,
+                root_type=float,
             ),
             population_size=10,
             evaluator=ClassificationEvaluator(),
