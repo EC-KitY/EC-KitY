@@ -17,7 +17,6 @@ from eckity.base.untyped_functions import (
     f_mul,
     f_sub,
 )
-from eckity.breeders import SimpleBreeder
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
 from eckity.genetic_operators import (
     SubtreeCrossover,
@@ -81,7 +80,6 @@ def main():
                 )
             ],
         ),
-        breeder=SimpleBreeder(),
         max_workers=1,
         max_generation=100,
         # optimal fitness is 1, evolution ("training") process will be finished when best fitness <= threshold
