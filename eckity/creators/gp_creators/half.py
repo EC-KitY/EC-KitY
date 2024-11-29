@@ -1,5 +1,4 @@
-from types import NoneType
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from overrides import override
 
@@ -20,7 +19,7 @@ class HalfCreator(GPTreeCreator):
         bloat_weight: float = 0.0,
         erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         events: List[str] = None,
-        root_type: type = NoneType,
+        root_type: Optional[type] = None,
     ):
         """
         Tree creator that creates trees using the Ramped Half and Half method

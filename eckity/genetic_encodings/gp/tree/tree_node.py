@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
-from types import NoneType
-from typing import Any, Callable, Dict, get_type_hints
+from typing import Any, Callable, Optional
 
-import numpy as np
 from overrides import override
 
 from eckity.base.utils import arity
@@ -20,7 +18,7 @@ class TreeNode(ABC):
         node type
     """
 
-    def __init__(self, node_type: type = NoneType) -> None:
+    def __init__(self, node_type: Optional[type] = None) -> None:
         self.node_type = node_type
 
     @abstractmethod
@@ -43,7 +41,7 @@ class FunctionNode(TreeNode):
     ) -> None:
         # infer the return type of the function
         func_types = get_func_types(function)
-        return_type = func_types[-1] if func_types else NoneType
+        return_type = func_types[-1] if func_types else None
         self.n_args = arity(function)
 
         if 0 < len(func_types) < self.n_args + 1:
@@ -84,7 +82,11 @@ class FunctionNode(TreeNode):
 
 
 class TerminalNode(TreeNode):
-    def __init__(self, value: Any, node_type=NoneType, parent=None) -> None:
+    def __init__(
+        self,
+        value: Any,
+        node_type: Optional[type] = None
+    ) -> None:
         super().__init__(node_type)
         self.value = value
 

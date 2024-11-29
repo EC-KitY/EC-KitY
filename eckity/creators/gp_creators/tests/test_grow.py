@@ -1,4 +1,3 @@
-from types import NoneType
 from typing import Any, Callable, Dict, List, Union
 
 import pytest
@@ -39,12 +38,15 @@ def test_add_children(
         function_set=function_set,
         terminal_set=terminal_set,
     )
+    
+    node_type = float if isinstance(terminal_set, dict) else None
     tree_ind = Tree(
         function_set=function_set,
         terminal_set=terminal_set,
         erc_range=None,
+        root_type=node_type,
     )
-    node_type = float if isinstance(terminal_set, dict) else NoneType
+
     node = tree_ind.random_function(node_type=node_type)
     tree_ind.add_tree(node)
 

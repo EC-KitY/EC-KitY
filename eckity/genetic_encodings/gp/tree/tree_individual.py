@@ -5,7 +5,6 @@ This module implements the tree class.
 import logging
 import random
 from numbers import Number
-from types import NoneType
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
@@ -42,7 +41,7 @@ class Tree(Individual):
         erc_range: Optional[
             Union[Tuple[float, float], Tuple[int, int]]
         ] = None,
-        root_type: type = None,
+        root_type: Optional[type] = None,
         update_parents: bool = False
     ):
         """
@@ -56,12 +55,14 @@ class Tree(Individual):
             List of functions used as internal nodes in the GP tree.
         terminal_set : Union[Dict[Any, type], List[Any]], optional
             Mapping of terminal nodes and their types.
-            In the untyped case, all types are NoneType.
-            Lists are treated as untyped, and will be assigned NoneType.
+            In the untyped case, all types are None.
+            Lists are treated as untyped, and will be assigned None.
         tree : List[TreeNode], optional
             Actual tree representation, by default None
         erc_range : tuple of float or int, optional
             Range of Ephemeral random constant values, by default None
+        root_type: type, optional
+            Root node type, by default None
 
         Raises
         ------
@@ -71,7 +72,6 @@ class Tree(Individual):
         super().__init__(fitness, update_parents=update_parents)
 
         self.erc_range = erc_range
-
 
         function_set, terminal_set = self._handle_input_types(
             function_set, terminal_set, root_type
@@ -171,7 +171,10 @@ class Tree(Individual):
         else:
             return 0
 
-    def random_function(self, node_type=NoneType) -> Optional[FunctionNode]:
+    def random_function(
+        self,
+        node_type: Optional[type] = None
+    ) -> Optional[FunctionNode]:
         functions_types = {
             func: get_return_type(func) for func in self.function_set
         }
@@ -188,7 +191,10 @@ class Tree(Individual):
         func = random.choice(relevant_functions)
         return FunctionNode(func)
 
-    def random_terminal(self, node_type=NoneType) -> Optional[TerminalNode]:
+    def random_terminal(
+        self,
+        node_type: Optional[type] = None
+    ) -> Optional[TerminalNode]:
         """Select a random terminal, including constants from ERC range"""
         relevant_terminals = [
             term
@@ -197,7 +203,7 @@ class Tree(Individual):
         ]
 
         if self.erc_range is not None and (
-            node_type is NoneType or issubclass(node_type, Number)
+            node_type is None or issubclass(node_type, Number)
         ):
             relevant_terminals.append(
                 random.uniform(*self.erc_range)
@@ -213,7 +219,7 @@ class Tree(Individual):
 
         # erc terminal will be typeless in untyped case,
         # and int/float in typed case
-        default_type = NoneType if node_type is NoneType else type(terminal)
+        default_type = None if node_type is None else type(terminal)
         node_type = self.terminal_set.get(terminal, default_type)
 
         return TerminalNode(terminal, node_type=node_type)
@@ -322,15 +328,18 @@ class Tree(Individual):
         )
         return random.choice(erc_nodes) if erc_nodes else None
 
-    def random_subtree(self, node_type=NoneType) -> Optional[List[TreeNode]]:
+    def random_subtree(
+        self,
+        node_type: Optional[type] = None
+    ) -> Optional[List[TreeNode]]:
         relevant_nodes = self.filter_tree(
-            lambda node: node.node_type is NoneType  # untyped case
+            lambda node: node.node_type is None  # untyped case
             or (
-                node_type is NoneType and node != self.root
-            )  # typed case with first invokation
+                node_type is None and node != self.root
+            )  # typed case with first invocation
             or (
                 node.node_type == node_type and node != self.root
-            )  # typed case with subsequent invokations
+            )  # typed case with subsequent invocations
         )
         if not relevant_nodes:
             return None
@@ -345,7 +354,7 @@ class Tree(Individual):
             return self.tree
 
         end_i = self._find_subtree_end([start_i])
-        return self.tree[start_i : end_i + 1]
+        return self.tree[start_i: end_i + 1]
 
     def replace_subtree(
         self, old_subtree: List[TreeNode], new_subtree: List[TreeNode]
@@ -386,8 +395,8 @@ class Tree(Individual):
 
     def _handle_input_types(
         self,
-        function_set: Optional[List[Callable]],
-        terminal_set: Optional[Union[Dict[Any, type], List[str]]],
+        function_set: List[Callable],
+        terminal_set: Union[Dict[Any, type], List[str]],
         root_type: type
     ):
         if function_set is None:
@@ -408,7 +417,7 @@ class Tree(Individual):
                 f"got {type(terminal_set)}."
             )
 
-        # untyped case - convert to dictionary of NoneTypes.
+        # untyped case - convert to dictionary of Nones.
         if isinstance(terminal_set, list):
             # check if any function has type hints
             if any(f.__annotations__ for f in function_set):
@@ -417,7 +426,7 @@ class Tree(Individual):
                     Please provide a dictionary with types for terminals."
                 )
 
-            terminal_set = {t: NoneType for t in terminal_set}
+            terminal_set = {t: None for t in terminal_set}
             return function_set, terminal_set
 
         # typed case - check every value is a type
@@ -485,12 +494,12 @@ class Tree(Individual):
         """
         args = (
             list(self.terminal_set.keys())
-            if NoneType in self.terminal_set.values()
+            if None in self.terminal_set.values()
             else [f"{k}: {v.__name__}" for k, v in self.terminal_set.items()]
         )
         ret_type_str = (
             ""
-            if NoneType in self.terminal_set.values()
+            if None in self.terminal_set.values()
             else f" -> {self.root.node_type.__name__}"
         )
 

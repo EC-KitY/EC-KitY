@@ -2,7 +2,6 @@
 This module implements some utility functions.
 """
 
-from types import NoneType
 from typing import Callable, Dict, List, Union, get_type_hints
 
 import numpy as np
@@ -82,7 +81,7 @@ def get_func_types(f: Callable) -> List[type]:
     List[type]
         List of function types, sorted by argument order
         with the return type as the last element.
-        For untyped functions, NoneType is used.
+        For untyped functions, None is used.
 
     Examples
     --------
@@ -94,15 +93,15 @@ def get_func_types(f: Callable) -> List[type]:
     >>> def f(x, y):
     ...     return x + y
     >>> get_func_types(f)
-    [NoneType, NoneType, NoneType]
+    [None, None, None]
     """
     params_types: Dict = get_type_hints(f)
     type_list = list(params_types.values())
     if not type_list:
-        # If we don't have type hints, assign None types
-        type_list = [NoneType] * (arity(f) + 1)
+        # If we don't have type hints, assign None
+        type_list = [None] * (arity(f) + 1)
     return type_list
 
 
 def get_return_type(func: Callable) -> type:
-    return get_type_hints(func).get("return", NoneType)
+    return get_type_hints(func).get("return", None)

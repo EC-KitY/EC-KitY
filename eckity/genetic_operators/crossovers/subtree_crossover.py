@@ -1,4 +1,4 @@
-from types import NoneType
+
 from typing import Any, List, Tuple, Optional
 
 from overrides import override

@@ -1,5 +1,5 @@
 from time import time
-from types import NoneType
+
 
 from sklearn.decomposition import PCA
 from sklearn.datasets import make_regression
@@ -60,7 +60,7 @@ def main():
     typed_function_set = [add2floats, mul2floats, sub2floats]
     function_set = typed_function_set if TYPED else untyped_function_set
 
-    root_type = float if TYPED else NoneType
+    root_type = float if TYPED else None
 
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(

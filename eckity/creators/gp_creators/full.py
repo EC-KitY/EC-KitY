@@ -1,12 +1,9 @@
-from types import NoneType
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from overrides import overrides
 
 from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 from eckity.genetic_encodings.gp import (
-    Tree,
-    TreeNode,
     TerminalNode,
     FunctionNode,
 )
@@ -22,7 +19,7 @@ class FullCreator(GPTreeCreator):
         erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         bloat_weight: float = 0.0,
         events: List[str] = None,
-        root_type: type = NoneType,
+        root_type: Optional[type] = None,
         update_parents: bool = False,
     ):
         """
@@ -63,7 +60,7 @@ class FullCreator(GPTreeCreator):
         random_function: Callable[type, FunctionNode],
         random_terminal: Callable[type, TerminalNode],
         depth: int = 0,
-        node_type: type = NoneType,
+        node_type: Optional[type] = None,
     ) -> None:
         """
         Recursively create a random tree using the full method
@@ -82,13 +79,13 @@ class FullCreator(GPTreeCreator):
 
         if depth >= max_depth:
             node = random_terminal(node_type)
-            self._check_generated_node(node)
+            self._assert_node_created(node)
 
             # add the new node to the tree of the given individual
             tree.append(node)
         else:
             node = random_function(node_type)
-            self._check_generated_node(node)
+            self._assert_node_created(node)
 
             # add the new node to the tree of the given individual
             tree.append(node)

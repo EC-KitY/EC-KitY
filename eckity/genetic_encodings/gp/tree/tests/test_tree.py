@@ -1,4 +1,4 @@
-from types import NoneType
+
 from typing import List
 
 import pytest
@@ -33,6 +33,7 @@ class TestTree:
         fitness=GPFitness(),
         function_set=typed_functions,
         terminal_set=typed_terminals,
+        root_type=float,
     )
     untyped_tree = Tree(
         fitness=GPFitness(),
@@ -69,7 +70,7 @@ class TestTree:
         self.untyped_tree.add_tree(untyped_child)
         assert self.untyped_tree.root == untyped_child
         assert self.untyped_tree.size() == 1
-        assert self.untyped_tree.root.node_type is NoneType
+        assert self.untyped_tree.root.node_type is None
 
     def test_add_tree_inner_typed(self, setup):
         """
@@ -97,7 +98,7 @@ class TestTree:
         self.untyped_tree.add_tree(untyped_child)
         assert self.untyped_tree.root == untyped_child
         assert self.untyped_tree.size() == 1
-        assert self.untyped_tree.root.node_type is NoneType
+        assert self.untyped_tree.root.node_type is None
 
     @pytest.mark.parametrize(
         "root, child",
@@ -108,7 +109,7 @@ class TestTree:
             ),
             (
                 FunctionNode(add2floats),
-                TerminalNode(1, NoneType),
+                TerminalNode(1, None),
             ),
             (
                 FunctionNode(f_add),
@@ -121,6 +122,7 @@ class TestTree:
             erc_range=None,
             function_set=[add2floats],
             terminal_set={"x": float},
+            root_type=float,
         )
         tree.add_tree(root)
 

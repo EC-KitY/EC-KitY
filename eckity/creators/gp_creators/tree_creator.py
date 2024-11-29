@@ -1,5 +1,4 @@
-from types import NoneType
-from typing import Any, Callable, Dict, List, Tuple, Union
+from typing import Any, Callable, Dict, List, Tuple, Union, Optional
 
 from overrides import override
 
@@ -26,7 +25,7 @@ class GPTreeCreator(Creator):
         fitness_type: type = SimpleFitness,
         bloat_weight: float = 0.0,
         events: List[str] = None,
-        root_type: type = NoneType,
+        root_type: Optional[type] = None,
         update_parents: bool = False
     ):
         if events is None:
@@ -84,7 +83,7 @@ class GPTreeCreator(Creator):
         random_function: Callable[type, FunctionNode],
         random_terminal: Callable[type, TerminalNode],
         depth: int = 0,
-        node_type: type = NoneType,
+        node_type: Optional[type] = None,
     ) -> None:
         """
         Create the actual tree representation of an existing Tree individual
@@ -115,11 +114,30 @@ class GPTreeCreator(Creator):
                 node_type=func_types[i],
             )
 
-    def _check_generated_node(self, node, node_type=NoneType):
+    def _assert_node_created(
+        self,
+        node: Optional[TreeNode],
+        node_type: Optional[type] = None
+    ) -> None:
+        """
+        Assert that a TreeNode was created successfully.
+
+        Parameters
+        ----------
+        node : Optional[TreeNode]
+            Generated tree node.
+        node_type : Optional[type], optional
+            Generated tree node type, by default None
+
+        Raises
+        ------
+        ValueError
+            Raised if a node was not generated successfully.
+        """
         if node is None:
             # optionally add type info for typed case
             type_info = (
-                f"with type {node_type}" if node_type is not NoneType else ""
+                f"with type {node_type}" if node_type is not None else ""
             )
 
             # optionally add erc_range info if it was defined

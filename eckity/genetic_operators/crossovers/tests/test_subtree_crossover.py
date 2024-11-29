@@ -8,11 +8,11 @@ from eckity.genetic_operators import SubtreeCrossover
 
 
 # Define custom functions
-def typed_add_inc(n: int, inc: bool) -> int:
+def typed_optional_inc(n: int, inc: bool) -> int:
     return n + 1 if inc else n
 
 
-def untyped_add_inc(n, inc):
+def untyped_optional_inc(n, inc):
     return n + 1 if inc else n
 
 
@@ -23,47 +23,49 @@ def untyped_add_inc(n, inc):
             [
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[typed_add_inc],
+                    function_set=[typed_optional_inc],
                     terminal_set={True: bool, False: bool},
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(typed_add_inc),
+                        FunctionNode(typed_optional_inc),
                         TerminalNode(1, int),
                         TerminalNode(True, bool),
                     ],
+                    root_type=int,
                 ),
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[typed_add_inc],
+                    function_set=[typed_optional_inc],
                     terminal_set={True: bool, False: bool},
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(typed_add_inc),
+                        FunctionNode(typed_optional_inc),
                         TerminalNode(1, int),
                         TerminalNode(False, bool),
                     ],
+                    root_type=int,
                 ),
             ],
             [
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(True, bool),
                 ],
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(False, bool),
                 ],
             ],
             [
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(False, bool),
                 ],
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(True, bool),
                 ],
@@ -73,25 +75,27 @@ def untyped_add_inc(n, inc):
             [
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[typed_add_inc],
+                    function_set=[typed_optional_inc],
                     terminal_set={True: bool, False: bool},
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(typed_add_inc),
+                        FunctionNode(typed_optional_inc),
                         TerminalNode(1, int),
                         TerminalNode(True, bool),
                     ],
+                    root_type=int,
                 ),
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[typed_add_inc],
+                    function_set=[typed_optional_inc],
                     terminal_set={True: bool, False: bool},
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(typed_add_inc),
+                        FunctionNode(typed_optional_inc),
                         TerminalNode(1, int),
                         TerminalNode(False, bool),
                     ],
+                    root_type=int,
                 ),
             ],
             [
@@ -104,12 +108,12 @@ def untyped_add_inc(n, inc):
             ],
             [
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(False, bool),
                 ],
                 [
-                    FunctionNode(typed_add_inc),
+                    FunctionNode(typed_optional_inc),
                     TerminalNode(1, int),
                     TerminalNode(True, bool),
                 ],
@@ -122,22 +126,22 @@ def untyped_add_inc(n, inc):
             [
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[untyped_add_inc],
+                    function_set=[untyped_optional_inc],
                     terminal_set=[True, False],
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(untyped_add_inc),
+                        FunctionNode(untyped_optional_inc),
                         TerminalNode(1),
                         TerminalNode(True),
                     ],
                 ),
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[untyped_add_inc],
+                    function_set=[untyped_optional_inc],
                     terminal_set=[True, False],
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(untyped_add_inc),
+                        FunctionNode(untyped_optional_inc),
                         TerminalNode(1),
                         TerminalNode(False),
                     ],
@@ -145,24 +149,24 @@ def untyped_add_inc(n, inc):
             ],
             [
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(True),
                 ],
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(False),
                 ],
             ],
             [
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(False),
                 ],
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(True),
                 ],
@@ -172,22 +176,22 @@ def untyped_add_inc(n, inc):
             [
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[untyped_add_inc],
+                    function_set=[untyped_optional_inc],
                     terminal_set=[True, False],
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(untyped_add_inc),
+                        FunctionNode(untyped_optional_inc),
                         TerminalNode(1),
                         TerminalNode(True),
                     ],
                 ),
                 Tree(
                     fitness=GPFitness(),
-                    function_set=[untyped_add_inc],
+                    function_set=[untyped_optional_inc],
                     terminal_set=[True, False],
                     erc_range=(1, 3),
                     tree=[
-                        FunctionNode(untyped_add_inc),
+                        FunctionNode(untyped_optional_inc),
                         TerminalNode(1),
                         TerminalNode(False),
                     ],
@@ -203,12 +207,12 @@ def untyped_add_inc(n, inc):
             ],
             [
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(False),
                 ],
                 [
-                    FunctionNode(untyped_add_inc),
+                    FunctionNode(untyped_optional_inc),
                     TerminalNode(1),
                     TerminalNode(True),
                 ],

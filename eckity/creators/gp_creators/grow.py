@@ -1,6 +1,5 @@
 import random
-from types import NoneType
-from typing import Any, Callable, Dict, List, Tuple, Union, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from overrides import overrides
 
@@ -8,7 +7,6 @@ from eckity.creators.gp_creators.tree_creator import GPTreeCreator
 from eckity.genetic_encodings.gp import (
     FunctionNode,
     TerminalNode,
-    Tree,
     TreeNode,
 )
 
@@ -23,7 +21,7 @@ class GrowCreator(GPTreeCreator):
         erc_range: Union[Tuple[int, int], Tuple[float, float]] = None,
         p_prune: float = 0.5,
         events: List[str] = None,
-        root_type: type = NoneType,
+        root_type: Optional[type] = None,
         update_parents: bool = False
     ):
         """
@@ -68,7 +66,7 @@ class GrowCreator(GPTreeCreator):
         random_function: Callable[type, Optional[FunctionNode]],
         random_terminal: Callable[type, Optional[TerminalNode]],
         depth: int = 0,
-        node_type: type = NoneType,
+        node_type: Optional[type] = None,
     ) -> None:
         """
         Recursively create a random tree using the grow method.
@@ -80,7 +78,7 @@ class GrowCreator(GPTreeCreator):
         depth : int
             Current depth in recursive process.
         node_type : type, optional
-            Type of the node to create. The default is NoneType.
+            Type of the node to create. The default is None.
         """
         if tree is None:
             tree = []
@@ -104,7 +102,7 @@ class GrowCreator(GPTreeCreator):
         # add the new node to the tree of the given individual
         tree.append(node)
 
-        self._check_generated_node(node)
+        self._assert_node_created(node)
 
         if is_func:
             self._add_children(

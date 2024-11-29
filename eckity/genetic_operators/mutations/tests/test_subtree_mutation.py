@@ -29,6 +29,7 @@ def f_equal(a, b):
                 TerminalNode(value=1, node_type=int),
                 TerminalNode(value=2, node_type=int),
             ],
+            root_type=bool,
         ),
         Tree(
             fitness=GPFitness(),

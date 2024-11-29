@@ -1,5 +1,3 @@
-from types import NoneType
-
 import pytest
 
 from eckity.base.typed_functions import add2floats
@@ -12,7 +10,7 @@ from eckity.genetic_encodings.gp.tree.utils import get_func_types
     "function, expected_types",
     [
         (add2floats, [float, float, float]),
-        (f_add, [NoneType, NoneType, NoneType]),
+        (f_add, [None, None, None]),
     ],
 )
 def test_get_func_types(function, expected_types):

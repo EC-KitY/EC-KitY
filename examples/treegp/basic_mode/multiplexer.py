@@ -1,5 +1,5 @@
 from time import time
-from types import NoneType
+
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.creators.gp_creators.full import FullCreator
