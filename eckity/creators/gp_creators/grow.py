@@ -69,16 +69,20 @@ class GrowCreator(GPTreeCreator):
         node_type: Optional[type] = None,
     ) -> None:
         """
-        Recursively create a random tree using the grow method.
+        Generate a list of TreeNodes in-place.
 
         Parameters
         ----------
-        tree_ind : Tree
-            Tree Individual that will receive the generated tree.
-        depth : int
-            Current depth in recursive process.
-        node_type : type, optional
-            Type of the node to create. The default is None.
+        tree : List[TreeNode]
+            List of tree nodes representing a tree of a Tree individual.
+        random_function : Callable[[type], Optional[FunctionNode]]
+            Random FunctionNode generator.
+        random_terminal : Callable[[type], Optional[TerminalNode]]
+            Random TerminalNode generator.
+        depth : int, optional
+            current depth of the tree, by default 0
+        node_type : Optional[type], optional
+            _description_, by default None
         """
         if tree is None:
             tree = []

@@ -86,7 +86,10 @@ class GPTreeCreator(Creator):
         node_type: Optional[type] = None,
     ) -> None:
         """
-        Create the actual tree representation of an existing Tree individual
+        Recursively build the tree representation
+        of an existing Tree individual.
+        
+        (This method is not abstract as it is not required in HalfCreator)
 
         Parameters
         ----------
@@ -103,7 +106,22 @@ class GPTreeCreator(Creator):
         random_terminal: Callable[[type], Optional[TerminalNode]],
         depth: int,
     ) -> None:
-        # recursively add children to the function node
+        """
+        Recursively add children to a function node.
+
+        Parameters
+        ----------
+        tree : List[TreeNode]
+            Total representation of the tree.
+        fn_node : FunctionNode
+            Function node, parent of the children to be created.
+        random_function : Callable[[type], Optional[FunctionNode]]
+            Random FunctionNode generator.
+        random_terminal : Callable[[type], Optional[TerminalNode]]
+            Random TerminalNode generator.
+        depth : int
+            current depth of the tree
+        """
         func_types = get_func_types(fn_node.function)
         for i in range(arity(fn_node.function)):
             self.create_tree(

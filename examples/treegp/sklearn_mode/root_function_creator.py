@@ -1,7 +1,9 @@
-from eckity.creators import FullCreator
-from typing import Callable
+from typing import Callable, List, Optional
+
 from overrides import override
-from eckity.genetic_encodings.gp import FunctionNode
+
+from eckity.creators import FullCreator
+from eckity.genetic_encodings.gp import FunctionNode, TerminalNode, TreeNode
 
 
 class RootFunctionCreator(FullCreator):
@@ -29,8 +31,20 @@ class RootFunctionCreator(FullCreator):
         self.root_function = root_function
 
     @override
-    def create_tree(self, tree_ind):
+    def create_tree(
+        self,
+        tree: List[TreeNode],
+        random_function: Callable[[type], Optional[FunctionNode]],
+        random_terminal: Callable[[type], Optional[TerminalNode]],
+        depth: int = 0,
+        node_type: Optional[type] = None,
+    ) -> None:
         root = FunctionNode(self.root_function)
-        tree_ind.root = root
 
-        self._build_children(root, tree_ind, depth=0)
+        self._add_children(
+            tree=tree,
+            fn_node=root,
+            random_function=random_function,
+            random_terminal=random_terminal,
+            depth=0,
+        )
