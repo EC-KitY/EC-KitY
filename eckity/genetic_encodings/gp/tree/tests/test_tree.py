@@ -217,12 +217,12 @@ class TestTree:
             (
                 True,
                 [TerminalNode(1, int)],
-                f"def func_{typed_tree.id}(x: float, y: float) -> int:\n\treturn 1",
+                f"def func_{typed_tree.id}(x: float, y: float) -> int:\n  return 1",
             ),
             (
                 False,
                 [TerminalNode(1)],
-                f"def func_{untyped_tree.id}(x, y):\n\treturn 1",
+                f"def func_{untyped_tree.id}(x, y):\n  return 1",
             ),
             (
                 True,
@@ -231,7 +231,7 @@ class TestTree:
                     TerminalNode(1.0, float),
                     TerminalNode(2.0, float),
                 ],
-                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n\treturn add2floats(\n\t\t1.0,\n\t\t2.0\n\t)"
+                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n  return add2floats(\n    1.0,\n    2.0\n  )"
             ),
             (
                 False,
@@ -240,7 +240,7 @@ class TestTree:
                     TerminalNode(1),
                     TerminalNode(2),
                 ],
-                f"def func_{untyped_tree.id}(x, y):\n\treturn f_add(\n\t\t1,\n\t\t2\n\t)"
+                f"def func_{untyped_tree.id}(x, y):\n  return f_add(\n    1,\n    2\n  )"
             ),
             (
                 True,
@@ -251,7 +251,7 @@ class TestTree:
                     TerminalNode(2.0, float),
                     TerminalNode(3.0, float),
                 ],
-                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n\treturn add2floats(\n\t\t1.0,\n\t\tsub2floats(\n\t\t\t2.0,\n\t\t\t3.0\n\t\t)\n\t)"
+                f"def func_{typed_tree.id}(x: float, y: float) -> float:\n  return add2floats(\n    1.0,\n    sub2floats(\n      2.0,\n      3.0\n    )\n  )"
             ),
             (
                 False,
@@ -262,7 +262,7 @@ class TestTree:
                     TerminalNode(2),
                     TerminalNode(3),
                 ],
-                f"def func_{untyped_tree.id}(x, y):\n\treturn f_add(\n\t\t1,\n\t\tf_sub(\n\t\t\t2,\n\t\t\t3\n\t\t)\n\t)"
+                f"def func_{untyped_tree.id}(x, y):\n  return f_add(\n    1,\n    f_sub(\n      2,\n      3\n    )\n  )"
             ),
         ],
     )
