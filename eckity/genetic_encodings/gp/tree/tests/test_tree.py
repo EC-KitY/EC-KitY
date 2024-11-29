@@ -1,5 +1,4 @@
-
-from typing import List
+from typing import List, Optional
 
 import pytest
 
@@ -204,7 +203,7 @@ class TestTree:
             ),
         ],
     )
-    def test_depth_typed(
+    def test_depth(
         self, setup, typed: bool, tree: List[TerminalNode], expected: bool
     ):
         tree_ind = self.typed_tree if typed else self.untyped_tree
@@ -351,3 +350,53 @@ class TestTree:
         for root_idx, expected in zip(root_indices, expected_results):
             subtree_root = tree[root_idx]
             assert tree_ind._get_subtree_by_root(subtree_root) == expected
+
+    @pytest.mark.parametrize(
+        "typed",
+        [True, False]
+    )
+    def test_random_function(
+        self,
+        typed: bool,
+    ):
+        tree = self.typed_tree if typed else self.untyped_tree
+        function_set = (
+            self.typed_functions
+            if typed
+            else self.untyped_functions
+        )
+        node_type = float if typed else None
+
+        for i in range(10):
+            function_node = tree.random_function(node_type)
+            assert function_node.function in function_set
+        
+        class MyType:
+            pass
+
+        assert tree.random_function(MyType) is None
+
+    @pytest.mark.parametrize(
+        "typed",
+        [True, False]
+    )
+    def test_random_terminal(
+        self,
+        typed: bool,
+    ):
+        tree = self.typed_tree if typed else self.untyped_tree
+        terminal_set = (
+            self.typed_terminals
+            if typed
+            else self.untyped_terminals
+        )
+        node_type = float if typed else None
+
+        for i in range(10):
+            terminal = tree.random_terminal(node_type)
+            assert terminal.value in terminal_set
+        
+        class MyType:
+            pass
+
+        assert tree.random_terminal(MyType) is None
