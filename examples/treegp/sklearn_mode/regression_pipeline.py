@@ -9,9 +9,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.base.typed_functions import add2floats, mul2floats, sub2floats
 from eckity.sklearn_compatible.sk_regressor import SKRegressor
-from eckity.breeders.simple_breeder import SimpleBreeder
 from eckity.creators.gp_creators.half import HalfCreator
 from eckity.base.untyped_functions import f_add, f_mul, f_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
@@ -32,9 +30,6 @@ from eckity.termination_checkers.threshold_from_target_termination_checker impor
 )
 from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
 
-# False for non-typed mode, True for strongly-typed mode
-TYPED = False
-
 
 def main():
     """
@@ -53,14 +48,10 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', 'x3', 'x4']
-    terminal_set = create_terminal_set(X, typed=TYPED)
+    terminal_set = create_terminal_set(X, typed=False)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
-    untyped_function_set = [f_add, f_mul, f_sub]
-    typed_function_set = [add2floats, mul2floats, sub2floats]
-    function_set = typed_function_set if TYPED else untyped_function_set
-
-    root_type = float if TYPED else None
+    function_set = [f_add, f_mul, f_sub]
 
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(
@@ -71,7 +62,6 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.0001,
                 erc_range=(-100.0, 100.0),
-                root_type=root_type,
             ),
             population_size=1000,
             # user-defined fitness evaluation method
@@ -95,12 +85,11 @@ def main():
                 )
             ],
         ),
-        breeder=SimpleBreeder(),
         max_workers=1,
         max_generation=1000,
         # optimal fitness is 0, evolution ("training") process will be finished when best fitness <= threshold
         termination_checker=ThresholdFromTargetTerminationChecker(
-            optimal=0, threshold=0.01
+            threshold=0.01
         ),
         statistics=BestAverageWorstStatistics(),
     )
