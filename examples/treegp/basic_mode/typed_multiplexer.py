@@ -173,7 +173,6 @@ def main():
                 function_set=function_set,
                 bloat_weight=0.00001,
                 root_type=bool,
-                erc_range=(0, 1)
             ),
             population_size=40,
             # user-defined fitness evaluation method
