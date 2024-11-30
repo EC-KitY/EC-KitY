@@ -139,7 +139,7 @@ def not2ints(x: int) -> int:
     return np.logical_not(x).astype(int)
 
 
-def if_then_else2ints(test: int, dit: int, dif: int) -> int:
+def if_then_else3ints(test: int, dit: int, dif: int) -> int:
     """if test return dit else return dif"""
     return np.where(test, dit, dif)
 
@@ -159,7 +159,7 @@ def not2bools(x: bool) -> bool:
     return np.logical_not(x)
 
 
-def if_then_else2bools(test: bool, dit: bool, dif: bool) -> bool:
+def if_then_else3bools(test: bool, dit: bool, dif: bool) -> bool:
     """if test return dit else return dif"""
     return np.where(test, dit, dif)
 
@@ -191,9 +191,9 @@ __all__ = [
     "and2ints",
     "or2ints",
     "not2ints",
-    "if_then_else2ints",
+    "if_then_else3ints",
     "and2bools",
     "or2bools",
     "not2bools",
-    "if_then_else2bools",
+    "if_then_else3bools",
 ]
