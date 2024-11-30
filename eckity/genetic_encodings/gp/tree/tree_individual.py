@@ -437,21 +437,6 @@ class Tree(Individual):
                     f"but {v} is of type {type(v)}."
                 )
 
-        # check terminals and functions type intersection
-        function_arg_types = {
-            t for func in function_set for t in get_func_types(func)[:-1]
-        }
-        terminal_types = set(terminal_set.values())
-
-        if self.erc_type:
-            terminal_types.add(self.erc_type)
-
-        if not function_arg_types.issubset(terminal_types):
-            raise ValueError(
-                f"Function args type hints ({function_arg_types}) "
-                f"must match terminal types ({terminal_types})."
-            )
-
         function_return_types = {
             get_return_type(f) for f in function_set
         }
@@ -466,6 +451,21 @@ class Tree(Individual):
                 f"Detected a mismatch between ERC type ({self.erc_type}) "
                 f"and function set ({function_set}).\n"
                 f"ERC range should not be defined if there are no numeric functions."
+            )
+
+        # check terminals and functions type intersection
+        function_arg_types = {
+            t for func in function_set for t in get_func_types(func)[:-1]
+        }
+        terminal_types = set(terminal_set.values())
+
+        if self.erc_type:
+            terminal_types.add(self.erc_type)
+
+        if function_arg_types != terminal_types:
+            raise ValueError(
+                f"Function args type hints ({function_arg_types}) "
+                f"must match terminal types ({terminal_types})."
             )
 
         return function_set, terminal_set

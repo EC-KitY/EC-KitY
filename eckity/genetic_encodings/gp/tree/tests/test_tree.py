@@ -7,6 +7,8 @@ from eckity.base.typed_functions import (
     div2floats,
     mul2floats,
     sub2floats,
+    or2bools,
+    and2bools,
 )
 from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.fitness.gp_fitness import GPFitness
@@ -370,7 +372,7 @@ class TestTree:
         for i in range(10):
             function_node = tree.random_function(node_type)
             assert function_node.function in function_set
-        
+
         class MyType:
             pass
 
@@ -395,8 +397,46 @@ class TestTree:
         for i in range(10):
             terminal = tree.random_terminal(node_type)
             assert terminal.value in terminal_set
-        
+
         class MyType:
             pass
 
         assert tree.random_terminal(MyType) is None
+
+    @pytest.mark.parametrize(
+        "kwargs, error_message_substring",
+        [
+            # supplying int terminal with boolean functions only
+            (
+                {
+                    "function_set": [and2bools, or2bools],
+                    "terminal_set": {1: int, False: bool},
+                    "root_type": bool
+                },
+                "must match terminal types"
+            ),
+            # supplying root_type int with no functions that return int
+            (
+                {
+                    "function_set": [and2bools, or2bools],
+                    "terminal_set": {True: bool, False: bool},
+                    "root_type": int
+                },
+                "Root type must be the return type of at least one function."
+            ),
+            # supplying erc_range with no numeric functions
+            (
+                {
+                    "erc_range": (1, 2),
+                    "function_set": [and2bools, or2bools],
+                    "terminal_set": {True: bool, False: bool},
+                    "root_type": bool
+                },
+                "ERC range should not be defined if there are no numeric functions."
+            ),
+        ],
+    )
+    def test_init_bad_args(self, kwargs, error_message_substring):
+        with pytest.raises(ValueError) as e:
+            Tree(**kwargs)
+        assert error_message_substring in str(e.value)
