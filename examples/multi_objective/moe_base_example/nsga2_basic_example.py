@@ -36,7 +36,7 @@ import random
 random.seed(0)
 
 
-class NSGA2BasicTestEvaluator(SimpleIndividualEvaluator):
+class NSGA2BasicExampleEvaluator(SimpleIndividualEvaluator):
     def evaluate_individual(self, individual):
         """
         Compute the fitness value of a given individual.
@@ -75,7 +75,7 @@ def main():
                     ),
                     population_size=150,
                     # user-defined fitness evaluation method
-                    evaluator=NSGA2BasicTestEvaluator(),
+                    evaluator=NSGA2BasicExampleEvaluator(),
                     # maximization problem (fitness is sum of values), so higher fitness is better
                     higher_is_better=False,
                     elitism_rate=1 / 300,
