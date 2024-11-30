@@ -102,12 +102,12 @@ def ifgt_floats(x: float, y: float, z: float, w: float) -> float:
 
 def and2floats(x: float, y: float) -> float:
     """x and y"""
-    return np.bitwise_and(x, y)
+    return np.logical_and(x, y)
 
 
 def or2floats(x: float, y: float) -> float:
     """x or y"""
-    return np.bitwise_or(x, y)
+    return np.logical_or(x, y)
 
 
 def not2floats(x: float) -> float:
@@ -126,12 +126,12 @@ def argmax2floats(x0: float, x1: float) -> t_argmax:
 
 def and2ints(x: int, y: int) -> int:
     """x and y"""
-    return np.bitwise_and(x, y)
+    return np.logical_and(x, y)
 
 
 def or2ints(x: int, y: int) -> int:
     """x or y"""
-    return np.bitwise_or(x, y)
+    return np.logical_or(x, y)
 
 
 def not2ints(x: int) -> int:
