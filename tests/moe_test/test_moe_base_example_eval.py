@@ -12,7 +12,7 @@ from examples.multi_objective.moe_base_test.nsga2_basic_test import (
 )
 
 
-class TestNSGA2BasicTestEvaluator:
+class TestNSGA2BasicExampleEvaluator:
 
     @classmethod
     def setup_class(self):
