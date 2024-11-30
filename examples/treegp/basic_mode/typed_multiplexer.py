@@ -1,6 +1,6 @@
 from time import time
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.base.typed_functions import and2bools, or2bools, not2bools, if_then_else2bools
+from eckity.base.typed_functions import and2bools, or2bools, not2bools, if_then_else3bools
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
@@ -162,7 +162,7 @@ def main():
     terminal_set = {**typed_select_terminals, **typed_input_terminals}
 
     # Logical functions: and, or, not and if-then-else
-    function_set = [and2bools, or2bools, not2bools, if_then_else2bools]
+    function_set = [and2bools, or2bools, not2bools, if_then_else3bools]
 
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
