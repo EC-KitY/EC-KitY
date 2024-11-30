@@ -131,8 +131,8 @@ class Subpopulation:
 
         if self.n_elite == 0 and elitism_rate > 0.0:
             logger.warning(
-                "Detected elitism_rate > 0 but 0 elites. \
-                    Try increasing elitism_rate."
+                "Detected elitism_rate > 0 but 0 elites. "
+                "Try increasing elitism_rate."
             )
 
         self.individuals = individuals

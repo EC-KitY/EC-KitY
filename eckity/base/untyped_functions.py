@@ -50,8 +50,6 @@ def f_neg(x):
 
 def f_inv(x):
     """protected inverse: if abs(x) > 0.001 return 1/x else return 0"""
-    # with np.errstate(divide='ignore', invalid='ignore'):
-    #     return np.where(np.abs(x) > 0.001, 1. / x, 0.)
     return f_div(1, x)
 
 
