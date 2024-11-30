@@ -7,8 +7,8 @@ import numpy as np
 from eckity.creators.ga_creators.simple_vector_creator import GAVectorCreator
 from eckity.genetic_encodings.ga.float_vector import FloatVector
 from eckity.multi_objective_evolution.nsga2_fitness import NSGA2Fitness
-from examples.multi_objective.moe_base_test.nsga2_basic_test import (
-    NSGA2BasicTestEvaluator,
+from examples.multi_objective.moe_base_example.nsga2_basic_example import (
+    NSGA2BasicExampleEvaluator,
 )
 
 
@@ -19,7 +19,7 @@ class TestNSGA2BasicExampleEvaluator:
         """setup any state specific to the execution of the given class (which
         usually contains tests).
         """
-        self.evaluator = NSGA2BasicTestEvaluator()
+        self.evaluator = NSGA2BasicExampleEvaluator()
 
     @classmethod
     def teardown_class(self):
