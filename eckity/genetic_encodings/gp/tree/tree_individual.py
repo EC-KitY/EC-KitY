@@ -461,6 +461,13 @@ class Tree(Individual):
                 f"and function set ({function_set}).\n"
                 f"Root type must be the return type of at least one function."
             )
+        if self.erc_type not in function_return_types:
+            raise ValueError(
+                f"Detected a mismatch between ERC type ({self.erc_type}) "
+                f"and function set ({function_set}).\n"
+                f"ERC range should not be defined "
+                f"if there are no numeric functions."
+            )
 
         return function_set, terminal_set
 
