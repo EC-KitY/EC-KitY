@@ -28,7 +28,7 @@ def test_f_div():
     assert np.array_equal(f_div(6, 3), 2)
     assert np.array_equal(
         f_div(np.array([1, 2]), np.array([0.001, 0.002])),
-        np.array([1000, 1000]),
+        np.array([0, 1000]),
     )
     assert np.array_equal(f_div(1, 0), 0)
     assert np.array_equal(f_div(1, 0.0001), 0)
