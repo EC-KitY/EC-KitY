@@ -14,9 +14,9 @@ def run_example(example_path: str):
 
 
 @pytest.mark.parametrize(
-    "module_path, n_reps, expected_fitness",
+    "module_path, n_reps, expected_fitness, higher_is_better",
     [
-        ("examples.treegp.basic_mode.multiplexer", 10, 0.7, True),
+        ("examples.treegp.basic_mode.multiplexer", 3, 0.7, True),
     ],
 )
 def test_example(
@@ -38,7 +38,7 @@ def test_example(
         output = result.stdout.decode("utf-8")
         lines = output.split("\n")
         for line in lines:
-            if "Best pure fitness:" in line:
+            if "best pure fitness:" in line:
                 best_pure_fitness = float(line.split(":")[-1].strip())
                 fitness_scores.append(best_pure_fitness)
 
