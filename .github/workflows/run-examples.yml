@@ -35,14 +35,7 @@ jobs:
         find examples -type f -name "*.py" -exec sed -E -i 's/max_generation\s*=\s*[0-9]+/max_generation=3/g' {} \;
         find examples -type f -name "*.py" -exec sed -E -i 's/population_size\s*=\s*[0-9]+/population_size=6/g' {} \;
 
-    # - name: Find and run Python files in parallel
-    #   run: |
-    #     NUM_PROCS=$(nproc)
-    #     find examples -type f -name "*.py" | parallel --halt now,fail=1 -j $NUM_PROCS 'echo "Running {}"; python {}'
-
-    - name: Find and run Python files sequentially
+    - name: Find and run Python files in parallel
       run: |
-        find examples -type f -name "*.py" | while read -r file; do
-        echo "Running $file"
-        python "$file" || exit 1
-        done
+        NUM_PROCS=$(nproc)
+        find examples -type f -name "*.py" | parallel --halt now,fail=1 -j $NUM_PROCS 'echo "Running {}"; python {}'
