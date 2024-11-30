@@ -38,25 +38,17 @@ class SubtreeMutation(FailableOperator):
         """
         individuals: List[Tree] = payload
 
-        old_subtrees: Optional[List[List[TreeNode]]] = self._pick_subtrees(
-            individuals
-        )
+        old_subtrees: List[Optional[List[TreeNode]]] = [
+            ind.random_subtree() for ind in individuals
+        ]
 
-        if old_subtrees is None:
+        if None in old_subtrees:
             return False, individuals
 
         self._swap_subtrees(individuals, old_subtrees)
 
         self.applied_individuals = individuals
         return True, individuals
-
-    @staticmethod
-    def _pick_subtrees(individuals: List[Tree]) -> List[List[TreeNode]]:
-        old_subtrees: List[TreeNode] = [
-            ind.random_subtree() for ind in individuals
-        ]
-
-        return None if None in old_subtrees else old_subtrees
 
     def _swap_subtrees(
         self, individuals: List[Tree], old_subtrees: List[List[TreeNode]]

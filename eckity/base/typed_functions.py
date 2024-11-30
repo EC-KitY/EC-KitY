@@ -156,7 +156,7 @@ def or2bools(x: bool, y: bool) -> bool:
 
 def not2bools(x: bool) -> bool:
     """not x"""
-    return np.bitwise_not(x)
+    return np.logical_not(x)
 
 
 def if_then_else2bools(test: bool, dit: bool, dif: bool) -> bool:
