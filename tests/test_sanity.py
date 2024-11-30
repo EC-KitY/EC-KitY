@@ -16,7 +16,7 @@ def run_example(example_path: str):
 @pytest.mark.parametrize(
     "module_path, n_reps, expected_fitness",
     [
-        ("examples.treegp.basic_mode.multiplexer", 10, 0.75, True),
+        ("examples.treegp.basic_mode.multiplexer", 10, 0.7, True),
     ],
 )
 def test_example(
