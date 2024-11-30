@@ -146,22 +146,22 @@ def if_then_else2ints(test: int, dit: int, dif: int) -> int:
 
 def and2bools(x: bool, y: bool) -> bool:
     """x and y"""
-    return x and y
+    return np.bitwise_and(x, y)
 
 
 def or2bools(x: bool, y: bool) -> bool:
     """x or y"""
-    return x or y
+    return np.bitwise_or(x, y)
 
 
 def not2bools(x: bool) -> bool:
     """not x"""
-    return not x
+    return np.bitwise_not(x)
 
 
 def if_then_else2bools(test: bool, dit: bool, dif: bool) -> bool:
     """if test return dit else return dif"""
-    return dit if test else dif
+    return np.where(test, dit, dif)
 
 
 __all__ = [

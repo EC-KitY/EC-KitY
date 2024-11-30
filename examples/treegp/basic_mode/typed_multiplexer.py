@@ -1,6 +1,6 @@
 from time import time
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.base.typed_functions import and2ints, or2ints, not2ints, if_then_else2ints
+from eckity.base.typed_functions import and2bools, or2bools, not2bools, if_then_else2bools
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.genetic_operators.crossovers.subtree_crossover import (
     SubtreeCrossover,
@@ -42,21 +42,21 @@ def _target_func(s0, s1, s2, d0, d1, d2, d3, d4, d5, d6, d7):
 
     Parameters
     ----------
-    s0-s2: int
+    s0-s2: bool
         select values for the mux gate
 
-    d0-d7: int
+    d0-d7: bool
         input values for the mux gate
 
     Returns
     -------
-    int
-        0 (False) or 1 (True), depends on the values of the given parameters
+    bool
+        False or True, depends on the values of the given parameters
 
     Examples
     -------
-    _target_func(s0=0, s1=0, s2=0, d0=1, ...) = 1 (value of input d0)
-    _target_func(s0=0, s1=0, s2=1, d0=1, d1=0, ...) = 0 (value of input d1)
+    _target_func(s0=False, s1=False, s2=False, d0=True, ...) = True (value of input d0)
+    _target_func(s0=False, s1=False, s2=True, d0=True, d1=False, ...) = False (value of input d1)
     """
     return (
             ((not s0) and (not s1) and (not s2) and d0)
@@ -91,8 +91,8 @@ class MuxEvaluator(SimpleIndividualEvaluator):
 
         # construct a truth table of all combinations of ones and zeros
         values = [
-            list(x) + [_target_func(*x)]
-            for x in product([0, 1], repeat=_target_func.__code__.co_argcount)
+            list(map(bool, x)) + [_target_func(*map(bool, x))]
+            for x in product([False, True], repeat=_target_func.__code__.co_argcount)
         ]
         truth_tbl = pd.DataFrame(
             values,
@@ -133,11 +133,10 @@ class MuxEvaluator(SimpleIndividualEvaluator):
 
         exec_res = individual.execute(**select_entries, **input_entries)
 
-        # sometimes execute will return a single scalar (in constant trees)
         if isinstance(exec_res, Number) or exec_res.shape == ():
-            exec_res = np.full((NUM_ROWS,), exec_res)
+            exec_res = np.full((NUM_ROWS,), bool(exec_res))
 
-        # Return normalized number of correct results
+        # Normalize number of correct results
         return np.mean(exec_res == self.output)
 
 
@@ -157,12 +156,13 @@ def main():
 
     # The terminal set of the tree will contain the mux inputs (d0-d7 in a 8-3 mux gate),
     # 3 select lines (s0-s2 in a 8-3 mux gate) and the constants 0 and 1
-    typed_select_terminals = {f"s{i}": int for i in range(NUM_SELECT_ENTRIES)}
-    typed_input_terminals = {f"d{i}": int for i in range(NUM_INPUT_ENTRIES)}
+    # Terminal set for boolean inputs
+    typed_select_terminals = {f"s{i}": bool for i in range(NUM_SELECT_ENTRIES)}
+    typed_input_terminals = {f"d{i}": bool for i in range(NUM_INPUT_ENTRIES)}
     terminal_set = {**typed_select_terminals, **typed_input_terminals}
 
     # Logical functions: and, or, not and if-then-else
-    function_set = [and2ints, or2ints, not2ints, if_then_else2ints]
+    function_set = [and2bools, or2bools, not2bools, if_then_else2bools]
 
     # Initialize SimpleEvolution instance
     algo = SimpleEvolution(
@@ -172,7 +172,7 @@ def main():
                 terminal_set=terminal_set,
                 function_set=function_set,
                 bloat_weight=0.00001,
-                root_type=int,
+                root_type=bool,
                 erc_range=(0, 1)
             ),
             population_size=40,
@@ -209,17 +209,20 @@ def main():
 
     # execute the best individual after the evolution process ends
     exec1 = algo.execute(
-        s0=0, s1=0, s2=1, d0=0, d1=0, d2=1, d3=1, d4=1, d5=0, d6=0, d7=1
+        s0=False, s1=False, s2=True, d0=False, d1=False, d2=True, d3=True,
+        d4=True, d5=False, d6=False, d7=True
     )
     exec3 = algo.execute(
-        s0=0, s1=1, s2=1, d0=0, d1=0, d2=1, d3=1, d4=1, d5=0, d6=0, d7=1
+        s0=False, s1=True, s2=True, d0=False, d1=False, d2=True, d3=True,
+        d4=True, d5=False, d6=False, d7=True
     )
     exec7 = algo.execute(
-        s0=1, s1=1, s2=1, d0=0, d1=0, d2=1, d3=1, d4=1, d5=0, d6=0, d7=1
+        s0=True, s1=True, s2=True, d0=False, d1=False, d2=True, d3=True,
+        d4=True, d5=False, d6=False, d7=True
     )
-    print("execute(s0=0, s1=1, s2=1, d1=0): expected = 0, actual =", exec1)
-    print("execute(s0=1, s1=1, s2=1, d3=1): expected = 1, actual =", exec3)
-    print("execute(s0=1, s1=1, s2=1, d7=1): expected = 1, actual =", exec7)
+    print("execute(s0=False, s1=True, s2=True, d1=False): expected = False, actual =", exec1)
+    print("execute(s0=True, s1=True, s2=True, d3=True): expected = True, actual =", exec3)
+    print("execute(s0=True, s1=True, s2=True, d7=True): expected = True, actual =", exec7)
 
     print("best pure fitness:", algo.best_of_run_.get_pure_fitness())
 
