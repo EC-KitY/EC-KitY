@@ -6,7 +6,6 @@ import logging
 import random
 from numbers import Number
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
-from functools import lru_cache
 
 import numpy as np
 
@@ -283,7 +282,6 @@ class Tree(Individual):
             res = np.full_like(X[:, 0], res)
         return res
 
-    @lru_cache
     def _execute(self, pos, **kwargs):
         """
         Recursively execute the tree by traversing it in a depth-first order
