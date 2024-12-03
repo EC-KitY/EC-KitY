@@ -152,6 +152,7 @@ def main():
             ],
         ),
         max_workers=4,
+        max_generation=40,
         termination_checker=ThresholdFromTargetTerminationChecker(
             optimal=0, threshold=0.001
         ),
