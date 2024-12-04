@@ -1,10 +1,14 @@
 """
 This module implements the vector class.
 """
+
 from abc import abstractmethod
 from random import randint
+import logging
 
 from eckity.individual import Individual
+
+logger = logging.getLogger(__name__)
 
 
 class Vector(Individual):
@@ -24,28 +28,33 @@ class Vector(Individual):
         Min/Max values for each vector cell (if of length n), or the minimum and maximum (if of length 1).
     """
 
-    def __init__(self,
-                 fitness,
-                 bounds,
-                 length,
-                 vector=None):
-        super().__init__(fitness)
+    def __init__(
+        self, fitness, bounds, length, vector=None, update_parents=False
+    ):
+        super().__init__(fitness, update_parents=update_parents)
 
-        if (type(bounds) == tuple and len(bounds) != 2) \
-                or (type(bounds) == list and len(bounds) != length):
-            raise ValueError(f'Bounds must be either a tuple of size 2 or a list of {length} tuples')
+        if (type(bounds) == tuple and len(bounds) != 2) or (
+            type(bounds) == list and len(bounds) != length
+        ):
+            raise ValueError(
+                f"Bounds must be either a tuple of size 2 or a list of {length} tuples"
+            )
 
         self.bounds = bounds
         self.length = length
-        
+
         if vector is None:
             self.vector = []
-        
+
         else:
             if not isinstance(vector, list):
-                raise ValueError(f'Expected vector argument in Vector constructor to be a list, got {type(vector)}')
+                raise ValueError(
+                    f"Expected vector argument in Vector constructor to be a list, got {type(vector)}"
+                )
             if len(vector) != length:
-                raise ValueError(f'Expected vector argument in Vector constructor to be of length {length}, got {len(vector)}')
+                raise ValueError(
+                    f"Expected vector argument in Vector constructor to be of length {length}, got {len(vector)}"
+                )
             self.vector = vector
 
     def size(self):
@@ -81,10 +90,14 @@ class Vector(Individual):
         """
         for i in range(self.size()):
             if len(self.bounds) == 2:
-                if (self.vector[i] < self.bounds[0]) or (self.vector[i] > self.bounds[1]):
+                if (self.vector[i] < self.bounds[0]) or (
+                    self.vector[i] > self.bounds[1]
+                ):
                     return False
             else:
-                if (self.vector[i] < self.bounds[i][0]) or (self.vector[i] > self.bounds[i][1]):
+                if (self.vector[i] < self.bounds[i][0]) or (
+                    self.vector[i] > self.bounds[i][1]
+                ):
                     return False
         return True
 
@@ -149,7 +162,7 @@ class Vector(Individual):
         # todo add tests to make sure this logic works
         rnd_i = randint(0, self.size() - 1)
         end_i = randint(rnd_i, self.size() - 1)
-        return self.vector[rnd_i:end_i + 1]
+        return self.vector[rnd_i : end_i + 1]
 
     def replace_vector_part_random(self, inserted_part):
         """
@@ -165,7 +178,9 @@ class Vector(Individual):
         list
             previous vector part of this vector genome
         """
-        index = randint(0, self.size() - len(inserted_part))  # select a random index
+        index = randint(
+            0, self.size() - len(inserted_part)
+        )  # select a random index
         end_i = index + len(inserted_part)
         replaced_part = self.vector[index:end_i]
         self.vector = self.vector[:index] + inserted_part + self.vector[end_i:]
@@ -190,7 +205,9 @@ class Vector(Individual):
         """
         end_i = start_index + len(inserted_part)
         replaced_part = self.vector[start_index:end_i]
-        self.vector = self.vector[:start_index] + inserted_part + self.vector[end_i:]
+        self.vector = (
+            self.vector[:start_index] + inserted_part + self.vector[end_i:]
+        )
         return replaced_part
 
     def get_vector_part(self, index, end_i):
@@ -261,7 +278,9 @@ class Vector(Individual):
         object
             vector cell value
         """
-        raise NotImplementedError("get_random_number is an abstract method in vector individual")
+        raise NotImplementedError(
+            "get_random_number is an abstract method in vector individual"
+        )
 
     def execute(self, *args, **kwargs):
         """
@@ -291,6 +310,7 @@ class Vector(Individual):
         -------
         None.
         """
-        print(self.vector)
+        logger.debug(self.vector)
+
 
 # end class Vector

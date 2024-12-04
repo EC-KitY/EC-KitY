@@ -1,8 +1,7 @@
-from sys import stdout
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 
-class Statistics:
+class Statistics(ABC):
     """
     Abstract Statistics class.
     Provides statistics about the current evolution state.
@@ -14,18 +13,15 @@ class Statistics:
         Value depends on the information the statistics provides.
         For more information, check out the concrete classes who extend this class.
 
-    output_stream: Optional[SupportsWrite[str]], default=stdout
-        Output file for the statistics.
-        By default, the statistics will be written to stdout.
     """
-    def __init__(self, format_string, output_stream=stdout):
-        self.output_stream = output_stream
+
+    def __init__(self, format_string):
         self.format_string = format_string
 
     @abstractmethod
     def write_statistics(self, sender, data_dict):
         """
-        Write the statistics information using the format string field to the output stream field.
+        Write the statistics information using the format string field.
 
         Parameters
         ----------
@@ -44,4 +40,3 @@ class Statistics:
         None.
         """
         pass
-

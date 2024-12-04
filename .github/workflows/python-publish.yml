@@ -9,11 +9,9 @@
 name: Upload Python Package
 
 on:
-  workflow_dispatch:
-    inputs:
-        repo_name:
-          description: 'EC-KitY'
-          required: false
+  # workflow_dispatch is disabled on purpose. 
+  # We must decide on the version number before publishing and create a release message.
+  # workflow_dispatch:
   release:
     types: [published]
 
@@ -26,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.5
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5.1.0
       with:
         python-version: '3.x'
     - name: Install dependencies

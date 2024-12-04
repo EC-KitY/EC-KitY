@@ -75,7 +75,7 @@ class TestBitStringVector:
 
         for _ in range(10 ** 3):
             num = vec1.get_random_number_in_bounds(0)
-            assert type(num) == int and num == bounds[0] or num == bounds[1]
+            assert isinstance(num, int) and num == bounds[0] or num == bounds[1]
 
     def test_get_vector_part_last_cell(self):
         length = 2
@@ -85,7 +85,9 @@ class TestBitStringVector:
     def test_clone(self):
         cells = [0, 1]
         score = 0.1
-        v1 = BitStringVector(SimpleFitness(score), len(cells), vector=cells)
+        v1 = BitStringVector(SimpleFitness(score, cache=True),
+                             length=len(cells),
+                             vector=cells)
 
         v2 = v1.clone()
         assert v2.vector == v1.vector
@@ -98,3 +100,10 @@ class TestBitStringVector:
         # Check that fitness is evaluated and equal to original one
         assert v2.fitness.get_pure_fitness() == score
         assert v2.fitness.is_fitness_evaluated()
+
+    def test_parents(self):
+        v1 = BitStringVector(SimpleFitness(), length=2, update_parents=True)
+        v2 = BitStringVector(SimpleFitness(), length=2, update_parents=True)
+
+        v1.parents = [v2]
+        assert v1.parents == [v2]

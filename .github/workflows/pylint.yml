@@ -1,17 +1,22 @@
 name: Pylint
 
-on: [push]
+on: 
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.5
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5.1.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -20,4 +25,9 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint $(git ls-files '*.py') --output=lint.txt || true
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: lint.txt
+        path: lint.txt

@@ -1,16 +1,18 @@
 """
-This module implements the fitness evaluation class, which delivers the fitness function.
-You will need to implement such a class to work with your own problem and fitness function.
+This module implements the fitness evaluation class, which delivers the
+fitness function. You will need to implement such a class to work with your
+own problem and fitness function.
 """
 
 from sklearn.metrics import mean_absolute_error
 
-from eckity.evaluators.simple_individual_evaluator import SimpleIndividualEvaluator
+from eckity.evaluators import SimpleIndividualEvaluator
 
 
 class RegressionEvaluator(SimpleIndividualEvaluator):
     """
     Computes the fitness of an individual in regression problems.
+    All simple classes assume only one sub-population.
 
     Parameters
     ----------
@@ -24,7 +26,7 @@ class RegressionEvaluator(SimpleIndividualEvaluator):
     A function which receives two array-like of shapes (n_samples,) or (n_samples, 1) and returns a float or
     ndarray of floats
     """
-        
+
     def __init__(self, X=None, y=None, metric=mean_absolute_error):
         super().__init__()
         self.X = X

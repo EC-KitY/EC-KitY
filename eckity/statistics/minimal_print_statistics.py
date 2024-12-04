@@ -1,6 +1,8 @@
-from sys import stdout
+import logging
 
 from eckity.statistics.statistics import Statistics
+
+logger = logging.getLogger(__name__)
 
 
 class MinimalPrintStatistics(Statistics):
@@ -15,28 +17,25 @@ class MinimalPrintStatistics(Statistics):
         String format of the data to output.
         Value depends on the information the statistics provides.
         For more information, check out the concrete classes who extend this class.
-
-    output_stream: Optional[SupportsWrite[str]], default=stdout
-        Output file for the statistics.
-        By default, the statistics will be written to stdout.
     """
-    def __init__(self, format_string=None, output_stream=stdout):
+
+    def __init__(self, format_string=None):
         if format_string is None:
-            format_string = 'best fitness {}\nworst fitness {}\naverage fitness {}\n'
-        super().__init__(format_string, output_stream)
+            format_string = (
+                "best fitness {}\nworst fitness {}\naverage fitness {}\n"
+            )
+        super().__init__(format_string)
 
     def write_statistics(self, sender, data_dict):
-        print(f'generation #{data_dict["generation_num"]}', file=self.output_stream)
+        logger.info(f'generation #{data_dict["generation_num"]}')
 
     # TODO tostring to indiv
 
     # Necessary for valid pickling, since modules cannot be pickled
     def __getstate__(self):
         state = self.__dict__.copy()
-        del state['output_stream']
         return state
 
     # Necessary for valid unpickling, since modules cannot be pickled
     def __setstate__(self, state):
         self.__dict__.update(state)
-        self.output_stream = stdout

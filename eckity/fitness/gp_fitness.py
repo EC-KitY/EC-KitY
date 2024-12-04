@@ -22,14 +22,30 @@ class GPFitness(SimpleFitness):
         declares the fitness direction.
         i.e., if it should be minimized or maximized
 
+    cache: bool
+        declares whether the fitness score should reset at the end of each generation
+
+    is_relative_fitness: bool
+        declares whether the fitness score is absolute or relative
+
     bloat_weight: float
         the weight of the bloat control fitness reduction
     """
-    def __init__(self,
-                 fitness: float = None,
-                 higher_is_better=False,
-                 bloat_weight=0.1):
-        super().__init__(fitness=fitness, higher_is_better=higher_is_better)
+
+    def __init__(
+        self,
+        fitness: float = None,
+        higher_is_better: bool = False,
+        cache: bool = False,
+        is_relative_fitness: bool = False,
+        bloat_weight: float = 0.1,
+    ):
+        super().__init__(
+            fitness=fitness,
+            higher_is_better=higher_is_better,
+            cache=cache,
+            is_relative_fitness=is_relative_fitness,
+        )
         self.bloat_weight = bloat_weight
 
     @overrides
@@ -47,11 +63,16 @@ class GPFitness(SimpleFitness):
         float
             augmented fitness score after applying bloat control
         """
-        if not self.is_fitness_evaluated():
-            raise ValueError('Fitness not evaluated yet')
+        score = self.get_pure_fitness()
+
+        if self.bloat_weight == 0:
+            # no bloat
+            return score
 
         # subtract bloat value from the fitness score if it should be maximized,
         # otherwise add bloat value to fitness score
-        return self.fitness - self.bloat_weight * individual.size() \
-            if self.higher_is_better \
-            else self.fitness + self.bloat_weight * individual.size()
+        return (
+            score - self.bloat_weight * individual.size()
+            if self.higher_is_better
+            else score + self.bloat_weight * individual.size()
+        )
