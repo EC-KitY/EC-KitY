@@ -65,6 +65,10 @@ class GPFitness(SimpleFitness):
         """
         score = self.get_pure_fitness()
 
+        if self.bloat_weight == 0:
+            # no bloat
+            return score
+
         # subtract bloat value from the fitness score if it should be maximized,
         # otherwise add bloat value to fitness score
         return (

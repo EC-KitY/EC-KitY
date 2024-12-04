@@ -23,8 +23,8 @@ def f_mul(x, y):
 
 def f_div(x, y):
     """protected division: if abs(y) > 0.001 return x/y else return 0"""
-    with np.errstate(divide='ignore', invalid='ignore'):
-        return np.where(np.abs(y) > 0.001, np.divide(x, y), 0.)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(np.abs(y) > 0.001, np.divide(x, y), 0.0)
 
 
 def f_sqrt(x):
@@ -34,8 +34,8 @@ def f_sqrt(x):
 
 def f_log(x):
     """protected log: if abs(x) > 0.001 return log(abs(x)) else return 0"""
-    with np.errstate(divide='ignore', invalid='ignore'):
-        return np.where(np.abs(x) > 0.001, np.log(np.abs(x)), 0.)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(np.abs(x) > 0.001, np.log(np.abs(x)), 0.0)
 
 
 def f_abs(x):
@@ -50,8 +50,6 @@ def f_neg(x):
 
 def f_inv(x):
     """protected inverse: if abs(x) > 0.001 return 1/x else return 0"""
-    # with np.errstate(divide='ignore', invalid='ignore'):
-    #     return np.where(np.abs(x) > 0.001, 1. / x, 0.)
     return f_div(1, x)
 
 
@@ -120,6 +118,27 @@ def f_if_then_else(test, dit, dif):
     return np.where(test, dit, dif)
 
 
-
-full_function_set = [f_add, f_sub, f_mul, f_div, f_sqrt, f_log, f_abs, f_neg, f_inv, f_max, f_min, f_sin, f_cos, f_tan,
-                     f_iflte0, f_ifgt0, f_iflte, f_ifgt, f_and, f_or, f_not, f_if_then_else]
+__all__ = [
+    "f_add",
+    "f_sub",
+    "f_mul",
+    "f_div",
+    "f_sqrt",
+    "f_log",
+    "f_abs",
+    "f_neg",
+    "f_inv",
+    "f_max",
+    "f_min",
+    "f_sin",
+    "f_cos",
+    "f_tan",
+    "f_iflte0",
+    "f_ifgt0",
+    "f_iflte",
+    "f_ifgt",
+    "f_and",
+    "f_or",
+    "f_not",
+    "f_if_then_else",
+]

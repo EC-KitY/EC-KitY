@@ -1,5 +1,6 @@
 from time import time
 
+
 from sklearn.decomposition import PCA
 from sklearn.datasets import make_regression
 from sklearn.model_selection import train_test_split
@@ -9,15 +10,20 @@ from sklearn.preprocessing import StandardScaler
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
 from eckity.sklearn_compatible.sk_regressor import SKRegressor
-from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub
+from eckity.creators.gp_creators.half import HalfCreator
+from eckity.base.untyped_functions import f_add, f_mul, f_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
-from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
+from eckity.genetic_operators.crossovers.subtree_crossover import (
+    SubtreeCrossover,
+)
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
+from eckity.genetic_operators.selections.tournament_selection import (
+    TournamentSelection,
+)
+from eckity.statistics.best_average_worst_statistics import (
+    BestAverageWorstStatistics,
+)
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import (
     ThresholdFromTargetTerminationChecker,
@@ -42,7 +48,7 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', 'x3', 'x4']
-    terminal_set = create_terminal_set(X)
+    terminal_set = create_terminal_set(X, typed=False)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
     function_set = [f_add, f_mul, f_sub]
@@ -50,12 +56,12 @@ def main():
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(
         Subpopulation(
-            creators=RampedHalfAndHalfCreator(
+            creators=HalfCreator(
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
-                erc_range=(-100, 100),
                 bloat_weight=0.0001,
+                erc_range=(-100.0, 100.0),
             ),
             population_size=1000,
             # user-defined fitness evaluation method
@@ -71,15 +77,19 @@ def main():
             ],
             selection_methods=[
                 # (selection method, selection probability) tuple
-                (TournamentSelection(tournament_size=4, higher_is_better=False), 1)
+                (
+                    TournamentSelection(
+                        tournament_size=4, higher_is_better=False
+                    ),
+                    1,
+                )
             ],
         ),
-        breeder=SimpleBreeder(),
         max_workers=1,
         max_generation=1000,
         # optimal fitness is 0, evolution ("training") process will be finished when best fitness <= threshold
         termination_checker=ThresholdFromTargetTerminationChecker(
-            optimal=0, threshold=0.01
+            threshold=0.01
         ),
         statistics=BestAverageWorstStatistics(),
     )

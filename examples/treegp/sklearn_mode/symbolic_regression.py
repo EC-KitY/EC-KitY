@@ -11,16 +11,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
-from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.creators.gp_creators.ramped_hh import RampedHalfAndHalfCreator
-from eckity.genetic_encodings.gp.tree.functions import f_add, f_mul, f_sub
+from eckity.creators.gp_creators.half import HalfCreator
+from eckity.base.untyped_functions import f_add, f_mul, f_sub
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
-from eckity.genetic_operators.crossovers.subtree_crossover import SubtreeCrossover
+from eckity.genetic_operators.crossovers.subtree_crossover import (
+    SubtreeCrossover,
+)
 from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
 from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
-from eckity.genetic_operators.selections.tournament_selection import TournamentSelection
+from eckity.genetic_operators.selections.tournament_selection import (
+    TournamentSelection,
+)
 from eckity.sklearn_compatible.sk_regressor import SKRegressor
-from eckity.statistics.best_average_worst_statistics import BestAverageWorstStatistics
+from eckity.statistics.best_average_worst_statistics import (
+    BestAverageWorstStatistics,
+)
 from eckity.subpopulation import Subpopulation
 from eckity.termination_checkers.threshold_from_target_termination_checker import (
     ThresholdFromTargetTerminationChecker,
@@ -41,68 +46,6 @@ def main():
     """
     Solve a regression problem imported from sklearn `make_regression` function, using GP Trees.
     Expected run time: ~25 minutes (on 2 cores, 2.5 GHz CPU)
-    Example output (with an error of 0.09 on test set):
-    f_sub
-       f_mul
-          x3
-          57.9788
-       f_sub
-          f_mul
-             f_add
-                x1
-                x0
-             -69.8759
-          f_add
-             f_sub
-                f_add
-                   f_add
-                      f_add
-                         f_add
-                            f_add
-                               f_add
-                                  x1
-                                  x2
-                               x2
-                            f_add
-                               f_add
-                                  x2
-                                  x2
-                               f_sub
-                                  x1
-                                  x0
-                         x1
-                      f_add
-                         f_add
-                            f_add
-                               f_sub
-                                  f_sub
-                                     x1
-                                     f_mul
-                                        x1
-                                        -1.0477
-                                  x1
-                               x2
-                            x4
-                         x1
-                   x1
-                f_mul
-                   -33.4406
-                   f_add
-                      x4
-                      x4
-             f_sub
-                f_mul
-                   x1
-                   f_sub
-                      x2
-                      x2
-                f_mul
-                   f_add
-                      x2
-                      x0
-                   f_sub
-                      -19.0099
-                      -1.0477
     """
     start_time = time()
 
@@ -111,7 +54,7 @@ def main():
 
     # Automatically generate a terminal set.
     # Since there are 5 features, set terminal_set to: ['x0', 'x1', 'x2', 'x3', 'x4']
-    terminal_set = create_terminal_set(X)
+    terminal_set = create_terminal_set(X, typed=False)
 
     # Set function set to binary addition, binary multiplication and binary subtraction
     function_set = [f_add, f_mul, f_sub]
@@ -119,12 +62,12 @@ def main():
     # Initialize Simple Evolutionary Algorithm instance
     algo = SimpleEvolution(
         Subpopulation(
-            creators=RampedHalfAndHalfCreator(
+            creators=HalfCreator(
                 init_depth=(2, 4),
                 terminal_set=terminal_set,
                 function_set=function_set,
-                erc_range=(-100, 100),
                 bloat_weight=0.0001,
+                erc_range=(-100.0, 100.0),
             ),
             population_size=1000,
             # user-defined fitness evaluation method
@@ -140,10 +83,14 @@ def main():
             ],
             selection_methods=[
                 # (selection method, selection probability) tuple
-                (TournamentSelection(tournament_size=4, higher_is_better=False), 1)
+                (
+                    TournamentSelection(
+                        tournament_size=4, higher_is_better=False
+                    ),
+                    1,
+                )
             ],
         ),
-        breeder=SimpleBreeder(),
         max_workers=1,
         max_generation=1000,
         # optimal fitness is 0, evolution ("training") process will be finished when best fitness <= threshold

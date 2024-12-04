@@ -213,7 +213,7 @@ class Algorithm(Operator, ABC):
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
-        logger.info("random seed = %f", self.random_seed)
+        logger.info("random seed = %d", self.random_seed)
         self.population_evaluator.set_executor(self.executor)
 
         for field in self.__dict__.values():

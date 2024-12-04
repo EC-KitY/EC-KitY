@@ -6,6 +6,9 @@ VERSION = eckity.__version__
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open("requirements.txt", 'r', encoding="utf-8") as fh:
+    requirements = [line.strip() for line in fh]
+
 setup(
     name='eckity',
     version=VERSION,
@@ -20,5 +23,5 @@ setup(
     },
     license='GNU GPLv3',
     packages=find_packages(),
-    install_requires=['numpy>=1.14.6', 'overrides>=6.1.0', 'pandas>=0.25.0'],
+    install_requires=requirements,
 )

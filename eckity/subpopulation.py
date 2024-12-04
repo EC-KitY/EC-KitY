@@ -4,10 +4,7 @@ import random
 import numpy as np
 
 from eckity.creators.creator import Creator
-from eckity.creators.gp_creators.full import FullCreator
-from eckity.genetic_operators import SubtreeCrossover, TournamentSelection
-from eckity.genetic_operators.mutations.erc_mutation import ERCMutation
-from eckity.genetic_operators.mutations.subtree_mutation import SubtreeMutation
+from eckity.genetic_operators import TournamentSelection
 
 logger = logging.getLogger(__name__)
 
@@ -79,13 +76,12 @@ class Subpopulation:
 
         # verify valid creators and creation probability inputs
         if creators is None:
-            full_cr = FullCreator()
-            creators = [full_cr]
+            raise ValueError("Must specify at least one creator")
         elif isinstance(creators, Creator):
             creators = [creators]
         elif isinstance(creators, list):
             if len(creators) == 0:
-                raise ValueError("Creators list cannot be empty")
+                raise ValueError("Creators cannot be empty list")
             for creator in creators:
                 if not isinstance(creator, Creator):
                     raise ValueError(
@@ -93,8 +89,8 @@ class Subpopulation:
                     )
         else:
             raise ValueError(
-                "Creators must be either a Creator or a list of Creators\n "
-                f"Received creators with unexpected type of {type(creators)}",
+                "Creators must be either a Creator or a list of Creators. "
+                f"Got unexpected type of {type(creators)}",
             )
 
         if pcr is None:
@@ -112,11 +108,7 @@ class Subpopulation:
 
         # set default args
         if operators_sequence is None:
-            operators_sequence = [
-                SubtreeCrossover(arity=2, probability=0.9),
-                SubtreeMutation(arity=1, probability=0.7),
-                ERCMutation(arity=1, probability=0.1),
-            ]
+            raise ValueError("Must specify at least one operator")
         if selection_methods is None:
             selection_methods = [
                 (
@@ -139,8 +131,8 @@ class Subpopulation:
 
         if self.n_elite == 0 and elitism_rate > 0.0:
             logger.warning(
-                "Detected elitism_rate > 0 but 0 elites. \
-                    Try increasing elitism_rate."
+                "Detected elitism_rate > 0 but 0 elites. "
+                "Try increasing elitism_rate."
             )
 
         self.individuals = individuals
