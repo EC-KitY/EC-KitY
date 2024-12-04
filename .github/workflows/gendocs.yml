@@ -24,7 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install scikit-learn>=1.1 --use-pep517
         python -m pip install -r requirements.txt
-        python -m pip install pdoc pytest
+        python -m pip install pdoc pytest matplotlib
 
     - name: Update documentation
       run: pdoc -d numpy -o docs ./eckity
