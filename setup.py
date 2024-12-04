@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
-import eckity
+from eckity import __version__
 
-VERSION = eckity.__version__
+VERSION = __version__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
