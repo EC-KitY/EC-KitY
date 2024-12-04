@@ -1,4 +1,4 @@
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.evaluators import SimpleIndividualEvaluator
 from eckity.creators import FullCreator
 from eckity.genetic_operators.mutations.identity_transformation import (

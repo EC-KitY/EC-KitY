@@ -9,7 +9,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.base.untyped_functions import (
     f_add,

@@ -44,7 +44,7 @@ You can run an EA with just 3 lines of code. The problem being solved herein is 
 
 Additional information on this problem can be found in the [Symbolic Regression Tutorial](https://github.com/EC-KitY/EC-KitY/wiki/Tutorial:-Symbolic-Regression).
 ```python
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.base.untyped_functions import f_add, f_sub, f_mul, f_div
 from eckity.creators import FullCreator

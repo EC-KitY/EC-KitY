@@ -12,7 +12,8 @@ from typing import Any, Callable, Dict, List, Union
 
 from overrides import overrides
 
-from eckity import Population, Subpopulation
+from eckity.population import Population
+from eckity.subpopulation import Subpopulation
 from eckity.breeders import Breeder
 from eckity.evaluators import PopulationEvaluator
 from eckity.event_based_operator import Operator

@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Any, Dict, List
 
-from eckity import Individual
+from eckity.individual import Individual
 from eckity.event_based_operator import Operator
 from eckity.fitness.simple_fitness import SimpleFitness
 

@@ -4,7 +4,7 @@ from time import sleep
 
 import numpy as np
 
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.creators import FullCreator

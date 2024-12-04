@@ -1,7 +1,7 @@
 import pytest
 from overrides import override
 
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.breeders import SimpleBreeder
 from eckity.creators import FullCreator

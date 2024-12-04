@@ -6,7 +6,7 @@ For now, this class is a placeholder for future tests to be added.
 import pytest
 from sklearn.exceptions import NotFittedError
 
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.base.typed_functions import sqrt_float
 from eckity.creators import GrowCreator
