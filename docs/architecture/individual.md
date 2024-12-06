@@ -35,7 +35,8 @@ def func_3(x, y):
 
 ## Vector
 Subclass of Individual, used for GP experiments.
-Representation is a list. The type of the list is homogenous and defined by the concrete vector class:
+The genotype is kept in the `vector` field.
+The type of the list is homogenous and defined by the concrete vector class:
 
 ### BitStringVector
 Binary vector.
