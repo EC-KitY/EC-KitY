@@ -10,6 +10,7 @@ chapters:
     - file: architecture/population
     - file: architecture/algorithm
     - file: architecture/individual
+    - file: architecture/fitness
     - file: architecture/creator
     - file: architecture/termination-checker
     - file: architecture/evaluator
