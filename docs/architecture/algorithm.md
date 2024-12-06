@@ -1,13 +1,27 @@
 # Algorithm
 
-Algorithm manages the Evolutionary Algorithm.
+Evolutionary Algorithm defined in the experiment.
+An algorithm can operate on a single Subpopulation, two Subpopulations (coevolution), or n>2 Subpoplations (island model).
+
+The following psuedocode demonstrates the main flow of the algorithm:
+
+```
+1. create initial population
+2. while termination condition not met do:
+    a. evaluate the fitness functions of the current generation
+    b. select parents from the current generation
+    c. perform crossover and mutation operators
+```
+
+Each step is performed by an object that is invoked by the algorithm:
+- The creation of the initial population is done by the *Creator*.
+- The termination condition check is done by the *TerminationChecker*.
+- The fitness evaluation of the population is done by the *Evaluator*.
+- The selection, crossover and mutation is done by the *Breeder*.
 
 ## Algorithm types
 
 Algorithm is an abstract class.
-Currently, the only concrete Algorithm class is *SimpleEvolution*.
-SimpleEvolution assumes there is only one population in the evolutionary experiment (i.e. no coevolution).
+The most straightforward concrete Algorithm class is *SimpleEvolution*.
+SimpleEvolution assumes there is only one population in the evolutionary experiment.
 
-An algorithm can operate on a single Subpopulation (as in the case of
-SimpleEvolution), two Subpopulations (e.g., in a coevolutionary setup), or
-n (> 2) Subpoplations (e.g., island model).

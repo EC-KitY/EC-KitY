@@ -7,20 +7,19 @@ chapters:
 - file: installation 
 - file: architecture
   sections:
-    - file: architecture/algorithm
     - file: architecture/population
+    - file: architecture/algorithm
     - file: architecture/individual
     - file: architecture/creator
+    - file: architecture/termination-checker
     - file: architecture/evaluator
     - file: architecture/breeder
-    - file: architecture/termination-checker
-    - file: architecture/statistics
     - file: architecture/operator
       sections:
         - file: architecture/operator/selection
-        - file: architecture/operator/crossover
-        - file: architecture/operator/mutation
+        - file: architecture/operator/genetic-operator
         - file: architecture/operator/failable-operator
+    - file: architecture/statistics
 - file: tutorials
   sections:
     - file: tutorials/one-max

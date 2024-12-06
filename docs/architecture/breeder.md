@@ -21,15 +21,12 @@ Note that the probabilities don't need to sum to one, as the execution of each o
 
 The breeder will iterate over the whole population to apply SubtreeCrossover on pairs of individuals, and only then iterate again over the whole population and attempt to apply the mutation on each individual.
 
-
-## Implementation details
+## Advanced - Implementation details
 During the design and implementation of SimpleBreeder, we have made several choices that impact its logic:
 
 - The size of the offspring created in each genetic operator **must** be equal to the amount of parents sent to the operator.
-For instance, a subtree crossover performed between 2 GP trees must return 2 offsprings.
+For instance, a subtree crossover performed between 2 GP trees must return 2 offspring.
 
-- When applying the genetic operators, SimpleBreeder iterates over the individuals by their selection order, and applies the operators according to their arity. For instance, when applying a SubtreeCrossover that receives two parents, the breeder will first apply the operator on the first and second individual, then apply the operator on the third and fourth individual an so on.
+- When applying the genetic operators, SimpleBreeder iterates over the individuals by their selection order, and applies the operators according to their arity. For instance, when applying a SubtreeCrossover that receives two parents, the breeder will first apply the crossover on the first and second individual, then apply the crossover on the third and fourth individual an so on.
 
 If you wish to change this logic, create a new Breeder subclass with your desired logic, submit a PR in our GitHub repository and we will consider including it in the package.
-
-

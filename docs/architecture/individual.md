@@ -1,8 +1,8 @@
 # Individual
-
 The Individual class represents an individual in the experiment.
 
-## Tree
+## Concrete Individual classes
+### Tree
 Subclass of Individual, used for GP experiments.
 Representation is a list of TreeNodes. Each node is either a function (inner node) or a terminal (leaf node). Tree nodes are in prefix order.
 
@@ -33,16 +33,16 @@ def func_3(x, y):
   )
 ```
 
-## Vector
+### Vector
 Subclass of Individual, used for GP experiments.
 The genotype is kept in the `vector` field.
 The type of the list is homogenous and defined by the concrete vector class:
 
-### BitStringVector
+#### BitStringVector
 Binary vector.
 
-### IntVector
+#### IntVector
 Integer vector.
 
-### FloatVector
+#### FloatVector
 Float vector.
