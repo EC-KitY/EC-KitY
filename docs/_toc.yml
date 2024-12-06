@@ -15,6 +15,12 @@ chapters:
     - file: architecture/breeder
     - file: architecture/termination-checker
     - file: architecture/statistics
+    - file: architecture/operator
+      sections:
+        - file: architecture/operator/selection
+        - file: architecture/operator/crossover
+        - file: architecture/operator/mutation
+        - file: architecture/operator/failable-operator
 - file: tutorials
   sections:
     - file: tutorials/one-max
