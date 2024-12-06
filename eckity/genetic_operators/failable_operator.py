@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Tuple
+from typing import Any, List, Tuple
 
 from eckity.genetic_operators.genetic_operator import GeneticOperator
 
@@ -70,8 +70,8 @@ class FailableOperator(GeneticOperator):
 
     @abstractmethod
     def attempt_operator(
-        self, payload: object, attempt_num: int
-    ) -> Tuple[bool, object]:
+        self, payload: Any, attempt_num: int
+    ) -> Tuple[bool, Any]:
         """
         A single attempt of the operator
 
@@ -90,12 +90,11 @@ class FailableOperator(GeneticOperator):
         """
         pass
 
-    @abstractmethod
-    def on_fail(self, payload: object) -> object:
+    def on_fail(self, payload: Any) -> Any:
         """
         What to do when all operator attempts failed
-
         This method is called once all operator attempts have failed
+        By default, this method does nothing.
 
         Parameters
         -------
@@ -105,7 +104,7 @@ class FailableOperator(GeneticOperator):
 
         Returns
         -------
-        object
-            result value
+        Any
+            failure handling mechanism, does nothing by default
         """
-        pass
+        return payload

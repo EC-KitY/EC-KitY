@@ -1,9 +1,10 @@
 import pytest
 from overrides import override
 
-from eckity import Subpopulation
+from eckity.subpopulation import Subpopulation
 from eckity.algorithms import SimpleEvolution
 from eckity.breeders import SimpleBreeder
+from eckity.creators import FullCreator
 from eckity.evaluators import SimpleIndividualEvaluator
 from eckity.genetic_operators import GeneticOperator
 
@@ -30,6 +31,10 @@ def test_incompatible_operator_arities():
     algo = SimpleEvolution(
         Subpopulation(
             DummyIndividualEvaluator(),
+            creators=FullCreator(
+                function_set=[lambda x: x],
+                terminal_set=['x']
+            ),
             population_size=10,
             operators_sequence=[DummyCrossover(arity=3)],
         ),

@@ -31,10 +31,10 @@ class Individual:
         in the last generation.
         *** Note that failed operators are still included in this list. ***
     """
+
     id = 1
 
-    def __init__(self, fitness: Fitness,
-                 update_parents: bool = False):
+    def __init__(self, fitness: Fitness, update_parents: bool = False):
         self.update_id()
         self.gen = 0
         self.fitness = fitness
@@ -46,7 +46,7 @@ class Individual:
 
         self.update_parents = update_parents
         if update_parents:
-            self.parents = []   # last gen
+            self.parents = []  # last gen
 
     def update_id(self):
         self.id = Individual.id

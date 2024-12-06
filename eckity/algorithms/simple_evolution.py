@@ -51,8 +51,7 @@ class SimpleEvolution(Algorithm):
     event_names: list of strings, default=None
             Names of events to publish during the evolution.
 
-    termination_checker: TerminationChecker,
-                         default=ThresholdFromTargetTerminationChecker()
+    termination_checker: TerminationChecker
             Checks if the evolution should perform early termination.
 
     max_workers: int, default=None
@@ -86,7 +85,7 @@ class SimpleEvolution(Algorithm):
         self,
         population,
         statistics=None,
-        breeder: SimpleBreeder = None,
+        breeder: SimpleBreeder = SimpleBreeder(),
         population_evaluator: SimplePopulationEvaluator = None,
         max_generation=500,
         events=None,
@@ -118,11 +117,6 @@ class SimpleEvolution(Algorithm):
 
         if breeder is None:
             breeder = SimpleBreeder()
-
-        if termination_checker is None:
-            termination_checker = ThresholdFromTargetTerminationChecker(
-                threshold=0
-            )
         
         if population_evaluator is None:
             population_evaluator = SimplePopulationEvaluator()
