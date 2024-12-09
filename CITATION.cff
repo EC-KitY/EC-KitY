@@ -74,6 +74,4 @@ preferred-citation:
   journal: SoftwareX
   volume: 22
   pages: 101381
-  identifiers:
-    - type: doi
-      value: 10.1016/j.softx.2023.101381
+  doi: 10.1016/j.softx.2023.101381
