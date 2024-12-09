@@ -48,3 +48,32 @@ keywords:
   - Machine learning
   - Scikit-learn
 license: BSD-3-Clause
+preferred-citation:
+  authors:
+    - given-names: Moshe
+      family-names: Sipper
+      email: sipper@bgu.ac.il
+      orcid: 'https://orcid.org/0000-0003-1811-472X'
+      affiliation: Ben-Gurion University
+    - given-names: Tomer
+      family-names: Halperin
+      email: tomerhal@post.bgu.ac.il
+      affiliation: Ben-Gurion University
+    - given-names: Itai
+      family-names: Tzruia
+      email: itaitz@post.bgu.ac.il
+      affiliation: Ben-Gurion University
+    - given-names: Achiya
+      family-names: Elyasaf
+      email: achiya@bgu.ac.il
+      affiliation: Ben-Gurion University
+      orcid: 'https://orcid.org/0000-0002-4009-5353'
+  title: "EC-KitY: Evolutionary computation tool kit in Python with seamless machine learning integration"
+  type: article
+  year: 2023
+  journal: SoftwareX
+  volume: 22
+  pages: 101381
+  identifiers:
+    - type: doi
+      value: 10.1016/j.softx.2023.101381
