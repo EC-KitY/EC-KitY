@@ -6,6 +6,8 @@
 
 Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
+[Join the community section](https://chat.eckity.org)
+
 **EC-KitY** is:
 - A comprehensive toolkit for running evolutionary algorithms
 - Written in Python
