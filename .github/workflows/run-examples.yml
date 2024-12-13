@@ -24,7 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install matplotlib
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f requirements-ml.txt ]; then pip install -r requirements-ml.txt; fi
+        if [ -f requirements-ml.txt ]; then pip install -r requirements-ml.txt --use-pep517; fi
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
