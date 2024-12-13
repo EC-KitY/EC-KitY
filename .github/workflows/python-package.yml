@@ -28,14 +28,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install flake8 pytest coverage matplotlib
-          python -m pip install scikit-learn>=1.1 --use-pep517
+          python -m pip install "scikit-learn>=1.1,<1.6" --use-pep517
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Log dependencies
-        run: |
-            python -m pip show numpy
-            python -m pip show overrides
-            python -m pip show pandas
-            python -m pip show scikit-learn
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
