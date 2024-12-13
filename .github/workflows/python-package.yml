@@ -32,10 +32,10 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Log dependencies
         run: |
-        python -m pip show numpy
-        python -m pip show overrides
-        python -m pip show pandas
-        python -m pip show scikit-learn
+            python -m pip show numpy
+            python -m pip show overrides
+            python -m pip show pandas
+            python -m pip show scikit-learn
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
