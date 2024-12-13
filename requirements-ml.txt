@@ -1,1 +1,1 @@
-scikit-learn>=1.1, <1.6
+scikit-learn>=1.1 --use-pep517
