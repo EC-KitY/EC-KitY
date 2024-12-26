@@ -30,5 +30,9 @@ chapters:
     - file: tutorials/sklearn-symbolic-regression
     - file: tutorials/breast-cancer
     - file: tutorials/nsga2
-- file: custom
+- file: advanced
+  sections:
+    - file: advanced/custom
+    - file: advanced/concurrency
+    - file: advanced/random
 - file: contribution

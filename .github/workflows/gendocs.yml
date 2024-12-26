@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install ghp-import
+        python -m pip install ghp-import pdoc
         python -m pip install -r docs/requirements.txt
 
     - name: Update documentation
@@ -30,3 +30,6 @@ jobs:
         jupyter-book build docs/
         ghp-import -n -p -f docs/_build/html
 
+    - name: Update API
+      run: |
+        pdoc -d numpy -o docs/api ./eckity

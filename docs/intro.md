@@ -10,5 +10,9 @@ Written in Python
 - Designed with modern software engineering in mind
 - Designed to support all popular EC paradigms (GA, GP, ES, coevolution, multi-objective, etc').
 
+[Main website](eckity.org)
+[API reference](api.eckity.org)
+[Community section](chat.eckity.org)
+
 ```{tableofcontents}
 ```

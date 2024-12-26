@@ -1,4 +1,4 @@
-# Setting Custom Experiments
+# Custom Problems
 
 In case you want to solve a problem that does not appear in the Examples folder, you only need to do these two things:
 - Choose the individual representation (either from the existing ones in genetic_encodings folder, or a custom representation of your own)
@@ -21,16 +21,29 @@ class ZeroMaxEvaluator(SimpleIndividualEvaluator):
         return len(vector) - sum(vector)
 ```
 
-Et voilà! we are ready to use our new evaluator in an experiment.
+Et voilà! we are ready to use our new evaluator in an evolutionary experiment.
 
 ```python
 from eckity.algorithms import SimpleEvolution
+from eckity.subpopulation import Subpopulation
+from eckity.creators import GABitStringVectorCreator
+from eckity.genetic_operators import VectorKPointCrossover, BitStringVectorFlipMutation
 
 algo = SimpleEvolution(
-    creators=GABitStringVectorCreator(
-        length=100,
-    ),
-    evaluator=ZeroMaxEvaluator(),
-    # additional fields of SimpleEvolution
+    Subpopulation(
+        creators=GABitStringVectorCreator(
+            length=100,
+        ),
+        evaluator=ZeroMaxEvaluator(),
+        operators_sequence=[
+            VectorKPointCrossover(),
+            BitStringVectorFlipMutation()
+        ]
+    )
 )
+
+algo.evolve()
+
+# Execute (show) the best solution
+print(algo.execute())
 ```
