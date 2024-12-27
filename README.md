@@ -56,7 +56,7 @@ from examples.treegp.basic_mode.symbolic_regression import SymbolicRegressionEva
 algo = SimpleEvolution(
     Subpopulation(
         SymbolicRegressionEvaluator(),
-        creator=FullCreator(
+        creators=FullCreator(
             terminal_set=['x', 'y', 'z'],
             function_set=[f_add, f_sub, f_mul, f_div]
         ),
