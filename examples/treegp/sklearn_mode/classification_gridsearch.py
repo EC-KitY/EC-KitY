@@ -96,7 +96,7 @@ def main():
             selection_methods=[
                 (
                     TournamentSelection(
-                        tournament_size=4, higher_is_better=True
+                        tournament_size=4
                     ),
                     1,
                 )

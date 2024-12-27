@@ -11,12 +11,10 @@ class SelectionMethod(Operator):
     def __init__(
         self,
         events=None,
-        higher_is_better=False
     ):
         if events is None:
             events = ["after_selection"]
         super().__init__(events=events)
-        self.higher_is_better = higher_is_better
         self.selected_individuals = None
 
     @override

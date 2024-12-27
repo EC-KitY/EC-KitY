@@ -31,7 +31,7 @@ def main():
                       ],
                       selection_methods=[
                           # (selection method, selection probability) tuple
-                          (TournamentSelection(tournament_size=3, higher_is_better=True), 1)
+                          (TournamentSelection(tournament_size=3), 1)
                       ]
                       ),
         breeder=SimpleBreeder(),

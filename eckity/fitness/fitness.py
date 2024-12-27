@@ -35,8 +35,8 @@ class Fitness(ABC):
         self.is_relative_fitness = is_relative_fitness
         self.cache = False if is_relative_fitness else cache
 
-        if higher_is_better is None:
-            raise ValueError("higher_is_better must be set to True/False")
+        if not isinstance(higher_is_better, bool):
+            raise ValueError("higher_is_better must be boolean")
         self.higher_is_better = higher_is_better
 
     @abstractmethod

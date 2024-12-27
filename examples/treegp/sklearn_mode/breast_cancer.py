@@ -74,7 +74,7 @@ def main():
                 # (selection method, selection probability) tuple
                 (
                     TournamentSelection(
-                        tournament_size=4, higher_is_better=True
+                        tournament_size=4
                     ),
                     1,
                 )

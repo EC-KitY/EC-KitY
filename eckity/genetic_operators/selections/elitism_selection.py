@@ -5,18 +5,20 @@ from eckity.individual import Individual
 
 
 class ElitismSelection(SelectionMethod):
-    def __init__(self, num_elites, higher_is_better=False, events=None):
-        super().__init__(events=events, higher_is_better=higher_is_better)
+    def __init__(self, num_elites, events=None):
+        super().__init__(events=events)
         self.num_elites = num_elites
-        self.higher_is_better = higher_is_better
 
     def select(
         self, source_inds: List[Individual], dest_inds: List[Individual]
     ) -> List[Individual]:
+        # assumes higher_is_better the same for all individuals
+        higher_is_better = source_inds[0].higher_is_better
+
         elites = sorted(
             source_inds,
             key=lambda ind: ind.get_augmented_fitness(),
-            reverse=self.higher_is_better,
+            reverse=higher_is_better,
         )[: self.num_elites]
         for elite in elites:
             cloned = elite.clone()

@@ -13,7 +13,6 @@ class TournamentSelection(SelectionMethod):
     def __init__(
         self,
         tournament_size,
-        higher_is_better=False,
         replace=True,
         events=None,
     ):
@@ -29,15 +28,13 @@ class TournamentSelection(SelectionMethod):
             Size of each tournament.
             larger tournaments focus on exploitation,
             while small tournaments focus on exploration.
-        higher_is_better : bool, optional
-            is higher fitness better or worse, by default False
         replace : bool, optional
             whether tournaments can contain multiple copies of the same
             individual, by default False
         events : List[str], optional
             selection events, by default None
         """
-        super().__init__(events=events, higher_is_better=higher_is_better)
+        super().__init__(events=events)
         self.tournament_size = tournament_size
         self.replace = replace
 

@@ -29,7 +29,7 @@ class NSGA2Breeder(SimpleBreeder):
 
 			num_elites = subpopulation.n_elite
 			if num_elites > 0:
-				elitism_sel = ElitismSelection(num_elites=num_elites, higher_is_better=subpopulation.higher_is_better)
+				elitism_sel = ElitismSelection(num_elites=num_elites)
 				elitism_sel.apply_operator((subpopulation.individuals, nextgen_population))
 
 			nextgen_population = self._create_next_gen(subpopulation)

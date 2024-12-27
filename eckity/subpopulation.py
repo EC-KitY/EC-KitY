@@ -113,7 +113,7 @@ class Subpopulation:
             selection_methods = [
                 (
                     TournamentSelection(
-                        tournament_size=10, higher_is_better=higher_is_better
+                        tournament_size=10
                     ),
                     1,
                 )
