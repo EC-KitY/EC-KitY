@@ -5,7 +5,7 @@ In case you want to solve a problem that does not appear in the Examples folder,
 - Define a custom SimpleIndividualEvaluator subclass.
 
 Let's define a new GA problem called zero-max, which is the exact opposite of the one-max problem.
-If you are not familiar with the one-max problem, refer to the [one-max tutorial](tutorials/one-max.md).
+If you are not familiar with the one-max problem, refer to the [One-Max tutorial](../tutorials/one-max.md).
 
 We will use bit-string vectors (as in the original problem).
 As for the fitness function, the fitness scores will be the number of zeros in the vector.

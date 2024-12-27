@@ -1,7 +1,7 @@
 # Algorithm
 
 Evolutionary Algorithm defined in the experiment.
-An algorithm can operate on a single Subpopulation, two Subpopulations (coevolution), or n>2 Subpoplations (island model).
+An algorithm can operate on a single Subpopulation, or multiple Subpopulations (coevolution, island model).
 
 The following psuedocode demonstrates the main flow of the algorithm:
 
@@ -24,4 +24,5 @@ Each step is performed by an object that is invoked by the algorithm:
 Algorithm is an abstract class.
 The most straightforward concrete Algorithm class is *SimpleEvolution*.
 SimpleEvolution assumes there is only one population in the evolutionary experiment.
+Another Algorithm subclass is *NSGA2Evolution*, used for multi-objective evolution (MOE).
 

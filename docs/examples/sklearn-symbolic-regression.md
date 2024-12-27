@@ -5,7 +5,6 @@ In this example we will solve the Symbolic Regression problem using Sklearn and 
 
 ## Setting the experiment
 First, we need to import the components we want to use in our experiment.
-If you are not familiar with the basics of evolutionary algorithms, here's a [short intro](https://drive.google.com/file/d/0B6G3tbmMcpR4WVBTeDhKa3NtQjg/view?resourcekey=0-zLNbQBpLQ7jC_HVVQGLrzA).
 
 Import external modules:
 ```python

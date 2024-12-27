@@ -21,15 +21,15 @@ chapters:
         - file: architecture/operator/genetic-operator
         - file: architecture/operator/failable-operator
     - file: architecture/statistics
-- file: tutorials
+- file: examples
   sections:
-    - file: tutorials/one-max
-    - file: tutorials/knapsack
-    - file: tutorials/basic-symbolic-regression
-    - file: tutorials/multiplexer
-    - file: tutorials/sklearn-symbolic-regression
-    - file: tutorials/breast-cancer
-    - file: tutorials/nsga2
+    - file: examples/one-max
+    - file: examples/knapsack
+    - file: examples/basic-symbolic-regression
+    - file: examples/multiplexer
+    - file: examples/sklearn-symbolic-regression
+    - file: examples/breast-cancer
+    - file: examples/nsga2
 - file: advanced
   sections:
     - file: advanced/custom

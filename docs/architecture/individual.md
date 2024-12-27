@@ -1,23 +1,19 @@
 # Individual
-The Individual class represents an individual in the experiment.
+Abstract class representing a single individual.
 
 ## Concrete Individual classes
 ### Tree
-Subclass of Individual, used for GP experiments.
-Representation is a list of TreeNodes. Each node is either a function (inner node) or a terminal (leaf node). Tree nodes are in prefix order.
+Subclass of Individual, used for GP experiments. \
+Tree is represented by a list of TreeNodes. Each node is either a function (inner node) or a terminal (leaf node). Tree nodes are in stored in prefix order.
 
 For instance, the function x*(y+1) is represented as:
 ```python
-[
-    FunctionNode(f_mul),
-    TerminalNode('x'),
-    FunctionNode(f_add),
-    TerminalNode('y'),
-    TerminalNode(1)
-]
+[FunctionNode(f_mul), TerminalNode('x'), FunctionNode(f_add), TerminalNode('y'), TerminalNode(1)]
 ```
 
-Converting a Tree to str generates a python function representing the tree:
+The possible nodes of a tree are defined by the fields `function_set` and `terminal_set`.
+
+Casting a Tree to str generates a python function that represents the tree:
 ```python
 >>> from eckity.genetic_encodings.gp import Tree, TerminalNode, FunctionNode
 >>> from eckity.base.untyped_functions import f_mul, f_add
