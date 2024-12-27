@@ -1,9 +1,11 @@
-import numpy as np
+from typing import List
 
+import numpy as np
 from overrides import override
 from scipy.special import softmax
 
 from eckity.genetic_operators import SelectionMethod
+from eckity.individual import Individual
 
 
 class FitnessProportionateSelection(SelectionMethod):
@@ -31,7 +33,9 @@ class FitnessProportionateSelection(SelectionMethod):
         super().__init__(events=events, higher_is_better=higher_is_better)
 
     @override
-    def select(self, source_inds, dest_inds):
+    def select(
+        self, source_inds: List[Individual], dest_inds: List[Individual]
+    ) -> List[Individual]:
         n_selected = len(source_inds) - len(dest_inds)
 
         fitness_scores = np.array(

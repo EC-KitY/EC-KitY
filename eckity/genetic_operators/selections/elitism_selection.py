@@ -1,4 +1,7 @@
+from typing import List
+
 from eckity.genetic_operators import SelectionMethod
+from eckity.individual import Individual
 
 
 class ElitismSelection(SelectionMethod):
@@ -7,7 +10,9 @@ class ElitismSelection(SelectionMethod):
         self.num_elites = num_elites
         self.higher_is_better = higher_is_better
 
-    def select(self, source_inds, dest_inds):
+    def select(
+        self, source_inds: List[Individual], dest_inds: List[Individual]
+    ) -> List[Individual]:
         elites = sorted(
             source_inds,
             key=lambda ind: ind.get_augmented_fitness(),
