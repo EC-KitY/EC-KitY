@@ -1,5 +1,6 @@
 import random
 from abc import ABC, abstractmethod
+from overrides import override
 
 from eckity.event_based_operator import Operator
 
@@ -26,7 +27,8 @@ class GeneticOperator(Operator, ABC):
         super().__init__(events=events, arity=arity)
         self.probability = probability
 
-    def apply_operator(self, individuals):
+    @override
+    def apply_operator(self, payload):
         """
         Apply the genetic operator with a certain probability.
         The individuals are modified in-place, so it is not mandatory
@@ -34,7 +36,7 @@ class GeneticOperator(Operator, ABC):
 
         Parameters
         ----------
-        individuals : List[Individual]
+        payload : List[Individual]
             Individuals to apply the operator to.
 
         Returns
@@ -44,19 +46,19 @@ class GeneticOperator(Operator, ABC):
         """
         if random.random() <= self.probability:
             # Fitness is irrelevant once the operator is applied
-            for individual in individuals:
+            for individual in payload:
                 individual.set_fitness_not_evaluated()
-            op_res = self.apply(individuals)
+            op_res = self.apply(payload)
 
             # Add the operator to the applied operators list
             for ind in op_res:
                 ind.applied_operators.append(type(self).__name__)
                 
                 if ind.update_parents:
-                    parents = [p.id for p in individuals]
+                    parents = [p.id for p in payload]
                     ind.parents.extend(parents)
             return op_res
-        return individuals
+        return payload
 
     @abstractmethod
     def apply(self, individuals):

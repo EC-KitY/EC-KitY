@@ -47,7 +47,7 @@ def main():
 			population_size=150,
 			# user-defined fitness evaluation method
 			evaluator=Zdt1Evaluator(),
-			# maximization problem (fitness is sum of values), so higher fitness is better
+			# minimization problem, so higher fitness is worse
 			higher_is_better=False,
 			elitism_rate=1 / 300,
 			# genetic operators sequence to be applied in each generation
@@ -56,8 +56,7 @@ def main():
 				FloatVectorUniformNPointMutation(probability=0.3, n=3)  # maybe chnge mutation
 			],
 			selection_methods=[
-				# (selection method, selection probability) tuple
-				(TournamentSelection(tournament_size=3, higher_is_better=True), 1)
+				TournamentSelection(tournament_size=3)
 			]
 		)]),
 		breeder=NSGA2Breeder(),

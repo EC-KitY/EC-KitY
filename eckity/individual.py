@@ -48,6 +48,10 @@ class Individual:
         if update_parents:
             self.parents = []  # last gen
 
+    @property
+    def higher_is_better(self) -> bool:
+        return self.fitness.higher_is_better
+
     def update_id(self):
         self.id = Individual.id
         Individual.id += 1

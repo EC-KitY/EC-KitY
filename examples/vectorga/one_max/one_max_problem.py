@@ -29,8 +29,7 @@ def main():
                           BitStringVectorNFlipMutation(probability=0.2, probability_for_each=0.05, n=100)
                       ],
                       selection_methods=[
-                          # (selection method, selection probability) tuple
-                          (TournamentSelection(tournament_size=3, higher_is_better=True), 1)
+                          TournamentSelection(tournament_size=3)
                       ]
                       ),
         breeder=SimpleBreeder(),

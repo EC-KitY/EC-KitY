@@ -1,15 +1,16 @@
-import numpy as np
+from typing import List
 
+import numpy as np
 from overrides import override
 from scipy.special import softmax
 
 from eckity.genetic_operators import SelectionMethod
+from eckity.individual import Individual
 
 
 class FitnessProportionateSelection(SelectionMethod):
     def __init__(
         self,
-        higher_is_better=False,
         events=None,
     ):
         """
@@ -23,15 +24,15 @@ class FitnessProportionateSelection(SelectionMethod):
 
         Parameters
         ----------
-        higher_is_better : bool, optional
-            is higher fitness better or worse, by default False
         events : List[str], optional
             selection events, by default None
         """
-        super().__init__(events=events, higher_is_better=higher_is_better)
+        super().__init__(events=events)
 
     @override
-    def select(self, source_inds, dest_inds):
+    def select(
+        self, source_inds: List[Individual], dest_inds: List[Individual]
+    ) -> List[Individual]:
         n_selected = len(source_inds) - len(dest_inds)
 
         fitness_scores = np.array(
@@ -45,8 +46,11 @@ class FitnessProportionateSelection(SelectionMethod):
                 "Fitness scores must be non-negative for FP Selection"
             )
 
+        # assumes higher_is_better the same for all individuals
+        higher_is_better = source_inds[0].higher_is_better
+
         # convert higher fitness scores to be better
-        if not self.higher_is_better:
+        if not higher_is_better:
             # add smoothing (if necessary) to avoid division by zero
             smoothing = 1 if min_val == 0 else 0
             fitness_scores = 1 / (fitness_scores + smoothing)

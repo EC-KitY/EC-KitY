@@ -4,10 +4,10 @@ from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
 
 
 def test_selected_by():
-    elitism = ElitismSelection(2, higher_is_better=True)
+    elitism = ElitismSelection(2)
     inds = [
-        BitStringVector(SimpleFitness(1), length=4),
-        BitStringVector(SimpleFitness(2), length=4),
+        BitStringVector(SimpleFitness(1, higher_is_better=True), length=4),
+        BitStringVector(SimpleFitness(2, higher_is_better=True), length=4),
     ]
     selected = elitism.select(inds, [])
     chosen = selected[0]

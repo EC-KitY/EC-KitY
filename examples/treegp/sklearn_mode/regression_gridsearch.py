@@ -73,13 +73,9 @@ def main():
                 ERCMutation(probability=0.05, arity=1),
             ],
             selection_methods=[
-                # (selection method, selection probability) tuple
-                (
-                    TournamentSelection(
-                        tournament_size=4, higher_is_better=False
-                    ),
-                    1,
-                )
+                TournamentSelection(
+                    tournament_size=4
+                ),
             ],
         ),
         max_workers=1,
