@@ -34,7 +34,7 @@ class NSGA2Breeder(SimpleBreeder):
 
 			nextgen_population = self._create_next_gen(subpopulation)
 
-			self.selected_individuals = subpopulation.get_selection_methods()[0][0] \
+			self.selected_individuals = subpopulation.get_selection_methods()[0] \
 				.select(subpopulation.individuals, nextgen_population)
 
 			subpopulation.individuals = nextgen_population

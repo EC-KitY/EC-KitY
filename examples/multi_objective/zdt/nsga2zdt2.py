@@ -56,8 +56,7 @@ def main():
 				FloatVectorUniformNPointMutation(probability=0.3, n=3)  # maybe chnge mutation
 			],
 			selection_methods=[
-				# (selection method, selection probability) tuple
-				(TournamentSelection(tournament_size=3), 1)
+				TournamentSelection(tournament_size=3)
 			]
 			)]),
 		breeder=NSGA2Breeder(),

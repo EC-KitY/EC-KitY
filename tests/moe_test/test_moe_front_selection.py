@@ -45,8 +45,7 @@ class TestNSGA2FrontSelection:
             # genetic operators sequence to be applied in each generation
             operators_sequence=[],
             selection_methods=[
-                # (selection method, selection probability) tuple
-                (TournamentSelection(tournament_size=3), 1)
+                TournamentSelection(tournament_size=3)
             ],
         )
 

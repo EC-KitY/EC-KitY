@@ -34,9 +34,7 @@ class SimpleBreeder(Breeder):
         """
         for subpopulation in population.sub_populations:
             # Assert that operator arities are compatible with pop size
-            # tuples of (selection, probability)
             selection_methods = subpopulation.get_selection_methods()
-            selection_methods = [t[0] for t in selection_methods]
 
             operators_sequence = subpopulation.get_operators_sequence()
             operators = selection_methods + operators_sequence
@@ -59,7 +57,8 @@ class SimpleBreeder(Breeder):
                     (subpopulation.individuals, nextgen_population)
                 )
 
-            selection = subpopulation.get_selection_methods()[0][0]
+            # consider only first selection method
+            selection = subpopulation.get_selection_methods()[0]
             self.selected_individuals = selection.select(
                 subpopulation.individuals, nextgen_population
             )

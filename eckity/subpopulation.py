@@ -1,10 +1,11 @@
 import logging
 import random
+from typing import List
 
 import numpy as np
 
 from eckity.creators.creator import Creator
-from eckity.genetic_operators import TournamentSelection
+from eckity.genetic_operators import SelectionMethod, TournamentSelection
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +68,7 @@ class Subpopulation:
         creators=None,
         pcr=None,
         operators_sequence=None,
-        selection_methods=None,
+        selection_methods: List[SelectionMethod] = None,
         elitism_rate=0.0,
         population_size=200,
         individuals=None,
@@ -109,13 +110,11 @@ class Subpopulation:
         # set default args
         if operators_sequence is None:
             raise ValueError("Must specify at least one operator")
+
         if selection_methods is None:
             selection_methods = [
-                (
-                    TournamentSelection(
-                        tournament_size=10
-                    ),
-                    1,
+                TournamentSelection(
+                    tournament_size=10
                 )
             ]
 

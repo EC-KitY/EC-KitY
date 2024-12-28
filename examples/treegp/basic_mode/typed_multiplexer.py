@@ -185,11 +185,7 @@ def main():
                 SubtreeMutation(probability=0.1, arity=1),
             ],
             selection_methods=[
-                # (selection method, selection probability) tuple
-                (
-                    TournamentSelection(tournament_size=7),
-                    1,
-                )
+                TournamentSelection(tournament_size=7)
             ],
         ),
         max_workers=1,
