@@ -1,15 +1,18 @@
 from eckity.breeders.simple_breeder import SimpleBreeder
-from eckity.genetic_operators.selections.elitism_selection import ElitismSelection
+from eckity.genetic_operators.selections.elitism_selection import (
+    ElitismSelection,
+)
 
 
 class NSGA2Breeder(SimpleBreeder):
-	def __init__(self,
-				 events=None):
-		super().__init__(events=events)
-		self.selected_individuals = []  # TODO why do we need this field? what about applied_individuals?
+    def __init__(self, events=None):
+        super().__init__(events=events)
+        self.selected_individuals = (
+            []
+        )  # TODO why do we need this field? what about applied_individuals?
 
-	def apply_breed(self, population):
-		"""
+    def apply_breed(self, population):
+        """
         Apply elitism, selection method and the sub-population's operator sequence on each sub-population.
         In simple case, the operator sequence is applied on the one and only sub-population.
 
@@ -24,32 +27,36 @@ class NSGA2Breeder(SimpleBreeder):
         -------
         None.
         """
-		for subpopulation in population.sub_populations:
-			nextgen_population = []
+        for subpopulation in population.sub_populations:
+            nextgen_population = []
 
-			num_elites = subpopulation.n_elite
-			if num_elites > 0:
-				elitism_sel = ElitismSelection(num_elites=num_elites)
-				elitism_sel.apply_operator((subpopulation.individuals, nextgen_population))
+            num_elites = subpopulation.n_elite
+            if num_elites > 0:
+                elitism_sel = ElitismSelection(num_elites=num_elites)
+                elitism_sel.apply_operator(
+                    (subpopulation.individuals, nextgen_population)
+                )
 
-			nextgen_population = self._create_next_gen(subpopulation)
+            nextgen_population = self._create_next_gen(subpopulation)
 
-			self.selected_individuals = subpopulation.get_selection_methods()[0] \
-				.select(subpopulation.individuals, nextgen_population)
+            selection = subpopulation.get_selection_methods()[0]
+            self.selected_individuals = selection.select(
+                subpopulation.individuals, nextgen_population
+            )
 
-			subpopulation.individuals = nextgen_population
+            subpopulation.individuals = nextgen_population
 
-	def _create_next_gen(self, subpopulation):
-		# oldgen_population = deepcopy(subpopulation.individuals)  # needed since apply operator changes the values of
-		oldgen_population = [ind.clone() for ind in subpopulation.individuals]
+    def _create_next_gen(self, subpopulation):
+        oldgen_population = [ind.clone() for ind in subpopulation.individuals]
 
-		nextgen_population = self._apply_operators(subpopulation.get_operators_sequence(),
-												   subpopulation.individuals)  # self.selected_individuals)
+        nextgen_population = self._apply_operators(
+            subpopulation.get_operators_sequence(), subpopulation.individuals
+        )
 
-		oldgen_population += nextgen_population
-		nextgen_population = oldgen_population
+        oldgen_population += nextgen_population
+        nextgen_population = oldgen_population
 
-		for ind in nextgen_population:
-			ind.fitness.set_not_evaluated()
+        for ind in nextgen_population:
+            ind.fitness.set_not_evaluated()
 
-		return nextgen_population
+        return nextgen_population
