@@ -1,4 +1,4 @@
-from typing import Callable, List, Optional
+from typing import Callable, Dict, List, Optional, Tuple, Union
 
 from overrides import override
 
@@ -14,11 +14,11 @@ class RootFunctionCreator(FullCreator):
 
     def __init__(
         self,
-        root_function: Callable = None,
-        init_depth=None,
-        function_set=None,
-        terminal_set=None,
-        bloat_weight=0.1,
+        root_function: Optional[Callable] = None,
+        init_depth: Optional[Tuple[int, int]] = None,
+        function_set: Optional[List[Callable]] = None,
+        terminal_set: Optional[Union[List[str], Dict[str, type]]] = None,
+        bloat_weight: float = 0.1,
         events=None,
     ) -> None:
         super().__init__(

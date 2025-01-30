@@ -3,6 +3,7 @@ This module implements the class `Fitness`
 """
 
 from abc import abstractmethod, ABC
+from typing import Optional
 
 
 class Fitness(ABC):
@@ -27,7 +28,7 @@ class Fitness(ABC):
     def __init__(
         self,
         is_evaluated: bool = False,
-        higher_is_better: bool = None,
+        higher_is_better: Optional[bool] = None,
         is_relative_fitness: bool = False,
         cache: bool = False,
     ):

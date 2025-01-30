@@ -1,3 +1,5 @@
+from typing import Any, Callable
+
 BEFORE_OPERATOR_EVENT_NAME = 'before_operator'
 AFTER_OPERATOR_EVENT_NAME = 'after_operator'
 
@@ -37,7 +39,7 @@ class BeforeAfterPublisher:
     def event_name_to_data(self, event_name):
         return {}  # TODO abs?
 
-    def act_and_publish_before_after(self, act_func: callable):
+    def act_and_publish_before_after(self, act_func: Callable) -> Any:
         self.publish(BEFORE_OPERATOR_EVENT_NAME)
         return_val = act_func()
         self.publish(AFTER_OPERATOR_EVENT_NAME)

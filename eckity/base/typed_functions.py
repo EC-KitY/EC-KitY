@@ -5,7 +5,7 @@ Note: all functions work on numpy arrays.
 
 from typing import Any
 import numpy as np
-from .types import t_argmax
+from .types import Argmax
 
 
 def add2floats(x: float, y: float) -> float:
@@ -120,7 +120,7 @@ def if_then_else(test: bool, dit: Any, dif: Any) -> float:
     return np.where(test, dit, dif)
 
 
-def argmax2floats(x0: float, x1: float) -> t_argmax:
+def argmax2floats(x0: float, x1: float) -> Argmax:
     return np.argmax([x0, x1], axis=0)
 
 

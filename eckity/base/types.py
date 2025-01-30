@@ -1,1 +1,2 @@
-t_argmax = type("argmax", (int,), {})
+def Argmax(int):
+    pass

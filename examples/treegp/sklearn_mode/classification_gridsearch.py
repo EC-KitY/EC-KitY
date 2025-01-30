@@ -40,10 +40,12 @@ from eckity.termination_checkers.threshold_from_target_termination_checker impor
 
 # Adding your own types and functions
 
-t_argmax = type("argmax", (int,), {})
+
+class Argmax(int):
+    pass
 
 
-def argmax3(x0: float, x1: float, x2: float) -> t_argmax:
+def argmax3(x0: float, x1: float, x2: float) -> Argmax:
     return np.argmax([x0, x1, x2])
 
 

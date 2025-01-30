@@ -1,6 +1,8 @@
 from copy import deepcopy
+from typing import List
 
 from eckity.fitness.fitness import Fitness
+from eckity.genetic_operators import GeneticOperator, SelectionMethod
 
 
 class Individual:
@@ -21,12 +23,12 @@ class Individual:
         The generation number of the individual.
     fitness: Fitness
         This object manages the fitness state of the individual.
-    cloned_from: list
+    cloned_from: List[int]
         A list of ids of individuals that this individual was cloned from.
-    selected_by: list
+    selected_by: List[SelectionMethod]
         A list of selection methods that selected this individual in
         the last generation.
-    applied_operators: list
+    applied_operators: List[GeneticOperator]
         A list of genetic operators that were applied on this individual
         in the last generation.
         *** Note that failed operators are still included in this list. ***
@@ -40,13 +42,13 @@ class Individual:
         self.fitness = fitness
 
         # informational only
-        self.cloned_from = []  # chain of ids from gen 0
-        self.selected_by = []  # last gen
-        self.applied_operators = []  # last gen
+        self.cloned_from: List[int] = []  # chain of ids from gen 0
+        self.selected_by: List[SelectionMethod] = []  # last gen
+        self.applied_operators: List[GeneticOperator] = []  # last gen
 
-        self.update_parents = update_parents
+        self.update_parents: bool = update_parents
         if update_parents:
-            self.parents = []  # last gen
+            self.parents: List[Individual] = []  # last gen
 
     def update_id(self):
         self.id = Individual.id
@@ -55,7 +57,7 @@ class Individual:
     def set_fitness_not_evaluated(self):
         self.fitness.set_not_evaluated()
 
-    def clone(self):
+    def clone(self) -> "Individual":
         result = deepcopy(self)
         result.cloned_from.append(self.id)
         if result.update_parents:
