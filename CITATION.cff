@@ -1,0 +1,77 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: EC-KitY
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: Moshe
+    family-names: Sipper
+    email: sipper@bgu.ac.il
+    orcid: 'https://orcid.org/0000-0003-1811-472X'
+    affiliation: Ben-Gurion University
+  - given-names: Tomer
+    family-names: Halperin
+    email: tomerhal@post.bgu.ac.il
+    affiliation: Ben-Gurion University
+  - given-names: Itai
+    family-names: Tzruia
+    email: itaitz@post.bgu.ac.il
+    affiliation: Ben-Gurion University
+  - given-names: Achiya
+    family-names: Elyasaf
+    email: achiya@bgu.ac.il
+    affiliation: Ben-Gurion University
+    orcid: 'https://orcid.org/0000-0002-4009-5353'
+identifiers:
+  - type: doi
+    value: 10.1016/j.softx.2023.101381
+repository-code: 'https://github.com/EC-KitY/EC-KitY'
+url: 'https://www.eckity.org/'
+abstract: >-
+  EC-KitY is a comprehensive Python library for doing
+  evolutionary computation (EC), licensed under the BSD
+  3-Clause License, and compatible with scikit-learn.
+  Designed with modern software engineering and machine
+  learning integration in mind, EC-KitY can support all
+  popular EC paradigms, including genetic algorithms,
+  genetic programming, coevolution, evolutionary
+  multi-objective optimization, and more. This paper
+  provides an overview of the package, including the ease of
+  setting up an EC experiment, the architecture, the main
+  features, and a comparison with other libraries.
+keywords:
+  - Evolutionary algorithms
+  - Evolutionary computation
+  - Genetic programming
+  - Machine learning
+  - Scikit-learn
+license: BSD-3-Clause
+preferred-citation:
+  authors:
+    - given-names: Moshe
+      family-names: Sipper
+      email: sipper@bgu.ac.il
+      orcid: 'https://orcid.org/0000-0003-1811-472X'
+      affiliation: Ben-Gurion University
+    - given-names: Tomer
+      family-names: Halperin
+      email: tomerhal@post.bgu.ac.il
+      affiliation: Ben-Gurion University
+    - given-names: Itai
+      family-names: Tzruia
+      email: itaitz@post.bgu.ac.il
+      affiliation: Ben-Gurion University
+    - given-names: Achiya
+      family-names: Elyasaf
+      email: achiya@bgu.ac.il
+      affiliation: Ben-Gurion University
+      orcid: 'https://orcid.org/0000-0002-4009-5353'
+  title: "EC-KitY: Evolutionary computation tool kit in Python with seamless machine learning integration"
+  type: article
+  year: 2023
+  journal: SoftwareX
+  volume: 22
+  pages: 101381
+  doi: 10.1016/j.softx.2023.101381

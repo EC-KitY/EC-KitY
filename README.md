@@ -6,6 +6,8 @@
 
 Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
+[Join the community section](https://chat.eckity.org)
+
 **EC-KitY** is:
 - A comprehensive toolkit for running evolutionary algorithms
 - Written in Python
@@ -54,7 +56,7 @@ from examples.treegp.basic_mode.symbolic_regression import SymbolicRegressionEva
 algo = SimpleEvolution(
     Subpopulation(
         SymbolicRegressionEvaluator(),
-        creator=FullCreator(
+        creators=FullCreator(
             terminal_set=['x', 'y', 'z'],
             function_set=[f_add, f_sub, f_mul, f_div]
         ),
@@ -78,17 +80,28 @@ from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
 from eckity.algorithms.simple_evolution import SimpleEvolution
+from eckity.base.untyped_functions import f_add, f_div, f_mul, f_sub
 from eckity.creators.gp_creators.full import FullCreator
 from eckity.genetic_encodings.gp.tree.utils import create_terminal_set
+from eckity.genetic_operators import SubtreeCrossover, SubtreeMutation
 from eckity.sklearn_compatible.regression_evaluator import RegressionEvaluator
 from eckity.sklearn_compatible.sk_regressor import SKRegressor
 from eckity.subpopulation import Subpopulation
 
 X, y = make_regression(n_samples=100, n_features=3)
 terminal_set = create_terminal_set(X)
+function_set = [f_add, f_sub, f_mul, f_div]
 
-algo = SimpleEvolution(Subpopulation(creators=FullCreator(terminal_set=terminal_set),
-                                     evaluator=RegressionEvaluator()))
+algo = SimpleEvolution(
+    Subpopulation(
+        RegressionEvaluator(),
+        creators=FullCreator(
+            terminal_set=terminal_set,
+            function_set=function_set
+        ),
+        operators_sequence=[SubtreeCrossover(), SubtreeMutation()]
+    )
+)
 regressor = SKRegressor(algo)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
