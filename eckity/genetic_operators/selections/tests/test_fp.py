@@ -24,4 +24,4 @@ def test_selection_higher_is_better(higher_is_better):
     expected_selected_idx = 1 if higher_is_better else 0
 
     assert first_selected.selected_by == [type(fp_sel).__name__]
-    assert first_selected.cloned_from == [inds[expected_selected_idx].id]
+    assert first_selected.cloned_from == inds[expected_selected_idx].id
