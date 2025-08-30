@@ -15,7 +15,7 @@ class SimpleBreeder(Breeder):
         self.selected_individuals = (
             []
         )  # TODO why do we need this field? what about applied_individuals?
-        self.best_of_run = []
+        self.best_of_run = []  # TODO this field isn't used
 
     def apply_breed(self, population):
         """
