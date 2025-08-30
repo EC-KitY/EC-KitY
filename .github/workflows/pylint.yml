@@ -27,7 +27,7 @@ jobs:
       run: |
         pylint $(git ls-files '*.py') --output=lint.txt || true
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: lint.txt
         path: lint.txt
