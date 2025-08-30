@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 from eckity.fitness.fitness import Fitness
-from memory_profiler import profile
 
 
 class Individual:
@@ -60,7 +59,6 @@ class Individual:
     def set_fitness_not_evaluated(self):
         self.fitness.set_not_evaluated()
 
-    @profile
     def clone(self):
         result = deepcopy(self)
         result.cloned_from = self.id
