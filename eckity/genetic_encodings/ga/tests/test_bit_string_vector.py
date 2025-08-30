@@ -95,7 +95,7 @@ class TestBitStringVector:
         assert v2.bounds == v1.bounds
         assert v2.get_pure_fitness() == v1.get_pure_fitness()
         assert v1.id == v2.id - 1
-        assert v2.cloned_from == [v1.id]
+        assert v2.cloned_from == v1.id
 
         # Check that fitness is evaluated and equal to original one
         assert v2.fitness.get_pure_fitness() == score
