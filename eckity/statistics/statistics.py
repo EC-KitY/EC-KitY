@@ -15,8 +15,9 @@ class Statistics(ABC):
 
     """
 
-    def __init__(self, format_string):
+    def __init__(self, format_string, verbose=True):
         self.format_string = format_string
+        self.verbose = verbose
 
     @abstractmethod
     def write_statistics(self, sender, data_dict):

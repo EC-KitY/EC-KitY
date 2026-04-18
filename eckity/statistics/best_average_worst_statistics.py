@@ -21,21 +21,21 @@ class BestAverageWorstStatistics(Statistics):
 
     """
 
-    def __init__(self, format_string=None):
+    def __init__(self, format_string=None, verbose=True):
         if format_string is None:
             format_string = (
                 "best fitness {}\nworst fitness {}\naverage fitness {}\n"
             )
-        super().__init__(format_string)
+        super().__init__(format_string, verbose)
 
     def write_statistics(self, sender, data_dict):
-        logger.info(f'generation #{data_dict["generation_num"]}')
+        if self.verbose: logger.info(f'generation #{data_dict["generation_num"]}')
         for index, sub_pop in enumerate(
             data_dict["population"].sub_populations
         ):
-            logger.info(f"subpopulation #{index}")
+            if self.verbose: logger.info(f"subpopulation #{index}")
             best_individual = sub_pop.get_best_individual()
-            logger.info(
+            if self.verbose: logger.info(
                 self.format_string.format(
                     best_individual.get_pure_fitness(),
                     sub_pop.get_worst_individual().get_pure_fitness(),

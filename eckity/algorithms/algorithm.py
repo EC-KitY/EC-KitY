@@ -91,6 +91,9 @@ class Algorithm(Operator, ABC):
     generation_num: int, default=0
         Current generation number
 
+    verbose: bool, default=True
+        For disabling logs
+
     Attributes
     ----------
     final_generation_: int
@@ -115,6 +118,7 @@ class Algorithm(Operator, ABC):
         executor: str = "process",
         max_workers: int = None,
         generation_num: int = 0,
+        verbose: bool = True,
     ):
 
         ext_event_names = event_names.copy() if event_names is not None else []
@@ -131,6 +135,7 @@ class Algorithm(Operator, ABC):
         self.population_evaluator = population_evaluator
         self.termination_checker = termination_checker
         self.max_generation = max_generation
+        self.verbose = verbose
 
         # set random seed to current time if not provided
         if random_seed is None:
@@ -214,7 +219,7 @@ class Algorithm(Operator, ABC):
         Initialize seed, Executor and relevant operators
         """
         self.set_random_seed(self.random_seed)
-        logger.info("random seed = %d", self.random_seed)
+        if self.verbose: logger.info("random seed = %d", self.random_seed)
         self.population_evaluator.set_executor(self.executor)
 
         for field in self.__dict__.values():

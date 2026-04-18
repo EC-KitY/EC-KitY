@@ -79,6 +79,9 @@ class SimpleEvolution(Algorithm):
 
     generation_num: int, default=0
             Current generation number
+
+    verbose: bool, default=True
+            For disabling logs
     """
 
     def __init__(
@@ -100,6 +103,7 @@ class SimpleEvolution(Algorithm):
         best_of_gen=None,
         worst_of_gen=None,
         generation_num=0,
+        verbose=True,
     ):
 
         if event_names is None:
