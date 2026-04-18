@@ -280,6 +280,7 @@ class Algorithm(Operator, ABC):
         # there was already "preprocessing" generation created - gen #0
         # now create another self.max_generation generations, starting gen #1
         for gen in range(1, self.max_generation + 1):
+            self.publish("before_gen")
             self.generation_num = gen
             self.update_gen(gen)
 

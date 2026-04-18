@@ -108,6 +108,8 @@ class SimpleEvolution(Algorithm):
                 "after_eval",
                 "before_breeding",
                 "after_breeding",
+                "before_generation",
+                "after_generation",
             ]
         else:
             _event_names = event_names
