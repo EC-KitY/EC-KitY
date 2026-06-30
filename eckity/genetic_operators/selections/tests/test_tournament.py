@@ -24,7 +24,7 @@ class TestTournament:
         selected = tournament.select(inds[:2], [])
         first_winner = selected[0]
         assert first_winner.selected_by == [type(tournament).__name__]
-        assert first_winner.cloned_from[0] == inds[0].id
+        assert first_winner.cloned_from == inds[0].id
 
     def test_without_replacement(self, inds):
         tournament = TournamentSelection(
@@ -34,7 +34,7 @@ class TestTournament:
         selected = tournament.select(inds, [])
         first_winner = selected[0]
         assert first_winner.selected_by == [type(tournament).__name__]
-        assert first_winner.cloned_from[0] == inds[0].id
+        assert first_winner.cloned_from == inds[0].id
 
     def test_tournament_too_big(self, inds):
         tournament = TournamentSelection(

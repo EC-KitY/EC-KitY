@@ -12,4 +12,4 @@ def test_selected_by():
     selected = elitism.select(inds, [])
     chosen = selected[0]
     assert chosen.selected_by == ["ElitismSelection"]
-    assert chosen.cloned_from == [inds[1].id]
+    assert chosen.cloned_from == inds[1].id
