@@ -8,17 +8,16 @@ from eckity.genetic_encodings.ga.bit_string_vector import BitStringVector
 
 
 class TestTournament:
-    @pytest.fixture(scope="class")
+    @pytest.fixture(scope="function")
     def inds(self):
         return [
-            BitStringVector(SimpleFitness(i),
-                            length=0)
+            BitStringVector(SimpleFitness(i, higher_is_better=False), length=0)
             for i in range(10)
         ]
 
     def test_with_replacement(self, inds):
         tournament = TournamentSelection(
-            tournament_size=30, higher_is_better=True, replace=True
+            tournament_size=30, replace=True
         )
 
         selected = tournament.select(inds[:2], [])
@@ -28,7 +27,7 @@ class TestTournament:
 
     def test_without_replacement(self, inds):
         tournament = TournamentSelection(
-            tournament_size=len(inds), higher_is_better=False, replace=False
+            tournament_size=len(inds), replace=False
         )
 
         selected = tournament.select(inds, [])
@@ -39,11 +38,10 @@ class TestTournament:
     def test_tournament_too_big(self, inds):
         tournament = TournamentSelection(
             tournament_size=len(inds) + 1,
-            higher_is_better=False,
             replace=False,
         )
 
         with pytest.raises(ValueError) as err_info:
             tournament.select(inds, [])
-        
+
         assert "tournament size" in str(err_info).lower()
