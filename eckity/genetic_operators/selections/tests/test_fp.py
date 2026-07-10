@@ -6,8 +6,8 @@ from eckity.genetic_encodings.ga import BitStringVector
 
 
 @pytest.mark.parametrize("higher_is_better", [False, True])
-def test_selection_higher_is_better(higher_is_better):
-    fp_sel = FitnessProportionateSelection(higher_is_better=higher_is_better)
+def test_fp_selection(higher_is_better):
+    fp_sel = FitnessProportionateSelection()
     inds = [
         BitStringVector(
             SimpleFitness(1 / 1e6, higher_is_better=higher_is_better),
