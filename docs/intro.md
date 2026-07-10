@@ -4,7 +4,7 @@ EC-KitY is a Python tool kit for doing evolutionary computation, and it is sciki
 
 [Website](https://eckity.org) \
 [Paper](https://www.sciencedirect.com/science/article/pii/S2352711023000778) \
-[API reference](https://api.eckity.org) \
+[API reference](api/eckity.html) \
 [Community section](https://chat.eckity.org)
 
 EC-KitY is:
