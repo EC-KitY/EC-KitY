@@ -39,9 +39,10 @@ Run the examples (used in CI as smoke tests, requires `PYTHONPATH` set to repo r
 python examples/treegp/basic_mode/symbolic_regression.py
 ```
 
-Generate API docs:
+Build the docs locally (book + pdoc API reference, mirrors `gendocs.yml`):
 ```
-gendocs.bat
+jupyter-book build docs/
+pdoc -d numpy -o docs/_build/html/api ./eckity "!eckity.*.tests"
 ```
 
 ## Architecture
