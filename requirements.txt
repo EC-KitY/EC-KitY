@@ -1,4 +1,5 @@
 numpy>=1.23.0
 overrides>=7.0.0
 pandas>=0.25.2
+scipy>=1.7.0
 
