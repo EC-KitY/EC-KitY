@@ -2,11 +2,11 @@
 ![PyPI](https://img.shields.io/pypi/v/eckity)
 
 
-**EC-KitY** is a Python tool kit for doing evolutionary computation, and it is scikit-learn compatible.
+**EC-KitY** is a Python toolkit for evolutionary computation and is scikit-learn-compatible.
 
-Currently we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
+Currently, we have implemented Genetic Algorithm (GA) and tree-based Genetic Programming (GP), but EC-KitY will grow!
 
-[Join the community section](https://chat.eckity.org)
+[Join the community discord](https://chat.eckity.org)
 
 **EC-KitY** is:
 - A comprehensive toolkit for running evolutionary algorithms
@@ -27,16 +27,12 @@ In addition, the dependencies of the ML mode are described in `requirements-ml.t
 
 ### Documentation
 
-API is available [here](https://api.eckity.org)
+The documentation, usage examples, and tutorials are available [here](https://api.eckity.org)
 
 (Work in progress - some modules and functions are not documented yet.)
 
-### Tutorials
-The tutorials are available [here](https://github.com/EC-KitY/EC-KitY/wiki/Tutorials), walking you through running EC-KitY both in sklearn mode and in non-sklearn mode.
+The documentation examples are also in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
 
-### Examples
-More examples are in the [examples](https://github.com/EC-KitY/EC-KitY/tree/main/examples "examples") folder.
-All you need to do is define a fitness-evaluation method, through a `SimpleIndividualEvaluator` sub-class.
 You can run the examples with ease by opening this [colab notebook](https://colab.research.google.com/drive/1mpr3EGb1rpoK-_zugszQkv1sWVm-ZQiB?usp=sharing).
 
 ### Basic example (no sklearn)
